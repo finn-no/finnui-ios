@@ -3,6 +3,7 @@
 //
 
 import FinniversKit
+import UIKit
 
 public protocol IconLinkViewDelegate: AnyObject {
     func iconLinkViewWasSelected(_ view: IconLinkView, url: String, identifier: String?)
