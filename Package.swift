@@ -12,7 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", from: "71.0.0"),
+        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", from: "73.1.0"),
         .package(name: "SnapshotTesting", url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.8.2"),
     ],
     targets: [
@@ -20,7 +20,7 @@ let package = Package(
             name: "FinnUI",
             dependencies: [
                 "FinniversKit",
-            ]
+            ],
             path: "Sources",
             resources: [
                 .process("Assets/Fonts"),
@@ -33,6 +33,7 @@ let package = Package(
                 "FinnUI",
                 "SnapshotTesting",
             ],
+            path: "UnitTests",
             exclude: [
                 "__Snapshots__",
             ]
