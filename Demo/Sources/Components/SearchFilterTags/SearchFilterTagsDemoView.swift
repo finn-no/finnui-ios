@@ -3,6 +3,7 @@
 //
 
 import FinnUI
+import UIKit
 
 class SearchFilterTagsDemoView: UIView {
     private lazy var view: SearchFilterTagsView = {

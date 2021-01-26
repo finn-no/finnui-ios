@@ -3,6 +3,7 @@
 //
 
 import FinnUI
+import UIKit
 
 public struct SearchFilterTagsData: SearchFilterTagsViewModel {
     public let removeTagIcon = UIImage(named: .removeFilterTag)

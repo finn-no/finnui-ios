@@ -1,4 +1,5 @@
 import FinnUI
+import UIKit
 
 final class SearchResultsDemoView: UIView {
 

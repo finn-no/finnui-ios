@@ -6,31 +6,6 @@ import Demo
 import XCTest
 import SwiftUI
 @testable import FinnUI
-/*
-@available(iOS 13.0, *)
-class FinnUISwiftUIViewTests: XCTestCase {
-    private func snapshot(
-        _ component: FinnUISwiftUIDemoViews,
-        includeIPad: Bool = false,
-        delay: TimeInterval? = nil,
-        record: Bool = false,
-        testName: String = #function
-    ) {
-        assertSnapshots(matching: component.viewController, includeDarkMode: true, includeIPad: includeIPad, delay: delay, record: record, testName: testName)
-    }
-
-    // MARK: - Tests
-
-    func testMissingSnapshotTests() {
-        for element in elementWithoutTests(for: FinnUISwiftUIDemoViews.self) {
-            XCTFail("Not all elements were implemented, missing: \(element.rawValue)")
-        }
-    }
-
-    func testBapAdView() {
-        snapshot(.bapAdView)
-    }
-}*/
 
 @available(iOS 13.0, *)
 class SwiftUIViewTests: XCTestCase {
@@ -52,27 +27,7 @@ class SwiftUIViewTests: XCTestCase {
         }
     }
 
-    func testButtons() {
-        snapshot(.buttons)
-    }
-
-    func testSettings() {
-        snapshot(.settings)
-    }
-
-    func testBasicCellVariations() {
-        snapshot(.basicCellVariations)
-    }
-
-    func testMyVehiclesListView() {
-        snapshot(.myVehiclesListView)
-    }
-
-    func testTextField() {
-        snapshot(.textField)
-    }
-
-    func testTextView() {
-        snapshot(.textView)
+    func testBapAdView() {
+        snapshot(.bapAdView)
     }
 }

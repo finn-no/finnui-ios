@@ -11,15 +11,13 @@ enum TabletDisplayMode {
 }
 
 enum Sections: String, CaseIterable {
-    case dna
     case components
-    case cells
     case recycling
     case fullscreen
     @available(iOS 13.0, *) case swiftui
 
     static var allCases: [Sections] {
-        var cases: [Sections] = [.dna, .components, .cells, .recycling, .fullscreen]
+        var cases: [Sections] = [.components, .recycling, .fullscreen]
 
         if #available(iOS 13.0, *) {
             cases.append(.swiftui)
@@ -34,12 +32,8 @@ enum Sections: String, CaseIterable {
 
     var numberOfItems: Int {
         switch self {
-        case .dna:
-            return DnaDemoViews.items.count
         case .components:
             return ComponentDemoViews.items.count
-        case .cells:
-            return CellsDemoViews.items.count
         case .recycling:
             return RecyclingDemoViews.items.count
         case .fullscreen:
@@ -62,12 +56,8 @@ enum Sections: String, CaseIterable {
         let section = Sections.items[section]
         let names: [String]
         switch section {
-        case .dna:
-            names = DnaDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         case .components:
             names = ComponentDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
-        case .cells:
-            names = CellsDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         case .recycling:
             names = RecyclingDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         case .fullscreen:
@@ -87,12 +77,8 @@ enum Sections: String, CaseIterable {
         let section = Sections.items[indexPath.section]
         var rawClassName: String
         switch section {
-        case .dna:
-            rawClassName = DnaDemoViews.items[indexPath.row].rawValue
         case .components:
             rawClassName = ComponentDemoViews.items[indexPath.row].rawValue
-        case .cells:
-            rawClassName = CellsDemoViews.items[indexPath.row].rawValue
         case .recycling:
             rawClassName = RecyclingDemoViews.items[indexPath.row].rawValue
         case .fullscreen:
@@ -119,14 +105,8 @@ enum Sections: String, CaseIterable {
         }
         var viewController: UIViewController?
         switch section {
-        case .dna:
-            let selectedView = DnaDemoViews.items[safe: indexPath.row]
-            viewController = selectedView?.viewController
         case .components:
             let selectedView = ComponentDemoViews.items[safe: indexPath.row]
-            viewController = selectedView?.viewController
-        case .cells:
-            let selectedView = CellsDemoViews.items[safe: indexPath.row]
             viewController = selectedView?.viewController
         case .recycling:
             let selectedView = RecyclingDemoViews.items[safe: indexPath.row]

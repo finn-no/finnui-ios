@@ -5,9 +5,9 @@
 import SwiftUI
 @testable import FinnUI
 @testable import FinniversKit
-/*
+
 @available(iOS 13.0, *)
-public enum FinnUISwiftUIDemoViews: String, DemoViews {
+public enum SwiftUIDemoViews: String, DemoViews {
     case bapAdView
 
     public var viewController: UIViewController {
@@ -22,41 +22,6 @@ public enum FinnUISwiftUIDemoViews: String, DemoViews {
         switch self {
         case .bapAdView:
             BapAdView_Previews.previews
-        }
-    }
-}*/
-
-@available(iOS 13.0, *)
-public enum SwiftUIDemoViews: String, DemoViews {
-    case buttons
-    case settings
-    case textField
-    case textView
-    case basicCellVariations
-    case myVehiclesListView
-
-    public var viewController: UIViewController {
-        PreviewController(hostingController: hostingController)
-    }
-
-    private var hostingController: UIViewController {
-        UIHostingController(rootView: previews)
-    }
-
-    @ViewBuilder private var previews: some View {
-        switch self {
-        case .buttons:
-            ButtonStyleUsageDemoView_Previews.previews
-        case .settings:
-            SettingsView_Previews.previews
-        case .textField:
-            FinnTextField_Previews.previews
-        case .textView:
-            FinnTextView_Previews.previews
-        case .basicCellVariations:
-            BasicListCell_Previews.previews
-        case .myVehiclesListView:
-            MyVehiclesListView_Previews.previews
         }
     }
 }

@@ -3,6 +3,7 @@
 //
 
 import FinnUI
+import UIKit
 
 class SearchDisplayMenuDemoView: UIView {
     private lazy var view: SearchDisplayMenuView = {

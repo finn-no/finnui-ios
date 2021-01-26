@@ -19,46 +19,6 @@ class RecyclingViewTests: XCTestCase {
         }
     }
 
-    func testNotificationsListView() {
-        snapshot(.notificationsListView)
-    }
-
-    func testMarketsGridView() {
-        snapshot(.marketsGridView)
-    }
-
-    func testAdsGridView() {
-        snapshot(.adsGridView)
-    }
-
-    func testFavoritesListView() {
-        snapshot(.favoritesListView)
-    }
-
-    func testFavoriteFoldersListView() {
-        snapshot(.favoriteFoldersListView)
-    }
-
-    func testSavedSearchesListView() {
-        snapshot(.savedSearchesListView)
-    }
-
-    func testSettingsView() {
-        snapshot(.settingsView)
-    }
-
-    func testAdManagementView() {
-        snapshot(.adManagementView)
-    }
-
-    func testNeighborhoodProfileView() {
-        snapshot(.neighborhoodProfileView)
-    }
-
-    func testBasicTableView() {
-        snapshot(.basicTableView)
-    }
-
     func testProjectUnitsView() {
         snapshot(.projectUnitsView)
     }

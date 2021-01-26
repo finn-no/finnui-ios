@@ -1,4 +1,5 @@
 import FinnUI
+import UIKit
 
 class RecentSearchData: SearchResultsListViewModel {
     let title = "Siste søk"

@@ -3,6 +3,7 @@
 //
 
 import FinnUI
+import UIKit
 
 public class SplashDemoView: UIView {
     private lazy var view = SplashView(withAutoLayout: true)

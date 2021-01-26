@@ -21,6 +21,9 @@ let package = Package(
                 "FinniversKit",
             ],
             path: "Sources",
+            exclude: [
+                "Demo",
+            ],
             resources: [
                 .process("Assets/Fonts"),
                 .process("Assets/Sounds"),
