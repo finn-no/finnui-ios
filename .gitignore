@@ -32,16 +32,8 @@ DerivedData
 # Appcode
 .idea/
 
-# Carthage
-Carthage/Checkouts/*
-Carthage/Build/watchOS/*
-Carthage/Build/tvOS/FinniversKit.framework*
-Carthage/Build/Mac/FinniversKit.framework*
-Carthage/Build/iOS/FinniversKit.framework*
-FinniversKit.framework.zip
-
 # Snapshot tests
-FailureDiffs/
+Demo/FailureDiffs/
 
 # Bundler
 bin/
