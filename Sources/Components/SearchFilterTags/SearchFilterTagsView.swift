@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol SearchFilterTagsViewDelegate: AnyObject {
     func searchFilterTagsViewDidSelectFilter(_ view: SearchFilterTagsView)

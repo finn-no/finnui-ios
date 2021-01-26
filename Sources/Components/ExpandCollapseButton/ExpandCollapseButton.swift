@@ -1,6 +1,7 @@
 //
-//  Copyright © FINN.no AS, Inc. All rights reserved.
+//  Copyright © FINN.no AS.
 //
+import UIKit
 
 public class ExpandCollapseButton: UIButton {
     private var expanded = false {

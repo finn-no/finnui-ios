@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import UIKit
 
 public struct SearchDisplayTypeSelectionViewModel {
     public let listText: String

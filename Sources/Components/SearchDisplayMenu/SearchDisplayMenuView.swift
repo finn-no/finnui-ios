@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol SearchDisplayMenuViewDelegate: AnyObject {
     func searchDisplayMenuViewDidSelectSort()
