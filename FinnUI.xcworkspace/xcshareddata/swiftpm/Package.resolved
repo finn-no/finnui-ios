@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FinniversKit",
+        "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
+        "state": {
+          "branch": null,
+          "revision": "2e2e0dd44444cf578a2bc461067102f4a8f082d7",
+          "version": "73.1.0"
+        }
+      },
+      {
+        "package": "SnapshotTesting",
+        "repositoryURL": "https://github.com/pointfreeco/swift-snapshot-testing.git",
+        "state": {
+          "branch": null,
+          "revision": "c466812aa2e22898f27557e2e780d3aad7a27203",
+          "version": "1.8.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
