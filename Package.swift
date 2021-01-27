@@ -29,15 +29,5 @@ let package = Package(
                 .process("Assets/Sounds"),
             ]
         ),
-        .testTarget(
-            name: "FinnUI-Tests",
-            dependencies: [
-                "FinnUI",
-            ],
-            path: "UnitTests",
-            exclude: [
-                "__Snapshots__",
-            ]
-        ),
     ]
 )
