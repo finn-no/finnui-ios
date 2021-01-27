@@ -89,6 +89,7 @@ private extension MyVehiclesListView {
 }
 
 @available(iOS 13.0.0, *)
+// swiftlint:disable superfluous_disable_command type_name
 struct MyVehiclesListView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {

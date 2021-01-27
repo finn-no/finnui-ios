@@ -17,11 +17,9 @@ jobs:
           key: spm-cache-{{ checksum "FinnUI.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved" }}
 
   swiftlint:
-    docker:
-      - image: dantoml/swiftlint:latest
     steps:
       - checkout
-      - run: swiftlint lint
+      - run: bundle exec swiftlint lint
 
 workflows:
   version: 2
