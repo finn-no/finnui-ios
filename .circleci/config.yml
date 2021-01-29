@@ -6,15 +6,10 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - restore_cache:
-          key: spm-cache-{{ checksum "FinnUI.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved" }}
-      - run:
-          name: Build and test
-          command: xcodebuild test -scheme "Demo" -clonedSourcePackagesDirPath SourcePackages -destination 'platform=iOS Simulator,OS=14.0,name=iPhone 11 Pro' build test | xcpretty
-      - save_cache:
-          paths:
-            - SourcePackages/
-          key: spm-cache-{{ checksum "FinnUI.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved" }}
+      - run: sudo defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
+      - run: rm ~/.ssh/id_rsa || true
+      - run: for ip in $(dig @8.8.8.8 github.com +short); do ssh-keyscan github.com,$ip; ssh-keyscan $ip; done 2>/dev/null >> ~/.ssh/known_hosts || true
+      - run: xcodebuild test -workspace FinnUIDemo.xcworkspace -scheme "Demo" -destination 'platform=iOS Simulator,OS=14.0,name=iPhone 11 Pro' build test | xcpretty
 
   swiftlint:
     docker:
