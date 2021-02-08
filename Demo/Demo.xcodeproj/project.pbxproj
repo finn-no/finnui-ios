@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -75,6 +75,13 @@
 			remoteGlobalIDString = 46AE6FBF242BADC9007BB005;
 			remoteInfo = Demo;
 		};
+		D6242D0425CD8559001999CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46AE6FB8242BADC9007BB005 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6242CF525CD84A9001999CE;
+			remoteInfo = GenerateAssetsScriptRunner;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -86,6 +93,15 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6242CF425CD84A9001999CE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -150,6 +166,7 @@
 		9BA6C4A124336B9A009D417B /* DemoWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoWrapperView.swift; sourceTree = "<group>"; };
 		9BBC903F24FD252B0003D2D8 /* UITraitCollection+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+Extensions.swift"; sourceTree = "<group>"; };
 		9BE474C824979816009620A5 /* BapAdView+Previews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BapAdView+Previews.swift"; sourceTree = "<group>"; };
+		D6242CF625CD84A9001999CE /* libGenerateAssetsScriptRunner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGenerateAssetsScriptRunner.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA083C2D2462BCA800B26235 /* SwiftUIDemoViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoViews.swift; sourceTree = "<group>"; };
 		DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIViewTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,6 +188,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D6242CF325CD84A9001999CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -189,6 +213,7 @@
 			children = (
 				46AE6FC0242BADC9007BB005 /* Demo.app */,
 				46E7756C242D4736008A5E93 /* SnapshotTests.xctest */,
+				D6242CF625CD84A9001999CE /* libGenerateAssetsScriptRunner.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -520,7 +545,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 46AE6FD4242BADCD007BB005 /* Build configuration list for PBXNativeTarget "Demo" */;
 			buildPhases = (
-				4D529E0C25835570007AE5B6 /* Generate constants for assets names */,
+				4D529E0C25835570007AE5B6 /* Generate constants for assets names (Demo) */,
 				46AE6FBC242BADC9007BB005 /* Sources */,
 				46AE6FBD242BADC9007BB005 /* Frameworks */,
 				46AE6FBE242BADC9007BB005 /* Resources */,
@@ -530,6 +555,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D6242D0525CD8559001999CE /* PBXTargetDependency */,
 			);
 			name = Demo;
 			packageProductDependencies = (
@@ -560,13 +586,31 @@
 			productReference = 46E7756C242D4736008A5E93 /* SnapshotTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D6242CF525CD84A9001999CE /* GenerateAssetsScriptRunner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6242CFA25CD84A9001999CE /* Build configuration list for PBXNativeTarget "GenerateAssetsScriptRunner" */;
+			buildPhases = (
+				D6242D0125CD84E1001999CE /* Generate constants for assets names (FinnUI) */,
+				D6242CF225CD84A9001999CE /* Sources */,
+				D6242CF325CD84A9001999CE /* Frameworks */,
+				D6242CF425CD84A9001999CE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GenerateAssetsScriptRunner;
+			productName = GenerateAssetsScriptRunner;
+			productReference = D6242CF625CD84A9001999CE /* libGenerateAssetsScriptRunner.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		46AE6FB8242BADC9007BB005 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "FINN.no AS";
 				TargetAttributes = {
@@ -576,6 +620,9 @@
 					46E7756B242D4736008A5E93 = {
 						CreatedOnToolsVersion = 11.4;
 						TestTargetID = 46AE6FBF242BADC9007BB005;
+					};
+					D6242CF525CD84A9001999CE = {
+						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
@@ -597,6 +644,7 @@
 			targets = (
 				46AE6FBF242BADC9007BB005 /* Demo */,
 				46E7756B242D4736008A5E93 /* SnapshotTests */,
+				D6242CF525CD84A9001999CE /* GenerateAssetsScriptRunner */,
 			);
 		};
 /* End PBXProject section */
@@ -640,7 +688,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/../.swiftlint.yml\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint or brew install swiftlint\"\nfi\n";
 		};
-		4D529E0C25835570007AE5B6 /* Generate constants for assets names */ = {
+		4D529E0C25835570007AE5B6 /* Generate constants for assets names (Demo) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -649,7 +697,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Generate constants for assets names";
+			name = "Generate constants for assets names (Demo)";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -657,6 +705,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "ruby \"${SRCROOT}/../Scripts/generate_image_assets_symbols\" \"${SRCROOT}\" ImageAsset\n";
+		};
+		D6242D0125CD84E1001999CE /* Generate constants for assets names (FinnUI) */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate constants for assets names (FinnUI)";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ruby \"${SRCROOT}/../Scripts/generate_image_assets_symbols\" \"${SRCROOT}/..\" ImageAsset\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -728,6 +795,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D6242CF225CD84A9001999CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -735,6 +809,11 @@
 			isa = PBXTargetDependency;
 			target = 46AE6FBF242BADC9007BB005 /* Demo */;
 			targetProxy = 46E77571242D4736008A5E93 /* PBXContainerItemProxy */;
+		};
+		D6242D0525CD8559001999CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6242CF525CD84A9001999CE /* GenerateAssetsScriptRunner */;
+			targetProxy = D6242D0425CD8559001999CE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -943,6 +1022,34 @@
 			};
 			name = Release;
 		};
+		D6242CFB25CD84A9001999CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D34XZHQLE3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D6242CFC25CD84A9001999CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D34XZHQLE3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -969,6 +1076,15 @@
 			buildConfigurations = (
 				46E77574242D4736008A5E93 /* Debug */,
 				46E77575242D4736008A5E93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6242CFA25CD84A9001999CE /* Build configuration list for PBXNativeTarget "GenerateAssetsScriptRunner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6242CFB25CD84A9001999CE /* Debug */,
+				D6242CFC25CD84A9001999CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
