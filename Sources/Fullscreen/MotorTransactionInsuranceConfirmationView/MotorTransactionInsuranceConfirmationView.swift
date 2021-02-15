@@ -5,6 +5,7 @@ public protocol MotorTransactionInsuranceConfirmationViewModel {
     var companyName: String { get }
     var bodyText: String { get }
     var confirmationDetails: [KeyValuePair] { get }
+    var caption: String? { get }
     var buttonTitle: String { get }
 }
 
@@ -46,6 +47,12 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
         return view
     }()
 
+    private lazy var captionLabel: Label = {
+        let label = Label(style: .caption, withAutoLayout: true)
+        label.numberOfLines = 0
+        return label
+    }()
+
     private lazy var confirmationButton: Button = {
         let button = Button(style: .callToAction, size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(handleConfirmationButtonTap), for: .touchUpInside)
@@ -74,7 +81,7 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
         self.remoteImageViewDataSource = remoteImageViewDataSource
         self.delegate = delegate
         super.init(frame: .zero)
-        setup()
+        setup(withCaptionLabel: viewModel.caption != nil)
         configure(with: viewModel)
     }
 
@@ -84,7 +91,7 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
 
     // MARK: - Setup
 
-    private func setup() {
+    private func setup(withCaptionLabel: Bool) {
         insertSubview(scrollView, belowSubview: topShadowView)
         scrollView.fillInSuperview()
 
@@ -101,12 +108,22 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
         contentView.addSubview(contentStackView)
         contentStackView.fillInSuperview(margin: margin)
 
-        contentStackView.addArrangedSubviews([
-            companyStackView,
-            bodyLabel,
-            keyValueGridContainer,
-            confirmationButton
-        ])
+        if withCaptionLabel {
+            contentStackView.addArrangedSubviews([
+                companyStackView,
+                bodyLabel,
+                keyValueGridContainer,
+                captionLabel,
+                confirmationButton
+            ])
+        } else {
+            contentStackView.addArrangedSubviews([
+                companyStackView,
+                bodyLabel,
+                keyValueGridContainer,
+                confirmationButton
+            ])
+        }
 
         keyValueGridContainer.addSubview(keyValueGrid)
         keyValueGrid.fillInSuperview(margin: margin)
@@ -125,6 +142,8 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
         bodyLabel.text = viewModel.bodyText
 
         keyValueGrid.configure(with: viewModel.confirmationDetails, titleStyle: .bodyStrong, valueStyle: .body)
+
+        captionLabel.text = viewModel.caption
         confirmationButton.setTitle(viewModel.buttonTitle, for: .normal)
 
         let fallbackImage: UIImage = UIImage(named: .noImage)
