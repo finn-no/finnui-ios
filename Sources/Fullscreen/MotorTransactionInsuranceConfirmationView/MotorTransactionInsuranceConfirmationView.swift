@@ -81,7 +81,7 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
         self.remoteImageViewDataSource = remoteImageViewDataSource
         self.delegate = delegate
         super.init(frame: .zero)
-        setup(withCaptionLabel: viewModel.caption != nil)
+        setup()
         configure(with: viewModel)
     }
 
@@ -91,7 +91,7 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
 
     // MARK: - Setup
 
-    private func setup(withCaptionLabel: Bool) {
+    private func setup() {
         insertSubview(scrollView, belowSubview: topShadowView)
         scrollView.fillInSuperview()
 
@@ -108,22 +108,13 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
         contentView.addSubview(contentStackView)
         contentStackView.fillInSuperview(margin: margin)
 
-        if withCaptionLabel {
-            contentStackView.addArrangedSubviews([
-                companyStackView,
-                bodyLabel,
-                keyValueGridContainer,
-                captionLabel,
-                confirmationButton
-            ])
-        } else {
-            contentStackView.addArrangedSubviews([
-                companyStackView,
-                bodyLabel,
-                keyValueGridContainer,
-                confirmationButton
-            ])
-        }
+        contentStackView.addArrangedSubviews([
+            companyStackView,
+            bodyLabel,
+            keyValueGridContainer,
+            captionLabel,
+            confirmationButton
+        ])
 
         keyValueGridContainer.addSubview(keyValueGrid)
         keyValueGrid.fillInSuperview(margin: margin)
@@ -143,7 +134,9 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
 
         keyValueGrid.configure(with: viewModel.confirmationDetails, titleStyle: .bodyStrong, valueStyle: .body)
 
+        captionLabel.isHidden = viewModel.caption == nil
         captionLabel.text = viewModel.caption
+
         confirmationButton.setTitle(viewModel.buttonTitle, for: .normal)
 
         let fallbackImage: UIImage = UIImage(named: .noImage)
