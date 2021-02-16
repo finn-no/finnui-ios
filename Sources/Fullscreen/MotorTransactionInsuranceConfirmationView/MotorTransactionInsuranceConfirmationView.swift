@@ -5,6 +5,7 @@ public protocol MotorTransactionInsuranceConfirmationViewModel {
     var companyName: String { get }
     var bodyText: String { get }
     var confirmationDetails: [KeyValuePair] { get }
+    var caption: String? { get }
     var buttonTitle: String { get }
 }
 
@@ -44,6 +45,12 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
         view.backgroundColor = .bgSecondary
         view.layer.cornerRadius = .spacingS
         return view
+    }()
+
+    private lazy var captionLabel: Label = {
+        let label = Label(style: .caption, withAutoLayout: true)
+        label.numberOfLines = 0
+        return label
     }()
 
     private lazy var confirmationButton: Button = {
@@ -105,6 +112,7 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
             companyStackView,
             bodyLabel,
             keyValueGridContainer,
+            captionLabel,
             confirmationButton
         ])
 
@@ -125,6 +133,10 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
         bodyLabel.text = viewModel.bodyText
 
         keyValueGrid.configure(with: viewModel.confirmationDetails, titleStyle: .bodyStrong, valueStyle: .body)
+
+        captionLabel.isHidden = viewModel.caption == nil
+        captionLabel.text = viewModel.caption
+
         confirmationButton.setTitle(viewModel.buttonTitle, for: .normal)
 
         let fallbackImage: UIImage = UIImage(named: .noImage)
