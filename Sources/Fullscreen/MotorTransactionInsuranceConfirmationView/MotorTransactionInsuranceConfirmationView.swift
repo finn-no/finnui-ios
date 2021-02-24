@@ -150,6 +150,7 @@ public class MotorTransactionInsuranceConfirmationView: ShadowScrollView {
     // MARK: - Actions
 
     @objc private func handleConfirmationButtonTap() {
+        confirmationButton.isEnabled = false
         delegate?.motorTransactionInsuranceConfirmationViewDidTapButton(self)
     }
 }
