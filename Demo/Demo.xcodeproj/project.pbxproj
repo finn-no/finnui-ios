@@ -55,10 +55,8 @@
 		D6D43CEF25BF2FA900234AC2 /* SearchDisplayTypeSelectionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCC6BAA252B312900F69B30 /* SearchDisplayTypeSelectionDemoView.swift */; };
 		D6D43CF025BF2FA900234AC2 /* SnowGlobeDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77275242CEF09008A5E93 /* SnowGlobeDemoView.swift */; };
 		D6D43CF125BF2FA900234AC2 /* SavedSearchSortingDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68001FA0046522DC369E44 /* SavedSearchSortingDemoView.swift */; };
-		D6D43CF225BF2FA900234AC2 /* MotorTransactionInsurancePickerDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D152F822578DA9F00282244 /* MotorTransactionInsurancePickerDemoView.swift */; };
 		D6D43CF325BF2FA900234AC2 /* SplashDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77291242CEF09008A5E93 /* SplashDemoView.swift */; };
 		D6D43CF425BF2FA900234AC2 /* SearchResultsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D644627248F782600B80827 /* SearchResultsData.swift */; };
-		D6D43CF525BF2FA900234AC2 /* MotorTransactionInsuranceConfirmationDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6FCA38257A693300C078F1 /* MotorTransactionInsuranceConfirmationDemoView.swift */; };
 		D6D43CF625BF2FA900234AC2 /* FavoriteAdSortingDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7728F242CEF09008A5E93 /* FavoriteAdSortingDemoView.swift */; };
 		D6D43CF725BF2FA900234AC2 /* NewYearsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77277242CEF09008A5E93 /* NewYearsDemoView.swift */; };
 		D6D43CF825BF2FA900234AC2 /* SearchResultsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D644437248A733400B80827 /* SearchResultsDemoView.swift */; };
@@ -146,12 +144,10 @@
 		46E7757B242D476B008A5E93 /* FullscreenViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenViewTests.swift; sourceTree = "<group>"; };
 		46E77582242D478D008A5E93 /* XCTestCastExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCastExtensions.swift; sourceTree = "<group>"; };
 		46E77584242D4805008A5E93 /* TestConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConfig.swift; sourceTree = "<group>"; };
-		4D152F822578DA9F00282244 /* MotorTransactionInsurancePickerDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotorTransactionInsurancePickerDemoView.swift; sourceTree = "<group>"; };
 		4D529E12258357D0007AE5B6 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		4D529E2025837087007AE5B6 /* ImageAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAsset.swift; sourceTree = "<group>"; };
 		4D644437248A733400B80827 /* SearchResultsDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsDemoView.swift; sourceTree = "<group>"; };
 		4D644627248F782600B80827 /* SearchResultsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsData.swift; sourceTree = "<group>"; };
-		4D6FCA38257A693300C078F1 /* MotorTransactionInsuranceConfirmationDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotorTransactionInsuranceConfirmationDemoView.swift; sourceTree = "<group>"; };
 		4DBC039A250A4A38004E8044 /* ExpandCollapseButtonDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandCollapseButtonDemoView.swift; sourceTree = "<group>"; };
 		4DCC6BAA252B312900F69B30 /* SearchDisplayTypeSelectionDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchDisplayTypeSelectionDemoView.swift; sourceTree = "<group>"; };
 		4DD84281254828910058D6BB /* ProjectUnitsDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectUnitsDemoView.swift; sourceTree = "<group>"; };
@@ -292,8 +288,6 @@
 				D6D43CDE25BF27C000234AC2 /* EasterEgg */,
 				4D644436248A731300B80827 /* SearchResults */,
 				4DCC6BA9252B312900F69B30 /* SearchDisplayTypeSelection */,
-				4D152F812578DA8700282244 /* MotorTransactionInsurancePickerView */,
-				4D6FCA37257A691000C078F1 /* MotorTransactionInsuranceConfirmationView */,
 			);
 			path = Fullscreen;
 			sourceTree = "<group>";
@@ -405,14 +399,6 @@
 			path = SnapshotTests;
 			sourceTree = "<group>";
 		};
-		4D152F812578DA8700282244 /* MotorTransactionInsurancePickerView */ = {
-			isa = PBXGroup;
-			children = (
-				4D152F822578DA9F00282244 /* MotorTransactionInsurancePickerDemoView.swift */,
-			);
-			path = MotorTransactionInsurancePickerView;
-			sourceTree = "<group>";
-		};
 		4D529E1625835A23007AE5B6 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,14 +416,6 @@
 				4D644627248F782600B80827 /* SearchResultsData.swift */,
 			);
 			path = SearchResults;
-			sourceTree = "<group>";
-		};
-		4D6FCA37257A691000C078F1 /* MotorTransactionInsuranceConfirmationView */ = {
-			isa = PBXGroup;
-			children = (
-				4D6FCA38257A693300C078F1 /* MotorTransactionInsuranceConfirmationDemoView.swift */,
-			);
-			path = MotorTransactionInsuranceConfirmationView;
 			sourceTree = "<group>";
 		};
 		4DBC0399250A495D004E8044 /* ExpandCollapseButton */ = {
@@ -741,7 +719,6 @@
 				46E77452242CEF0A008A5E93 /* ScrollViewController.swift in Sources */,
 				46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */,
 				D6D43CF125BF2FA900234AC2 /* SavedSearchSortingDemoView.swift in Sources */,
-				D6D43CF225BF2FA900234AC2 /* MotorTransactionInsurancePickerDemoView.swift in Sources */,
 				46E77456242CEF0A008A5E93 /* TweakableDemoView.swift in Sources */,
 				46E773AD242CEF0A008A5E93 /* BaseDemoViewController.swift in Sources */,
 				D6D43CEA25BF2F4D00234AC2 /* ObjectPageBlinkDemoView.swift in Sources */,
@@ -764,7 +741,6 @@
 				46E773AE242CEF0A008A5E93 /* Helpers.swift in Sources */,
 				D6D43CF325BF2FA900234AC2 /* SplashDemoView.swift in Sources */,
 				46E773B1242CEF0A008A5E93 /* UIDevice.swift in Sources */,
-				D6D43CF525BF2FA900234AC2 /* MotorTransactionInsuranceConfirmationDemoView.swift in Sources */,
 				D6D43CE325BF2F4D00234AC2 /* SearchDisplayMenuDemoView.swift in Sources */,
 				46E773AB242CEF0A008A5E93 /* SplitViewController.swift in Sources */,
 				46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */,

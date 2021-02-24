@@ -46,12 +46,4 @@ class FullscreenViewTests: XCTestCase {
     func testSearchDisplayTypeSelectionView() {
         snapshot(.searchDisplayTypeSelectionView)
     }
-
-    func testMotorTransactionInsurancePickerView() {
-        snapshot(.motorTransactionInsurancePickerView)
-    }
-
-    func testMotorTransactionInsuranceConfirmationView() {
-        snapshot(.motorTransactionInsuranceConfirmationView)
-    }
 }
