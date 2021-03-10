@@ -45,3 +45,4 @@ fastlane/report.xml
 
 # SPM
 .swiftpm
+.build
