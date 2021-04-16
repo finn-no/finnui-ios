@@ -15,6 +15,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case objectPageBlinkView
     case chatAvailabilityView
     case iconLinkListView
+    case searchDropdownGroupView
 
     public var viewController: UIViewController {
         switch self {
@@ -38,6 +39,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<ExpandCollapseButtonDemoView>()
         case .objectPageBlinkView:
             return DemoViewController<ObjectPageBlinkDemoView>()
+        case .searchDropdownGroupView:
+            return DemoViewController<SearchDropdownGroupDemoView>(dismissType: .dismissButton)
         }
     }
 }
