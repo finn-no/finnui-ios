@@ -12,8 +12,9 @@ class SearchDropdownGroupItemView: UIView {
 
     private let item: SearchDropdownGroupItem
     private weak var delegate: SearchDropdownGroupItemViewDelegate?
-    private lazy var titlesStackViewTrailingConstraint = titlesStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
     private let imageAndButtonWidth: CGFloat = 40
+    private lazy var titlesStackViewTrailingConstraint = titlesStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
+    private lazy var highlightLayer = CALayer()
 
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
@@ -99,6 +100,8 @@ class SearchDropdownGroupItemView: UIView {
             removeButton.heightAnchor.constraint(equalToConstant: imageAndButtonWidth),
             removeButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth)
         ])
+
+        layer.insertSublayer(highlightLayer, at: 0)
     }
 
     // MARK: - Actions
@@ -109,6 +112,50 @@ class SearchDropdownGroupItemView: UIView {
 
     @objc private func handleRemoveButtonTap() {
         delegate?.searchDropdownGroupItemViewDidSelectRemoveButton(self)
+    }
+
+    // MARK: - Overrides
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        highlightLayer.frame = bounds.insetBy(dx: -.spacingXS, dy: -.spacingXS)
+        setHighlightColor(.bgPrimary)
+    }
+}
+
+// MARK: - Touch / highlight handling.
+extension SearchDropdownGroupItemView {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        setHighlightColor(.defaultCellSelectedBackgroundColor)
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        setHighlightColor(.bgPrimary)
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        setHighlightColor(.bgPrimary)
+    }
+
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+
+        if let touch = touches.first, bounds.contains(touch.location(in: self)) {
+            setHighlightColor(.defaultCellSelectedBackgroundColor)
+        } else {
+            setHighlightColor(.bgPrimary)
+        }
+    }
+
+    /// Disable implicit layer animation when changing highlight color.
+    private func setHighlightColor(_ color: UIColor) {
+        CATransaction.begin()
+        CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+        highlightLayer.backgroundColor = color.cgColor
+        CATransaction.commit()
     }
 }
 
