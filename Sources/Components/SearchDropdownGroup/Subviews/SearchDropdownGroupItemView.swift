@@ -83,6 +83,7 @@ class SearchDropdownGroupItemView: UIView {
 
     private func setup() {
         titleLabel.text = item.title
+        titleLabel.textColor = item.titleColor
         subtitleLabel.text = item.subtitle
         removeButton.isHidden = !item.showDeleteButton
 
