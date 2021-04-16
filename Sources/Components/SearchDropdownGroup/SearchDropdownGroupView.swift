@@ -48,6 +48,7 @@ public class SearchDropdownGroupView: UIView {
     // MARK: - Setup
 
     private func setup() {
+        backgroundColor = .bgPrimary
         addSubview(headerStackView)
         addSubview(contentStackView)
 
