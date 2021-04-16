@@ -17,14 +17,18 @@ public class SearchDropdownGroupView: UIView {
     // MARK: - Private extensions
 
     private lazy var titleLabel = Label(style: .title3Strong, withAutoLayout: true)
+    private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
 
     private lazy var actionButton: Button = {
         let button = Button(style: .flat, size: .small, withAutoLayout: true)
+        button.addTarget(self, action: #selector(handleActionButtonTap), for: .touchUpInside)
         return button
     }()
 
-    private lazy var contentStackView: UIStackView = {
-        let stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
+    private lazy var headerStackView: UIStackView = {
+        let stackView = UIStackView.init(axis: .horizontal, spacing: 0, withAutoLayout: true)
+        stackView.alignment = .center
+        stackView.addArrangedSubviews([titleLabel, actionButton])
         return stackView
     }()
 
@@ -44,8 +48,27 @@ public class SearchDropdownGroupView: UIView {
     // MARK: - Setup
 
     private func setup() {
+        addSubview(headerStackView)
         addSubview(contentStackView)
-        contentStackView.fillInSuperview()
+
+        let innerLayoutGuide = UILayoutGuide()
+        addLayoutGuide(innerLayoutGuide)
+
+        NSLayoutConstraint.activate([
+            innerLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            innerLayoutGuide.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+            innerLayoutGuide.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            innerLayoutGuide.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+
+            headerStackView.topAnchor.constraint(equalTo: innerLayoutGuide.topAnchor),
+            headerStackView.leadingAnchor.constraint(equalTo: innerLayoutGuide.leadingAnchor),
+            headerStackView.trailingAnchor.constraint(equalTo: innerLayoutGuide.trailingAnchor),
+
+            contentStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: .spacingS),
+            contentStackView.leadingAnchor.constraint(equalTo: innerLayoutGuide.leadingAnchor),
+            contentStackView.trailingAnchor.constraint(equalTo: innerLayoutGuide.trailingAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: innerLayoutGuide.bottomAnchor),
+        ])
     }
 
     // MARK: - Public methods
@@ -72,6 +95,12 @@ public class SearchDropdownGroupView: UIView {
             )
         }
         contentStackView.addArrangedSubviews(views)
+    }
+
+    // MARK: - Actions
+
+    @objc private func handleActionButtonTap() {
+        delegate?.searchDropdownGroupViewDidSelectActionButton(self, withIdentifier: identifier)
     }
 }
 
