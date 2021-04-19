@@ -28,7 +28,7 @@ public class SearchDropdownContainerView: UIView {
 
     // MARK: - Init
 
-    public init(contentView: UIView, delegate: SearchDropdownContainerViewDelegate, withAutoLayout: Bool = false) {
+    public init(contentView: UIView, delegate: SearchDropdownContainerViewDelegate? = nil, withAutoLayout: Bool = false) {
         self.contentView = contentView
         self.delegate = delegate
         super.init(frame: .zero)

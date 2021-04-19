@@ -15,6 +15,7 @@ public class PopularSearchesView: UIView {
 
     private var popularItems = [String]()
     private lazy var collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
+    private lazy var containerView = SearchDropdownContainerView(contentView: collectionView, withAutoLayout: true)
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout)
@@ -46,12 +47,16 @@ public class PopularSearchesView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        addSubview(collectionView)
-        collectionView.fillInSuperview()
+        addSubview(containerView)
+        containerView.fillInSuperview()
         collectionViewHeightConstraint.isActive = true
     }
 
     // MARK: - Public methods
+
+    public func configure(title: String) {
+        containerView.configure(title: title, buttonTitle: nil)
+    }
 
     public func configure(with items: [String]) {
         popularItems = items
@@ -98,4 +103,10 @@ extension PopularSearchesView: UICollectionViewDataSource {
         cell.configure(with: popularItems[indexPath.item])
         return cell
     }
+}
+
+// MARK: - SearchDropdownContainerViewDelegate
+
+extension PopularSearchesView: SearchDropdownContainerViewDelegate {
+    public func searchDropdownContainerViewDidSelectActionButton(_ view: SearchDropdownContainerView) {}
 }
