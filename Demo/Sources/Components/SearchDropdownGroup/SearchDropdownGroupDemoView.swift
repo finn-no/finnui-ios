@@ -3,10 +3,21 @@ import FinniversKit
 import FinnUI
 
 class SearchDropdownGroupDemoView: UIView, Tweakable {
+
+    // MARK: - Private properties
+
     private lazy var groupView: SearchDropdownGroupView = {
         let view = SearchDropdownGroupView(identifier: "uniqe-id", withAutoLayout: true)
         view.delegate = self
         return view
+    }()
+
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(withAutoLayout: true)
+        scrollView.backgroundColor = .bgTertiary
+        scrollView.alwaysBounceVertical = true
+        scrollView.delaysContentTouches = false
+        return scrollView
     }()
 
     lazy var tweakingOptions: [TweakingOption] = [
@@ -34,17 +45,12 @@ class SearchDropdownGroupDemoView: UIView, Tweakable {
     // MARK: - Setup
 
     private func setup() {
-        let backgroundView = UIView(withAutoLayout: true)
-        backgroundView.backgroundColor = .bgTertiary
-        addSubview(backgroundView)
-        backgroundView.fillInSuperview()
+        addSubview(scrollView)
+        scrollView.fillInSuperview()
 
-        addSubview(groupView)
-        NSLayoutConstraint.activate([
-            groupView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            groupView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            groupView.centerYAnchor.constraint(equalTo: centerYAnchor),
-        ])
+        scrollView.addSubview(groupView)
+        groupView.fillInSuperview()
+        groupView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
 
     // MARK: - Private methods
@@ -53,7 +59,6 @@ class SearchDropdownGroupDemoView: UIView, Tweakable {
         groupView.configure(title: title, buttonTitle: buttonTitle)
         groupView.configure(with: items, remoteImageViewDataSource: self)
     }
-
 }
 
 // MARK: - SearchDropdownGroupViewDelegate
