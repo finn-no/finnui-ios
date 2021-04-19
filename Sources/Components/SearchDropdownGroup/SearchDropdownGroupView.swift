@@ -14,7 +14,7 @@ public class SearchDropdownGroupView: UIView {
     public let identifier: String
     public weak var delegate: SearchDropdownGroupViewDelegate?
 
-    // MARK: - Private extensions
+    // MARK: - Private properties
 
     private lazy var titleLabel = Label(style: .title3Strong, withAutoLayout: true)
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
@@ -26,7 +26,7 @@ public class SearchDropdownGroupView: UIView {
     }()
 
     private lazy var headerStackView: UIStackView = {
-        let stackView = UIStackView.init(axis: .horizontal, spacing: 0, withAutoLayout: true)
+        let stackView = UIStackView(axis: .horizontal, spacing: 0, withAutoLayout: true)
         stackView.alignment = .center
         stackView.addArrangedSubviews([titleLabel, actionButton])
         return stackView
