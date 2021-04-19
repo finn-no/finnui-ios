@@ -16,21 +16,8 @@ public class SearchDropdownGroupView: UIView {
 
     // MARK: - Private properties
 
-    private lazy var titleLabel = Label(style: .title3Strong, withAutoLayout: true)
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
-
-    private lazy var actionButton: Button = {
-        let button = Button(style: .flat, size: .small, withAutoLayout: true)
-        button.addTarget(self, action: #selector(handleActionButtonTap), for: .touchUpInside)
-        return button
-    }()
-
-    private lazy var headerStackView: UIStackView = {
-        let stackView = UIStackView(axis: .horizontal, spacing: 0, withAutoLayout: true)
-        stackView.alignment = .center
-        stackView.addArrangedSubviews([titleLabel, actionButton])
-        return stackView
-    }()
+    private lazy var containerView = SearchDropdownContainerView(contentView: contentStackView, delegate: self, withAutoLayout: true)
 
     // MARK: - Init
 
@@ -49,40 +36,14 @@ public class SearchDropdownGroupView: UIView {
 
     private func setup() {
         backgroundColor = .bgPrimary
-        addSubview(headerStackView)
-        addSubview(contentStackView)
-
-        let innerLayoutGuide = UILayoutGuide()
-        addLayoutGuide(innerLayoutGuide)
-
-        NSLayoutConstraint.activate([
-            innerLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            innerLayoutGuide.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
-            innerLayoutGuide.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            innerLayoutGuide.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
-
-            headerStackView.topAnchor.constraint(equalTo: innerLayoutGuide.topAnchor),
-            headerStackView.leadingAnchor.constraint(equalTo: innerLayoutGuide.leadingAnchor),
-            headerStackView.trailingAnchor.constraint(equalTo: innerLayoutGuide.trailingAnchor),
-
-            contentStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: .spacingS),
-            contentStackView.leadingAnchor.constraint(equalTo: innerLayoutGuide.leadingAnchor),
-            contentStackView.trailingAnchor.constraint(equalTo: innerLayoutGuide.trailingAnchor),
-            contentStackView.bottomAnchor.constraint(equalTo: innerLayoutGuide.bottomAnchor),
-        ])
+        addSubview(containerView)
+        containerView.fillInSuperview()
     }
 
     // MARK: - Public methods
 
     public func configure(title: String, buttonTitle: String?) {
-        titleLabel.text = title
-
-        if let buttonTitle = buttonTitle {
-            actionButton.setTitle(buttonTitle, for: .normal)
-            actionButton.isHidden = false
-        } else {
-            actionButton.isHidden = true
-        }
+        containerView.configure(title: title, buttonTitle: buttonTitle)
     }
 
     public func configure(with items: [SearchDropdownGroupItem], remoteImageViewDataSource: RemoteImageViewDataSource) {
@@ -96,12 +57,6 @@ public class SearchDropdownGroupView: UIView {
             )
         }
         contentStackView.addArrangedSubviews(views)
-    }
-
-    // MARK: - Actions
-
-    @objc private func handleActionButtonTap() {
-        delegate?.searchDropdownGroupViewDidSelectActionButton(self, withIdentifier: identifier)
     }
 }
 
@@ -122,5 +77,13 @@ extension SearchDropdownGroupView: SearchDropdownGroupItemViewDelegate {
         }
 
         delegate?.searchDropdownGroupView(self, withIdentifier: identifier, didSelectRemoveButtonForItemAtIndex: viewIndex)
+    }
+}
+
+// MARK: - SearchDropdownContainerViewDelegate
+
+extension SearchDropdownGroupView: SearchDropdownContainerViewDelegate {
+    public func searchDropdownContainerViewDidSelectActionButton(_ view: SearchDropdownContainerView) {
+        delegate?.searchDropdownGroupViewDidSelectActionButton(self, withIdentifier: identifier)
     }
 }
