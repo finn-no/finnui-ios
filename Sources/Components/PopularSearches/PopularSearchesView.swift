@@ -62,9 +62,13 @@ public class PopularSearchesView: UIView {
         popularItems = items
         collectionView.reloadData()
 
+        layoutIfNeeded()
+    }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
         let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
         collectionViewHeightConstraint.constant = contentHeight
-        layoutIfNeeded()
     }
 }
 
