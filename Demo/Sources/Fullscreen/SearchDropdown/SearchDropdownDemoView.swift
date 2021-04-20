@@ -134,7 +134,6 @@ private extension Array where Element == SearchDropdownGroupItem {
                 title: "'Sofa'",
                 subtitle: "Møbler og interiør",
                 imageUrl: .demoImageUrl,
-                imagePlaceholderColor: .pea,
                 titleColor: .textAction,
                 showDeleteButton: true
             ),
@@ -142,7 +141,6 @@ private extension Array where Element == SearchDropdownGroupItem {
                 title: "'Bolig til salgs', Oslo",
                 subtitle: "Eiendom",
                 imageUrl: .demoImageUrl,
-                imagePlaceholderColor: .pea,
                 titleColor: .textAction,
                 showDeleteButton: true
             ),
@@ -150,7 +148,6 @@ private extension Array where Element == SearchDropdownGroupItem {
                 title: "Sykkel",
                 subtitle: "Torget",
                 imageUrl: .demoImageUrl,
-                imagePlaceholderColor: .pea,
                 titleColor: .textAction,
                 showDeleteButton: true
             ),
@@ -158,7 +155,6 @@ private extension Array where Element == SearchDropdownGroupItem {
                 title: "'vintage kamera', 1500-4500kr",
                 subtitle: "Elektronikk og hvitevarer",
                 imageUrl: .demoImageUrl,
-                imagePlaceholderColor: .pea,
                 titleColor: .textAction,
                 showDeleteButton: true
             ),
@@ -171,21 +167,18 @@ private extension Array where Element == SearchDropdownGroupItem {
                 title: "Møbler i nabolaget",
                 subtitle: "Torget",
                 imageUrl: .demoImageUrl,
-                imagePlaceholderColor: .pea,
                 showDeleteButton: false
             ),
             SearchDropdownGroupItem(
                 title: "Hunder",
                 subtitle: "Torget",
                 imageUrl: .demoImageUrl,
-                imagePlaceholderColor: .pea,
                 showDeleteButton: false
             ),
             SearchDropdownGroupItem(
                 title: "Bolig til leie",
                 subtitle: "Torget",
                 imageUrl: .demoImageUrl,
-                imagePlaceholderColor: .pea,
                 showDeleteButton: false
             )
         ]
