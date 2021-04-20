@@ -166,7 +166,7 @@ private extension Array where Element == SearchDropdownGroupItem {
                 title: $0.title,
                 subtitle: nil,
                 imageUrl: $0.imageUrl,
-                imagePlaceholderColor: $0.imagePlaceholderColor,
+                titleColor: $0.titleColor,
                 showDeleteButton: $0.showDeleteButton
             )
         }
