@@ -135,7 +135,7 @@ private extension Array where Element == SearchDropdownGroupItem {
                 subtitle: "Møbler og interiør",
                 imageUrl: .demoImageUrl,
                 imagePlaceholderColor: .pea,
-                titleColor: .primaryBlue,
+                titleColor: .textAction,
                 showDeleteButton: true
             ),
             SearchDropdownGroupItem(
@@ -143,7 +143,7 @@ private extension Array where Element == SearchDropdownGroupItem {
                 subtitle: "Eiendom",
                 imageUrl: .demoImageUrl,
                 imagePlaceholderColor: .pea,
-                titleColor: .primaryBlue,
+                titleColor: .textAction,
                 showDeleteButton: true
             ),
             SearchDropdownGroupItem(
@@ -151,7 +151,7 @@ private extension Array where Element == SearchDropdownGroupItem {
                 subtitle: "Torget",
                 imageUrl: .demoImageUrl,
                 imagePlaceholderColor: .pea,
-                titleColor: .primaryBlue,
+                titleColor: .textAction,
                 showDeleteButton: true
             ),
             SearchDropdownGroupItem(
@@ -159,7 +159,7 @@ private extension Array where Element == SearchDropdownGroupItem {
                 subtitle: "Elektronikk og hvitevarer",
                 imageUrl: .demoImageUrl,
                 imagePlaceholderColor: .pea,
-                titleColor: .primaryBlue,
+                titleColor: .textAction,
                 showDeleteButton: true
             ),
         ]
