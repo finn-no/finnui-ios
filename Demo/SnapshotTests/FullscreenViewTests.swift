@@ -46,4 +46,8 @@ class FullscreenViewTests: XCTestCase {
     func testSearchDisplayTypeSelectionView() {
         snapshot(.searchDisplayTypeSelectionView)
     }
+
+    func testSearchDropdown() {
+        snapshot(.searchDropdown)
+    }
 }
