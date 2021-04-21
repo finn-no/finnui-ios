@@ -20,14 +20,6 @@ public class SearchDropdownView: UIView {
 
     // MARK: - Private properties
 
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView(withAutoLayout: true)
-        scrollView.backgroundColor = .bgTertiary
-        scrollView.alwaysBounceVertical = true
-        scrollView.delaysContentTouches = false
-        return scrollView
-    }()
-
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
         stackView.addArrangedSubviews([recentSearchesView, savedSearchesView, popularSearchesView])
@@ -64,13 +56,10 @@ public class SearchDropdownView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        addSubview(scrollView)
-        scrollView.fillInSuperview()
-
         stackView.arrangedSubviews.forEach { $0.isHidden = true }
-        scrollView.addSubview(stackView)
+
+        addSubview(stackView)
         stackView.fillInSuperview()
-        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
 
     // MARK: - Public methods

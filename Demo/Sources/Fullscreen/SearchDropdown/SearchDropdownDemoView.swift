@@ -2,10 +2,18 @@ import FinnUI
 import FinniversKit
 
 final class SearchDropdownDemoView: UIView, Tweakable {
-    private lazy var searchDropdown: SearchDropdownView = {
+    private lazy var searchDropdownView: SearchDropdownView = {
         let view = SearchDropdownView(withAutoLayout: true)
         view.delegate = self
         return view
+    }()
+
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(withAutoLayout: true)
+        scrollView.backgroundColor = .bgTertiary
+        scrollView.alwaysBounceVertical = true
+        scrollView.delaysContentTouches = false
+        return scrollView
     }()
 
     lazy var tweakingOptions: [TweakingOption] = [
@@ -39,18 +47,22 @@ final class SearchDropdownDemoView: UIView, Tweakable {
     // MARK: - Setup
 
     private func setup() {
-        searchDropdown.configure(title: "Siste søk", buttonTitle: "Fjern alle", section: .recentSearches)
-        searchDropdown.configure(title: "Lagrede søk", buttonTitle: "Se alle dine lagrede søk", section: .savedSearches)
-        searchDropdown.configure(title: "Populært på FINN", section: .popularSearches)
+        searchDropdownView.configure(title: "Siste søk", buttonTitle: "Fjern alle", section: .recentSearches)
+        searchDropdownView.configure(title: "Lagrede søk", buttonTitle: "Se alle dine lagrede søk", section: .savedSearches)
+        searchDropdownView.configure(title: "Populært på FINN", section: .popularSearches)
 
-        addSubview(searchDropdown)
-        searchDropdown.fillInSuperview()
+        addSubview(scrollView)
+        scrollView.fillInSuperview()
+
+        scrollView.addSubview(searchDropdownView)
+        searchDropdownView.fillInSuperview()
+        searchDropdownView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
 
     // MARK: - Private methods
 
     private func configure(recentSearches: Bool, savedSearches: Bool, popularSearches: Bool) {
-        searchDropdown.configure(
+        searchDropdownView.configure(
             recentSearches: recentSearches ? .recentSearches : [],
             savedSearches: savedSearches ? .savedSearches : [],
             popularSearches: popularSearches ? .popularSearches : [],
