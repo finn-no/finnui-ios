@@ -28,6 +28,9 @@ class PopularSearchesDemoView: UIView, Tweakable {
         TweakingOption(title: "1 search", action: { [weak self] in
             self?.popularSearchesView.configure(with: ["Hund"])
         }),
+        TweakingOption(title: "Different lengths", action: { [weak self] in
+            self?.popularSearchesView.configure(with: ["Båt", "Traktortilhenger", "Båt", "Traktortilhenger", "Båt", "Traktortilhenger", "Båt", "Traktortilhenger"])
+        }),
     ]
 
     // MARK: - Init
