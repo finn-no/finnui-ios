@@ -18,21 +18,13 @@ public class PopularSearchesView: UIView {
     private lazy var containerView = SearchDropdownContainerView(contentView: collectionView, withAutoLayout: true)
 
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(PopularSearchCollectionViewCell.self)
         collectionView.backgroundColor = .bgPrimary
         return collectionView
-    }()
-
-    private lazy var collectionViewLayout: UICollectionViewLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = .spacingS
-        layout.minimumLineSpacing = .spacingS
-        return layout
     }()
 
     // MARK: - Init
@@ -69,6 +61,45 @@ public class PopularSearchesView: UIView {
         super.layoutSubviews()
         let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
         collectionViewHeightConstraint.constant = contentHeight
+    }
+}
+
+// MARK: - Private class
+
+extension PopularSearchesView {
+    private class CollectionViewLayout: UICollectionViewFlowLayout {
+        private let spacing = CGFloat.spacingS
+
+        override init() {
+            super.init()
+            scrollDirection = .vertical
+            minimumInteritemSpacing = spacing
+            minimumLineSpacing = spacing
+        }
+
+        required init?(coder: NSCoder) { fatalError() }
+
+        override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+            guard let attributes = super.layoutAttributesForElements(in: rect) else {
+                return nil
+            }
+
+            attributes.enumerated().forEach { index, attribute in
+                // Skip the first attribute, that one's already correctly placed.
+                guard index > 0 else { return }
+
+                let origin = attributes[index - 1].frame.maxX
+
+                // Make sure the new cell is not exceeding the width of the collectionView.
+                if origin + spacing + attribute.frame.size.width < collectionViewContentSize.width {
+                    var newFrame = attribute.frame
+                    newFrame.origin.x = origin + spacing
+                    attribute.frame = newFrame
+                }
+            }
+
+            return attributes
+        }
     }
 }
 
