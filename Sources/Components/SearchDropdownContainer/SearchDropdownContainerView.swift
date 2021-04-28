@@ -16,6 +16,7 @@ public class SearchDropdownContainerView: UIView {
     private lazy var actionButton: Button = {
         let button = Button(style: .flat, size: .small, withAutoLayout: true)
         button.addTarget(self, action: #selector(handleActionButtonTap), for: .touchUpInside)
+        button.setContentHuggingPriority(.required, for: .horizontal)
         return button
     }()
 
