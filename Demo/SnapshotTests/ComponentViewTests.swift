@@ -54,4 +54,12 @@ class ComponentViewTests: XCTestCase {
     func testObjectPageBlinkView() {
         snapshot(.objectPageBlinkView)
     }
+
+    func testSearchDropdownGroupView() {
+        snapshot(.searchDropdownGroupView)
+    }
+
+    func testPopularSearchesView() {
+        snapshot(.popularSearchesView)
+    }
 }

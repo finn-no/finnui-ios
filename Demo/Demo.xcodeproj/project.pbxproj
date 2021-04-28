@@ -38,6 +38,9 @@
 		4D529E13258357D0007AE5B6 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D529E12258357D0007AE5B6 /* Icons.xcassets */; };
 		4D529E2125837087007AE5B6 /* ImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D529E2025837087007AE5B6 /* ImageAsset.swift */; };
 		5D62FD7025B03B4800EB882D /* DemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D62FD6F25B03B4800EB882D /* DemoViews.swift */; };
+		8D6809D9F29B489936910F12 /* SearchDropdownDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D680D3139FB7C6614DD9BFB /* SearchDropdownDemoView.swift */; };
+		8D680A91CD2C95FDA6334007 /* PopularSearchesDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D680896DB471416120C7E0E /* PopularSearchesDemoView.swift */; };
+		8D680B94EF5A2484F34CE9AB /* SearchDropdownGroupDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D680D09AE93C13B7B20F08E /* SearchDropdownGroupDemoView.swift */; };
 		9BA6C4A224336B9A009D417B /* DemoWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA6C4A124336B9A009D417B /* DemoWrapperView.swift */; };
 		9BBC904024FD252B0003D2D8 /* UITraitCollection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBC903F24FD252B0003D2D8 /* UITraitCollection+Extensions.swift */; };
 		D61E2C3825C0157600FA8F16 /* FinnUI in Frameworks */ = {isa = PBXBuildFile; productRef = D61E2C3725C0157600FA8F16 /* FinnUI */; };
@@ -159,6 +162,9 @@
 		8D6800F29F72B6957F2BE564 /* IconLinkListViewDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconLinkListViewDemo.swift; sourceTree = "<group>"; };
 		8D680197B160A999652BC551 /* ChatAvailabilityDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatAvailabilityDemoView.swift; sourceTree = "<group>"; };
 		8D6803892BCA4EA2979E49FA /* ObjectPageBlinkDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectPageBlinkDemoView.swift; sourceTree = "<group>"; };
+		8D680896DB471416120C7E0E /* PopularSearchesDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularSearchesDemoView.swift; sourceTree = "<group>"; };
+		8D680D09AE93C13B7B20F08E /* SearchDropdownGroupDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchDropdownGroupDemoView.swift; sourceTree = "<group>"; };
+		8D680D3139FB7C6614DD9BFB /* SearchDropdownDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchDropdownDemoView.swift; sourceTree = "<group>"; };
 		9BA6C4A124336B9A009D417B /* DemoWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoWrapperView.swift; sourceTree = "<group>"; };
 		9BBC903F24FD252B0003D2D8 /* UITraitCollection+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+Extensions.swift"; sourceTree = "<group>"; };
 		9BE474C824979816009620A5 /* BapAdView+Previews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BapAdView+Previews.swift"; sourceTree = "<group>"; };
@@ -288,6 +294,7 @@
 				D6D43CDE25BF27C000234AC2 /* EasterEgg */,
 				4D644436248A731300B80827 /* SearchResults */,
 				4DCC6BA9252B312900F69B30 /* SearchDisplayTypeSelection */,
+				8D6802A9ABC8059CC5395B9E /* SearchDropdown */,
 			);
 			path = Fullscreen;
 			sourceTree = "<group>";
@@ -334,6 +341,8 @@
 				4DBC0399250A495D004E8044 /* ExpandCollapseButton */,
 				4DDD45AC250FA7E1007DBDD5 /* SearchFilterTags */,
 				4DDD45AA250FA7E1007DBDD5 /* SearchDisplayMenu */,
+				8D680CEAEE8620B4DD78D96C /* SearchDropdownGroup */,
+				8D680EE0BE80227384CFC7E3 /* PopularSearchesView */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -467,6 +476,14 @@
 			path = IconLinkListView;
 			sourceTree = "<group>";
 		};
+		8D6802A9ABC8059CC5395B9E /* SearchDropdown */ = {
+			isa = PBXGroup;
+			children = (
+				8D680D3139FB7C6614DD9BFB /* SearchDropdownDemoView.swift */,
+			);
+			path = SearchDropdown;
+			sourceTree = "<group>";
+		};
 		8D6808BAF6E309D495F118C1 /* SavedSearchSorting */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,6 +506,22 @@
 				8D6803892BCA4EA2979E49FA /* ObjectPageBlinkDemoView.swift */,
 			);
 			path = ObjectPageBlinkView;
+			sourceTree = "<group>";
+		};
+		8D680CEAEE8620B4DD78D96C /* SearchDropdownGroup */ = {
+			isa = PBXGroup;
+			children = (
+				8D680D09AE93C13B7B20F08E /* SearchDropdownGroupDemoView.swift */,
+			);
+			path = SearchDropdownGroup;
+			sourceTree = "<group>";
+		};
+		8D680EE0BE80227384CFC7E3 /* PopularSearchesView */ = {
+			isa = PBXGroup;
+			children = (
+				8D680896DB471416120C7E0E /* PopularSearchesDemoView.swift */,
+			);
+			path = PopularSearchesView;
 			sourceTree = "<group>";
 		};
 		9BA6C4A024336B81009D417B /* SwiftUI */ = {
@@ -614,7 +647,7 @@
 			);
 			mainGroup = 46AE6FB7242BADC9007BB005;
 			packageReferences = (
-				46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing.git" */,
 			);
 			productRefGroup = 46AE6FC1242BADC9007BB005 /* Products */;
 			projectDirPath = "";
@@ -755,6 +788,9 @@
 				D6D43CEF25BF2FA900234AC2 /* SearchDisplayTypeSelectionDemoView.swift in Sources */,
 				D6D43CEC25BF2F4D00234AC2 /* SaveSearchPromptViewDemoView.swift in Sources */,
 				D6D43CE525BF2F4D00234AC2 /* IconLinkListViewDemo.swift in Sources */,
+				8D680B94EF5A2484F34CE9AB /* SearchDropdownGroupDemoView.swift in Sources */,
+				8D680A91CD2C95FDA6334007 /* PopularSearchesDemoView.swift in Sources */,
+				8D6809D9F29B489936910F12 /* SearchDropdownDemoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1068,7 +1104,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+		46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
 			requirement = {
@@ -1081,7 +1117,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		46E77597242D6890008A5E93 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			package = 46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing.git" */;
 			productName = SnapshotTesting;
 		};
 		D61E2C3725C0157600FA8F16 /* FinnUI */ = {
