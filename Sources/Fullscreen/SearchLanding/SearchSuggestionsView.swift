@@ -50,6 +50,8 @@ public class SearchSuggestionsView: UIView {
     // MARK: - Public methods
 
     public func configure(with sections: [SearchSuggestionSection]) {
+        tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
+
         self.sections = sections
         tableView.reloadData()
     }
