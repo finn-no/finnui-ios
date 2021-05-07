@@ -59,19 +59,7 @@ class SearchSuggestionTableViewCell: UITableViewCell {
     // MARK: - Configure
 
     func configure(with item: SearchSuggestionGroupItem) {
-        titleLabel.text = item.title
+        titleLabel.attributedText = item.title
         detailLabel.text = item.detail
-
-        switch item.style {
-        case .regular:
-            titleLabel.font = .body
-            titleLabel.textColor = .textPrimary
-        case .bold:
-            titleLabel.font = .bodyStrong
-            titleLabel.textColor = .textPrimary
-        case .highlighted:
-            titleLabel.font = .body
-            titleLabel.textColor = .textAction
-        }
     }
 }
