@@ -8,7 +8,6 @@ class SearchSuggestionTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel(withAutoLayout: true)
         label.setContentHuggingPriority(.required, for: .horizontal)
-        label.numberOfLines = 0
         return label
     }()
 
