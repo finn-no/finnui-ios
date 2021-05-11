@@ -3,17 +3,19 @@ import UIKit
 import FinnUI
 
 extension Array where Element == SearchSuggestionSection {
-    static var suggestions: [SearchSuggestionSection] {
+    static func suggestions(withLocationPermission: Bool = false) -> [SearchSuggestionSection] {
         [
+            withLocationPermission ? .locationPermission(title: "Vil du se forslag til annonser nærme deg?") : nil,
             .group(.generateSuggestions(title: "Torget", count: 6)),
             .group(.generateSuggestions(title: "Bolig til salgs", count: 2)),
             .group(.generateSuggestions(title: "Alle stillinger", count: 4)),
             .viewMoreResults(title: "Finn flere resultater for 'hund'")
-        ]
+        ].compactMap { $0 }
     }
 
-    static var landingPage: [SearchSuggestionSection] {
+    static func landingPage(withLocationPermission: Bool = false) -> [SearchSuggestionSection] {
         [
+            withLocationPermission ? .locationPermission(title: "Vil du se forslag til annonser nærme deg?") : nil,
             .group(SearchSuggestionGroup(
                 title: "Torget",
                 items: [
@@ -59,7 +61,7 @@ extension Array where Element == SearchSuggestionSection {
                     )
                 ]
             ))
-        ]
+        ].compactMap { $0 }
     }
 }
 

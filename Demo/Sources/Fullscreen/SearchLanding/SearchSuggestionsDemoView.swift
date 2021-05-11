@@ -4,11 +4,17 @@ import FinniversKit
 class SearchSuggestionsDemoView: UIView, Tweakable {
 
     lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Search suggestions") { [weak self] in
-            self?.searchSuggestionsView.configure(with: .suggestions)
+        TweakingOption(title: "Search suggestions", description: "With location permission cell") { [weak self] in
+            self?.searchSuggestionsView.configure(with: .suggestions(withLocationPermission: true))
         },
-        TweakingOption(title: "Search landingpage") { [weak self] in
-            self?.searchSuggestionsView.configure(with: .landingPage)
+        TweakingOption(title: "Search suggestions", description: "With location permission cell") { [weak self] in
+            self?.searchSuggestionsView.configure(with: .suggestions())
+        },
+        TweakingOption(title: "Search landingpage", description: "With location permission cell") { [weak self] in
+            self?.searchSuggestionsView.configure(with: .landingPage(withLocationPermission: true))
+        },
+        TweakingOption(title: "Search landingpage", description: "With location permission cell") { [weak self] in
+            self?.searchSuggestionsView.configure(with: .landingPage())
         }
     ]
 
@@ -44,6 +50,10 @@ extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
     }
 
     func searchSuggestionsViewDidSelectViewMoreResults(_ view: SearchSuggestionsView) {
+        print("🔥🔥🔥🔥 \(#function)")
+    }
+
+    func searchSuggestionsViewDidSelectLocationButton(_ view: SearchSuggestionsView) {
         print("🔥🔥🔥🔥 \(#function)")
     }
 }
