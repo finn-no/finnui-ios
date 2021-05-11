@@ -4,6 +4,7 @@ import FinniversKit
 public protocol SearchSuggestionsViewDelegate: AnyObject {
     func searchSuggestionsView(_ view: SearchSuggestionsView, didSelectResultAt indexPath: IndexPath)
     func searchSuggestionsViewDidSelectViewMoreResults(_ view: SearchSuggestionsView)
+    func searchSuggestionsViewDidSelectLocationButton(_ view: SearchSuggestionsView)
 }
 
 public class SearchSuggestionsView: UIView {
@@ -23,6 +24,7 @@ public class SearchSuggestionsView: UIView {
         tableView.dataSource = self
         tableView.register(SearchSuggestionTableViewCell.self)
         tableView.register(SearchSuggestionMoreResultsTableViewCell.self)
+        tableView.register(SearchSuggestionLocationPermissionCell.self)
         tableView.register(SearchSuggestionsSectionHeader.self)
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
@@ -70,6 +72,8 @@ extension SearchSuggestionsView: UITableViewDelegate {
             delegate?.searchSuggestionsView(self, didSelectResultAt: indexPath)
         case .viewMoreResults:
             delegate?.searchSuggestionsViewDidSelectViewMoreResults(self)
+        case .locationPermission:
+            delegate?.searchSuggestionsViewDidSelectLocationButton(self)
         }
     }
 
@@ -81,7 +85,7 @@ extension SearchSuggestionsView: UITableViewDelegate {
             let header = tableView.dequeue(SearchSuggestionsSectionHeader.self)
             header.configure(with: group.title)
             return header
-        case .viewMoreResults:
+        case .viewMoreResults, .locationPermission:
             return UIView(frame: .zero)
         }
     }
@@ -92,7 +96,7 @@ extension SearchSuggestionsView: UITableViewDelegate {
         switch section {
         case .group:
             return UITableView.automaticDimension
-        case .viewMoreResults:
+        case .viewMoreResults, .locationPermission:
             return CGFloat.leastNonzeroMagnitude
         }
     }
@@ -103,7 +107,7 @@ extension SearchSuggestionsView: UITableViewDelegate {
         switch section {
         case .group:
             return 50
-        case .viewMoreResults:
+        case .viewMoreResults, .locationPermission:
             return CGFloat.leastNonzeroMagnitude
         }
     }
@@ -122,7 +126,7 @@ extension SearchSuggestionsView: UITableViewDataSource {
         switch section {
         case .group(let group):
             return group.items.count
-        case .viewMoreResults:
+        case .viewMoreResults, .locationPermission:
             return 1
         }
     }
@@ -138,6 +142,10 @@ extension SearchSuggestionsView: UITableViewDataSource {
             return cell
         case .viewMoreResults(let title):
             let cell = tableView.dequeue(SearchSuggestionMoreResultsTableViewCell.self, for: indexPath)
+            cell.configure(with: title)
+            return cell
+        case .locationPermission(let title):
+            let cell = tableView.dequeue(SearchSuggestionLocationPermissionCell.self, for: indexPath)
             cell.configure(with: title)
             return cell
         }
