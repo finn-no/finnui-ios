@@ -12,6 +12,7 @@ public class SearchSuggestionsView: UIView {
     // MARK: - Public properties
 
     public weak var delegate: SearchSuggestionsViewDelegate?
+    public var scrollView: UIScrollView { tableView }
 
     // MARK: - Private properties
 
