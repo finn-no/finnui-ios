@@ -56,4 +56,8 @@ extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
     func searchSuggestionsViewDidSelectLocationButton(_ view: SearchSuggestionsView) {
         print("🔥🔥🔥🔥 \(#function)")
     }
+
+    func searchSuggestionsViewDidScroll() {
+        print("🔥🔥🔥🔥 \(#function)")
+    }
 }

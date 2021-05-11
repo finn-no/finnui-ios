@@ -5,6 +5,7 @@ public protocol SearchSuggestionsViewDelegate: AnyObject {
     func searchSuggestionsView(_ view: SearchSuggestionsView, didSelectResultAt indexPath: IndexPath)
     func searchSuggestionsViewDidSelectViewMoreResults(_ view: SearchSuggestionsView)
     func searchSuggestionsViewDidSelectLocationButton(_ view: SearchSuggestionsView)
+    func searchSuggestionsViewDidScroll()
 }
 
 public class SearchSuggestionsView: UIView {
@@ -111,6 +112,10 @@ extension SearchSuggestionsView: UITableViewDelegate {
         case .viewMoreResults, .locationPermission:
             return CGFloat.leastNonzeroMagnitude
         }
+    }
+
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegate?.searchSuggestionsViewDidScroll()
     }
 }
 
