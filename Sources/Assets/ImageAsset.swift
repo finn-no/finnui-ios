@@ -48,6 +48,7 @@ enum ImageAsset: String {
     case favoritesSortLastAdded
     case finnLogoSimple
     case heartMini
+    case mapPin
     case noImage
     case pin
     case plus
@@ -86,6 +87,7 @@ enum ImageAsset: String {
             .favoritesSortLastAdded,
             .finnLogoSimple,
             .heartMini,
+            .mapPin,
             .noImage,
             .pin,
             .plus,
