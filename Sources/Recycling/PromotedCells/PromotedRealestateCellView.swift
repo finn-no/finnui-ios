@@ -23,6 +23,12 @@ public class PromotedRealestateCellView: UIView {
         remoteImageViewDataSource: remoteImageViewDataSource
     )
 
+    private lazy var realtorInfoView = RealtorInfoView(
+        realtorName: viewModel.realtorName,
+        realtorLogoUrl: viewModel.realtorImageUrl,
+        remoteImageViewDataSource: remoteImageViewDataSource
+    )
+
     private lazy var titleLabel: Label = {
         let label = Label(style: .body, withAutoLayout: true)
         label.numberOfLines = 0
@@ -91,6 +97,7 @@ public class PromotedRealestateCellView: UIView {
 
         addSubview(imageMapGridView)
         addSubview(highlightView)
+        addSubview(realtorInfoView)
         addSubview(textStackView)
 
         NSLayoutConstraint.activate([
@@ -103,7 +110,11 @@ public class PromotedRealestateCellView: UIView {
             highlightView.trailingAnchor.constraint(equalTo: trailingAnchor),
             highlightView.heightAnchor.constraint(equalToConstant: .spacingS),
 
-            textStackView.topAnchor.constraint(equalTo: highlightView.bottomAnchor, constant: .spacingS),
+            realtorInfoView.topAnchor.constraint(equalTo: highlightView.bottomAnchor, constant: .spacingS),
+            realtorInfoView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            realtorInfoView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            textStackView.topAnchor.constraint(equalTo: realtorInfoView.bottomAnchor, constant: .spacingS),
             textStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             textStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             textStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
