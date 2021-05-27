@@ -38,6 +38,7 @@
 		4D529E13258357D0007AE5B6 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D529E12258357D0007AE5B6 /* Icons.xcassets */; };
 		4D529E2125837087007AE5B6 /* ImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D529E2025837087007AE5B6 /* ImageAsset.swift */; };
 		5D62FD7025B03B4800EB882D /* DemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D62FD6F25B03B4800EB882D /* DemoViews.swift */; };
+		8D68046EF3BCAE82CA1D838A /* PromotedRealestateCellDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D680064FF2F8E2DD2C33B1D /* PromotedRealestateCellDemoView.swift */; };
 		8D6809D9F29B489936910F12 /* SearchDropdownDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D680D3139FB7C6614DD9BFB /* SearchDropdownDemoView.swift */; };
 		8D680A91CD2C95FDA6334007 /* PopularSearchesDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D680896DB471416120C7E0E /* PopularSearchesDemoView.swift */; };
 		8D680B94EF5A2484F34CE9AB /* SearchDropdownGroupDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D680D09AE93C13B7B20F08E /* SearchDropdownGroupDemoView.swift */; };
@@ -159,6 +160,7 @@
 		4DDD45AE250FA7E1007DBDD5 /* SearchFilterTagsDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterTagsDemoView.swift; sourceTree = "<group>"; };
 		5D62FD6F25B03B4800EB882D /* DemoViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViews.swift; sourceTree = "<group>"; };
 		8D68001FA0046522DC369E44 /* SavedSearchSortingDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedSearchSortingDemoView.swift; sourceTree = "<group>"; };
+		8D680064FF2F8E2DD2C33B1D /* PromotedRealestateCellDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromotedRealestateCellDemoView.swift; sourceTree = "<group>"; };
 		8D6800F29F72B6957F2BE564 /* IconLinkListViewDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconLinkListViewDemo.swift; sourceTree = "<group>"; };
 		8D680197B160A999652BC551 /* ChatAvailabilityDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatAvailabilityDemoView.swift; sourceTree = "<group>"; };
 		8D6803892BCA4EA2979E49FA /* ObjectPageBlinkDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectPageBlinkDemoView.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 			isa = PBXGroup;
 			children = (
 				46E7738D242CEF0A008A5E93 /* ListViews */,
+				8D6803EE6FEE7BE44E883FA8 /* PromotedCells */,
 			);
 			path = Recycling;
 			sourceTree = "<group>";
@@ -482,6 +485,14 @@
 				8D680D3139FB7C6614DD9BFB /* SearchDropdownDemoView.swift */,
 			);
 			path = SearchDropdown;
+			sourceTree = "<group>";
+		};
+		8D6803EE6FEE7BE44E883FA8 /* PromotedCells */ = {
+			isa = PBXGroup;
+			children = (
+				8D680064FF2F8E2DD2C33B1D /* PromotedRealestateCellDemoView.swift */,
+			);
+			path = PromotedCells;
 			sourceTree = "<group>";
 		};
 		8D6808BAF6E309D495F118C1 /* SavedSearchSorting */ = {
@@ -791,6 +802,7 @@
 				8D680B94EF5A2484F34CE9AB /* SearchDropdownGroupDemoView.swift in Sources */,
 				8D680A91CD2C95FDA6334007 /* PopularSearchesDemoView.swift in Sources */,
 				8D6809D9F29B489936910F12 /* SearchDropdownDemoView.swift in Sources */,
+				8D68046EF3BCAE82CA1D838A /* PromotedRealestateCellDemoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
