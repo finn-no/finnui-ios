@@ -2,11 +2,24 @@ import UIKit
 import FinniversKit
 import MapKit
 
+
+public protocol PromotedRealestateCellViewDelegate: AnyObject {
+    func promotedRealestateCellViewDidToggleFavoriteState(_ view: PromotedRealestateCellView)
+}
+
 public class PromotedRealestateCellView: UIView {
 
     public enum PromoKind {
-        case singleImage
-        case imagesAndMap
+        case singleImage // Plus
+        case imagesAndMap // Premium
+    }
+
+    // MARK: - Public properties
+
+    public weak var delegate: PromotedRealestateCellViewDelegate?
+
+    public var isFavorited: Bool {
+        primaryFavoriteButton.isFavorited
     }
 
     // MARK: - Private properties
@@ -14,6 +27,10 @@ public class PromotedRealestateCellView: UIView {
     private let viewModel: PromotedRealestateCellViewModel
     private let promoKind: PromoKind
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
+
+    private lazy var primaryFavoriteButton = createFavoriteButton()
+    private lazy var secondaryFavoriteButton = createFavoriteButton(includeShadow: true)
+    private lazy var highlightView = UIView(withAutoLayout: true)
 
     private lazy var imageMapGridView = ImageMapGridView(
         promoKind: promoKind,
@@ -61,12 +78,17 @@ public class PromotedRealestateCellView: UIView {
         return stackView
     }()
 
+    private lazy var realtorAndFavoriteStackView: UIStackView = {
+        let stackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
+        stackView.addArrangedSubviews([realtorInfoView, primaryFavoriteButton])
+        stackView.alignment = .center
+        return stackView
+    }()
+
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(axis: .vertical, spacing: .zero, withAutoLayout: true)
         return stackView
     }()
-
-    private lazy var highlightView = UIView(withAutoLayout: true)
 
     // MARK: - Init
 
@@ -97,7 +119,7 @@ public class PromotedRealestateCellView: UIView {
 
         addSubview(imageMapGridView)
         addSubview(highlightView)
-        addSubview(realtorInfoView)
+        addSubview(realtorAndFavoriteStackView)
         addSubview(textStackView)
 
         NSLayoutConstraint.activate([
@@ -110,20 +132,64 @@ public class PromotedRealestateCellView: UIView {
             highlightView.trailingAnchor.constraint(equalTo: trailingAnchor),
             highlightView.heightAnchor.constraint(equalToConstant: .spacingS),
 
-            realtorInfoView.topAnchor.constraint(equalTo: highlightView.bottomAnchor, constant: .spacingS),
-            realtorInfoView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            realtorInfoView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            realtorAndFavoriteStackView.topAnchor.constraint(equalTo: highlightView.bottomAnchor, constant: .spacingS),
+            realtorAndFavoriteStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            realtorAndFavoriteStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
             textStackView.topAnchor.constraint(equalTo: realtorInfoView.bottomAnchor, constant: .spacingS),
             textStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             textStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             textStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+
+        if promoKind == .imagesAndMap {
+            addSubview(secondaryFavoriteButton)
+            NSLayoutConstraint.activate([
+                secondaryFavoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+                secondaryFavoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
+            ])
+        }
+
+        configure(isFavorited: isFavorited)
     }
 
     // MARK: - Public methods
 
     public func configure(mapTileOverlay: MKTileOverlay) {
         imageMapGridView.configure(mapTileOverlay: mapTileOverlay)
+    }
+
+    public func configure(isFavorited: Bool) {
+        primaryFavoriteButton.configure(isFavorited: isFavorited)
+        secondaryFavoriteButton.configure(isFavorited: isFavorited)
+
+        if isFavorited {
+            primaryFavoriteButton.tintColor = .textAction
+            secondaryFavoriteButton.tintColor = .white
+        } else {
+            primaryFavoriteButton.tintColor = .textSecondary
+            secondaryFavoriteButton.tintColor = .white
+        }
+    }
+
+    // MARK: - Private methods
+
+    private func createFavoriteButton(includeShadow: Bool = false) -> FavoriteButton {
+        let button = FavoriteButton(withAutoLayout: true)
+        button.delegate = self
+
+        if includeShadow {
+            button.configureShadow()
+        }
+
+        return button
+    }
+}
+
+// MARK: - FavoriteButtonDelegate
+
+extension PromotedRealestateCellView: FavoriteButtonDelegate {
+    func favoriteButtonDidToggleFavoriteState(_ button: FavoriteButton) {
+        delegate?.promotedRealestateCellViewDidToggleFavoriteState(self)
     }
 }
