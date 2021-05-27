@@ -74,8 +74,11 @@ public class PromotedRealestateCellView: UIView {
     }()
 
     private lazy var textStackView: UIStackView = {
-        let stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+        let stackView = UIStackView(axis: .vertical, spacing: .zero, withAutoLayout: true)
         stackView.addArrangedSubviews([titleLabel, addressLabel, primaryAttributesLabel, secondaryAttributesLabel])
+        stackView.setCustomSpacing(.spacingXS, after: titleLabel)
+        stackView.setCustomSpacing(.spacingM, after: addressLabel)
+        stackView.setCustomSpacing(.spacingS, after: primaryAttributesLabel)
         return stackView
     }()
 
