@@ -28,6 +28,7 @@ public class PromotedRealestateCellView: UIView {
     private let promoKind: PromoKind
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
 
+    private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
     private lazy var primaryFavoriteButton = createFavoriteButton()
     private lazy var secondaryFavoriteButton = createFavoriteButton(includeShadow: true)
     private lazy var highlightView = UIView(withAutoLayout: true)
@@ -85,11 +86,6 @@ public class PromotedRealestateCellView: UIView {
         return stackView
     }()
 
-    private lazy var contentStackView: UIStackView = {
-        let stackView = UIStackView(axis: .vertical, spacing: .zero, withAutoLayout: true)
-        return stackView
-    }()
-
     // MARK: - Init
 
     public init(
@@ -117,30 +113,18 @@ public class PromotedRealestateCellView: UIView {
         secondaryAttributesLabel.text = viewModel.secondaryAttributes.joined(separator: "・")
         highlightView.backgroundColor = viewModel.highlightColor
 
-        addSubview(imageMapGridView)
-        addSubview(highlightView)
-        addSubview(realtorAndFavoriteStackView)
-        addSubview(textStackView)
-
-        NSLayoutConstraint.activate([
-            imageMapGridView.topAnchor.constraint(equalTo: topAnchor),
-            imageMapGridView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageMapGridView.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-            highlightView.topAnchor.constraint(equalTo: imageMapGridView.bottomAnchor),
-            highlightView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            highlightView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            highlightView.heightAnchor.constraint(equalToConstant: .spacingS),
-
-            realtorAndFavoriteStackView.topAnchor.constraint(equalTo: highlightView.bottomAnchor, constant: .spacingS),
-            realtorAndFavoriteStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            realtorAndFavoriteStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-            textStackView.topAnchor.constraint(equalTo: realtorInfoView.bottomAnchor, constant: .spacingS),
-            textStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            textStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            textStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        contentStackView.addArrangedSubviews([
+            imageMapGridView,
+            highlightView,
+            realtorAndFavoriteStackView,
+            textStackView
         ])
+
+        highlightView.heightAnchor.constraint(equalToConstant: .spacingS).isActive = true
+        contentStackView.setCustomSpacing(0, after: imageMapGridView)
+
+        addSubview(contentStackView)
+        contentStackView.fillInSuperview()
 
         if promoKind == .imagesAndMap {
             addSubview(secondaryFavoriteButton)
