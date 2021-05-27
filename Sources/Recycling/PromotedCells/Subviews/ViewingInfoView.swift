@@ -9,7 +9,7 @@ class ViewingInfoView: UIView {
 
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
-        imageView.image = UIImage(named: .plus)
+        imageView.image = UIImage(named: .clockSmall)
         imageView.tintColor = .textPrimary
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -35,8 +35,8 @@ class ViewingInfoView: UIView {
             iconImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
             iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
             iconImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingS),
-            iconImageView.widthAnchor.constraint(equalToConstant: 16),
-            iconImageView.heightAnchor.constraint(equalToConstant: 16),
+            iconImageView.widthAnchor.constraint(equalToConstant: 18),
+            iconImageView.heightAnchor.constraint(equalToConstant: 18),
 
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: .spacingS),
