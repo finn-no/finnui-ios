@@ -31,6 +31,7 @@ public class PromotedRealestateCellView: UIView {
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
     private lazy var primaryFavoriteButton = createFavoriteButton()
     private lazy var secondaryFavoriteButton = createFavoriteButton(includeShadow: true)
+    private lazy var viewingInfoView = ViewingInfoView(withAutoLayout: true)
     private lazy var highlightView = UIView(withAutoLayout: true)
 
     private lazy var imageMapGridView = ImageMapGridView(
@@ -120,7 +121,8 @@ public class PromotedRealestateCellView: UIView {
             imageMapGridView,
             highlightView,
             realtorAndFavoriteStackView,
-            textStackView
+            textStackView,
+            viewingInfoView
         ])
 
         highlightView.heightAnchor.constraint(equalToConstant: .spacingS).isActive = true
@@ -128,6 +130,12 @@ public class PromotedRealestateCellView: UIView {
 
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
+
+        if let viewingText = viewModel.viewingText {
+            viewingInfoView.configure(with: viewingText)
+        } else {
+            viewingInfoView.isHidden = true
+        }
 
         if promoKind == .imagesAndMap {
             addSubview(secondaryFavoriteButton)
