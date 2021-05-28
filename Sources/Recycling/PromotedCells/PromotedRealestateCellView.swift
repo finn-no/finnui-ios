@@ -28,7 +28,6 @@ public class PromotedRealestateCellView: UIView {
     private let promoKind: PromoKind
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
 
-    private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
     private lazy var primaryFavoriteButton = createFavoriteButton()
     private lazy var secondaryFavoriteButton = createFavoriteButton(includeShadow: true)
     private lazy var viewingInfoView = ViewingInfoView(withAutoLayout: true)
@@ -90,6 +89,20 @@ public class PromotedRealestateCellView: UIView {
         return stackView
     }()
 
+    private lazy var contentStackView: UIStackView = {
+        let stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+        stackView.addArrangedSubviews([
+            imageMapGridView,
+            highlightView,
+            realtorAndFavoriteStackView,
+            textStackView,
+            viewingInfoView
+        ])
+        stackView.setCustomSpacing(0, after: imageMapGridView)
+        stackView.alignment = .leading
+        return stackView
+    }()
+
     // MARK: - Init
 
     public init(
@@ -117,19 +130,15 @@ public class PromotedRealestateCellView: UIView {
         secondaryAttributesLabel.text = viewModel.secondaryAttributes.joined(separator: "・")
         highlightView.backgroundColor = viewModel.highlightColor
 
-        contentStackView.addArrangedSubviews([
-            imageMapGridView,
-            highlightView,
-            realtorAndFavoriteStackView,
-            textStackView,
-            viewingInfoView
-        ])
-
-        highlightView.heightAnchor.constraint(equalToConstant: .spacingS).isActive = true
-        contentStackView.setCustomSpacing(0, after: imageMapGridView)
-
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
+
+        NSLayoutConstraint.activate([
+            highlightView.heightAnchor.constraint(equalToConstant: .spacingS),
+            imageMapGridView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
+            realtorAndFavoriteStackView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
+            textStackView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor)
+        ])
 
         if let viewingText = viewModel.viewingText {
             viewingInfoView.configure(with: viewingText)
