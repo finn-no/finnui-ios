@@ -135,8 +135,10 @@ public class PromotedRealestateCellView: UIView {
 
         NSLayoutConstraint.activate([
             highlightView.heightAnchor.constraint(equalToConstant: .spacingS),
+            highlightView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             imageMapGridView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             realtorAndFavoriteStackView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
+            realtorAndFavoriteStackView.heightAnchor.constraint(equalToConstant: 28),
             textStackView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor)
         ])
 

@@ -58,7 +58,6 @@ class RealtorInfoView: UIView {
             realtorLogoImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             realtorLogoImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             realtorLogoImageView.widthAnchor.constraint(equalToConstant: 48),
-            realtorLogoImageView.heightAnchor.constraint(equalToConstant: 24),
 
             realtorNameLabel.topAnchor.constraint(equalTo: topAnchor),
             realtorNameLabel.leadingAnchor.constraint(equalTo: realtorLogoImageView.trailingAnchor, constant: .spacingS),
