@@ -1,24 +1,11 @@
 import UIKit
 import FinniversKit
 
-protocol FavoriteButtonDelegate: AnyObject {
-    func favoriteButtonDidToggleFavoriteState(_ button: FavoriteButton)
-}
-
-class FavoriteButton: UIView {
+class FavoriteButton: UIButton {
 
     // MARK: - Internal properties
 
-    weak var delegate: FavoriteButtonDelegate?
     private(set) var isFavorited = false
-
-    // MARK: - Private properties
-
-    private lazy var button: UIButton = {
-        let button = UIButton(withAutoLayout: true)
-        button.addTarget(self, action: #selector(handleButtonTap), for: .touchUpInside)
-        return button
-    }()
 
     // MARK: - Init
 
@@ -32,8 +19,6 @@ class FavoriteButton: UIView {
     // MARK: - Setup
 
     private func setup() {
-        addSubview(button)
-        button.fillInSuperview()
         configure(isFavorited: isFavorited)
     }
 
@@ -42,19 +27,13 @@ class FavoriteButton: UIView {
     func configure(isFavorited: Bool) {
         self.isFavorited = isFavorited
         let image = isFavorited ? UIImage(named: .favorited) : UIImage(named: .notFavorited)
-        button.setImage(image, for: .normal)
+        setImage(image, for: .normal)
     }
 
     func configureShadow() {
-        button.imageView?.layer.shadowColor = UIColor.black.cgColor
-        button.imageView?.layer.shadowOpacity = 0.7
-        button.imageView?.layer.shadowRadius = 2
-        button.imageView?.layer.shadowOffset = .zero
-    }
-
-    // MARK: - Actions
-
-    @objc private func handleButtonTap() {
-        delegate?.favoriteButtonDidToggleFavoriteState(self)
+        imageView?.layer.shadowColor = UIColor.black.cgColor
+        imageView?.layer.shadowOpacity = 0.7
+        imageView?.layer.shadowRadius = 2
+        imageView?.layer.shadowOffset = .zero
     }
 }

@@ -4,7 +4,7 @@ import MapKit
 
 
 public protocol PromotedRealestateCellViewDelegate: AnyObject {
-    func promotedRealestateCellViewDidToggleFavoriteState(_ view: PromotedRealestateCellView)
+    func promotedRealestateCellViewDidToggleFavoriteState(_ view: PromotedRealestateCellView, button: UIButton)
 }
 
 public class PromotedRealestateCellView: UIView {
@@ -139,6 +139,7 @@ public class PromotedRealestateCellView: UIView {
             imageMapGridView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             realtorAndFavoriteStackView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             realtorAndFavoriteStackView.heightAnchor.constraint(equalToConstant: 28),
+            primaryFavoriteButton.widthAnchor.constraint(equalTo: realtorAndFavoriteStackView.heightAnchor),
             textStackView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor)
         ])
 
@@ -182,7 +183,7 @@ public class PromotedRealestateCellView: UIView {
 
     private func createFavoriteButton(includeShadow: Bool = false) -> FavoriteButton {
         let button = FavoriteButton(withAutoLayout: true)
-        button.delegate = self
+        button.addTarget(self, action: #selector(handleFavoriteButtonTap), for: .touchUpInside)
 
         if includeShadow {
             button.configureShadow()
@@ -190,12 +191,10 @@ public class PromotedRealestateCellView: UIView {
 
         return button
     }
-}
 
-// MARK: - FavoriteButtonDelegate
+    // MARK: - Actions
 
-extension PromotedRealestateCellView: FavoriteButtonDelegate {
-    func favoriteButtonDidToggleFavoriteState(_ button: FavoriteButton) {
-        delegate?.promotedRealestateCellViewDidToggleFavoriteState(self)
+    @objc func handleFavoriteButtonTap(_ button: UIButton) {
+        delegate?.promotedRealestateCellViewDidToggleFavoriteState(self, button: button)
     }
 }

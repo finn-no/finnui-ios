@@ -51,7 +51,7 @@ class PromotedRealestateCellDemoView: UIView, Tweakable {
 // MARK: - PromotedRealestateCellViewDelegate
 
 extension PromotedRealestateCellDemoView: PromotedRealestateCellViewDelegate {
-    func promotedRealestateCellViewDidToggleFavoriteState(_ view: PromotedRealestateCellView) {
+    func promotedRealestateCellViewDidToggleFavoriteState(_ view: PromotedRealestateCellView, button: UIButton) {
         view.configure(isFavorited: !view.isFavorited)
     }
 }
