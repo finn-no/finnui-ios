@@ -47,8 +47,9 @@ class FavoriteButton: UIView {
 
     func configureShadow() {
         button.imageView?.layer.shadowColor = UIColor.black.cgColor
-        button.imageView?.layer.shadowOpacity = 0.5
+        button.imageView?.layer.shadowOpacity = 0.7
         button.imageView?.layer.shadowRadius = 2
+        button.imageView?.layer.shadowOffset = .zero
     }
 
     // MARK: - Actions
