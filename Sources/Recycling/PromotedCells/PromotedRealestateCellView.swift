@@ -108,7 +108,7 @@ public class PromotedRealestateCellView: UIView {
     public init(
         viewModel: PromotedRealestateCellViewModel,
         promoKind: PromoKind,
-        remoteImageViewDataSource: RemoteImageViewDataSource,
+        remoteImageViewDataSource: RemoteImageViewDataSource?,
         withAutoLayout: Bool
     ) {
         self.viewModel = viewModel
