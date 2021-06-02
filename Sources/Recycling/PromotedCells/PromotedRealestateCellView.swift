@@ -32,6 +32,10 @@ public class PromotedRealestateCellView: UIView {
     private lazy var secondaryFavoriteButton = createFavoriteButton(includeShadow: true)
     private lazy var viewingInfoView = ViewingInfoView(withAutoLayout: true)
     private lazy var highlightView = UIView(withAutoLayout: true)
+    private lazy var titleLabel = createLabel(style: .body, textColor: .textPrimary)
+    private lazy var addressLabel = createLabel(style: .caption, textColor: .textSecondary)
+    private lazy var primaryAttributesLabel = createLabel(style: .bodyStrong, textColor: .textPrimary)
+    private lazy var secondaryAttributesLabel = createLabel(style: .caption, textColor: .textSecondary)
 
     private lazy var imageMapGridView = ImageMapGridView(
         promoKind: promoKind,
@@ -46,32 +50,6 @@ public class PromotedRealestateCellView: UIView {
         realtorLogoUrl: viewModel.realtorImageUrl,
         remoteImageViewDataSource: remoteImageViewDataSource
     )
-
-    private lazy var titleLabel: Label = {
-        let label = Label(style: .body, withAutoLayout: true)
-        label.numberOfLines = 0
-        return label
-    }()
-
-    private lazy var addressLabel: Label = {
-        let label = Label(style: .caption, withAutoLayout: true)
-        label.numberOfLines = 0
-        label.textColor = .textSecondary
-        return label
-    }()
-
-    private lazy var primaryAttributesLabel: Label = {
-        let label = Label(style: .bodyStrong, withAutoLayout: true)
-        label.numberOfLines = 0
-        return label
-    }()
-
-    private lazy var secondaryAttributesLabel: Label = {
-        let label = Label(style: .caption, withAutoLayout: true)
-        label.numberOfLines = 0
-        label.textColor = .textSecondary
-        return label
-    }()
 
     private lazy var textStackView: UIStackView = {
         let stackView = UIStackView(axis: .vertical, spacing: .zero, withAutoLayout: true)
@@ -180,6 +158,13 @@ public class PromotedRealestateCellView: UIView {
     }
 
     // MARK: - Private methods
+
+    private func createLabel(style: Label.Style, textColor: UIColor = .textPrimary) -> Label {
+        let label = Label(style: style, withAutoLayout: true)
+        label.numberOfLines = 0
+        label.textColor = textColor
+        return label
+    }
 
     private func createFavoriteButton(includeShadow: Bool = false) -> FavoriteButton {
         let button = FavoriteButton(withAutoLayout: true)
