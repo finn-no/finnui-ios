@@ -6,7 +6,7 @@ public struct PromotedRealestateCellViewModel {
     public let address: String
     public let primaryAttributes: [String]
     public let secondaryAttributes: [String]
-    public let totalPriceText: String
+    public let totalPriceText: String?
     public let viewingText: String?
     public let primaryImageUrl: String
     public let secondaryImageUrl: String?
@@ -20,7 +20,7 @@ public struct PromotedRealestateCellViewModel {
         address: String,
         primaryAttributes: [String],
         secondaryAttributes: [String],
-        totalPriceText: String,
+        totalPriceText: String?,
         viewingText: String?,
         primaryImageUrl: String,
         secondaryImageUrl: String?,

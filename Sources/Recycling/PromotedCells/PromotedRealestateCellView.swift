@@ -107,9 +107,14 @@ public class PromotedRealestateCellView: UIView {
         titleLabel.text = viewModel.title
         addressLabel.text = viewModel.address
         primaryAttributesLabel.text = viewModel.primaryAttributes.joined(separator: " • ")
-        totalPriceLabel.text = viewModel.totalPriceText
         secondaryAttributesLabel.text = viewModel.secondaryAttributes.joined(separator: "・")
         highlightView.backgroundColor = viewModel.highlightColor
+
+        if let totalPriceText = viewModel.totalPriceText {
+            totalPriceLabel.text = viewModel.totalPriceText
+        } else {
+            totalPriceLabel.isHidden = true
+        }
 
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
