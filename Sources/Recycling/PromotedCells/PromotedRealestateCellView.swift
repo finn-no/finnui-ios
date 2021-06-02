@@ -36,6 +36,7 @@ public class PromotedRealestateCellView: UIView {
     private lazy var addressLabel = createLabel(style: .caption, textColor: .textSecondary)
     private lazy var primaryAttributesLabel = createLabel(style: .bodyStrong, textColor: .textPrimary)
     private lazy var secondaryAttributesLabel = createLabel(style: .caption, textColor: .textSecondary)
+    private lazy var totalPriceLabel = createLabel(style: .caption, textColor: .textSecondary)
 
     private lazy var imageMapGridView = ImageMapGridView(
         promoKind: promoKind,
@@ -53,10 +54,11 @@ public class PromotedRealestateCellView: UIView {
 
     private lazy var textStackView: UIStackView = {
         let stackView = UIStackView(axis: .vertical, spacing: .zero, withAutoLayout: true)
-        stackView.addArrangedSubviews([titleLabel, addressLabel, primaryAttributesLabel, secondaryAttributesLabel])
+        stackView.addArrangedSubviews([titleLabel, addressLabel, primaryAttributesLabel, totalPriceLabel, secondaryAttributesLabel])
         stackView.setCustomSpacing(.spacingXS, after: titleLabel)
         stackView.setCustomSpacing(.spacingM, after: addressLabel)
         stackView.setCustomSpacing(.spacingS, after: primaryAttributesLabel)
+        stackView.setCustomSpacing(.spacingXS, after: totalPriceLabel)
         return stackView
     }()
 
@@ -105,6 +107,7 @@ public class PromotedRealestateCellView: UIView {
         titleLabel.text = viewModel.title
         addressLabel.text = viewModel.address
         primaryAttributesLabel.text = viewModel.primaryAttributes.joined(separator: " • ")
+        totalPriceLabel.text = viewModel.totalPriceText
         secondaryAttributesLabel.text = viewModel.secondaryAttributes.joined(separator: "・")
         highlightView.backgroundColor = viewModel.highlightColor
 
@@ -159,7 +162,7 @@ public class PromotedRealestateCellView: UIView {
 
     // MARK: - Private methods
 
-    private func createLabel(style: Label.Style, textColor: UIColor = .textPrimary) -> Label {
+    private func createLabel(style: Label.Style, textColor: UIColor) -> Label {
         let label = Label(style: style, withAutoLayout: true)
         label.numberOfLines = 0
         label.textColor = textColor
