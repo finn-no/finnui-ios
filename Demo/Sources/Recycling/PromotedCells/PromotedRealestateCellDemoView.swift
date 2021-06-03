@@ -19,7 +19,7 @@ class PromotedRealestateCellDemoView: UIView, Tweakable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        tweakingOptions[1].action?()
+        tweakingOptions.first?.action?()
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
