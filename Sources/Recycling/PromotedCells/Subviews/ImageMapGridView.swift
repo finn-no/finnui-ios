@@ -131,6 +131,7 @@ extension ImageMapGridView: MKMapViewDelegate {
 }
 
 // MARK: - Private extensions / types
+
 private extension MKMapView {
     func centerToLocation(
         coordinates: CLLocationCoordinate2D,

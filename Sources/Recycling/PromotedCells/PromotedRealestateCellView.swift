@@ -2,7 +2,6 @@ import UIKit
 import FinniversKit
 import MapKit
 
-
 public protocol PromotedRealestateCellViewDelegate: AnyObject {
     func promotedRealestateCellViewDidToggleFavoriteState(_ view: PromotedRealestateCellView, button: UIButton)
 }
@@ -111,7 +110,7 @@ public class PromotedRealestateCellView: UIView {
         highlightView.backgroundColor = viewModel.highlightColor
 
         if let totalPriceText = viewModel.totalPriceText {
-            totalPriceLabel.text = viewModel.totalPriceText
+            totalPriceLabel.text = totalPriceText
         } else {
             totalPriceLabel.isHidden = true
         }
