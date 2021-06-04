@@ -658,7 +658,7 @@
 			);
 			mainGroup = 46AE6FB7242BADC9007BB005;
 			packageReferences = (
-				46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing.git" */,
+				46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = 46AE6FC1242BADC9007BB005 /* Products */;
 			projectDirPath = "";
@@ -966,6 +966,7 @@
 				DEVELOPMENT_TEAM = D34XZHQLE3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -990,6 +991,7 @@
 				DEVELOPMENT_TEAM = D34XZHQLE3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1116,7 +1118,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing.git" */ = {
+		46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
 			requirement = {
@@ -1129,7 +1131,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		46E77597242D6890008A5E93 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing.git" */;
+			package = 46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
 		};
 		D61E2C3725C0157600FA8F16 /* FinnUI */ = {

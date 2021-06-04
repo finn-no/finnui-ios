@@ -13,12 +13,12 @@ final class TagCloudCell: UICollectionViewCell {
     static let iconSize: CGFloat = 24
     static let textFont = UIFont.bodyRegular
 
-    static func width(forText text: String, iconPath: String?) -> CGFloat {
+    static func width(for viewModel: TagCloudCellViewModel) -> CGFloat {
         var width: CGFloat = .spacingS * 2
-        if iconPath != nil {
+        if viewModel.iconUrl != nil {
             width += iconSize
         }
-        width += text.width(withConstrainedHeight: height, font: textFont) + .spacingM
+        width += viewModel.text.width(withConstrainedHeight: height, font: textFont) + .spacingM
         return width
     }
 
@@ -30,7 +30,7 @@ final class TagCloudCell: UICollectionViewCell {
         }
     }
 
-    var showShadow = false
+    private var showShadow = false
 
     // MARK: - Private properties
 
@@ -96,6 +96,7 @@ final class TagCloudCell: UICollectionViewCell {
         textLabel.sizeToFit()
 
         iconView.isHidden = viewModel.iconUrl == nil
+        showShadow = viewModel.showShadow
 
         if let iconUrl = viewModel.iconUrl {
             iconView.loadImage(for: iconUrl, imageWidth: TagCloudCell.iconSize)
