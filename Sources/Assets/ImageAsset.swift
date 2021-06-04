@@ -39,16 +39,20 @@ enum ImageAsset: String {
     case balloon2
     case balloon2Red
     case blinkRocket
+    case clockSmall
     case emptyPersonalNotificationsIcon
     case emptySavedSearchNotificationsIcon
     case favoriteActive
     case favoriteDefault
+    case favorited
     case favoritesSortAdStatus
     case favoritesSortDistance
     case favoritesSortLastAdded
     case finnLogoSimple
     case heartMini
+    case mapPin
     case noImage
+    case notFavorited
     case pin
     case plus
     case profile
@@ -77,16 +81,20 @@ enum ImageAsset: String {
             .balloon2,
             .balloon2Red,
             .blinkRocket,
+            .clockSmall,
             .emptyPersonalNotificationsIcon,
             .emptySavedSearchNotificationsIcon,
             .favoriteActive,
             .favoriteDefault,
+            .favorited,
             .favoritesSortAdStatus,
             .favoritesSortDistance,
             .favoritesSortLastAdded,
             .finnLogoSimple,
             .heartMini,
+            .mapPin,
             .noImage,
+            .notFavorited,
             .pin,
             .plus,
             .profile,
