@@ -103,17 +103,13 @@ public class PromotedRealestateCellView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        titleLabel.text = viewModel.title
-        addressLabel.text = viewModel.address
-        primaryAttributesLabel.text = viewModel.primaryAttributes.joined(separator: " • ")
-        secondaryAttributesLabel.text = viewModel.secondaryAttributes.joined(separator: "・")
-        highlightView.backgroundColor = viewModel.highlightColor
+        titleLabel.setTextOrHideIfEmpty(viewModel.title)
+        addressLabel.setTextOrHideIfEmpty(viewModel.address)
+        primaryAttributesLabel.setTextOrHideIfEmpty(viewModel.primaryAttributes?.joined(separator: " • "))
+        secondaryAttributesLabel.setTextOrHideIfEmpty(viewModel.secondaryAttributes?.joined(separator: "・"))
+        totalPriceLabel.setTextOrHideIfEmpty(viewModel.totalPriceText)
 
-        if let totalPriceText = viewModel.totalPriceText {
-            totalPriceLabel.text = totalPriceText
-        } else {
-            totalPriceLabel.isHidden = true
-        }
+        highlightView.backgroundColor = viewModel.highlightColor
 
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
@@ -188,5 +184,17 @@ public class PromotedRealestateCellView: UIView {
 
     @objc func handleFavoriteButtonTap(_ button: UIButton) {
         delegate?.promotedRealestateCellViewDidToggleFavoriteState(self, button: button)
+    }
+}
+
+// MARK: - Private extension
+
+private extension UILabel {
+    func setTextOrHideIfEmpty(_ text: String?) {
+        if let text = text {
+            self.text = text
+        } else {
+            isHidden = true
+        }
     }
 }
