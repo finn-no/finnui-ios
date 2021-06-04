@@ -2,10 +2,10 @@ import UIKit
 import MapKit
 
 public struct PromotedRealestateCellViewModel {
-    public let title: String
-    public let address: String
-    public let primaryAttributes: [String]
-    public let secondaryAttributes: [String]
+    public let title: String?
+    public let address: String?
+    public let primaryAttributes: [String]?
+    public let secondaryAttributes: [String]?
     public let totalPriceText: String?
     public let viewingText: String?
     public let primaryImageUrl: String
@@ -16,10 +16,10 @@ public struct PromotedRealestateCellViewModel {
     public let mapCoordinates: CLLocationCoordinate2D?
 
     public init(
-        title: String,
-        address: String,
-        primaryAttributes: [String],
-        secondaryAttributes: [String],
+        title: String?,
+        address: String?,
+        primaryAttributes: [String]?,
+        secondaryAttributes: [String]?,
         totalPriceText: String?,
         viewingText: String?,
         primaryImageUrl: String,
