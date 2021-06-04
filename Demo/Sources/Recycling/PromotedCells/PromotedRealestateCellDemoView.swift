@@ -12,6 +12,9 @@ class PromotedRealestateCellDemoView: UIView, Tweakable {
         }),
         TweakingOption(title: "Two images and map", action: { [weak self] in
             self?.configure(with: .default, promoKind: .imagesAndMap)
+        }),
+        TweakingOption(title: "Two images and map", description: "Mostly nil values", action: { [weak self] in
+            self?.configure(with: .mostlyEmpty, promoKind: .imagesAndMap)
         })
     ]
 
@@ -101,6 +104,23 @@ private extension PromotedRealestateCellViewModel {
             primaryImageUrl: "https://i.pinimg.com/736x/73/de/32/73de32f9e5a0db66ec7805bb7cb3f807--navy-blue-houses-blue-and-white-houses-exterior.jpg",
             secondaryImageUrl: "http://i3.au.reastatic.net/home-ideas/raw/a96671bab306bcb39783bc703ac67f0278ffd7de0854d04b7449b2c3ae7f7659/facades.jpg",
             realtorName: "FINN Eiendom",
+            realtorImageUrl: "https://kommunikasjon.ntb.no/data/images/00171/daaffdf6-fb0e-4e74-9b6b-7f973dbfa6a3.png",
+            highlightColor: UIColor(hex: "#0063FB"),
+            mapCoordinates: CLLocationCoordinate2D(latitude: 59.9137496948242, longitude: 10.7438659667969)
+        )
+    }
+
+    static var mostlyEmpty: PromotedRealestateCellViewModel {
+        PromotedRealestateCellViewModel(
+            title: nil,
+            address: nil,
+            primaryAttributes: nil,
+            secondaryAttributes: nil,
+            totalPriceText: nil,
+            viewingText: nil,
+            primaryImageUrl: "https://i.pinimg.com/736x/73/de/32/73de32f9e5a0db66ec7805bb7cb3f807--navy-blue-houses-blue-and-white-houses-exterior.jpg",
+            secondaryImageUrl: "http://i3.au.reastatic.net/home-ideas/raw/a96671bab306bcb39783bc703ac67f0278ffd7de0854d04b7449b2c3ae7f7659/facades.jpg",
+            realtorName: nil,
             realtorImageUrl: "https://kommunikasjon.ntb.no/data/images/00171/daaffdf6-fb0e-4e74-9b6b-7f973dbfa6a3.png",
             highlightColor: UIColor(hex: "#0063FB"),
             mapCoordinates: CLLocationCoordinate2D(latitude: 59.9137496948242, longitude: 10.7438659667969)
