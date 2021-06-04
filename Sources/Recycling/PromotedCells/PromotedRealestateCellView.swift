@@ -18,7 +18,7 @@ public class PromotedRealestateCellView: UIView {
     public weak var delegate: PromotedRealestateCellViewDelegate?
 
     public var isFavorited: Bool {
-        primaryFavoriteButton.isFavorited
+        primaryFavoriteButton.isToggled
     }
 
     // MARK: - Private properties
@@ -148,8 +148,8 @@ public class PromotedRealestateCellView: UIView {
     }
 
     public func configure(isFavorited: Bool) {
-        primaryFavoriteButton.configure(isFavorited: isFavorited)
-        secondaryFavoriteButton.configure(isFavorited: isFavorited)
+        primaryFavoriteButton.isToggled = isFavorited
+        secondaryFavoriteButton.isToggled = isFavorited
 
         if isFavorited {
             primaryFavoriteButton.tintColor = .textAction
@@ -169,12 +169,16 @@ public class PromotedRealestateCellView: UIView {
         return label
     }
 
-    private func createFavoriteButton(includeShadow: Bool = false) -> FavoriteButton {
-        let button = FavoriteButton(withAutoLayout: true)
+    private func createFavoriteButton(includeShadow: Bool = false) -> IconButton {
+        let button = IconButton(style: .favorite)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleFavoriteButtonTap), for: .touchUpInside)
 
         if includeShadow {
-            button.configureShadow()
+            button.imageView?.layer.shadowColor = UIColor.black.cgColor
+            button.imageView?.layer.shadowOpacity = 0.7
+            button.imageView?.layer.shadowRadius = 2
+            button.imageView?.layer.shadowOffset = .zero
         }
 
         return button
@@ -187,7 +191,7 @@ public class PromotedRealestateCellView: UIView {
     }
 }
 
-// MARK: - Private extension
+// MARK: - Private extensions
 
 private extension UILabel {
     func setTextOrHideIfEmpty(_ text: String?) {
@@ -197,4 +201,11 @@ private extension UILabel {
             isHidden = true
         }
     }
+}
+
+private extension IconButton.Style {
+    static let favorite = IconButton.Style(
+        icon: UIImage(named: .notFavorited),
+        iconToggled: UIImage(named: .favorited)
+    )
 }
