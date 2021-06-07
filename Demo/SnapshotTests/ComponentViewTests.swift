@@ -62,4 +62,8 @@ class ComponentViewTests: XCTestCase {
     func testPopularSearchesView() {
         snapshot(.popularSearchesView)
     }
+
+    func testTagCloudGridView() {
+        snapshot(.tagCloudGridView)
+    }
 }

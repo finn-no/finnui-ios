@@ -17,7 +17,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case iconLinkListView
     case searchDropdownGroupView
     case popularSearchesView
-    case tagCloudGrid
+    case tagCloudGridView
 
     public var viewController: UIViewController {
         switch self {
@@ -45,7 +45,7 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<SearchDropdownGroupDemoView>(dismissType: .dismissButton)
         case .popularSearchesView:
             return DemoViewController<PopularSearchesDemoView>(dismissType: .dismissButton)
-        case .tagCloudGrid:
+        case .tagCloudGridView:
             return DemoViewController<TagCloudGridDemoView>()
         }
     }
