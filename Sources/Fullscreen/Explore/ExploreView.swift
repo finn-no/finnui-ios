@@ -28,6 +28,7 @@ public protocol ExploreViewDataSource: AnyObject {
 public final class ExploreView: UIView {
     public weak var delegate: ExploreViewDelegate?
     public weak var dataSource: ExploreViewDataSource?
+    private var sections = [ExploreSectionViewModel]()
     private let imageCache = ImageMemoryCache()
     private let layoutBuilder = ExploreLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
 
@@ -43,6 +44,7 @@ public final class ExploreView: UIView {
         collectionView.backgroundColor = .bgPrimary
         collectionView.contentInset.bottom = .spacingXL
         collectionView.register(ExploreCollectionCell.self)
+        collectionView.register(ExploreTagCloudGridCell.self)
         collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         collectionView.refreshControl = refreshControl
         return collectionView
@@ -54,7 +56,85 @@ public final class ExploreView: UIView {
         return refreshControl
     }()
 
-    // MARK: - Data
+    private lazy var collectionViewDataSource: UICollectionViewDiffableDataSource<ExploreSectionViewModel, Item> = {
+        let dataSource = UICollectionViewDiffableDataSource<ExploreSectionViewModel, Item>(
+            collectionView: collectionView,
+            cellProvider: { [weak self] collectionView, indexPath, item in
+                guard let self = self else { return nil }
+
+                switch item {
+                case .regular(let viewModel):
+                    let cell = collectionView.dequeue(ExploreCollectionCell.self, for: indexPath)
+                    cell.configure(with: viewModel)
+                    return cell
+                case .tagCloud(let viewModels):
+                    let cell = collectionView.dequeue(ExploreTagCloudGridCell.self, for: indexPath)
+                    cell.gridView.delegate = self
+                    cell.gridView.configure(withItems: viewModels)
+                    return cell
+                }
+            })
+
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let self = self else { return nil }
+            let section = self.sections[indexPath.section]
+            let view = collectionView.dequeue(
+                ExploreSectionHeaderView.self,
+                for: indexPath,
+                ofKind: UICollectionView.elementKindSectionHeader
+            )
+            view.configure(withText: section.title)
+            return view
+        }
+
+        return dataSource
+    }()
+
+    // MARK: - Init
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    public required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Setup
+
+    public func configure(withSections sections: [ExploreSectionViewModel]) {
+        self.sections = sections
+
+        var snapshot = NSDiffableDataSourceSnapshot<ExploreSectionViewModel, Item>()
+        snapshot.appendSections(sections)
+
+        for section in sections {
+            switch section.layout {
+            case .random:
+                snapshot.appendItems(section.items.map(Item.regular), toSection: section)
+            case .tagCloud:
+                let items = section.items.map {
+                    TagCloudCellViewModel(
+                        text: $0.title,
+                        iconUrl: $0.iconUrl,
+                        backgroundColor: .primaryBlue,
+                        foregroundColor: .white
+                    )
+                }
+                snapshot.appendItems([Item.tagCloud(items)], toSection: section)
+            }
+        }
+
+        collectionViewDataSource.apply(snapshot, animatingDifferences: false)
+    }
+
+    private func setup() {
+        addSubview(collectionView)
+        collectionView.fillInSuperview()
+    }
+
+    // MARK: - Actions
 
     @objc private func onRefresh() {
 
@@ -66,6 +146,14 @@ public final class ExploreView: UIView {
 extension ExploreView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {}
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {}
+}
+
+// MARK: - TagCloudGridViewDelegate
+
+extension ExploreView: TagCloudGridViewDelegate {
+    public func tagCloudGridView(_ view: TagCloudGridView, didSelectItem item: TagCloudCellViewModel, at indexPath: IndexPath) {
+
+    }
 }
 
 // MARK: - RemoteImageViewDataSource
@@ -100,4 +188,11 @@ extension ExploreView: RemoteImageViewDataSource {
     ) {
         dataSource?.exploreView(self, cancelLoadingImageWithPath: imagePath, imageWidth: imageWidth)
     }
+}
+
+// MARK: - Private types
+
+private enum Item: Equatable, Hashable {
+    case regular(ExploreCollectionViewModel)
+    case tagCloud([TagCloudCellViewModel])
 }
