@@ -66,6 +66,7 @@
 		D6D43CF825BF2FA900234AC2 /* SearchResultsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D644437248A733400B80827 /* SearchResultsDemoView.swift */; };
 		D6D43CFB25BF2FDD00234AC2 /* ProjectUnitsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD84281254828910058D6BB /* ProjectUnitsDemoView.swift */; };
 		DA083C2E2462BCA800B26235 /* SwiftUIDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA083C2D2462BCA800B26235 /* SwiftUIDemoViews.swift */; };
+		DA2F2715266E28B000E6F17C /* TagCloudGridDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F2714266E28B000E6F17C /* TagCloudGridDemoView.swift */; };
 		DAE9CA8724602CB000C7552F /* SwiftUIViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -172,6 +173,7 @@
 		9BE474C824979816009620A5 /* BapAdView+Previews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BapAdView+Previews.swift"; sourceTree = "<group>"; };
 		D6242CF625CD84A9001999CE /* libGenerateAssetsScriptRunner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGenerateAssetsScriptRunner.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA083C2D2462BCA800B26235 /* SwiftUIDemoViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoViews.swift; sourceTree = "<group>"; };
+		DA2F2714266E28B000E6F17C /* TagCloudGridDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCloudGridDemoView.swift; sourceTree = "<group>"; };
 		DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIViewTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -336,15 +338,16 @@
 		46E772CB242CEF09008A5E93 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				8D680BBD858E71F3F90C6A1C /* ObjectPageBlinkView */,
-				8D680186E91B4FA9052BF60C /* IconLinkListView */,
 				8D680B67DAB7BFCB028C94EE /* ChatAvailability */,
-				46E772EA242CEF09008A5E93 /* SaveSearch */,
 				4DBC0399250A495D004E8044 /* ExpandCollapseButton */,
-				4DDD45AC250FA7E1007DBDD5 /* SearchFilterTags */,
+				8D680186E91B4FA9052BF60C /* IconLinkListView */,
+				8D680BBD858E71F3F90C6A1C /* ObjectPageBlinkView */,
+				8D680EE0BE80227384CFC7E3 /* PopularSearchesView */,
+				46E772EA242CEF09008A5E93 /* SaveSearch */,
 				4DDD45AA250FA7E1007DBDD5 /* SearchDisplayMenu */,
 				8D680CEAEE8620B4DD78D96C /* SearchDropdownGroup */,
-				8D680EE0BE80227384CFC7E3 /* PopularSearchesView */,
+				4DDD45AC250FA7E1007DBDD5 /* SearchFilterTags */,
+				DA2F2713266E276D00E6F17C /* TagCloudGridView */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -558,6 +561,14 @@
 				46E77274242CEF09008A5E93 /* SnowGlobe */,
 			);
 			path = EasterEgg;
+			sourceTree = "<group>";
+		};
+		DA2F2713266E276D00E6F17C /* TagCloudGridView */ = {
+			isa = PBXGroup;
+			children = (
+				DA2F2714266E28B000E6F17C /* TagCloudGridDemoView.swift */,
+			);
+			path = TagCloudGridView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -774,6 +785,7 @@
 				46E773AF242CEF0A008A5E93 /* DemoViewController.swift in Sources */,
 				46E77453242CEF0A008A5E93 /* CornerAnchoringViewController.swift in Sources */,
 				46E77451242CEF0A008A5E93 /* TweakingOptionsTableViewController.swift in Sources */,
+				DA2F2715266E28B000E6F17C /* TagCloudGridDemoView.swift in Sources */,
 				46E77455242CEF0A008A5E93 /* TweakingOption.swift in Sources */,
 				46E77457242CEF0A008A5E93 /* Device.swift in Sources */,
 				D6D43CE925BF2F4D00234AC2 /* ChatAvailabilityDemoView.swift in Sources */,

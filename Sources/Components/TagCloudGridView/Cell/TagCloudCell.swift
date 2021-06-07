@@ -88,7 +88,7 @@ final class TagCloudCell: UICollectionViewCell {
     // MARK: - Setup
 
     func configure(with viewModel: TagCloudCellViewModel) {
-        contentView.backgroundColor = backgroundColor
+        contentView.backgroundColor = viewModel.backgroundColor
 
         stackViewLeading.constant = viewModel.iconUrl == nil ? .spacingM : .spacingS
         textLabel.textColor = viewModel.foregroundColor
@@ -96,11 +96,13 @@ final class TagCloudCell: UICollectionViewCell {
         textLabel.sizeToFit()
 
         iconView.isHidden = viewModel.iconUrl == nil
+        iconView.tintColor = viewModel.foregroundColor
         showShadow = viewModel.showShadow
 
         if let iconUrl = viewModel.iconUrl {
-            iconView.loadImage(for: iconUrl, imageWidth: TagCloudCell.iconSize)
-            // self?.iconView.image = image?.withRenderingMode(.alwaysTemplate)
+            iconView.loadImage(for: iconUrl, imageWidth: TagCloudCell.iconSize, modify: {
+                $0?.withRenderingMode(.alwaysTemplate)
+            })
         }
     }
 

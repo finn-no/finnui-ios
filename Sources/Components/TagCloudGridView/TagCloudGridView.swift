@@ -5,13 +5,24 @@
 import UIKit
 import FinniversKit
 
-final class TagCloudGridView: UIView, UICollectionViewDelegate {
-    static func height(for items: [TagCloudCellViewModel]) -> CGFloat {
+public protocol TagCloudGridViewDelegate: AnyObject {
+    func tagCloudGridView(
+        _ view: TagCloudGridView,
+        didSelectItem item: TagCloudCellViewModel,
+        at indexPath: IndexPath
+    )
+}
+
+public final class TagCloudGridView: UIView, UICollectionViewDelegate {
+
+    // MARK: - Static properties
+
+    public static func height(for items: [TagCloudCellViewModel]) -> CGFloat {
         let builder = TagCloudLayoutBuilder(models: items)
         return builder.groupLayoutSize(forItems: builder.layoutGroupItems()).height
     }
 
-    static func collectionLayoutGroup(with models: [TagCloudCellViewModel]) -> NSCollectionLayoutGroup {
+    public static func collectionLayoutGroup(with models: [TagCloudCellViewModel]) -> NSCollectionLayoutGroup {
         NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
@@ -25,9 +36,13 @@ final class TagCloudGridView: UIView, UICollectionViewDelegate {
         )
     }
 
-    var onSelect: ((TagCloudCellViewModel) -> Void)?
+    // MARK: - Public properties
 
-    var collectionViewOffset: CGFloat {
+    public weak var delegate: TagCloudGridViewDelegate?
+    public weak var remoteImageViewDataSource: RemoteImageViewDataSource?
+    public var onSelect: ((TagCloudCellViewModel, IndexPath) -> Void)?
+
+    public var collectionViewOffset: CGFloat {
         get {
             collectionView.contentOffset.x
         }
@@ -61,26 +76,27 @@ final class TagCloudGridView: UIView, UICollectionViewDelegate {
 
     private lazy var dataSource = UICollectionViewDiffableDataSource<Int, TagCloudCellViewModel>(
         collectionView: collectionView,
-        cellProvider: { collectionView, indexPath, viewModel in
+        cellProvider: { [weak self] collectionView, indexPath, viewModel in
             let cell = collectionView.dequeue(TagCloudCell.self, for: indexPath)
+            cell.remoteImageViewDataSource = self?.remoteImageViewDataSource
             cell.configure(with: viewModel)
             return cell
         })
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
 
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Setup
 
-    func configure(withItems items: [TagCloudCellViewModel]) {
+    public func configure(withItems items: [TagCloudCellViewModel]) {
         self.items = items
         var snapshot = NSDiffableDataSourceSnapshot<Int, TagCloudCellViewModel>()
         snapshot.appendSections([0])
@@ -95,8 +111,10 @@ final class TagCloudGridView: UIView, UICollectionViewDelegate {
 
     // MARK: - UICollectionViewDelegate
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        onSelect?(items[indexPath.item])
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = items[indexPath.item]
+        delegate?.tagCloudGridView(self, didSelectItem: model, at: indexPath)
+        onSelect?(model, indexPath)
     }
 }
 

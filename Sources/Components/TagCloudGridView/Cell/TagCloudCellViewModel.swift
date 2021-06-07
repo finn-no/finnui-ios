@@ -18,7 +18,7 @@ public struct TagCloudCellViewModel: Hashable {
         iconUrl: String?,
         backgroundColor: UIColor?,
         foregroundColor: UIColor?,
-        showShadow: Bool
+        showShadow: Bool = true
     ) {
         self.text = text
         self.iconUrl = iconUrl
