@@ -29,6 +29,43 @@ public final class ExploreView: UIView {
     public weak var delegate: ExploreViewDelegate?
     public weak var dataSource: ExploreViewDataSource?
     private let imageCache = ImageMemoryCache()
+    private let layoutBuilder = ExploreLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
+
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: bounds,
+            collectionViewLayout: layoutBuilder.collectionViewLayout
+        )
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.alwaysBounceVertical = true
+        collectionView.delegate = self
+        collectionView.backgroundColor = .bgPrimary
+        collectionView.contentInset.bottom = .spacingXL
+        collectionView.register(ExploreCollectionCell.self)
+        collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
+        collectionView.refreshControl = refreshControl
+        return collectionView
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+        return refreshControl
+    }()
+
+    // MARK: - Data
+
+    @objc private func onRefresh() {
+
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension ExploreView: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {}
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {}
 }
 
 // MARK: - RemoteImageViewDataSource
