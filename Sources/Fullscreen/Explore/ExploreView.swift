@@ -108,7 +108,11 @@ public final class ExploreView: UIView {
 
     // MARK: - Setup
 
-    public func configure(withSections sections: [ExploreSectionViewModel]) {
+    public func configure(with viewModel: ExploreViewModel) {
+
+    }
+
+    public func reload(sections: [ExploreSectionViewModel]) {
         self.sections = sections
 
         var snapshot = NSDiffableDataSourceSnapshot<ExploreSectionViewModel, Item>()

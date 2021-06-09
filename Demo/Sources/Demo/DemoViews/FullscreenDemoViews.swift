@@ -33,7 +33,23 @@ public enum FullscreenDemoViews: String, DemoViews {
         case .searchDropdown:
             return DemoViewController<SearchDropdownDemoView>()
         case .explore:
-            return DemoViewController<ExploreDemoView>()
+            let viewController = DemoViewController<ExploreDemoView>()
+            viewController.navigationItem.title = "Torget"
+            viewController.navigationItem.largeTitleDisplayMode = .always
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.titleTextAttributes = [
+                .font: UIFont.bodyStrong,
+                .foregroundColor: UIColor.textPrimary
+            ]
+            appearance.largeTitleTextAttributes = [
+                .font: UIFont(name: UIFont.title1.fontName, size: 28.0)!,
+                .foregroundColor: UIColor.textPrimary
+            ]
+            viewController.navigationItem.standardAppearance = appearance
+            let navigationController = UINavigationController(rootViewController: viewController)
+            navigationController.navigationBar.prefersLargeTitles = true
+            return navigationController
         }
     }
 }

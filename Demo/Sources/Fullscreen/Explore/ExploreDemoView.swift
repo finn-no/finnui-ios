@@ -78,6 +78,6 @@ public class ExploreDemoView: UIView {
     private func setup() {
         addSubview(view)
         view.fillInSuperview()
-        view.configure(withSections: sections)
+        view.reload(sections: sections)
     }
 }
