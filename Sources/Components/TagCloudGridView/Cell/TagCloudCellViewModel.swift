@@ -4,23 +4,32 @@
 
 import UIKit
 
-public struct TagCloudCellViewModel: Hashable {
-    public let text: String
+// MARK: - Layout data
+
+public protocol TagCloudLayoutDataProvider {
+    var title: String { get }
+    var iconUrl: String? { get }
+}
+
+// MARK: - View Model
+
+public struct TagCloudCellViewModel: Hashable, TagCloudLayoutDataProvider {
+    public let title: String
     public let iconUrl: String?
-    public let backgroundColor: UIColor?
-    public let foregroundColor: UIColor?
+    public let backgroundColor: UIColor
+    public let foregroundColor: UIColor
     public let showShadow: Bool
 
     // MARK: - Init
 
     public init(
-        text: String,
+        title: String,
         iconUrl: String?,
-        backgroundColor: UIColor?,
-        foregroundColor: UIColor?,
+        backgroundColor: UIColor = UIColor(hex: "#F3F4F6"),
+        foregroundColor: UIColor = .licorice,
         showShadow: Bool = true
     ) {
-        self.text = text
+        self.title = title
         self.iconUrl = iconUrl
         self.backgroundColor = backgroundColor
         self.foregroundColor = foregroundColor

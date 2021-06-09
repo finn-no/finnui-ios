@@ -6,42 +6,46 @@ import UIKit
 import FinniversKit
 
 struct ExploreLayoutBuilder {
+    let sections: [ExploreSectionViewModel]
     let elementKind: String
 
-    var collectionViewLayout: UICollectionViewLayout {
-        UICollectionViewCompositionalLayout { sectionIndex, _ in
-            let section: NSCollectionLayoutSection = {
-                let index = sectionIndex % 3
+    func collectionLayoutSection(at sectionIndex: Int) -> NSCollectionLayoutSection {
+        let layoutSection: NSCollectionLayoutSection = {
+            let section = sections[sectionIndex]
 
-                if index == 0 {
-                    return .grid
-                } else if index == 1 {
-                    return .hero
-                } else if index == 2 {
-                    return .smallSquares
-                } else {
-                    return .smallSquares
-                }
-            }()
-            section.boundarySupplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(70)
-                ),
-                elementKind: elementKind,
-                alignment: .top
-            )]
+            switch section.layout {
+            case .hero:
+                return .hero
+            case .squares:
+                return .squares
+            case .twoRowsGrid:
+                return .twoRowsGrid
+            case .tagCloud:
+                let group = TagCloudGridView.collectionLayoutGroup(with: section.items)
+                return NSCollectionLayoutSection(group: group)
+            }
+        }()
 
-            section.supplementariesFollowContentInsets = false
-            return section
-        }
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM)
+        layoutSection.supplementariesFollowContentInsets = false
+
+        layoutSection.boundarySupplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(70)
+            ),
+            elementKind: elementKind,
+            alignment: .top
+        )]
+
+        return layoutSection
     }
 }
 
 // MARK: - Layout section
 
 private extension NSCollectionLayoutSection {
-    static let grid: NSCollectionLayoutSection = {
+    static let twoRowsGrid: NSCollectionLayoutSection = {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1 / 2),
             heightDimension: .fractionalWidth(1 / 2)
@@ -59,9 +63,6 @@ private extension NSCollectionLayoutSection {
 
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = .spacingM
-        section.contentInsets = NSDirectionalEdgeInsets(
-            top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM
-        )
         return section
     }()
 
@@ -73,7 +74,7 @@ private extension NSCollectionLayoutSection {
         scrollingBehavior: .groupPaging
     )
 
-    static let smallSquares = horizontalLayout(
+    static let squares = horizontalLayout(
         size: NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1 / 2),
             heightDimension: .fractionalWidth(1 / 2)
@@ -96,8 +97,6 @@ private extension NSCollectionLayoutSection {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = .spacingM
         section.orthogonalScrollingBehavior = scrollingBehavior
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingXS)
         return section
     }
 }
-

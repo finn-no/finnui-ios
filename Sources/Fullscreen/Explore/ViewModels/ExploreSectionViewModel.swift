@@ -6,8 +6,10 @@ import UIKit
 
 public struct ExploreSectionViewModel: Hashable {
     public enum Layout {
+        case hero
         case tagCloud
-        case random
+        case squares
+        case twoRowsGrid
     }
 
     public let layout: Layout

@@ -30,12 +30,16 @@ public final class ExploreView: UIView {
     public weak var dataSource: ExploreViewDataSource?
     private var sections = [ExploreSectionViewModel]()
     private let imageCache = ImageMemoryCache()
-    private let layoutBuilder = ExploreLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: bounds,
-            collectionViewLayout: layoutBuilder.collectionViewLayout
+            collectionViewLayout: UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+                ExploreLayoutBuilder(
+                    sections: self?.sections ?? [],
+                    elementKind: UICollectionView.elementKindSectionHeader
+                ).collectionLayoutSection(at: sectionIndex)
+            }
         )
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -111,12 +115,12 @@ public final class ExploreView: UIView {
 
         for section in sections {
             switch section.layout {
-            case .random:
+            case .hero, .squares, .twoRowsGrid:
                 snapshot.appendItems(section.items.map(Item.regular), toSection: section)
             case .tagCloud:
                 let items = section.items.map {
                     TagCloudCellViewModel(
-                        text: $0.title,
+                        title: $0.title,
                         iconUrl: $0.iconUrl,
                         backgroundColor: .primaryBlue,
                         foregroundColor: .white
