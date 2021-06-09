@@ -11,7 +11,7 @@ public struct ExploreCollectionViewModel: Hashable, TagCloudLayoutDataProvider {
 
     // MARK: - Init
 
-    public init(title: String, imageUrl: String?, iconUrl: String?) {
+    public init(title: String, imageUrl: String? = nil, iconUrl: String? = nil) {
         self.title = title
         self.imageUrl = imageUrl
         self.iconUrl = iconUrl

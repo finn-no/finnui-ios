@@ -11,7 +11,7 @@ final class TagCloudCell: UICollectionViewCell {
 
     static let height: CGFloat = 41
     static let iconSize: CGFloat = 24
-    static let textFont = UIFont.bodyRegular
+    static let textFont = UIFont.bodyStrong
 
     static func width(for item: TagCloudLayoutDataProvider) -> CGFloat {
         var width: CGFloat = .spacingS * 2
@@ -108,7 +108,7 @@ final class TagCloudCell: UICollectionViewCell {
 
     private func setup() {
         contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 8
+        contentView.layer.cornerRadius = 19
         contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([

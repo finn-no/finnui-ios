@@ -62,8 +62,6 @@ public final class TagCloudGridView: UIView, UICollectionViewDelegate {
                 TagCloudLayoutBuilder(items: self?.items ?? []).layoutSection()
             }
         )
-        collectionView.contentInset.left = .spacingM
-        collectionView.contentInset.right = .spacingM
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.alwaysBounceVertical = false

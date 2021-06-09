@@ -24,10 +24,10 @@ public struct TagCloudCellViewModel: Hashable, TagCloudLayoutDataProvider {
 
     public init(
         title: String,
-        iconUrl: String?,
-        backgroundColor: UIColor = UIColor(hex: "#F3F4F6"),
-        foregroundColor: UIColor = .licorice,
-        showShadow: Bool = true
+        iconUrl: String? = nil,
+        backgroundColor: UIColor = .dynamicColor(defaultColor: UIColor(hex: "F3F4F6"), darkModeColor: .darkIce),
+        foregroundColor: UIColor = .textPrimary,
+        showShadow: Bool = false
     ) {
         self.title = title
         self.iconUrl = iconUrl

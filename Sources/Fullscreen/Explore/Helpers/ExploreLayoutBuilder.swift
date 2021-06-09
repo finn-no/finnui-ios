@@ -32,7 +32,7 @@ struct ExploreLayoutBuilder {
         layoutSection.boundarySupplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(70)
+                heightDimension: .estimated(58)
             ),
             elementKind: elementKind,
             alignment: .top
@@ -46,22 +46,25 @@ struct ExploreLayoutBuilder {
 
 private extension NSCollectionLayoutSection {
     static let twoRowsGrid: NSCollectionLayoutSection = {
+        let size: CGFloat = 128
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1 / 2),
-            heightDimension: .fractionalWidth(1 / 2)
+            widthDimension: .absolute(size),
+            heightDimension: .absolute(size)
         ))
         item.contentInsets = .zero
 
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalWidth(1.0)
+                widthDimension: .absolute(size),
+                heightDimension: .absolute(size * 2 + .spacingM)
             ),
             subitem: item,
             count: 2
         )
+        group.interItemSpacing = .fixed(.spacingM)
 
         let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = .spacingM
         return section
     }()

@@ -41,6 +41,7 @@ public final class ExploreView: UIView {
                 ).collectionLayoutSection(at: sectionIndex)
             }
         )
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
@@ -67,9 +68,9 @@ public final class ExploreView: UIView {
                 guard let self = self else { return nil }
 
                 switch item {
-                case .regular(let viewModel):
+                case .regular(let viewModel, let cellKind):
                     let cell = collectionView.dequeue(ExploreCollectionCell.self, for: indexPath)
-                    cell.configure(with: viewModel)
+                    cell.configure(with: viewModel, kind: cellKind)
                     return cell
                 case .tagCloud(let viewModels):
                     let cell = collectionView.dequeue(ExploreTagCloudGridCell.self, for: indexPath)
@@ -116,15 +117,13 @@ public final class ExploreView: UIView {
         for section in sections {
             switch section.layout {
             case .hero, .squares, .twoRowsGrid:
-                snapshot.appendItems(section.items.map(Item.regular), toSection: section)
+                let items = section.items.map {
+                    Item.regular($0, section.layout == .hero ? .big : .regular)
+                }
+                snapshot.appendItems(items, toSection: section)
             case .tagCloud:
                 let items = section.items.map {
-                    TagCloudCellViewModel(
-                        title: $0.title,
-                        iconUrl: $0.iconUrl,
-                        backgroundColor: .primaryBlue,
-                        foregroundColor: .white
-                    )
+                    TagCloudCellViewModel(title: $0.title, iconUrl: $0.iconUrl)
                 }
                 snapshot.appendItems([Item.tagCloud(items)], toSection: section)
             }
@@ -197,6 +196,6 @@ extension ExploreView: RemoteImageViewDataSource {
 // MARK: - Private types
 
 private enum Item: Equatable, Hashable {
-    case regular(ExploreCollectionViewModel)
+    case regular(ExploreCollectionViewModel, ExploreCollectionCell.Kind)
     case tagCloud([TagCloudCellViewModel])
 }
