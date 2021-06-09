@@ -47,6 +47,20 @@ public enum FullscreenDemoViews: String, DemoViews {
                 .foregroundColor: UIColor.textPrimary
             ]
             viewController.navigationItem.standardAppearance = appearance
+            viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
+                image: UIImage(named: .filter),
+                style: .plain,
+                target: nil,
+                action: nil
+            )
+            let searchController = UISearchController(searchResultsController: nil)
+            searchController.showsSearchResultsController = true
+            searchController.obscuresBackgroundDuringPresentation = false
+            searchController.searchBar.placeholder = "Søk på Torget"
+
+            viewController.navigationItem.searchController = searchController
+            viewController.navigationItem.hidesSearchBarWhenScrolling = false
+
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.navigationBar.prefersLargeTitles = true
             return navigationController
