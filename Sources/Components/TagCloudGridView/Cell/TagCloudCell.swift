@@ -30,9 +30,9 @@ final class TagCloudCell: UICollectionViewCell {
         }
     }
 
-    private var showShadow = false
-
     // MARK: - Private properties
+
+    private var showShadow = false
 
     private lazy var iconView: RemoteImageView = {
         let view = RemoteImageView(withAutoLayout: true)
