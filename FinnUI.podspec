@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
                    DESC
 
   s.license      = 'MIT'
-  s.platform      = :ios, '12.0'
+  s.platform      = :ios, '13.0'
   s.swift_version = '5.0'
   s.source        = { :git => "https://github.com/finn-no/finnui-ios.git", :tag => "#{s.version}" }
   s.requires_arc  = true
