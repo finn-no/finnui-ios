@@ -6,13 +6,10 @@ import UIKit
 import FinniversKit
 
 struct ExploreLayoutBuilder {
-    let sections: [ExploreSectionViewModel]
     let elementKind: String
 
-    func collectionLayoutSection(at sectionIndex: Int) -> NSCollectionLayoutSection {
+    func collectionLayoutSection(for section: ExploreSectionViewModel) -> NSCollectionLayoutSection {
         let layoutSection: NSCollectionLayoutSection = {
-            let section = sections[sectionIndex]
-
             switch section.layout {
             case .hero:
                 return .hero

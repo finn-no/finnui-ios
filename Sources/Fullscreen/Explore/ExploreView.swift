@@ -7,7 +7,10 @@ import FinniversKit
 
 // MARK: - Protocols
 
-public protocol ExploreViewDelegate: AnyObject {}
+public protocol ExploreViewDelegate: AnyObject {
+    func exploreViewDidRefresh(_ view: ExploreView)
+    func exploreView(_ view: ExploreView, didSelectItem item: ExploreCollectionViewModel, at indexPath: IndexPath)
+}
 
 public protocol ExploreViewDataSource: AnyObject {
     func exploreView(
@@ -26,19 +29,24 @@ public protocol ExploreViewDataSource: AnyObject {
 // MARK: - View
 
 public final class ExploreView: UIView {
+
+    // MARK: - Public properties
+
     public weak var delegate: ExploreViewDelegate?
     public weak var dataSource: ExploreViewDataSource?
+
+    // MARK: - Private properties
+
     private var sections = [ExploreSectionViewModel]()
     private let imageCache = ImageMemoryCache()
+    private let layoutBuilder = ExploreLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: bounds,
             collectionViewLayout: UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
-                ExploreLayoutBuilder(
-                    sections: self?.sections ?? [],
-                    elementKind: UICollectionView.elementKindSectionHeader
-                ).collectionLayoutSection(at: sectionIndex)
+                guard let self = self else { return nil }
+                return self.layoutBuilder.collectionLayoutSection(for: self.sections[sectionIndex])
             }
         )
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -70,10 +78,12 @@ public final class ExploreView: UIView {
                 switch item {
                 case .regular(let viewModel, let cellKind):
                     let cell = collectionView.dequeue(ExploreCollectionCell.self, for: indexPath)
+                    cell.remoteImageViewDataSource = self
                     cell.configure(with: viewModel, kind: cellKind)
                     return cell
                 case .tagCloud(let viewModels):
                     let cell = collectionView.dequeue(ExploreTagCloudGridCell.self, for: indexPath)
+                    cell.gridView.tag = indexPath.section
                     cell.gridView.delegate = self
                     cell.gridView.configure(withItems: viewModels)
                     return cell
@@ -108,11 +118,7 @@ public final class ExploreView: UIView {
 
     // MARK: - Setup
 
-    public func configure(with viewModel: ExploreViewModel) {
-
-    }
-
-    public func reload(sections: [ExploreSectionViewModel]) {
+    public func configure(with sections: [ExploreSectionViewModel]) {
         self.sections = sections
 
         var snapshot = NSDiffableDataSourceSnapshot<ExploreSectionViewModel, Item>()
@@ -133,6 +139,7 @@ public final class ExploreView: UIView {
             }
         }
 
+        refreshControl.endRefreshing()
         collectionViewDataSource.apply(snapshot, animatingDifferences: false)
     }
 
@@ -144,22 +151,26 @@ public final class ExploreView: UIView {
     // MARK: - Actions
 
     @objc private func onRefresh() {
-
+        delegate?.exploreViewDidRefresh(self)
     }
 }
 
 // MARK: - UICollectionViewDelegate
 
 extension ExploreView: UICollectionViewDelegate {
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {}
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {}
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = sections[indexPath.section].items[indexPath.item]
+        delegate?.exploreView(self, didSelectItem: item, at: indexPath)
+    }
 }
 
 // MARK: - TagCloudGridViewDelegate
 
 extension ExploreView: TagCloudGridViewDelegate {
     public func tagCloudGridView(_ view: TagCloudGridView, didSelectItem item: TagCloudCellViewModel, at indexPath: IndexPath) {
-
+        let indexPath = IndexPath(item: indexPath.item, section: view.tag)
+        let item = sections[indexPath.section].items[indexPath.item]
+        delegate?.exploreView(self, didSelectItem: item, at: indexPath)
     }
 }
 

@@ -6,6 +6,7 @@ import UIKit
 import FinniversKit
 
 final class ExploreTagCloudGridCell: UICollectionViewCell {
+    var section: Int?
     private(set) lazy var gridView = TagCloudGridView(withAutoLayout: true)
 
     // MARK: - Init

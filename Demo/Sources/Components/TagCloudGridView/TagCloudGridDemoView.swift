@@ -42,8 +42,8 @@ final class TagCloudGridDemoView: UIView {
         addSubview(view)
 
         NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor),
+            view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
             view.centerYAnchor.constraint(equalTo: centerYAnchor),
             view.heightAnchor.constraint(equalToConstant: TagCloudGridView.height(for: items))
         ])

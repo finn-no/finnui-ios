@@ -25,7 +25,7 @@ final class ExploreCollectionCell: UICollectionViewCell {
     private lazy var imageView: RemoteImageView = {
         let imageView = RemoteImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .secondaryBlue
+        imageView.backgroundColor = .accentSecondaryBlue
         return imageView
     }()
 
@@ -52,6 +52,12 @@ final class ExploreCollectionCell: UICollectionViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func prepareForReuse() {
+        imageView.backgroundColor = .secondaryBlue
+        imageView.image = nil
+        titleLabel.text = nil
     }
 
     // MARK: - Setup

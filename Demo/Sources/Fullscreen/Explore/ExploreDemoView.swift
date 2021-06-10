@@ -6,8 +6,6 @@ import FinnUI
 import UIKit
 
 public class ExploreDemoView: UIView {
-    private lazy var view = ExploreView(withAutoLayout: true)
-
     private let sections: [ExploreSectionViewModel] = [
         ExploreSectionViewModel(layout: .tagCloud, title: "Utvalgte kategorier", items: [
             ExploreCollectionViewModel(title: "Fashion"),
@@ -62,6 +60,13 @@ public class ExploreDemoView: UIView {
         ])
     ]
 
+    private lazy var view: ExploreView = {
+        let view = ExploreView(withAutoLayout: true)
+        view.delegate = self
+        view.dataSource = self
+        return view
+    }()
+
     // MARK: - Init
 
     public override init(frame: CGRect) {
@@ -78,6 +83,51 @@ public class ExploreDemoView: UIView {
     private func setup() {
         addSubview(view)
         view.fillInSuperview()
-        view.reload(sections: sections)
+        view.configure(with: sections)
+    }
+}
+
+// MARK: - ExploreViewDataSource
+
+extension ExploreDemoView: ExploreViewDataSource {
+    public func exploreView(
+        _ view: ExploreView,
+        loadImageWithPath imagePath: String,
+        imageWidth: CGFloat,
+        completion: @escaping ((UIImage?) -> Void)
+    ) {
+        guard let url = URL(string: imagePath) else {
+            completion(nil)
+            return
+        }
+
+        // Demo code only.
+        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
+            usleep(50_000)
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                    completion(image)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    public func exploreView(_ view: ExploreView, cancelLoadingImageWithPath imagePath: String, imageWidth: CGFloat) {}
+}
+
+// MARK: - ExploreViewDelegate
+
+extension ExploreDemoView: ExploreViewDelegate {
+    public func exploreViewDidRefresh(_ view: ExploreView) {
+        print("Did refresh")
+        view.configure(with: sections)
+    }
+
+    public func exploreView(_ view: ExploreView, didSelectItem item: ExploreCollectionViewModel, at indexPath: IndexPath) {
+        print("Selected item at indexPath: \(indexPath)")
     }
 }
