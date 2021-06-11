@@ -5,7 +5,7 @@
 import FinnUI
 import UIKit
 
-public class ExploreDemoView: UIView {
+final class ExploreDemoView: UIView {
     private let sections: [ExploreSectionViewModel] = [
         ExploreSectionViewModel(layout: .tagCloud, title: "Utvalgte kategorier", items: [
             ExploreCollectionViewModel(title: "Fashion"),
@@ -69,12 +69,12 @@ public class ExploreDemoView: UIView {
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -90,7 +90,7 @@ public class ExploreDemoView: UIView {
 // MARK: - ExploreViewDataSource
 
 extension ExploreDemoView: ExploreViewDataSource {
-    public func exploreView(
+    func exploreView(
         _ view: ExploreView,
         loadImageWithPath imagePath: String,
         imageWidth: CGFloat,
@@ -116,18 +116,18 @@ extension ExploreDemoView: ExploreViewDataSource {
         task.resume()
     }
 
-    public func exploreView(_ view: ExploreView, cancelLoadingImageWithPath imagePath: String, imageWidth: CGFloat) {}
+    func exploreView(_ view: ExploreView, cancelLoadingImageWithPath imagePath: String, imageWidth: CGFloat) {}
 }
 
 // MARK: - ExploreViewDelegate
 
 extension ExploreDemoView: ExploreViewDelegate {
-    public func exploreViewDidRefresh(_ view: ExploreView) {
+    func exploreViewDidRefresh(_ view: ExploreView) {
         print("Did refresh")
         view.configure(with: sections)
     }
 
-    public func exploreView(_ view: ExploreView, didSelectItem item: ExploreCollectionViewModel, at indexPath: IndexPath) {
+    func exploreView(_ view: ExploreView, didSelectItem item: ExploreCollectionViewModel, at indexPath: IndexPath) {
         print("Selected item at indexPath: \(indexPath)")
     }
 }

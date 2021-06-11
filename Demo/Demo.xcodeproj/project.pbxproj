@@ -67,6 +67,7 @@
 		D6D43CFB25BF2FDD00234AC2 /* ProjectUnitsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD84281254828910058D6BB /* ProjectUnitsDemoView.swift */; };
 		DA083C2E2462BCA800B26235 /* SwiftUIDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA083C2D2462BCA800B26235 /* SwiftUIDemoViews.swift */; };
 		DA2F2715266E28B000E6F17C /* TagCloudGridDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F2714266E28B000E6F17C /* TagCloudGridDemoView.swift */; };
+		DA3E1B0F2673B4ED001B7730 /* ExploreDetailDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E1B0E2673B4ED001B7730 /* ExploreDetailDemoView.swift */; };
 		DA7B29F22670CAFE0018B11C /* ExploreDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7B29F12670CAFE0018B11C /* ExploreDemoView.swift */; };
 		DAE9CA8724602CB000C7552F /* SwiftUIViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */; };
 /* End PBXBuildFile section */
@@ -175,6 +176,7 @@
 		D6242CF625CD84A9001999CE /* libGenerateAssetsScriptRunner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGenerateAssetsScriptRunner.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA083C2D2462BCA800B26235 /* SwiftUIDemoViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoViews.swift; sourceTree = "<group>"; };
 		DA2F2714266E28B000E6F17C /* TagCloudGridDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCloudGridDemoView.swift; sourceTree = "<group>"; };
+		DA3E1B0E2673B4ED001B7730 /* ExploreDetailDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailDemoView.swift; sourceTree = "<group>"; };
 		DA7B29F12670CAFE0018B11C /* ExploreDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDemoView.swift; sourceTree = "<group>"; };
 		DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIViewTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -294,6 +296,7 @@
 		46E7726A242CEF09008A5E93 /* Fullscreen */ = {
 			isa = PBXGroup;
 			children = (
+				DA3E1B0D2673B4DF001B7730 /* ExploreDetail */,
 				DA7B29F02670CAEA0018B11C /* Explore */,
 				8D6808BAF6E309D495F118C1 /* SavedSearchSorting */,
 				46E77290242CEF09008A5E93 /* SplashView */,
@@ -574,6 +577,14 @@
 			path = TagCloudGridView;
 			sourceTree = "<group>";
 		};
+		DA3E1B0D2673B4DF001B7730 /* ExploreDetail */ = {
+			isa = PBXGroup;
+			children = (
+				DA3E1B0E2673B4ED001B7730 /* ExploreDetailDemoView.swift */,
+			);
+			path = ExploreDetail;
+			sourceTree = "<group>";
+		};
 		DA7B29F02670CAEA0018B11C /* Explore */ = {
 			isa = PBXGroup;
 			children = (
@@ -820,6 +831,7 @@
 				46E77454242CEF0A008A5E93 /* Tweakable.swift in Sources */,
 				D6D43CFB25BF2FDD00234AC2 /* ProjectUnitsDemoView.swift in Sources */,
 				D6D43CE725BF2F4D00234AC2 /* SearchFilterTagsData.swift in Sources */,
+				DA3E1B0F2673B4ED001B7730 /* ExploreDetailDemoView.swift in Sources */,
 				D6D43CEF25BF2FA900234AC2 /* SearchDisplayTypeSelectionDemoView.swift in Sources */,
 				D6D43CEC25BF2F4D00234AC2 /* SaveSearchPromptViewDemoView.swift in Sources */,
 				D6D43CE525BF2F4D00234AC2 /* IconLinkListViewDemo.swift in Sources */,

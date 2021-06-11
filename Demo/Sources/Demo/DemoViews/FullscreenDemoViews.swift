@@ -13,6 +13,7 @@ public enum FullscreenDemoViews: String, DemoViews {
     case favoriteAdSortingView
     case searchDropdown
     case exploreView
+    case exploreDetail
 
     public var viewController: UIViewController {
         switch self {
@@ -34,6 +35,8 @@ public enum FullscreenDemoViews: String, DemoViews {
             return DemoViewController<SearchDropdownDemoView>()
         case .exploreView:
             return makeExploreView()
+        case .exploreDetail:
+            return DemoViewController<ExploreDetailDemoView>()
         }
     }
 }
