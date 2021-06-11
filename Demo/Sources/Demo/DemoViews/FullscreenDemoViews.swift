@@ -63,7 +63,7 @@ private extension FullscreenDemoViews {
             target: nil,
             action: nil
         )
-    
+
         let searchController = UISearchController(searchResultsController: nil)
         searchController.showsSearchResultsController = true
         searchController.obscuresBackgroundDuringPresentation = false

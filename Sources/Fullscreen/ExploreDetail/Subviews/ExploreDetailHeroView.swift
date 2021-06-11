@@ -5,15 +5,9 @@
 import UIKit
 import FinniversKit
 
-protocol ExploreDetailHeroViewDelegate: AnyObject {
-    func exploreDetailHeroViewDidPressPinButton(_ view: ExploreDetailHeroView)
-}
-
 final class ExploreDetailHeroView: UIView {
 
     // MARK: - Internal properties
-
-    weak var delegate: ExploreDetailHeroViewDelegate?
 
     weak var remoteImageViewDataSource: RemoteImageViewDataSource? {
         didSet {
@@ -76,9 +70,9 @@ final class ExploreDetailHeroView: UIView {
 
     // MARK: - Setup
 
-    func configure(withTitle title: String, subtitle: String, imageUrl: URL?) {
+    func configure(withTitle title: String, subtitle: String, imageUrl: String?) {
         if let imageUrl = imageUrl {
-            imageView.loadImage(for: imageUrl.absoluteString, imageWidth: bounds.size.width)
+            imageView.loadImage(for: imageUrl, imageWidth: bounds.size.width)
         }
 
         titleLabel.text = title

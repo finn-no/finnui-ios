@@ -43,6 +43,11 @@ final class ExploreCollectionCell: UICollectionViewCell {
         return label
     }()
 
+    private lazy var titleBottomConstraint = titleLabel.bottomAnchor.constraint(
+        equalTo: contentView.bottomAnchor,
+        constant: -.spacingM
+    )
+
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -74,6 +79,8 @@ final class ExploreCollectionCell: UICollectionViewCell {
             titleLabel.font = .title3Strong
         }
 
+        titleBottomConstraint.constant = kind == .narrow ? -.spacingS : -.spacingM
+
         titleLabel.text = viewModel.title
         titleLabel.sizeToFit()
     }
@@ -89,7 +96,7 @@ final class ExploreCollectionCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: .spacingM),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacingM),
+            titleBottomConstraint,
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacingM)
         ])
