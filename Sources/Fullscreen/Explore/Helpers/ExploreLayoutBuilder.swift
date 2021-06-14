@@ -26,14 +26,17 @@ struct ExploreLayoutBuilder {
         layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM)
         layoutSection.supplementariesFollowContentInsets = false
 
-        layoutSection.boundarySupplementaryItems = [NSCollectionLayoutBoundarySupplementaryItem(
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .estimated(58)
             ),
             elementKind: elementKind,
             alignment: .top
-        )]
+        )
+        header.contentInsets.leading = .spacingM
+
+        layoutSection.boundarySupplementaryItems = [header]
 
         return layoutSection
     }
@@ -63,6 +66,7 @@ private extension NSCollectionLayoutSection {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = .spacingM
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM)
         return section
     }()
 

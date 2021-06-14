@@ -9,14 +9,18 @@ extension ExploreDetailViewModel {
     static func selectedCategoryDetail(favorites: Set<Int>) -> ExploreDetailViewModel {
         viewModel(
             favorites: favorites,
-            topSection: .init(title: "Gå dypere til verks", items: .selectedCategories(collections))
+            topSection: .init(title: nil, items: .selectedCategories(collections)),
+            showHeroView: false,
+            adsSectionTitle: "874 gjenstander"
         )
     }
 
     static func collectionDetail(favorites: Set<Int>) -> ExploreDetailViewModel {
         viewModel(
             favorites: favorites,
-            topSection: .init(title: "Gå dypere til verks", items: .collections(collections))
+            topSection: .init(title: "Gå dypere til verks", items: .collections(collections)),
+            showHeroView: true,
+            adsSectionTitle: "Eller rett på sak"
         )
     }
 
@@ -29,14 +33,20 @@ extension ExploreDetailViewModel {
         ExploreCollectionViewModel(title: "Dekorasjon")
     ]
 
-    private static func viewModel(favorites: Set<Int>, topSection: ExploreDetailViewModel.Section) -> ExploreDetailViewModel {
+    private static func viewModel(
+        favorites: Set<Int>,
+        topSection: ExploreDetailViewModel.Section,
+        showHeroView: Bool,
+        adsSectionTitle: String
+    ) -> ExploreDetailViewModel {
         ExploreDetailViewModel(
             title: "Barnerom",
             subtitle: "KOLLEKSJON",
             imageUrl: nil,
+            showHeroView: showHeroView,
             sections: [
                 topSection,
-                .init(title: "Eller rett på sak", items: .ads([
+                .init(title: adsSectionTitle, items: .ads([
                     ExploreAdCellViewModel(
                         title: "Hjemmekontor: skjerm, mus, tastatur+",
                         location: "Oslo",

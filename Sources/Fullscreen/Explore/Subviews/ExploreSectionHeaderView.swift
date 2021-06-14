@@ -39,8 +39,8 @@ final class ExploreSectionHeaderView: UICollectionReusableView {
 
         NSLayoutConstraint.activate([
             label.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 6),
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
 }

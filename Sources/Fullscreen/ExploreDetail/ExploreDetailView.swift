@@ -55,7 +55,6 @@ public final class ExploreDetailView: UIView {
                 return self.layoutBuilder.collectionLayoutSection(for: section, at: sectionIndex)
             }
         )
-        collectionView.contentInset.top = 220
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
@@ -63,6 +62,7 @@ public final class ExploreDetailView: UIView {
         collectionView.contentInset.bottom = 100
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(ExploreCollectionCell.self)
+        collectionView.register(ExploreSelectedCategoryCell.self)
         collectionView.register(ExploreAdCell.self)
         collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         return collectionView
@@ -84,6 +84,11 @@ public final class ExploreDetailView: UIView {
                     let cell = collectionView.dequeue(ExploreCollectionCell.self, for: indexPath)
                     cell.remoteImageViewDataSource = self
                     cell.configure(with: viewModel, kind: .narrow)
+                    return cell
+                case .selectedCategory(let viewModel):
+                    let cell = collectionView.dequeue(ExploreSelectedCategoryCell.self, for: indexPath)
+                    cell.remoteImageViewDataSource = self
+                    cell.configure(with: viewModel)
                     return cell
                 case .ad(let viewModel):
                     let cell = collectionView.dequeue(ExploreAdCell.self, for: indexPath)
@@ -128,14 +133,18 @@ public final class ExploreDetailView: UIView {
         self.viewModel = viewModel
 
         heroView.configure(withTitle: viewModel.title, subtitle: viewModel.subtitle, imageUrl: viewModel.imageUrl)
+        heroView.isHidden = !viewModel.showHeroView
+        collectionView.contentInset.top = viewModel.showHeroView ? 220 : 0
 
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections(viewModel.sections)
 
         for section in viewModel.sections {
             switch section.items {
-            case .collections(let collections), .selectedCategories(let collections):
+            case .collections(let collections):
                 snapshot.appendItems(collections.map(Item.collection), toSection: section)
+            case .selectedCategories(let collections):
+                snapshot.appendItems(collections.map(Item.selectedCategory), toSection: section)
             case .ads(let ads):
                 snapshot.appendItems(ads.map(Item.ad), toSection: section)
             }
@@ -245,6 +254,7 @@ extension ExploreDetailView: RemoteImageViewDataSource {
 private extension ExploreDetailView {
     enum Item: Hashable {
         case collection(ExploreCollectionViewModel)
+        case selectedCategory(ExploreCollectionViewModel)
         case ad(ExploreAdCellViewModel)
     }
 }

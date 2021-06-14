@@ -36,7 +36,7 @@ public enum FullscreenDemoViews: String, DemoViews {
         case .exploreView:
             return makeExploreView()
         case .exploreDetail:
-            return DemoViewController<ExploreDetailDemoView>(constrainToTopSafeArea: false, constrainToBottomSafeArea: false)
+            return DemoViewController<ExploreDetailDemoView>(constrainToTopSafeArea: true, constrainToBottomSafeArea: false)
         }
     }
 }

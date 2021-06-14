@@ -8,6 +8,7 @@ public struct ExploreDetailViewModel: Hashable {
     public let title: String
     public let subtitle: String
     public let imageUrl: String?
+    public let showHeroView: Bool
     public var sections: [Section]
 
     // MARK: - Init
@@ -16,11 +17,13 @@ public struct ExploreDetailViewModel: Hashable {
         title: String,
         subtitle: String,
         imageUrl: String?,
+        showHeroView: Bool,
         sections: [ExploreDetailViewModel.Section]
     ) {
         self.title = title
         self.subtitle = subtitle
         self.imageUrl = imageUrl
+        self.showHeroView = showHeroView
         self.sections = sections
     }
 }
