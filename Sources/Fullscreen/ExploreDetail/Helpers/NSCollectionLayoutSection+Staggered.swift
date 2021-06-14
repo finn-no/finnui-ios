@@ -25,54 +25,52 @@ public protocol StaggeredLayoutItem {
 
 public extension NSCollectionLayoutSection {
     static func staggered(with models: [StaggeredLayoutItem]) -> NSCollectionLayoutSection {
-        let estimatedHeight = models.count > 0
-            ? UIScreen.main.bounds.size.width / 2 * .minImageAspectRatio * CGFloat(models.count) / 2
+        let contentWidth = UIScreen.main.bounds.size.width
+        let configuration = GridLayoutConfiguration(width: contentWidth)
+        let columnItemWidth = configuration.itemWidth(for: contentWidth)
+        var items = [NSCollectionLayoutGroupCustomItem]()
+        let columnsRange = 0 ..< configuration.numberOfColumns
+        var columns = columnsRange.map { _ in 0 }
+
+        for model in models {
+            let frame: CGRect
+
+            switch model.staggeredLayoutItemKind {
+            case .compact:
+                let columnIndex = configuration.indexOfLowestValue(in: columns)
+                let xOffset = configuration.xOffsetForItemInColumn(
+                    itemWidth: columnItemWidth,
+                    columnIndex: columnIndex
+                )
+                let yOffset = CGFloat(columns[columnIndex]) + configuration.topOffset
+                let itemHeight = self.itemHeight(model: model, itemWidth: columnItemWidth)
+                frame = CGRect(x: xOffset, y: yOffset, width: columnItemWidth, height: itemHeight)
+                columns[columnIndex] = Int(frame.maxY + configuration.columnSpacing)
+            case .fullWidth:
+                let columnIndex = configuration.indexOfHighestValue(in: columns)
+                let xOffset = configuration.sidePadding
+                let yOffset = CGFloat(columns[columnIndex]) + configuration.topOffset
+                let itemWidth = contentWidth - configuration.sidePadding * 2
+                let itemHeight = self.itemHeight(model: model, itemWidth: itemWidth)
+                frame = CGRect(x: xOffset, y: yOffset, width: itemWidth, height: itemHeight)
+                columnsRange.forEach {
+                    columns[$0] = Int(frame.maxY + configuration.columnSpacing)
+                }
+            }
+
+            items.append(NSCollectionLayoutGroupCustomItem(frame: frame))
+        }
+
+        let absoluteHeight = models.count > 0
+            ? (items.max(by: { $0.frame.maxY < $1.frame.maxY })?.frame.maxY ?? 0) + configuration.columnSpacing
             : 100
 
-        let groupLayoutSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(estimatedHeight)
-        )
-
         let group = NSCollectionLayoutGroup.custom(
-            layoutSize: groupLayoutSize,
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(absoluteHeight)
+            ),
             itemProvider: { environment -> [NSCollectionLayoutGroupCustomItem] in
-                let contentWidth = environment.container.contentSize.width
-                let configuration = GridLayoutConfiguration(width: contentWidth)
-                let columnItemWidth = configuration.itemWidth(for: contentWidth)
-                var items = [NSCollectionLayoutGroupCustomItem]()
-                let columnsRange = 0 ..< configuration.numberOfColumns
-                var columns = columnsRange.map { _ in 0 }
-
-                for model in models {
-                    let frame: CGRect
-
-                    switch model.staggeredLayoutItemKind {
-                    case .compact:
-                        let columnIndex = configuration.indexOfLowestValue(in: columns)
-                        let xOffset = configuration.xOffsetForItemInColumn(
-                            itemWidth: columnItemWidth,
-                            columnIndex: columnIndex
-                        )
-                        let yOffset = CGFloat(columns[columnIndex]) + configuration.topOffset
-                        let itemHeight = self.itemHeight(model: model, itemWidth: columnItemWidth)
-                        frame = CGRect(x: xOffset, y: yOffset, width: columnItemWidth, height: itemHeight)
-                        columns[columnIndex] = Int(frame.maxY + configuration.columnSpacing)
-                    case .fullWidth:
-                        let columnIndex = configuration.indexOfHighestValue(in: columns)
-                        let xOffset = configuration.sidePadding
-                        let yOffset = CGFloat(columns[columnIndex]) + configuration.topOffset
-                        let itemWidth = contentWidth - configuration.sidePadding * 2
-                        let itemHeight = self.itemHeight(model: model, itemWidth: itemWidth)
-                        frame = CGRect(x: xOffset, y: yOffset, width: itemWidth, height: itemHeight)
-                        columnsRange.forEach {
-                            columns[$0] = Int(frame.maxY + configuration.columnSpacing)
-                        }
-                    }
-
-                    items.append(NSCollectionLayoutGroupCustomItem(frame: frame))
-                }
-
                 return items
             })
 

@@ -48,6 +48,7 @@ extension ExploreDetailViewModel {
                 topSection,
                 .init(title: adsSectionTitle, items: .ads([
                     ExploreAdCellViewModel(
+                        imageUrl: "http://i3.au.reastatic.net/home-ideas/raw/a96671bab306bcb39783bc703ac67f0278ffd7de0854d04b7449b2c3ae7f7659/facades.jpg",
                         title: "Hjemmekontor: skjerm, mus, tastatur+",
                         location: "Oslo",
                         price: "850 kr",

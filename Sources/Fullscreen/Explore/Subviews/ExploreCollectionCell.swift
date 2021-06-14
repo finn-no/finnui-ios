@@ -60,8 +60,9 @@ final class ExploreCollectionCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
+        imageView.cancelLoading()
+        imageView.setImage(nil, animated: false)
         imageView.backgroundColor = .secondaryBlue
-        imageView.image = nil
         titleLabel.text = nil
     }
 

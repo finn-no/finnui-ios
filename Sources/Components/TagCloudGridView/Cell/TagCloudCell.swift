@@ -85,6 +85,13 @@ final class TagCloudCell: UICollectionViewCell {
         dropShadow(color: .black, opacity: showShadow ? 0.1 : 0, offset: CGSize(width: 0, height: 2), radius: 4)
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        iconView.cancelLoading()
+        iconView.setImage(nil, animated: false)
+        titleLabel.text = nil
+    }
+
     // MARK: - Setup
 
     func configure(with viewModel: TagCloudCellViewModel) {

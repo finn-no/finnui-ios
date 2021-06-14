@@ -51,8 +51,8 @@ final class ExploreSelectedCategoryCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
-        imageView.backgroundColor = .secondaryBlue
-        imageView.image = nil
+        imageView.cancelLoading()
+        imageView.setImage(nil, animated: false)
         titleLabel.text = nil
     }
 

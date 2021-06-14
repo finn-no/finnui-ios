@@ -131,6 +131,13 @@ final class ExploreAdCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         contentView.layer.shadowPath = nil
+        imageView.cancelLoading()
+        imageView.setImage(nil, animated: false)
+        imageView.backgroundColor = .accentSecondaryBlue
+        titleLabel.text = nil
+        locationLabel.text = nil
+        timeLabel.text = nil
+        priceLabel.text = nil
     }
 
     override func layoutSubviews() {

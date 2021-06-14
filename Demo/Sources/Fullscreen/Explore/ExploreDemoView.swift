@@ -103,7 +103,7 @@ extension ExploreDemoView: ExploreViewDataSource {
 
         // Demo code only.
         let task = URLSession.shared.dataTask(with: url) { data, _, _ in
-            usleep(50_000)
+            //usleep(50_000)
             DispatchQueue.main.async {
                 if let data = data, let image = UIImage(data: data) {
                     completion(image)
