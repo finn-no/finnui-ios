@@ -5,6 +5,8 @@
 import UIKit
 import FinniversKit
 
+// MARK: - Protocols
+
 public protocol ExploreDetailViewDelegate: AnyObject {
     func exploreDetailView(_ view: ExploreDetailView, didScrollWithOffset: CGPoint)
     func exploreDetailView(
@@ -12,6 +14,16 @@ public protocol ExploreDetailViewDelegate: AnyObject {
         didTapFavoriteButton button: UIButton,
         at indexPath: IndexPath,
         viewModel: ExploreAdCellViewModel
+    )
+    func exploreDetailView(
+        _ view: ExploreDetailView,
+        didSelectCollection collection: ExploreCollectionViewModel,
+        at indexPath: IndexPath
+    )
+    func exploreDetailView(
+        _ view: ExploreDetailView,
+        didSelectAd ad: ExploreAdCellViewModel,
+        at indexPath: IndexPath
     )
 }
 
@@ -29,6 +41,8 @@ public protocol ExploreDetailViewDataSource: AnyObject {
     )
 }
 
+// MARK: - View
+
 public final class ExploreDetailView: UIView {
 
     // MARK: - Public properties
@@ -39,7 +53,7 @@ public final class ExploreDetailView: UIView {
     // MARK: - Private properties
 
     private typealias Section = ExploreDetailViewModel.Section
-    private var viewModel: ExploreDetailViewModel?
+    private var sections = [Section]()
     private let imageCache = ImageMemoryCache()
     private let layoutBuilder = ExploreDetailLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
 
@@ -51,8 +65,8 @@ public final class ExploreDetailView: UIView {
         let collectionView = UICollectionView(
             frame: bounds,
             collectionViewLayout: UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
-                guard let self = self, let section = self.viewModel?.sections[sectionIndex] else { return nil }
-                return self.layoutBuilder.collectionLayoutSection(for: section, at: sectionIndex)
+                guard let self = self else { return nil }
+                return self.layoutBuilder.collectionLayoutSection(for: self.sections[sectionIndex], at: sectionIndex)
             }
         )
         collectionView.showsVerticalScrollIndicator = false
@@ -100,7 +114,7 @@ public final class ExploreDetailView: UIView {
             })
 
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let section = self?.viewModel?.sections[indexPath.section], let title = section.title else {
+            guard let section = self?.sections[indexPath.section], let title = section.title else {
                 return nil
             }
 
@@ -130,16 +144,22 @@ public final class ExploreDetailView: UIView {
     // MARK: - Setup
 
     public func configure(with viewModel: ExploreDetailViewModel) {
-        self.viewModel = viewModel
+        self.sections = viewModel.sections
 
         heroView.configure(withTitle: viewModel.title, subtitle: viewModel.subtitle, imageUrl: viewModel.imageUrl)
         heroView.isHidden = !viewModel.showHeroView
         collectionView.contentInset.top = viewModel.showHeroView ? 220 : 0
 
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections(viewModel.sections)
+        reload(sections: viewModel.sections)
+    }
 
-        for section in viewModel.sections {
+    public func reload(sections: [ExploreDetailViewModel.Section]) {
+        self.sections = sections
+
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections(sections)
+
+        for section in sections {
             switch section.items {
             case .collections(let collections):
                 snapshot.appendItems(collections.map(Item.collection), toSection: section)
@@ -175,7 +195,14 @@ public final class ExploreDetailView: UIView {
 
 extension ExploreDetailView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = sections[indexPath.section]
 
+        switch section.items {
+        case .collections(let items), .selectedCategories(let items):
+            delegate?.exploreDetailView(self, didSelectCollection: items[indexPath.item], at: indexPath)
+        case .ads(let items):
+            delegate?.exploreDetailView(self, didSelectAd: items[indexPath.item], at: indexPath)
+        }
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -249,7 +276,7 @@ extension ExploreDetailView: RemoteImageViewDataSource {
     }
 }
 
-// MARK: - Private type
+// MARK: - Private extensions
 
 private extension ExploreDetailView {
     enum Item: Hashable {
@@ -258,8 +285,6 @@ private extension ExploreDetailView {
         case ad(ExploreAdCellViewModel)
     }
 }
-
-// MARK: - Private extensions
 
 private extension ExploreDetailViewModel.Section {
     var headerFont: UIFont {

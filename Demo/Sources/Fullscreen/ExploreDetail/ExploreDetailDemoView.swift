@@ -115,5 +115,17 @@ extension ExploreDetailDemoView: ExploreDetailViewDelegate {
         reload()
     }
 
+    func exploreDetailView(
+        _ view: ExploreDetailView,
+        didSelectCollection collection: ExploreCollectionViewModel,
+        at indexPath: IndexPath
+    ) {
+        print("Did select collection at \(indexPath)")
+    }
+
+    func exploreDetailView(_ view: ExploreDetailView, didSelectAd ad: ExploreAdCellViewModel, at indexPath: IndexPath) {
+        print("Did select ad at \(indexPath)")
+    }
+
     func exploreDetailView(_ view: ExploreDetailView, didScrollWithOffset: CGPoint) {}
 }
