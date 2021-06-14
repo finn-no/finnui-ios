@@ -21,7 +21,8 @@ final class ExploreAdCell: UICollectionViewCell {
         }
     }
 
-    var index: Int?
+    private(set) var viewModel: ExploreAdCellViewModel?
+    private(set) var indexPath: IndexPath?
 
     // MARK: - Private properties
 
@@ -139,7 +140,10 @@ final class ExploreAdCell: UICollectionViewCell {
 
     // MARK: - Internal API
 
-    func configure(with viewModel: ExploreAdCellViewModel) {
+    func configure(with viewModel: ExploreAdCellViewModel, indexPath: IndexPath) {
+        self.viewModel = viewModel
+        self.indexPath = indexPath
+
         backgroundColor = .bgPrimary
 
         if let imageUrl = viewModel.imageUrl {

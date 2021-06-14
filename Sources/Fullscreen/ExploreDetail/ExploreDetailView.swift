@@ -7,6 +7,12 @@ import FinniversKit
 
 public protocol ExploreDetailViewDelegate: AnyObject {
     func exploreDetailView(_ view: ExploreDetailView, didScrollWithOffset: CGPoint)
+    func exploreDetailView(
+        _ view: ExploreDetailView,
+        didTapFavoriteButton button: UIButton,
+        at indexPath: IndexPath,
+        viewModel: ExploreAdCellViewModel
+    )
 }
 
 public protocol ExploreDetailViewDataSource: AnyObject {
@@ -83,7 +89,7 @@ public final class ExploreDetailView: UIView {
                     let cell = collectionView.dequeue(ExploreAdCell.self, for: indexPath)
                     cell.delegate = self
                     cell.remoteImageViewDataSource = self
-                    cell.configure(with: viewModel)
+                    cell.configure(with: viewModel, indexPath: indexPath)
                     return cell
                 }
             })
@@ -135,7 +141,7 @@ public final class ExploreDetailView: UIView {
             }
         }
 
-        collectionDataSource.apply(snapshot, animatingDifferences: !snapshot.itemIdentifiers.isEmpty)
+        collectionDataSource.apply(snapshot, animatingDifferences: false)
     }
 
     private func setup() {
@@ -193,7 +199,10 @@ extension ExploreDetailView: UICollectionViewDelegate {
 
 extension ExploreDetailView: ExploreAdCellDelegate {
     func exploreAdCell(_ cell: ExploreAdCell, didTapFavoriteButton button: UIButton) {
-
+        guard let indexPath = cell.indexPath, let viewModel = cell.viewModel else {
+            return
+        }
+        delegate?.exploreDetailView(self, didTapFavoriteButton: button, at: indexPath, viewModel: viewModel)
     }
 }
 

@@ -69,6 +69,7 @@
 		DA2F2715266E28B000E6F17C /* TagCloudGridDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F2714266E28B000E6F17C /* TagCloudGridDemoView.swift */; };
 		DA3E1B0F2673B4ED001B7730 /* ExploreDetailDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3E1B0E2673B4ED001B7730 /* ExploreDetailDemoView.swift */; };
 		DA7B29F22670CAFE0018B11C /* ExploreDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7B29F12670CAFE0018B11C /* ExploreDemoView.swift */; };
+		DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */; };
 		DAE9CA8724602CB000C7552F /* SwiftUIViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -178,6 +179,7 @@
 		DA2F2714266E28B000E6F17C /* TagCloudGridDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCloudGridDemoView.swift; sourceTree = "<group>"; };
 		DA3E1B0E2673B4ED001B7730 /* ExploreDetailDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailDemoView.swift; sourceTree = "<group>"; };
 		DA7B29F12670CAFE0018B11C /* ExploreDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDemoView.swift; sourceTree = "<group>"; };
+		DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExploreDetailViewModel+Demo.swift"; sourceTree = "<group>"; };
 		DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIViewTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -581,6 +583,7 @@
 			isa = PBXGroup;
 			children = (
 				DA3E1B0E2673B4ED001B7730 /* ExploreDetailDemoView.swift */,
+				DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */,
 			);
 			path = ExploreDetail;
 			sourceTree = "<group>";
@@ -806,6 +809,7 @@
 				D6D43CF025BF2FA900234AC2 /* SnowGlobeDemoView.swift in Sources */,
 				46E773AF242CEF0A008A5E93 /* DemoViewController.swift in Sources */,
 				46E77453242CEF0A008A5E93 /* CornerAnchoringViewController.swift in Sources */,
+				DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */,
 				46E77451242CEF0A008A5E93 /* TweakingOptionsTableViewController.swift in Sources */,
 				DA2F2715266E28B000E6F17C /* TagCloudGridDemoView.swift in Sources */,
 				46E77455242CEF0A008A5E93 /* TweakingOption.swift in Sources */,

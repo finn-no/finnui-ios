@@ -5,52 +5,25 @@
 import FinnUI
 import UIKit
 
-final class ExploreDetailDemoView: UIView {
-    private let viewModel = ExploreDetailViewModel(
-        title: "Barnerom",
-        subtitle: "KOLLEKSJON",
-        imageUrl: nil,
-        sections: [
-            .init(title: "Gå dypere til verks", items: .collections([
-                ExploreCollectionViewModel(title: "Bord"),
-                ExploreCollectionViewModel(title: "Seng"),
-                ExploreCollectionViewModel(title: "Stellebord"),
-                ExploreCollectionViewModel(title: "Stol"),
-                ExploreCollectionViewModel(title: "Oppbevaring"),
-                ExploreCollectionViewModel(title: "Dekorasjon")
-            ])),
-            .init(title: "Eller rett på sak", items: .ads([
-                ExploreAdCellViewModel(
-                    title: "Hjemmekontor: skjerm, mus, tastatur+",
-                    location: "Oslo",
-                    price: "850 kr",
-                    time: "2 timer siden",
-                    aspectRatio: 1
-                ),
-                ExploreAdCellViewModel(
-                    title: "Ståbord for hjemmekontor",
-                    location: "Oslo",
-                    price: "4999 kr",
-                    time: "2 timer siden",
-                    aspectRatio: 1.33
-                ),
-                ExploreAdCellViewModel(
-                    title: "Aarsland hyller til kontor/hjemmekontor",
-                    location: "Oslo",
-                    price: "500 kr",
-                    time: "2 timer siden",
-                    aspectRatio: 0.74
-                ),
-                ExploreAdCellViewModel(
-                    title: "Pent brukt Microsoft Surface laptop",
-                    location: "Oslo",
-                    price: "4000 kr",
-                    time: "2 timer siden",
-                    aspectRatio: 1
-                )
-            ]))
-        ]
-    )
+final class ExploreDetailDemoView: UIView, Tweakable {
+    private enum Kind {
+        case collection
+        case selectedCategory
+    }
+
+    lazy var tweakingOptions: [TweakingOption] = [
+        TweakingOption(title: "Collection Detail", action: { [weak self] in
+            self?.kind = .collection
+            self?.reload()
+        }),
+        TweakingOption(title: "Selected Category Detail", action: { [weak self] in
+            self?.kind = .selectedCategory
+            self?.reload()
+        })
+    ]
+
+    private var kind: Kind = .collection
+    private var favorites = Set<Int>()
 
     private lazy var view: ExploreDetailView = {
         let view = ExploreDetailView(withAutoLayout: true)
@@ -75,6 +48,19 @@ final class ExploreDetailDemoView: UIView {
     private func setup() {
         addSubview(view)
         view.fillInSuperview()
+        reload()
+    }
+
+    func reload() {
+        let viewModel: ExploreDetailViewModel = {
+            switch kind {
+            case .collection:
+                return .collectionDetail(favorites: favorites)
+            case .selectedCategory:
+                return .selectedCategoryDetail(favorites: favorites)
+            }
+        }()
+
         view.configure(with: viewModel)
     }
 }
@@ -114,5 +100,20 @@ extension ExploreDetailDemoView: ExploreDetailViewDataSource {
 // MARK: - ExploreViewDelegate
 
 extension ExploreDetailDemoView: ExploreDetailViewDelegate {
+    func exploreDetailView(
+        _ view: ExploreDetailView,
+        didTapFavoriteButton button: UIButton,
+        at indexPath: IndexPath,
+        viewModel: ExploreAdCellViewModel
+    ) {
+        if favorites.contains(indexPath.item) {
+            favorites.remove(indexPath.item)
+        } else {
+            favorites.insert(indexPath.item)
+        }
+
+        reload()
+    }
+
     func exploreDetailView(_ view: ExploreDetailView, didScrollWithOffset: CGPoint) {}
 }

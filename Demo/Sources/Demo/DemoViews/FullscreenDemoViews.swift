@@ -36,7 +36,7 @@ public enum FullscreenDemoViews: String, DemoViews {
         case .exploreView:
             return makeExploreView()
         case .exploreDetail:
-            return DemoViewController<ExploreDetailDemoView>()
+            return DemoViewController<ExploreDetailDemoView>(constrainToTopSafeArea: false, constrainToBottomSafeArea: false)
         }
     }
 }
@@ -56,7 +56,7 @@ private extension FullscreenDemoViews {
             .foregroundColor: UIColor.textPrimary
         ]
 
-        let viewController = DemoViewController<ExploreDemoView>()
+        let viewController = DemoViewController<ExploreDemoView>(constrainToTopSafeArea: false, constrainToBottomSafeArea: false)
         viewController.navigationItem.title = "Torget"
         viewController.navigationItem.largeTitleDisplayMode = .always
         viewController.navigationItem.standardAppearance = appearance
