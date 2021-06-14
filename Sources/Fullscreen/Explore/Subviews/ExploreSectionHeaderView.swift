@@ -29,8 +29,9 @@ final class ExploreSectionHeaderView: UICollectionReusableView {
 
     // MARK: - Setup
 
-    func configure(withText text: String) {
+    func configure(withText text: String, font: UIFont = .title3Strong) {
         label.text = text
+        label.font = font
     }
 
     private func setup() {

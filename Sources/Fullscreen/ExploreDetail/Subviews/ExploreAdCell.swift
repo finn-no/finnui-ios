@@ -43,14 +43,14 @@ final class ExploreAdCell: UICollectionViewCell {
     }()
 
     private lazy var locationLabel: UILabel = {
-        let label = label(withFont: .caption, textColor: .textSecondary)
+        let label = label(withFont: .detail, textColor: .textSecondary)
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()
 
     private lazy var timeLabel: UILabel = {
-        let label = label(withFont: .caption, textColor: .textSecondary)
+        let label = label(withFont: .detail, textColor: .textSecondary)
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label

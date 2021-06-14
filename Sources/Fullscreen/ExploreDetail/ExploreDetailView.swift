@@ -58,7 +58,7 @@ public final class ExploreDetailView: UIView {
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(ExploreCollectionCell.self)
         collectionView.register(ExploreAdCell.self)
-        collectionView.register(ExploreDetailSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
+        collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         return collectionView
     }()
 
@@ -94,7 +94,7 @@ public final class ExploreDetailView: UIView {
             }
 
             let view = collectionView.dequeue(
-                ExploreDetailSectionHeaderView.self,
+                ExploreSectionHeaderView.self,
                 for: indexPath,
                 ofKind: UICollectionView.elementKindSectionHeader
             )
