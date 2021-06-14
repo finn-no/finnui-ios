@@ -42,8 +42,19 @@ final class ExploreAdCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var locationLabel = label(withFont: .caption, textColor: .textSecondary)
-    private lazy var timeLabel = label(withFont: .caption, textColor: .textSecondary)
+    private lazy var locationLabel: UILabel = {
+        let label = label(withFont: .caption, textColor: .textSecondary)
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }()
+
+    private lazy var timeLabel: UILabel = {
+        let label = label(withFont: .caption, textColor: .textSecondary)
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
+    }()
 
     private lazy var priceLabel: UILabel = {
         let label = UILabel(withAutoLayout: true)
@@ -99,7 +110,7 @@ final class ExploreAdCell: UICollectionViewCell {
         let view = UIStackView(arrangedSubviews: [locationAndTimeStackView, titleLabel])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
-        view.spacing = .spacingXXS
+        view.spacing = .spacingXS
         view.setContentHuggingPriority(.required, for: .vertical)
         view.setContentCompressionResistancePriority(.required, for: .vertical)
         return view
@@ -165,7 +176,7 @@ final class ExploreAdCell: UICollectionViewCell {
         imageView.addSubview(priceLabel)
 
         NSLayoutConstraint.activate([
-            textStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            textStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacingS),
             textStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             textStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 
@@ -174,7 +185,7 @@ final class ExploreAdCell: UICollectionViewCell {
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: textStackView.topAnchor, constant: -.spacingXS),
 
-            priceBackground.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: .spacingXS),
+            priceBackground.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: .spacingS),
             priceBackground.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -.spacingS),
             priceBackground.heightAnchor.constraint(equalTo: priceLabel.heightAnchor, multiplier: 2),
             priceBackground.widthAnchor.constraint(equalTo: priceLabel.widthAnchor, constant: .spacingS * 2),
@@ -214,10 +225,12 @@ extension ExploreAdCell {
 
         height += viewModel.title?.height(withConstrainedWidth: width, font: titleFont) ?? 0
 
-        if viewModel.location != nil {
-            height += .spacingXXS
+        if viewModel.location != nil || viewModel.time != nil {
+            height += .spacingXS
             height += .spacingM
         }
+
+        height += .spacingS
 
         return height
     }

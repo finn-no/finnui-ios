@@ -7,16 +7,47 @@ import UIKit
 
 final class ExploreDetailDemoView: UIView {
     private let viewModel = ExploreDetailViewModel(
-        title: "Skjorter",
+        title: "Barnerom",
         subtitle: "KOLLEKSJON",
         imageUrl: nil,
         sections: [
-            .init(title: "", items: .collections([
-                ExploreCollectionViewModel(title: "T-shirts"),
-                ExploreCollectionViewModel(title: "Planter")
+            .init(title: "Gå dypere til verks", items: .collections([
+                ExploreCollectionViewModel(title: "Bord"),
+                ExploreCollectionViewModel(title: "Seng"),
+                ExploreCollectionViewModel(title: "Stellebord"),
+                ExploreCollectionViewModel(title: "Stol"),
+                ExploreCollectionViewModel(title: "Oppbevaring"),
+                ExploreCollectionViewModel(title: "Dekorasjon")
             ])),
-            .init(title: "", items: .ads([
-                ExploreAdCellViewModel(title: "", location: "", price: "", time: "", aspectRatio: nil)
+            .init(title: "Eller rett på sak", items: .ads([
+                ExploreAdCellViewModel(
+                    title: "Hjemmekontor: skjerm, mus, tastatur+",
+                    location: "Oslo",
+                    price: "850 kr",
+                    time: "2 timer siden",
+                    aspectRatio: 1
+                ),
+                ExploreAdCellViewModel(
+                    title: "Ståbord for hjemmekontor",
+                    location: "Oslo",
+                    price: "4999 kr",
+                    time: "2 timer siden",
+                    aspectRatio: 1.33
+                ),
+                ExploreAdCellViewModel(
+                    title: "Aarsland hyller til kontor/hjemmekontor",
+                    location: "Oslo",
+                    price: "500 kr",
+                    time: "2 timer siden",
+                    aspectRatio: 0.74
+                ),
+                ExploreAdCellViewModel(
+                    title: "Pent brukt Microsoft Surface laptop",
+                    location: "Oslo",
+                    price: "4000 kr",
+                    time: "2 timer siden",
+                    aspectRatio: 1
+                )
             ]))
         ]
     )

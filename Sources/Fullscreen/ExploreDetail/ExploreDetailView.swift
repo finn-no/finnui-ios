@@ -128,7 +128,7 @@ public final class ExploreDetailView: UIView {
 
         for section in viewModel.sections {
             switch section.items {
-            case .collections(let collections):
+            case .collections(let collections), .selectedCategories(let collections):
                 snapshot.appendItems(collections.map(Item.collection), toSection: section)
             case .ads(let ads):
                 snapshot.appendItems(ads.map(Item.ad), toSection: section)
@@ -172,7 +172,7 @@ extension ExploreDetailView: UICollectionViewDelegate {
         guard offset <= 0 else {
             if heroViewTopConstraint.constant != -inset {
                 heroViewTopConstraint.constant = -inset
-                layoutIfNeeded()
+                layoutIfNeeded(animated: false)
             }
             return
         }
@@ -185,7 +185,7 @@ extension ExploreDetailView: UICollectionViewDelegate {
             heroViewTopConstraint.constant = -(inset + offset)
         }
 
-        layoutIfNeeded()
+        layoutIfNeeded(animated: false)
     }
 }
 
@@ -245,10 +245,22 @@ private extension ExploreDetailView {
 private extension ExploreDetailViewModel.Section {
     var headerFont: UIFont {
         switch items {
-        case .collections:
+        case .collections, .selectedCategories:
             return .bodyStrong
         case .ads:
             return .title3Strong
+        }
+    }
+}
+
+private extension UIView {
+    func layoutIfNeeded(animated: Bool) {
+        if animated {
+            layoutIfNeeded()
+        } else {
+            CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+            layoutIfNeeded()
+            CATransaction.commit()
         }
     }
 }

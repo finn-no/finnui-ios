@@ -30,6 +30,7 @@ public struct ExploreDetailViewModel: Hashable {
 extension ExploreDetailViewModel {
     public struct Section: Hashable {
         public enum Items: Hashable {
+            case selectedCategories([ExploreCollectionViewModel])
             case collections([ExploreCollectionViewModel])
             case ads([ExploreAdCellViewModel])
         }

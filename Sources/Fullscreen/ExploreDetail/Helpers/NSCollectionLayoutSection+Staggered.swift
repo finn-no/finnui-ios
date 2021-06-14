@@ -82,7 +82,7 @@ public extension NSCollectionLayoutSection {
     private static func itemHeight(model: StaggeredLayoutItem, itemWidth: CGFloat) -> CGFloat {
         switch model.staggeredLayoutItemHeight(forWidth: itemWidth) {
         case .dynamic(let aspectRatio, let extraHeight):
-            let aspectRatio = aspectRatio ?? .minImageAspectRatio
+            let aspectRatio = aspectRatio ?? 1
             let imageAspectRatio = min(max(aspectRatio, .minImageAspectRatio), .maxImageAspectRatio)
             return itemWidth / imageAspectRatio + extraHeight
         case .fixed(let height):
@@ -149,6 +149,6 @@ private enum GridLayoutConfiguration {
 // MARK: - Private extensions
 
 private extension CGFloat {
-    static let minImageAspectRatio: CGFloat = 1
+    static let minImageAspectRatio: CGFloat = 0.75
     static let maxImageAspectRatio: CGFloat = 1.5
 }

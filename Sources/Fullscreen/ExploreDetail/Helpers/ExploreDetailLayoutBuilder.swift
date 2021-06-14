@@ -16,7 +16,15 @@ struct ExploreDetailLayoutBuilder {
 
         switch section.items {
         case .collections(let collections):
-            let layoutSection: NSCollectionLayoutSection = collections.count > 5 ? .twoRowsGrid : .carouselSection
+            let layoutSection: NSCollectionLayoutSection = collections.count > 5
+                ? .twoRowsGrid
+                : .carouselSection(itemSize: CGSize(width: 140, height: 96))
+            if section.title != nil {
+                layoutSection.boundarySupplementaryItems = [.header(with: headerId, height: .absolute(49))]
+            }
+            return layoutSection
+        case .selectedCategories:
+            let layoutSection: NSCollectionLayoutSection = .carouselSection(itemSize: CGSize(width: 88, height: 88))
             if section.title != nil {
                 layoutSection.boundarySupplementaryItems = [.header(with: headerId, height: .absolute(49))]
             }
@@ -49,24 +57,26 @@ private extension NSCollectionLayoutSection {
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .absolute(size.width),
-                heightDimension: .absolute(size.height * 2 + .spacingM)
+                heightDimension: .absolute(size.height * 2 + .spacingS)
             ),
             subitem: item,
             count: 2
         )
-        group.interItemSpacing = .fixed(.spacingM)
+        group.interItemSpacing = .fixed(.spacingS)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: 0)
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.interGroupSpacing = .spacingM
+        section.interGroupSpacing = .spacingS
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: .spacingXL)
         return section
     }()
 
-    static var carouselSection: NSCollectionLayoutSection {
+    static func carouselSection(itemSize: CGSize) -> NSCollectionLayoutSection {
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .absolute(140),
-                heightDimension: .absolute(96)
+                widthDimension: .absolute(itemSize.width),
+                heightDimension: .absolute(itemSize.height)
             ),
             subitem: NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
@@ -79,7 +89,7 @@ private extension NSCollectionLayoutSection {
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: .spacingXS)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: .spacingS)
 
         return section
     }
