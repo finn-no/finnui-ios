@@ -9,7 +9,6 @@ public struct ExploreDetailViewModel: Hashable {
     public let subtitle: String
     public let imageUrl: String?
     public let showHeroView: Bool
-    public var sections: [Section]
 
     // MARK: - Init
 
@@ -17,33 +16,29 @@ public struct ExploreDetailViewModel: Hashable {
         title: String,
         subtitle: String,
         imageUrl: String?,
-        showHeroView: Bool,
-        sections: [ExploreDetailViewModel.Section]
+        showHeroView: Bool
     ) {
         self.title = title
         self.subtitle = subtitle
         self.imageUrl = imageUrl
         self.showHeroView = showHeroView
-        self.sections = sections
     }
 }
 
 // MARK: - Section
 
-extension ExploreDetailViewModel {
-    public struct Section: Hashable {
-        public enum Items: Hashable {
-            case selectedCategories([ExploreCollectionViewModel])
-            case collections([ExploreCollectionViewModel])
-            case ads([ExploreAdCellViewModel])
-        }
+public struct ExploreDetailSection: Hashable {
+    public enum Items: Hashable {
+        case selectedCategories([ExploreCollectionViewModel])
+        case collections([ExploreCollectionViewModel])
+        case ads([ExploreAdCellViewModel])
+    }
 
-        public let title: String?
-        public let items: Items
+    public let title: String?
+    public let items: Items
 
-        public init(title: String?, items: Items) {
-            self.title = title
-            self.items = items
-        }
+    public init(title: String?, items: Items) {
+        self.title = title
+        self.items = items
     }
 }

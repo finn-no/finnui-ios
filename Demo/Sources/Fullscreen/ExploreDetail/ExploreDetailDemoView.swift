@@ -23,6 +23,7 @@ final class ExploreDetailDemoView: UIView, Tweakable {
     ]
 
     private var kind: Kind = .collection
+    private var sections = [ExploreDetailSection]()
     private var favorites = Set<Int>()
 
     private lazy var view: ExploreDetailView = {
@@ -51,23 +52,35 @@ final class ExploreDetailDemoView: UIView, Tweakable {
         reload()
     }
 
-    func reload() {
-        let viewModel: ExploreDetailViewModel = {
-            switch kind {
-            case .collection:
-                return .collectionDetail(favorites: favorites)
-            case .selectedCategory:
-                return .selectedCategoryDetail(favorites: favorites)
-            }
-        }()
+    private func reload() {
+        switch kind {
+        case .collection:
+            view.configure(with: .collectionDetail)
+        case .selectedCategory:
+            view.configure(with: .selectedCategoryDetail)
+        }
 
-        view.configure(with: viewModel)
+        syncFavorites()
+        view.reloadSections()
+    }
+
+    private func syncFavorites() {
+        switch kind {
+        case .collection:
+            sections = ExploreDetailSection.collectionDetailSections(favorites: favorites)
+        case .selectedCategory:
+            sections = ExploreDetailSection.selectedCategorySections(favorites: favorites)
+        }
     }
 }
 
 // MARK: - ExploreViewDataSource
 
 extension ExploreDetailDemoView: ExploreDetailViewDataSource {
+    func sections(inExploreDetailView view: ExploreDetailView) -> [ExploreDetailSection] {
+        sections
+    }
+
     func exploreDetailView(
         _ view: ExploreDetailView,
         loadImageWithPath imagePath: String,
@@ -112,7 +125,8 @@ extension ExploreDetailDemoView: ExploreDetailViewDelegate {
             favorites.insert(indexPath.item)
         }
 
-        reload()
+        syncFavorites()
+        view.updateFavoriteStatusForVisibleItems()
     }
 
     func exploreDetailView(

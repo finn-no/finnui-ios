@@ -21,6 +21,12 @@ final class ExploreAdCell: UICollectionViewCell {
         }
     }
 
+    var isFavorite = false {
+        didSet {
+            favoriteButton.isToggled = isFavorite
+        }
+    }
+
     private(set) var viewModel: ExploreAdCellViewModel?
     private(set) var indexPath: IndexPath?
 
@@ -163,7 +169,7 @@ final class ExploreAdCell: UICollectionViewCell {
         priceLabel.text = viewModel.price
         priceLabel.sizeToFit()
         priceBackground.isHidden = viewModel.price == nil
-        favoriteButton.isToggled = viewModel.isFavorite
+        isFavorite = viewModel.isFavorite
 
         [titleLabel, locationLabel, timeLabel].forEach {
             $0.sizeToFit()

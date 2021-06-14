@@ -9,7 +9,7 @@ struct ExploreDetailLayoutBuilder {
     let elementKind: String
 
     func collectionLayoutSection(
-        for section: ExploreDetailViewModel.Section,
+        for section: ExploreDetailSection,
         at sectionIndex: Int
     ) -> NSCollectionLayoutSection {
         let headerId = UICollectionView.elementKindSectionHeader

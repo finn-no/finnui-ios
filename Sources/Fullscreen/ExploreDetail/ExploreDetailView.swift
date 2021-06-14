@@ -39,6 +39,7 @@ public protocol ExploreDetailViewDataSource: AnyObject {
         cancelLoadingImageWithPath imagePath: String,
         imageWidth: CGFloat
     )
+    func sections(inExploreDetailView view: ExploreDetailView) -> [ExploreDetailSection]
 }
 
 // MARK: - View
@@ -52,8 +53,10 @@ public final class ExploreDetailView: UIView {
 
     // MARK: - Private properties
 
-    private typealias Section = ExploreDetailViewModel.Section
-    private var sections = [Section]()
+    private typealias Section = ExploreDetailSection
+    private var sections: [Section] {
+        dataSource?.sections(inExploreDetailView: self) ?? []
+    }
     private let imageCache = ImageMemoryCache()
     private let layoutBuilder = ExploreDetailLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
 
@@ -144,18 +147,12 @@ public final class ExploreDetailView: UIView {
     // MARK: - Setup
 
     public func configure(with viewModel: ExploreDetailViewModel) {
-        self.sections = viewModel.sections
-
         heroView.configure(withTitle: viewModel.title, subtitle: viewModel.subtitle, imageUrl: viewModel.imageUrl)
         heroView.isHidden = !viewModel.showHeroView
         collectionView.contentInset.top = viewModel.showHeroView ? 220 : 0
-
-        reload(sections: viewModel.sections)
     }
 
-    public func reload(sections: [ExploreDetailViewModel.Section]) {
-        self.sections = sections
-
+    public func reloadSections() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections(sections)
 
@@ -170,7 +167,22 @@ public final class ExploreDetailView: UIView {
             }
         }
 
-        collectionDataSource.apply(snapshot, animatingDifferences: false)
+        collectionDataSource.apply(snapshot, animatingDifferences: true)
+    }
+
+    public func updateFavoriteStatusForVisibleItems() {
+        for indexPath in collectionView.indexPathsForVisibleItems {
+            let section = sections[indexPath.section]
+
+            switch section.items {
+            case .collections, .selectedCategories:
+                break
+            case .ads(let items):
+                if let cell = collectionView.cellForItem(at: indexPath) as? ExploreAdCell {
+                    cell.isFavorite = items[indexPath.item].isFavorite
+                }
+            }
+        }
     }
 
     private func setup() {
@@ -286,7 +298,7 @@ private extension ExploreDetailView {
     }
 }
 
-private extension ExploreDetailViewModel.Section {
+private extension ExploreDetailSection {
     var headerFont: UIFont {
         switch items {
         case .collections, .selectedCategories:
