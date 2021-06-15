@@ -17,16 +17,16 @@ public final class TagCloudGridView: UIView, UICollectionViewDelegate {
 
     // MARK: - Static properties
 
-    public static func height(for items: [TagCloudCellViewModel]) -> CGFloat {
-        let builder = TagCloudLayoutBuilder(models: items)
+    public static func height(for items: [TagCloudLayoutDataProvider]) -> CGFloat {
+        let builder = TagCloudLayoutBuilder(items: items)
         return builder.groupLayoutSize(forItems: builder.layoutGroupItems()).height
     }
 
-    public static func collectionLayoutGroup(with models: [TagCloudCellViewModel]) -> NSCollectionLayoutGroup {
+    public static func collectionLayoutGroup(with items: [TagCloudLayoutDataProvider]) -> NSCollectionLayoutGroup {
         NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(height(for: models))
+                heightDimension: .absolute(height(for: items))
             ),
             subitem: NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
@@ -59,11 +59,9 @@ public final class TagCloudGridView: UIView, UICollectionViewDelegate {
         let collectionView = UICollectionView(
             frame: bounds,
             collectionViewLayout: UICollectionViewCompositionalLayout { [weak self] _, _  in
-                TagCloudLayoutBuilder(models: self?.items ?? []).layoutSection()
+                TagCloudLayoutBuilder(items: self?.items ?? []).layoutSection()
             }
         )
-        collectionView.contentInset.left = .spacingM
-        collectionView.contentInset.right = .spacingM
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.alwaysBounceVertical = false
@@ -121,7 +119,7 @@ public final class TagCloudGridView: UIView, UICollectionViewDelegate {
 // MARK: - Layout builder
 
 private struct TagCloudLayoutBuilder {
-    let models: [TagCloudCellViewModel]
+    let items: [TagCloudLayoutDataProvider]
     private let spacing: CGFloat = .spacingS
 
     func layoutSection() -> NSCollectionLayoutSection {
@@ -171,7 +169,7 @@ private struct TagCloudLayoutBuilder {
 
     // Algorithm is based on https://stackoverflow.com/a/35518541
     private func createRows() -> [[CGFloat]] {
-        let widths = models.map({ TagCloudCell.width(for: $0) })
+        let widths = items.map({ TagCloudCell.width(for: $0) })
         let totalSum = widths.reduce(0, +)
         let estimatedRowWidth = UIScreen.main.bounds.size.width * 2.5
         let numberOfRows = Int(min(3, (totalSum / estimatedRowWidth).rounded(.up)))

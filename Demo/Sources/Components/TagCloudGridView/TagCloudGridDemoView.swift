@@ -14,20 +14,18 @@ final class TagCloudGridDemoView: UIView {
         return view
     }()
 
-    private var items: [TagCloudCellViewModel] = {
-        return [
-            TagCloudCellViewModel(text: "Brettspill", iconUrl: "displayTypeGrid", backgroundColor: .systemPink, foregroundColor: .white),
-            TagCloudCellViewModel(text: "Foto", iconUrl: nil, backgroundColor: .systemOrange, foregroundColor: .white),
-            TagCloudCellViewModel(text: "Gaming", iconUrl: nil, backgroundColor: .systemRed, foregroundColor: .white),
-            TagCloudCellViewModel(text: "Hjemmekontor", iconUrl: nil, backgroundColor: .systemGreen, foregroundColor: .white),
-            TagCloudCellViewModel(text: "Planter", iconUrl: nil, backgroundColor: .systemBlue, foregroundColor: .white),
-            TagCloudCellViewModel(text: "Puslespill", iconUrl: nil, backgroundColor: .systemPurple, foregroundColor: .white),
-            TagCloudCellViewModel(text: "Spillkonsoller", iconUrl: nil, backgroundColor: .systemTeal, foregroundColor: .white),
-            TagCloudCellViewModel(text: "Studentlivet", iconUrl: "displayTypeGrid", backgroundColor: .systemBlue, foregroundColor: .white),
-            TagCloudCellViewModel(text: "Søte dyr", iconUrl: nil, backgroundColor: .systemOrange, foregroundColor: .white),
-            TagCloudCellViewModel(text: "Vintersport", iconUrl: nil, backgroundColor: .systemPurple, foregroundColor: .white)
-        ]
-    }()
+    private var items: [TagCloudCellViewModel] = [
+        TagCloudCellViewModel(title: "Brettspill", iconUrl: "displayTypeGrid"),
+        TagCloudCellViewModel(title: "Foto", iconUrl: nil),
+        TagCloudCellViewModel(title: "Gaming", iconUrl: nil),
+        TagCloudCellViewModel(title: "Hjemmekontor", iconUrl: nil),
+        TagCloudCellViewModel(title: "Planter", iconUrl: nil),
+        TagCloudCellViewModel(title: "Puslespill", iconUrl: nil),
+        TagCloudCellViewModel(title: "Spillkonsoller", iconUrl: nil),
+        TagCloudCellViewModel(title: "Studentlivet", iconUrl: "displayTypeGrid"),
+        TagCloudCellViewModel(title: "Søte dyr", iconUrl: nil),
+        TagCloudCellViewModel(title: "Vintersport", iconUrl: nil)
+    ]
 
     // MARK: - Init
 
@@ -44,8 +42,8 @@ final class TagCloudGridDemoView: UIView {
         addSubview(view)
 
         NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor),
+            view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
             view.centerYAnchor.constraint(equalTo: centerYAnchor),
             view.heightAnchor.constraint(equalToConstant: TagCloudGridView.height(for: items))
         ])

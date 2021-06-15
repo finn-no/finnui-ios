@@ -11,14 +11,14 @@ final class TagCloudCell: UICollectionViewCell {
 
     static let height: CGFloat = 41
     static let iconSize: CGFloat = 24
-    static let textFont = UIFont.bodyRegular
+    static let textFont = UIFont.bodyStrong
 
-    static func width(for viewModel: TagCloudCellViewModel) -> CGFloat {
+    static func width(for item: TagCloudLayoutDataProvider) -> CGFloat {
         var width: CGFloat = .spacingS * 2
-        if viewModel.iconUrl != nil {
+        if item.iconUrl != nil {
             width += iconSize
         }
-        width += viewModel.text.width(withConstrainedHeight: height, font: textFont) + .spacingM
+        width += item.title.width(withConstrainedHeight: height, font: textFont) + .spacingM
         return width
     }
 
@@ -41,7 +41,7 @@ final class TagCloudCell: UICollectionViewCell {
         return view
     }()
 
-    private lazy var textLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel(withAutoLayout: true)
         label.font = TagCloudCell.textFont
         label.textColor = .white
@@ -53,7 +53,7 @@ final class TagCloudCell: UICollectionViewCell {
     }()
 
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [iconView, textLabel])
+        let stackView = UIStackView(arrangedSubviews: [iconView, titleLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
@@ -91,9 +91,9 @@ final class TagCloudCell: UICollectionViewCell {
         contentView.backgroundColor = viewModel.backgroundColor
 
         stackViewLeading.constant = viewModel.iconUrl == nil ? .spacingM : .spacingS
-        textLabel.textColor = viewModel.foregroundColor
-        textLabel.text = viewModel.text
-        textLabel.sizeToFit()
+        titleLabel.textColor = viewModel.foregroundColor
+        titleLabel.text = viewModel.title
+        titleLabel.sizeToFit()
 
         iconView.isHidden = viewModel.iconUrl == nil
         iconView.tintColor = viewModel.foregroundColor
@@ -108,7 +108,7 @@ final class TagCloudCell: UICollectionViewCell {
 
     private func setup() {
         contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 8
+        contentView.layer.cornerRadius = 19
         contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
@@ -119,7 +119,7 @@ final class TagCloudCell: UICollectionViewCell {
             iconView.widthAnchor.constraint(equalToConstant: TagCloudCell.iconSize),
             iconView.heightAnchor.constraint(equalTo: iconView.widthAnchor),
 
-            textLabel.centerYAnchor.constraint(equalTo: stackView.centerYAnchor)
+            titleLabel.centerYAnchor.constraint(equalTo: stackView.centerYAnchor)
         ])
     }
 }
