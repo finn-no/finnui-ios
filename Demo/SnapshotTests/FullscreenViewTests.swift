@@ -52,10 +52,10 @@ class FullscreenViewTests: XCTestCase {
     }
 
     func testExploreView() {
-        snapshot(.exploreDetailView)
+        snapshot(.exploreView)
     }
 
     func testExploreDetailView() {
-        snapshot(.exploreDetail)
+        snapshot(.exploreDetailView)
     }
 }
