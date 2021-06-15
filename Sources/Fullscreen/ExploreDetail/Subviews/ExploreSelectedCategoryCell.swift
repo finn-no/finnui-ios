@@ -71,7 +71,13 @@ final class ExploreSelectedCategoryCell: UICollectionViewCell {
 
     private func setup() {
         clipsToBounds = true
-        dropShadow(color: UIColor(hex: "C3CCD9"), opacity: 0.3, offset: CGSize(width: 0, height: 8), radius: 8)
+
+        dropShadow(
+            color: .dynamicColor(defaultColor: UIColor(hex: "C3CCD9"), darkModeColor: .clear),
+            opacity: 0.3,
+            offset: CGSize(width: 0, height: 8),
+            radius: 8
+        )
 
         contentView.layer.cornerRadius = .spacingM
         contentView.backgroundColor = .dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgSecondary)
