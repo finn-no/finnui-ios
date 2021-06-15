@@ -135,8 +135,11 @@ public final class ExploreDetailView: UIView {
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(dataSource: ExploreDetailViewDataSource, delegate: ExploreDetailViewDelegate) {
+        self.dataSource = dataSource
+        self.delegate = delegate
+
+        super.init(frame: .zero)
         setup()
     }
 

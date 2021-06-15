@@ -27,9 +27,8 @@ final class ExploreDetailDemoView: UIView, Tweakable {
     private var favorites = Set<Int>()
 
     private lazy var view: ExploreDetailView = {
-        let view = ExploreDetailView(withAutoLayout: true)
-        view.delegate = self
-        view.dataSource = self
+        let view = ExploreDetailView(dataSource: self, delegate: self)
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
