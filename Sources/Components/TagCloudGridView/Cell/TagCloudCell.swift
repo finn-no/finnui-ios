@@ -97,7 +97,7 @@ final class TagCloudCell: UICollectionViewCell {
     func configure(with viewModel: TagCloudCellViewModel) {
         contentView.backgroundColor = viewModel.backgroundColor
 
-        stackViewLeading.constant = viewModel.iconUrl == nil ? .spacingM : .spacingS
+        stackViewLeading.constant = viewModel.iconUrl == nil ? .spacingM : 12
         titleLabel.textColor = viewModel.foregroundColor
         titleLabel.text = viewModel.title
         titleLabel.sizeToFit()
