@@ -70,7 +70,7 @@ final class ExploreCollectionCell: UICollectionViewCell {
 
     func configure(with viewModel: ExploreCollectionViewModel, kind: Kind = .regular) {
         if let imageUrl = viewModel.imageUrl {
-            imageView.loadImage(for: imageUrl, imageWidth: TagCloudCell.iconSize)
+            imageView.loadImage(for: imageUrl, imageWidth: contentView.frame.size.width)
         }
 
         switch kind {
