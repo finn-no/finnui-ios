@@ -85,6 +85,7 @@ public final class ExploreView: UIView {
                     let cell = collectionView.dequeue(ExploreTagCloudGridCell.self, for: indexPath)
                     cell.gridView.tag = indexPath.section
                     cell.gridView.delegate = self
+                    cell.gridView.remoteImageViewDataSource = self
                     cell.gridView.configure(withItems: viewModels)
                     return cell
                 }
