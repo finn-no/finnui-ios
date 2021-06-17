@@ -24,7 +24,7 @@ struct ExploreDetailLayoutBuilder {
             }
             return layoutSection
         case .selectedCategories:
-            let layoutSection: NSCollectionLayoutSection = .carouselSection(itemSize: CGSize(width: 88, height: 88))
+            let layoutSection: NSCollectionLayoutSection = .carouselSection(itemSize: CGSize(width: 104, height: 88))
             layoutSection.contentInsets.top = .spacingM
             if section.title != nil {
                 layoutSection.boundarySupplementaryItems = [.header(with: headerId, height: .absolute(49))]

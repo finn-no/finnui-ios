@@ -35,7 +35,7 @@ final class ExploreSelectedCategoryCell: UICollectionViewCell {
         label.minimumScaleFactor = 0.6
         label.setContentHuggingPriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         return label
     }()
 
@@ -81,18 +81,22 @@ final class ExploreSelectedCategoryCell: UICollectionViewCell {
 
         contentView.layer.cornerRadius = .spacingM
         contentView.backgroundColor = .dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgSecondary)
-        contentView.addSubview(imageView)
-        contentView.addSubview(titleLabel)
+
+        let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = .spacingS
+
+        contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .spacingM),
-            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingS),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacingS),
             imageView.widthAnchor.constraint(equalToConstant: ExploreSelectedCategoryCell.iconSize),
-            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
-
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: .spacingS),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingS),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacingS)
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
         ])
     }
 }

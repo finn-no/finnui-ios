@@ -39,7 +39,7 @@ final class ExploreCollectionCell: UICollectionViewCell {
         label.setContentHuggingPriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.numberOfLines = 0
-        label.dropShadow(color: .black, opacity: 0.5, offset: .zero, radius: 1.5)
+        label.dropShadow(color: .black, opacity: 0.5, offset: .zero, radius: 3)
         return label
     }()
 
