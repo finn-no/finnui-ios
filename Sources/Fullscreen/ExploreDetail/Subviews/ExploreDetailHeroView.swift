@@ -48,13 +48,10 @@ final class ExploreDetailHeroView: UIView {
         return label
     }()
 
-    private lazy var gradientView: UIView = {
-        let view = GradientView(
-            startColor: UIColor.black.withAlphaComponent(0),
-            endColor: UIColor.black.withAlphaComponent(0.5)
-        )
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private lazy var gradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.colors = [UIColor.black.withAlphaComponent(0).cgColor, UIColor.black.withAlphaComponent(0.5).cgColor]
+        return layer
     }()
 
     // MARK: - Init
@@ -66,6 +63,11 @@ final class ExploreDetailHeroView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
     }
 
     // MARK: - Setup
@@ -92,11 +94,10 @@ final class ExploreDetailHeroView: UIView {
         stackView.setCustomSpacing(.spacingS, after: titleLabel)
 
         addSubview(imageView)
-        imageView.addSubview(gradientView)
+        layer.addSublayer(gradientLayer)
         addSubview(stackView)
 
         imageView.fillInSuperview()
-        gradientView.fillInSuperview()
 
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
