@@ -210,13 +210,15 @@ public final class ExploreDetailView: UIView {
 
 extension ExploreDetailView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = sections[indexPath.section]
+        guard let item = collectionDataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
 
-        switch section.items {
-        case .collections(let items), .selectedCategories(let items):
-            delegate?.exploreDetailView(self, didSelectCollection: items[indexPath.item], at: indexPath)
-        case .ads(let items):
-            delegate?.exploreDetailView(self, didSelectAd: items[indexPath.item], at: indexPath)
+        switch item {
+        case .collection(let viewModel), .selectedCategory(let viewModel):
+            delegate?.exploreDetailView(self, didSelectCollection: viewModel, at: indexPath)
+        case .ad(let viewModel):
+            delegate?.exploreDetailView(self, didSelectAd: viewModel, at: indexPath)
         }
     }
 

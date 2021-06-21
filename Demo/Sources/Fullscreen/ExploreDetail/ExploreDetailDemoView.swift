@@ -109,7 +109,7 @@ extension ExploreDetailDemoView: ExploreDetailViewDataSource {
     func exploreDetailView(_ view: ExploreDetailView, cancelLoadingImageWithPath imagePath: String, imageWidth: CGFloat) {}
 }
 
-// MARK: - ExploreViewDelegate
+// MARK: - ExploreDetailViewDelegate
 
 extension ExploreDetailDemoView: ExploreDetailViewDelegate {
     func exploreDetailView(

@@ -51,6 +51,7 @@ final class ExploreSelectedCategoryCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
+        super.prepareForReuse()
         imageView.cancelLoading()
         imageView.setImage(nil, animated: false)
         titleLabel.text = nil
