@@ -175,13 +175,17 @@ public final class ExploreDetailView: UIView {
 
     public func updateFavoriteStatusForVisibleItems() {
         for indexPath in collectionView.indexPathsForVisibleItems {
+            guard indexPath.section < sections.count else {
+                continue
+            }
+
             let section = sections[indexPath.section]
 
             switch section.items {
             case .collections, .selectedCategories:
                 break
             case .ads(let items):
-                if let cell = collectionView.cellForItem(at: indexPath) as? ExploreAdCell {
+                if let cell = collectionView.cellForItem(at: indexPath) as? ExploreAdCell, indexPath.item < items.count {
                     cell.isFavorite = items[indexPath.item].isFavorite
                 }
             }
