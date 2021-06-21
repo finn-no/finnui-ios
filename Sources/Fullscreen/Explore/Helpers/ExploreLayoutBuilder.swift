@@ -36,7 +36,9 @@ struct ExploreLayoutBuilder {
         )
         header.contentInsets.leading = .spacingM
 
-        layoutSection.boundarySupplementaryItems = [header]
+        if section.title != nil {
+            layoutSection.boundarySupplementaryItems = [header]
+        }
 
         return layoutSection
     }

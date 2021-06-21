@@ -171,7 +171,7 @@ private struct TagCloudLayoutBuilder {
     private func createRows() -> [[CGFloat]] {
         let widths = items.map({ TagCloudCell.width(for: $0) })
         let totalSum = widths.reduce(0, +)
-        let estimatedRowWidth = UIScreen.main.bounds.size.width * 2.5
+        let estimatedRowWidth = UIScreen.main.bounds.size.width * 3
         let numberOfRows = Int(min(3, (totalSum / estimatedRowWidth).rounded(.up)))
         var avgSum = totalSum / CGFloat(numberOfRows)
         var results = [[CGFloat]]()

@@ -92,14 +92,13 @@ public final class ExploreView: UIView {
             })
 
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let self = self else { return nil }
-            let section = self.sections[indexPath.section]
+            guard let section = self?.sections[indexPath.section], let title = section.title else { return nil }
             let view = collectionView.dequeue(
                 ExploreSectionHeaderView.self,
                 for: indexPath,
                 ofKind: UICollectionView.elementKindSectionHeader
             )
-            view.configure(withText: section.title)
+            view.configure(withText: title)
             return view
         }
 
