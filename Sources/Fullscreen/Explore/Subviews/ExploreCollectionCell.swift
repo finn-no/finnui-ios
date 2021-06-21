@@ -39,9 +39,14 @@ final class ExploreCollectionCell: UICollectionViewCell {
         label.setContentHuggingPriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.numberOfLines = 0
-        label.dropShadow(color: .black, opacity: 0.5, offset: .zero, radius: 1.5)
+        label.dropShadow(color: .black, opacity: 0.5, offset: .zero, radius: 3)
         return label
     }()
+
+    private lazy var titleBottomConstraint = titleLabel.bottomAnchor.constraint(
+        equalTo: contentView.bottomAnchor,
+        constant: -.spacingM
+    )
 
     // MARK: - Init
 
@@ -55,8 +60,10 @@ final class ExploreCollectionCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.cancelLoading()
+        imageView.setImage(nil, animated: false)
         imageView.backgroundColor = .secondaryBlue
-        imageView.image = nil
         titleLabel.text = nil
     }
 
@@ -64,7 +71,7 @@ final class ExploreCollectionCell: UICollectionViewCell {
 
     func configure(with viewModel: ExploreCollectionViewModel, kind: Kind = .regular) {
         if let imageUrl = viewModel.imageUrl {
-            imageView.loadImage(for: imageUrl, imageWidth: TagCloudCell.iconSize)
+            imageView.loadImage(for: imageUrl, imageWidth: contentView.frame.size.width)
         }
 
         switch kind {
@@ -73,6 +80,8 @@ final class ExploreCollectionCell: UICollectionViewCell {
         case .big:
             titleLabel.font = .title3Strong
         }
+
+        titleBottomConstraint.constant = kind == .narrow ? -.spacingS : -.spacingM
 
         titleLabel.text = viewModel.title
         titleLabel.sizeToFit()
@@ -89,7 +98,7 @@ final class ExploreCollectionCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: .spacingM),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacingM),
+            titleBottomConstraint,
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacingM)
         ])

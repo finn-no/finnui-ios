@@ -29,8 +29,9 @@ final class ExploreSectionHeaderView: UICollectionReusableView {
 
     // MARK: - Setup
 
-    func configure(withText text: String) {
+    func configure(withText text: String, font: UIFont = .title3Strong) {
         label.text = text
+        label.font = font
     }
 
     private func setup() {
@@ -38,8 +39,8 @@ final class ExploreSectionHeaderView: UICollectionReusableView {
 
         NSLayoutConstraint.activate([
             label.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 6),
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
 }

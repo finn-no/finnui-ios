@@ -13,6 +13,7 @@ public enum FullscreenDemoViews: String, DemoViews {
     case favoriteAdSortingView
     case searchDropdown
     case exploreView
+    case exploreDetailView
 
     public var viewController: UIViewController {
         switch self {
@@ -34,6 +35,8 @@ public enum FullscreenDemoViews: String, DemoViews {
             return DemoViewController<SearchDropdownDemoView>()
         case .exploreView:
             return makeExploreView()
+        case .exploreDetailView:
+            return DemoViewController<ExploreDetailDemoView>(constrainToTopSafeArea: true, constrainToBottomSafeArea: false)
         }
     }
 }
@@ -53,7 +56,7 @@ private extension FullscreenDemoViews {
             .foregroundColor: UIColor.textPrimary
         ]
 
-        let viewController = DemoViewController<ExploreDemoView>()
+        let viewController = DemoViewController<ExploreDemoView>(constrainToTopSafeArea: false, constrainToBottomSafeArea: false)
         viewController.navigationItem.title = "Torget"
         viewController.navigationItem.largeTitleDisplayMode = .always
         viewController.navigationItem.standardAppearance = appearance
@@ -63,7 +66,6 @@ private extension FullscreenDemoViews {
             target: nil,
             action: nil
         )
-    
         let searchController = UISearchController(searchResultsController: nil)
         searchController.showsSearchResultsController = true
         searchController.obscuresBackgroundDuringPresentation = false

@@ -9,8 +9,8 @@ final class TagCloudCell: UICollectionViewCell {
 
     // MARK: - Static properties
 
-    static let height: CGFloat = 41
-    static let iconSize: CGFloat = 24
+    static let height: CGFloat = 42
+    static let iconSize: CGFloat = 22.5
     static let textFont = UIFont.bodyStrong
 
     static func width(for item: TagCloudLayoutDataProvider) -> CGFloat {
@@ -62,11 +62,6 @@ final class TagCloudCell: UICollectionViewCell {
         return stackView
     }()
 
-    private lazy var stackViewLeading = stackView.leadingAnchor.constraint(
-        equalTo: contentView.leadingAnchor,
-        constant: .spacingS
-    )
-
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -85,12 +80,18 @@ final class TagCloudCell: UICollectionViewCell {
         dropShadow(color: .black, opacity: showShadow ? 0.1 : 0, offset: CGSize(width: 0, height: 2), radius: 4)
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        iconView.cancelLoading()
+        iconView.setImage(nil, animated: false)
+        titleLabel.text = nil
+    }
+
     // MARK: - Setup
 
     func configure(with viewModel: TagCloudCellViewModel) {
         contentView.backgroundColor = viewModel.backgroundColor
 
-        stackViewLeading.constant = viewModel.iconUrl == nil ? .spacingM : .spacingS
         titleLabel.textColor = viewModel.foregroundColor
         titleLabel.text = viewModel.title
         titleLabel.sizeToFit()
@@ -112,7 +113,7 @@ final class TagCloudCell: UICollectionViewCell {
         contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackViewLeading,
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacingM),
 
