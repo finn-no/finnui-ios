@@ -13,12 +13,12 @@ public struct ExploreSectionViewModel: Hashable {
     }
 
     public let layout: Layout
-    public let title: String
+    public let title: String?
     public let items: [ExploreCollectionViewModel]
 
     // MARK: - Init
 
-    public init(layout: Layout, title: String, items: [ExploreCollectionViewModel]) {
+    public init(layout: Layout, title: String?, items: [ExploreCollectionViewModel]) {
         self.layout = layout
         self.title = title
         self.items = items
