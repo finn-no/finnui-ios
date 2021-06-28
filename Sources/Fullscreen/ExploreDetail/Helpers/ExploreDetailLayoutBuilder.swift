@@ -10,15 +10,16 @@ struct ExploreDetailLayoutBuilder {
 
     func collectionLayoutSection(
         for section: ExploreDetailSection,
-        at sectionIndex: Int
+        at sectionIndex: Int,
+        traitCollection: UITraitCollection
     ) -> NSCollectionLayoutSection {
         let headerId = UICollectionView.elementKindSectionHeader
 
         switch section.items {
         case .collections(let collections):
-            let layoutSection: NSCollectionLayoutSection = collections.count > 5
-                ? .twoRowsGrid
-                : .carouselSection(itemSize: CGSize(width: 140, height: 96))
+            let layoutSection: NSCollectionLayoutSection = collections.count < 6 || traitCollection.horizontalSizeClass == .regular
+                ? .carouselSection(itemSize: CGSize(width: 140, height: 96))
+                : .twoRowsGrid
             if section.title != nil {
                 layoutSection.boundarySupplementaryItems = [.header(with: headerId, height: .absolute(49))]
             }
@@ -31,7 +32,7 @@ struct ExploreDetailLayoutBuilder {
             }
             return layoutSection
         case .ads(let ads):
-            let layoutSection = NSCollectionLayoutSection.staggered(with: ads)
+            let layoutSection = NSCollectionLayoutSection.staggered(with: ads, traitCollection: traitCollection)
 
             if sectionIndex == 0 {
                 layoutSection.contentInsets.top = .spacingL

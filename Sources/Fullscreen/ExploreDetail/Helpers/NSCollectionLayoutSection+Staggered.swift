@@ -24,9 +24,9 @@ public protocol StaggeredLayoutItem {
 // MARK: - Staggered layout
 
 public extension NSCollectionLayoutSection {
-    static func staggered(with models: [StaggeredLayoutItem]) -> NSCollectionLayoutSection {
+    static func staggered(with models: [StaggeredLayoutItem], traitCollection: UITraitCollection) -> NSCollectionLayoutSection {
+        let configuration = GridLayoutConfiguration(traitCollection: traitCollection)
         let contentWidth = UIScreen.main.bounds.size.width
-        let configuration = GridLayoutConfiguration(width: contentWidth)
         let columnItemWidth = configuration.itemWidth(for: contentWidth)
         var items = [NSCollectionLayoutGroupCustomItem]()
         let columnsRange = 0 ..< configuration.numberOfColumns
@@ -42,14 +42,14 @@ public extension NSCollectionLayoutSection {
                     itemWidth: columnItemWidth,
                     columnIndex: columnIndex
                 )
-                let yOffset = CGFloat(columns[columnIndex]) + configuration.topOffset
+                let yOffset = CGFloat(columns[columnIndex])
                 let itemHeight = self.itemHeight(model: model, itemWidth: columnItemWidth)
                 frame = CGRect(x: xOffset, y: yOffset, width: columnItemWidth, height: itemHeight)
                 columns[columnIndex] = Int(frame.maxY + configuration.columnSpacing)
             case .fullWidth:
                 let columnIndex = configuration.indexOfHighestValue(in: columns)
                 let xOffset = configuration.sidePadding
-                let yOffset = CGFloat(columns[columnIndex]) + configuration.topOffset
+                let yOffset = CGFloat(columns[columnIndex])
                 let itemWidth = contentWidth - configuration.sidePadding * 2
                 let itemHeight = self.itemHeight(model: model, itemWidth: itemWidth)
                 frame = CGRect(x: xOffset, y: yOffset, width: itemWidth, height: itemHeight)
@@ -91,37 +91,15 @@ public extension NSCollectionLayoutSection {
 
 // MARK: - Configuration
 
-private enum GridLayoutConfiguration {
-    case small
-    case medium
-    case large
-
-    static let mediumRange: Range<CGFloat> = (375.0 ..< 450.0)
-
-    init(width: CGFloat) {
-        switch width {
-        case let width where width > GridLayoutConfiguration.mediumRange.upperBound:
-            self = .large
-        case let width where width < GridLayoutConfiguration.mediumRange.lowerBound:
-            self = .small
-        default:
-            self = .medium
-        }
+private struct GridLayoutConfiguration {
+    init(traitCollection: UITraitCollection) {
+        numberOfColumns = traitCollection.horizontalSizeClass == .regular ? 3 : 2
     }
 
-    var topOffset: CGFloat {
-        switch self {
-        case .large:
-            return 10
-        default:
-            return 0
-        }
-    }
-
-    var sidePadding: CGFloat { 16 }
-    var lineSpacing: CGFloat { 16 }
-    var columnSpacing: CGFloat { 16 }
-    var numberOfColumns: Int { 2 }
+    let numberOfColumns: Int
+    let sidePadding: CGFloat = .spacingM
+    let lineSpacing: CGFloat = .spacingM
+    let columnSpacing: CGFloat = .spacingM
 
     func itemWidth(for collectionViewWidth: CGFloat) -> CGFloat {
         let columnPadding = columnSpacing * CGFloat(numberOfColumns - 1)

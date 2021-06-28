@@ -69,7 +69,11 @@ public final class ExploreDetailView: UIView {
             frame: bounds,
             collectionViewLayout: UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
                 guard let self = self else { return nil }
-                return self.layoutBuilder.collectionLayoutSection(for: self.sections[sectionIndex], at: sectionIndex)
+                return self.layoutBuilder.collectionLayoutSection(
+                    for: self.sections[sectionIndex],
+                    at: sectionIndex,
+                    traitCollection: self.traitCollection
+                )
             }
         )
         collectionView.showsVerticalScrollIndicator = false
