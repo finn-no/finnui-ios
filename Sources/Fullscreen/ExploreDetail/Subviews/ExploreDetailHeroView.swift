@@ -101,7 +101,7 @@ final class ExploreDetailHeroView: UIView {
 
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingL),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
 
             titleLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8)
         ])
