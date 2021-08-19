@@ -5,7 +5,7 @@ import UIKit
 class CatDogBuyingTipsDemoView: UIView, Tweakable {
     // MARK: - Private properties
 
-    private lazy var demoView = CatDogBuyingTipsView(withAutoLayout: true)
+    private lazy var demoView = CatDogBuyingTipsView(identifier: "cat-dog-tips", delegate: self, withAutoLayout: true)
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
 
     lazy var tweakingOptions: [TweakingOption] = [
@@ -55,7 +55,11 @@ class CatDogBuyingTipsDemoView: UIView, Tweakable {
 
 extension CatDogBuyingTipsDemoView: CatDogBuyingTipsViewDelegate {
     func catDogBuyingTipsView(_ view: CatDogBuyingTipsView, didSelectActioButtonForItem selectedItem: NumberedListItem) {
-        print("✅ Selected button with title: \"\(selectedItem.actionButtonTitle ?? "")\"")
+        print("👉 Selected button with title: \"\(selectedItem.actionButtonTitle ?? "")\"")
+    }
+
+    public func adTipsCollapsibleView(_ view: AdTipsCollapsibleView, withIdentifier identifier: String, didChangeExpandState isExpanded: Bool) {
+        print("❕ View with identifier '\(identifier)' changed expanded state. Is expanded: \(isExpanded ? "✅" : "❌")")
     }
 }
 

@@ -56,7 +56,7 @@ class AdTipsCollapsibleDemoView: UIView, Tweakable {
     ) {
         collapsibleContentView?.removeFromSuperview()
 
-        let collapsibleContentView = AdTipsCollapsibleView(withAutoLayout: true)
+        let collapsibleContentView = AdTipsCollapsibleView(identifier: "adtips-demo-view", delegate: self, withAutoLayout: true)
         collapsibleContentView.configure(with: title, expandCollapseButtonTitles: (expanded: "Vis mindre", collapsed: "Vis mer"), headerImage: UIImage(named: "virtualViewing"), contentView: contentView ?? self.contentView)
 
         scrollView.addSubview(collapsibleContentView)
@@ -64,5 +64,13 @@ class AdTipsCollapsibleDemoView: UIView, Tweakable {
         collapsibleContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -.spacingXL).isActive = true
 
         self.collapsibleContentView = collapsibleContentView
+    }
+}
+
+// MARK: - AdTipsCollapsibleViewDelegate
+
+extension AdTipsCollapsibleDemoView: AdTipsCollapsibleViewDelegate {
+    func adTipsCollapsibleView(_ view: AdTipsCollapsibleView, withIdentifier identifier: String, didChangeExpandState isExpanded: Bool) {
+        print("❕ View with identifier '\(identifier)' changed expanded state. Is expanded: \(isExpanded ? "✅" : "❌")")
     }
 }
