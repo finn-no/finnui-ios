@@ -5,9 +5,9 @@
         "package": "FinniversKit",
         "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
         "state": {
-          "branch": null,
-          "revision": "0b2c47d5deb9f62cc43d5f7e82b493fd3e67fd13",
-          "version": "83.3.0"
+          "branch": "feature/cat-dog-buyer-tips",
+          "revision": "9cbe05e9a37fc6417ab6271fb6d06a1df1bbf059",
+          "version": null
         }
       },
       {
