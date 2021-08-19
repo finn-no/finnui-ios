@@ -8,6 +8,7 @@ public class AdTipsCollapsibleView: UIView {
 
     // MARK: - Private properties
 
+    private let imageSize: CGSize
     private var buttonTitles: ButtonTitles?
     private var contentView: UIView?
     private lazy var headerView = UIView(withAutoLayout: true)
@@ -37,8 +38,10 @@ public class AdTipsCollapsibleView: UIView {
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(imageSize: CGSize = CGSize(width: 48, height: 48), withAutoLayout: Bool = false) {
+        self.imageSize = imageSize
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
@@ -73,8 +76,8 @@ public class AdTipsCollapsibleView: UIView {
             headerImageView.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: .spacingS),
             headerImageView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
             headerImageView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor),
-            headerImageView.heightAnchor.constraint(equalToConstant: 48),
-            headerImageView.widthAnchor.constraint(equalToConstant: 48),
+            headerImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
+            headerImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
 
             /// Footer.
             expandButton.topAnchor.constraint(equalTo: footerView.topAnchor),
