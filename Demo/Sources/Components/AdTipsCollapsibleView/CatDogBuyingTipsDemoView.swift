@@ -101,19 +101,6 @@ private struct CatDogTips: NumberedListItem {
             title: "Kjøp hunden av en seriøs oppdretter",
             body: "Kontakt raseklubben for å få en liste over godkjente oppdrettere. En seriøs oppdretter lar deg besøke valpen og se den sammen med mor og resten av valpekullet. Hos Mattilsynet kan du lese mer om forhåndsregler du bør ta for å ikke kjøpe en ulovlig importert hund.",
             actionButtonTitle: "Forhåndsregler"
-        ),
-        CatDogTips(
-            title: "Sørg for at papirene er i orden",
-            body: "Valpen skal ha en nydatert helseattest/valpeattest og den skal være grunnvaksinert. Hvis hunden er ID-merket, skal du få med bekreftelse på det når du kjøper den. Ikke godta å få dokumentasjon ettersendt!"
-        ),
-        CatDogTips(
-            title: "Skriv en skikkelig kjøpekontrakt",
-            body: "Her må telefonnummer, navn og adresse på oppdretteren komme tydelig frem. Her finner du Forbrukerrådets kontrakt for kjøp av husdyr.",
-            actionButtonTitle: "Se kontrakt"
-        ),
-        CatDogTips(
-            title: "Det er lurt å forsikre hunden",
-            body: "Det finnes både veterinærforsikringer og livsforsikringer. Sjekk hos ditt foretrukne forsikringsselskap."
         )
     ]
 }
