@@ -9,7 +9,7 @@ public class AdTipsCollapsibleView: UIView {
     // MARK: - Private properties
 
     private let imageSize: CGSize
-    private var buttonTitles: ButtonTitles?
+    private var expandCollapseButtonTitles: ButtonTitles?
     private var contentView: UIView?
     private lazy var headerView = UIView(withAutoLayout: true)
     private lazy var footerView = UIView(withAutoLayout: true)
@@ -91,13 +91,13 @@ public class AdTipsCollapsibleView: UIView {
 
     public func configure(
         with title: String,
-        buttonTitles: ButtonTitles,
+        expandCollapseButtonTitles: ButtonTitles,
         headerImage: UIImage?,
         contentView: UIView
     ) {
         titleLabel.text = title
-        self.buttonTitles = buttonTitles
-        expandButton.setTitle(buttonTitles.expanded, for: .normal)
+        self.expandCollapseButtonTitles = expandCollapseButtonTitles
+        expandButton.setTitle(isExpanded ? expandCollapseButtonTitles.expanded : expandCollapseButtonTitles.collapsed, for: .normal)
         headerImageView.image = headerImage
         addContentView(contentView)
     }
@@ -124,7 +124,7 @@ public class AdTipsCollapsibleView: UIView {
 
     @objc private func handleExpandButtonTap() {
         isExpanded.toggle()
-        expandButton.setTitle(isExpanded ? buttonTitles?.expanded : buttonTitles?.collapsed, for: .normal)
+        expandButton.setTitle(isExpanded ? expandCollapseButtonTitles?.expanded : expandCollapseButtonTitles?.collapsed, for: .normal)
 
         UIView.animate(
             withDuration: 0.3,
