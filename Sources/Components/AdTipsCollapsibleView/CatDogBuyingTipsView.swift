@@ -1,25 +1,28 @@
 import UIKit
 import FinniversKit
 
-public protocol CatDogBuyingTipsViewDelegate: AnyObject {
+public protocol CatDogBuyingTipsViewDelegate: AdTipsCollapsibleViewDelegate {
     func catDogBuyingTipsView(_ view: CatDogBuyingTipsView, didSelectActioButtonForItem selectedItem: NumberedListItem)
 }
 
 public class CatDogBuyingTipsView: AdTipsCollapsibleView {
 
-    // MARK: - Public properties
-
-    public weak var delegate: CatDogBuyingTipsViewDelegate?
-
     // MARK: - Private properties
 
-    private var items: [NumberedListItem] = []
+    private weak var delegate: CatDogBuyingTipsViewDelegate?
     private lazy var numberedListView = NumberedListView(withAutoLayout: true)
+    private var items: [NumberedListItem] = []
 
     // MARK: - Init
 
-    public init(withAutoLayout: Bool = false) {
-        super.init(imageSize: CGSize(width: 78, height: 78), withAutoLayout: withAutoLayout)
+    public init(identifier: String, delegate: CatDogBuyingTipsViewDelegate, withAutoLayout: Bool = false) {
+        self.delegate = delegate
+        super.init(
+            identifier: identifier,
+            imageSize: CGSize(width: 78, height: 78),
+            delegate: delegate,
+            withAutoLayout: withAutoLayout
+        )
     }
 
     public required init?(coder: NSCoder) { fatalError() }
