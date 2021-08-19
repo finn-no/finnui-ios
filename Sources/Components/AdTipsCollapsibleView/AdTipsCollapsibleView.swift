@@ -1,13 +1,19 @@
 import UIKit
 import FinniversKit
 
+public protocol AdTipsCollapsibleViewDelegate: AnyObject {
+    func adTipsCollapsibleView(_ view: AdTipsCollapsibleView, withIdentifier identifier: String, didChangeExpandState isExpanded: Bool)
+}
+
 public class AdTipsCollapsibleView: UIView {
     public typealias ButtonTitles = (expanded: String, collapsed: String)
 
-    public var isExpanded: Bool = false
+    public private(set) var isExpanded: Bool = false
 
     // MARK: - Private properties
 
+    private weak var delegate: AdTipsCollapsibleViewDelegate?
+    private let identifier: String
     private let imageSize: CGSize
     private var expandCollapseButtonTitles: ButtonTitles?
     private var contentView: UIView?
@@ -38,8 +44,15 @@ public class AdTipsCollapsibleView: UIView {
 
     // MARK: - Init
 
-    public init(imageSize: CGSize = CGSize(width: 48, height: 48), withAutoLayout: Bool = false) {
+    public init(
+        identifier: String,
+        imageSize: CGSize = CGSize(width: 48, height: 48),
+        delegate: AdTipsCollapsibleViewDelegate,
+        withAutoLayout: Bool = false
+    ) {
+        self.identifier = identifier
         self.imageSize = imageSize
+        self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
@@ -135,5 +148,7 @@ public class AdTipsCollapsibleView: UIView {
                 self.stackView.layoutIfNeeded()
             }
         )
+
+        delegate?.adTipsCollapsibleView(self, withIdentifier: identifier, didChangeExpandState: isExpanded)
     }
 }
