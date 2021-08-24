@@ -2,7 +2,7 @@ import UIKit
 import FinniversKit
 
 public protocol CatDogBuyingTipsViewDelegate: AdTipsCollapsibleViewDelegate {
-    func catDogBuyingTipsView(_ view: CatDogBuyingTipsView, didSelectActioButtonForItem selectedItem: NumberedListItem)
+    func catDogBuyingTipsView(_ view: CatDogBuyingTipsView, didSelectActionButtonForItem selectedItem: NumberedListItem)
 }
 
 public class CatDogBuyingTipsView: AdTipsCollapsibleView {
@@ -67,6 +67,6 @@ extension CatDogBuyingTipsView: NumberedListViewDelegate {
     public func numberedListView(_ view: NumberedListView, didSelectActionButtonForItemAt itemIndex: Int) {
         guard items.indices.contains(itemIndex) else { return }
         let item = items[itemIndex]
-        delegate?.catDogBuyingTipsView(self, didSelectActioButtonForItem: item)
+        delegate?.catDogBuyingTipsView(self, didSelectActionButtonForItem: item)
     }
 }

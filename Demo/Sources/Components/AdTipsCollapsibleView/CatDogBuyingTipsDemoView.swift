@@ -54,7 +54,7 @@ class CatDogBuyingTipsDemoView: UIView, Tweakable {
 // MARK: - CatDogBuyingTipsViewDelegate
 
 extension CatDogBuyingTipsDemoView: CatDogBuyingTipsViewDelegate {
-    func catDogBuyingTipsView(_ view: CatDogBuyingTipsView, didSelectActioButtonForItem selectedItem: NumberedListItem) {
+    func catDogBuyingTipsView(_ view: CatDogBuyingTipsView, didSelectActionButtonForItem selectedItem: NumberedListItem) {
         print("👉 Selected button with title: \"\(selectedItem.actionButtonTitle ?? "")\"")
     }
 
