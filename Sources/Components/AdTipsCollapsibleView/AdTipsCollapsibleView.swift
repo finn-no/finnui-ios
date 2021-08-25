@@ -8,12 +8,12 @@ public protocol AdTipsCollapsibleViewDelegate: AnyObject {
 public class AdTipsCollapsibleView: UIView {
     public typealias ButtonTitles = (expanded: String, collapsed: String)
 
+    public let identifier: String
     public private(set) var isExpanded: Bool = false
 
     // MARK: - Private properties
 
     private weak var delegate: AdTipsCollapsibleViewDelegate?
-    private let identifier: String
     private let imageSize: CGSize
     private var expandCollapseButtonTitles: ButtonTitles?
     private var contentView: UIView?

@@ -1,21 +1,25 @@
 import UIKit
 import FinniversKit
 
-public protocol CatDogBuyingTipsViewDelegate: AdTipsCollapsibleViewDelegate {
-    func catDogBuyingTipsView(_ view: CatDogBuyingTipsView, didSelectActionButtonForItem selectedItem: NumberedListItem)
+public protocol NumberedAdTipsCollapsibleViewDelegate: AdTipsCollapsibleViewDelegate {
+    func numberedAdTipsCollapsibleView(
+        _ view: NumberedAdTipsCollapsibleView,
+        withIdentifier identifier: String,
+        didSelectActionButtonForItem selectedItem: NumberedListItem
+    )
 }
 
-public class CatDogBuyingTipsView: AdTipsCollapsibleView {
+public class NumberedAdTipsCollapsibleView: AdTipsCollapsibleView {
 
     // MARK: - Private properties
 
-    private weak var delegate: CatDogBuyingTipsViewDelegate?
+    private weak var delegate: NumberedAdTipsCollapsibleViewDelegate?
     private lazy var numberedListView = NumberedListView(withAutoLayout: true)
     private var items: [NumberedListItem] = []
 
     // MARK: - Init
 
-    public init(identifier: String, delegate: CatDogBuyingTipsViewDelegate, withAutoLayout: Bool = false) {
+    public init(identifier: String, delegate: NumberedAdTipsCollapsibleViewDelegate, withAutoLayout: Bool = false) {
         self.delegate = delegate
         super.init(
             identifier: identifier,
@@ -63,10 +67,10 @@ extension CatDogBuyingTipsView {
 
 // MARK: - NumberedListViewDelegate
 
-extension CatDogBuyingTipsView: NumberedListViewDelegate {
+extension NumberedAdTipsCollapsibleView: NumberedListViewDelegate {
     public func numberedListView(_ view: NumberedListView, didSelectActionButtonForItemAt itemIndex: Int) {
         guard items.indices.contains(itemIndex) else { return }
         let item = items[itemIndex]
-        delegate?.catDogBuyingTipsView(self, didSelectActionButtonForItem: item)
+        delegate?.numberedAdTipsCollapsibleView(self, withIdentifier: identifier, didSelectActionButtonForItem: item)
     }
 }
