@@ -71,7 +71,7 @@ class ComponentViewTests: XCTestCase {
         snapshot(.adTipsCollapsibleView)
     }
 
-    func testCatDogBuyingTipsView() {
-        snapshot(.catDogBuyingTipsView)
+    func testNumberedAdTipsCollapsibleView() {
+        snapshot(.numberedAdTipsCollapsibleView)
     }
 }
