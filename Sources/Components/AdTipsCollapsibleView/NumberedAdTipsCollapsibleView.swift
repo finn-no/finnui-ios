@@ -33,7 +33,7 @@ public class NumberedAdTipsCollapsibleView: AdTipsCollapsibleView {
 
     // MARK: - Public methods
 
-    public func configure(kind: Kind, title: String, expandCollapseButtonTitles: ButtonTitles, items: [NumberedListItem]) {
+    public func configure(with title: String, expandCollapseButtonTitles: ButtonTitles, headerImage: UIImage?, items: [NumberedListItem]) {
         self.items = items
         let numberedListView = NumberedListView(withAutoLayout: true)
         numberedListView.delegate = self
@@ -41,27 +41,9 @@ public class NumberedAdTipsCollapsibleView: AdTipsCollapsibleView {
         super.configure(
             with: title,
             expandCollapseButtonTitles: expandCollapseButtonTitles,
-            headerImage: kind.image,
+            headerImage: headerImage,
             contentView: numberedListView
         )
-    }
-}
-
-// MARK: - CatDogBuyingTipsView.Kind
-
-extension CatDogBuyingTipsView {
-    public enum Kind {
-        case cat
-        case dog
-
-        fileprivate var image: UIImage {
-            switch self {
-            case .cat:
-                return UIImage(named: .buyingTipsCat)
-            case .dog:
-                return UIImage(named: .buyingTipsDog)
-            }
-        }
     }
 }
 
