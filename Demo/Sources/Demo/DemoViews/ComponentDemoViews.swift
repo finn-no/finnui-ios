@@ -52,7 +52,7 @@ public enum ComponentDemoViews: String, DemoViews {
         case .adTipsCollapsibleView:
             return DemoViewController<AdTipsCollapsibleDemoView>()
         case .catDogBuyingTipsView:
-            return DemoViewController<CatDogBuyingTipsDemoView>()
+            return DemoViewController<NumberedAdTipsCollapsibleDemoView>()
         }
     }
 }

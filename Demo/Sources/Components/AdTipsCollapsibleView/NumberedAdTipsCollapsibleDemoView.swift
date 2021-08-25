@@ -1,11 +1,11 @@
-import FinnUI
+@testable import FinnUI
 import FinniversKit
 import UIKit
 
-class CatDogBuyingTipsDemoView: UIView, Tweakable {
+class NumberedAdTipsCollapsibleDemoView: UIView, Tweakable {
     // MARK: - Private properties
 
-    private lazy var demoView = CatDogBuyingTipsView(identifier: "cat-dog-tips", delegate: self, withAutoLayout: true)
+    private lazy var demoView = NumberedAdTipsCollapsibleView(identifier: "cat-dog-tips", delegate: self, withAutoLayout: true)
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
 
     lazy var tweakingOptions: [TweakingOption] = [
@@ -14,7 +14,10 @@ class CatDogBuyingTipsDemoView: UIView, Tweakable {
         }),
         TweakingOption(title: "Dog buying tips", action: { [weak self] in
             self?.configure(for: .dog)
-        })
+        }),
+        TweakingOption(title: "\"Unknown\" tips – aka. without image", action: { [weak self] in
+            self?.configure(for: .unknown)
+        }),
     ]
 
     // MARK: - Init
@@ -41,21 +44,21 @@ class CatDogBuyingTipsDemoView: UIView, Tweakable {
 
     // MARK: - Private methods
 
-    private func configure(for kind: CatDogBuyingTipsView.Kind) {
+    private func configure(for kind: Kind) {
         demoView.configure(
-            kind: kind,
-            title: kind.title,
+            with: kind.title,
             expandCollapseButtonTitles: (expanded: "Vis mindre", collapsed: "Vis mer"),
-            items: CatDogTips.demoItems
+            headerImage: kind.image,
+            items: BuyingTips.demoItems
         )
     }
 }
 
 // MARK: - CatDogBuyingTipsViewDelegate
 
-extension CatDogBuyingTipsDemoView: CatDogBuyingTipsViewDelegate {
-    func catDogBuyingTipsView(_ view: CatDogBuyingTipsView, didSelectActionButtonForItem selectedItem: NumberedListItem) {
-        print("👉 Selected button with title: \"\(selectedItem.actionButtonTitle ?? "")\"")
+extension NumberedAdTipsCollapsibleDemoView: NumberedAdTipsCollapsibleViewDelegate {
+    func numberedAdTipsCollapsibleView(_ view: NumberedAdTipsCollapsibleView, withIdentifier identifier: String, didSelectActionButtonForItem selectedItem: NumberedListItem) {
+        print("👉 View with identifier '\(identifier)' selected button with title: '\(selectedItem.actionButtonTitle ?? "")'")
     }
 
     public func adTipsCollapsibleView(_ view: AdTipsCollapsibleView, withIdentifier identifier: String, didChangeExpandState isExpanded: Bool) {
@@ -65,18 +68,35 @@ extension CatDogBuyingTipsDemoView: CatDogBuyingTipsViewDelegate {
 
 // MARK: - Private types / extensions
 
-private extension CatDogBuyingTipsView.Kind {
+private enum Kind {
+    case cat
+    case dog
+    case unknown
+
     var title: String {
         switch self {
         case .cat:
             return "6 tips når du skal kjøpe katt"
         case .dog:
             return "6 tips når du skal kjøpe hund"
+        case .unknown:
+            return "Masse tips til deg som skal kjøpe noe"
+        }
+    }
+
+    var image: UIImage? {
+        switch self {
+        case .cat:
+            return UIImage(named: .buyingTipsCat)
+        case .dog:
+            return UIImage(named: .buyingTipsDog)
+        case .unknown:
+            return nil
         }
     }
 }
 
-private struct CatDogTips: NumberedListItem {
+private struct BuyingTips: NumberedListItem {
     let title: String?
     let body: String
     let actionButtonTitle: String?
@@ -87,17 +107,17 @@ private struct CatDogTips: NumberedListItem {
         self.actionButtonTitle = actionButtonTitle
     }
 
-    static var demoItems: [CatDogTips] = [
-        CatDogTips(
+    static var demoItems: [BuyingTips] = [
+        BuyingTips(
             title: "Valget om å skaffe seg hund må være godt gjennomtenkt",
             body: "Husk at hunder lever i mange år, må passes på av noen i feriene og kommer med en del utgifter til f.eks fôr og veterinær."
         ),
-        CatDogTips(
+        BuyingTips(
             title: "Velg en hunderase som passer for deg og din hverdag",
             body: "Norsk Kennel Klub kan gi deg nyttige tips til valg av rase.",
             actionButtonTitle: "Sjekk tipsene"
         ),
-        CatDogTips(
+        BuyingTips(
             title: "Kjøp hunden av en seriøs oppdretter",
             body: "Kontakt raseklubben for å få en liste over godkjente oppdrettere. En seriøs oppdretter lar deg besøke valpen og se den sammen med mor og resten av valpekullet. Hos Mattilsynet kan du lese mer om forhåndsregler du bør ta for å ikke kjøpe en ulovlig importert hund.",
             actionButtonTitle: "Forhåndsregler"
