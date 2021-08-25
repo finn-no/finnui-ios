@@ -17,7 +17,7 @@ public class AdTipsCollapsibleView: UIView {
     private let imageSize: CGSize
     private var expandCollapseButtonTitles: ButtonTitles?
     private var contentView: UIView?
-    private lazy var headerView = UIView(withAutoLayout: true)
+    private lazy var headerStackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
     private lazy var footerView = UIView(withAutoLayout: true)
     private lazy var contentContainerView = UIView(withAutoLayout: true)
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
@@ -69,30 +69,19 @@ public class AdTipsCollapsibleView: UIView {
         backgroundColor = .bgSecondary
         layer.cornerRadius = .spacingS
 
-        headerView.addSubview(titleLabel)
-        headerView.addSubview(headerImageView)
+        headerStackView.addArrangedSubviews([titleLabel, headerImageView])
 
         footerView.addSubview(expandButton)
 
-        stackView.addArrangedSubviews([headerView, contentContainerView, footerView])
+        stackView.addArrangedSubviews([headerStackView, contentContainerView, footerView])
         contentContainerView.isHidden = !isExpanded
         addSubview(stackView)
         stackView.fillInSuperview(margin: .spacingS)
 
         NSLayoutConstraint.activate([
-            /// Header.
-            titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor),
+            headerImageView.heightAnchor.constraint(lessThanOrEqualToConstant: imageSize.height),
+            headerImageView.widthAnchor.constraint(lessThanOrEqualToConstant: imageSize.width),
 
-            headerImageView.topAnchor.constraint(equalTo: headerView.topAnchor),
-            headerImageView.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: .spacingS),
-            headerImageView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-            headerImageView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor),
-            headerImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
-            headerImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
-
-            /// Footer.
             expandButton.topAnchor.constraint(equalTo: footerView.topAnchor),
             expandButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor),
             expandButton.trailingAnchor.constraint(lessThanOrEqualTo: footerView.trailingAnchor),
@@ -111,7 +100,10 @@ public class AdTipsCollapsibleView: UIView {
         titleLabel.text = title
         self.expandCollapseButtonTitles = expandCollapseButtonTitles
         expandButton.setTitle(isExpanded ? expandCollapseButtonTitles.expanded : expandCollapseButtonTitles.collapsed, for: .normal)
+
         headerImageView.image = headerImage
+        headerImageView.isHidden = headerImage == nil
+
         addContentView(contentView)
     }
 
