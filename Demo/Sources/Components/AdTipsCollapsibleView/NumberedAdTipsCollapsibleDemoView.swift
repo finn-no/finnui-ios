@@ -97,28 +97,28 @@ private enum Kind {
 }
 
 private struct BuyingTips: NumberedListItem {
-    let title: String?
+    let heading: String?
     let body: String
     let actionButtonTitle: String?
 
-    init(title: String?, body: String, actionButtonTitle: String? = nil) {
-        self.title = title
+    init(heading: String?, body: String, actionButtonTitle: String? = nil) {
+        self.heading = heading
         self.body = body
         self.actionButtonTitle = actionButtonTitle
     }
 
     static var demoItems: [BuyingTips] = [
         BuyingTips(
-            title: "Valget om å skaffe seg hund må være godt gjennomtenkt",
+            heading: "Valget om å skaffe seg hund må være godt gjennomtenkt",
             body: "Husk at hunder lever i mange år, må passes på av noen i feriene og kommer med en del utgifter til f.eks fôr og veterinær."
         ),
         BuyingTips(
-            title: "Velg en hunderase som passer for deg og din hverdag",
+            heading: "Velg en hunderase som passer for deg og din hverdag",
             body: "Norsk Kennel Klub kan gi deg nyttige tips til valg av rase.",
             actionButtonTitle: "Sjekk tipsene"
         ),
         BuyingTips(
-            title: "Kjøp hunden av en seriøs oppdretter",
+            heading: "Kjøp hunden av en seriøs oppdretter",
             body: "Kontakt raseklubben for å få en liste over godkjente oppdrettere. En seriøs oppdretter lar deg besøke valpen og se den sammen med mor og resten av valpekullet. Hos Mattilsynet kan du lese mer om forhåndsregler du bør ta for å ikke kjøpe en ulovlig importert hund.",
             actionButtonTitle: "Forhåndsregler"
         )
