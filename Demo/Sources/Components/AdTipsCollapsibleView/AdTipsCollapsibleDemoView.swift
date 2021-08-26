@@ -57,7 +57,7 @@ class AdTipsCollapsibleDemoView: UIView, Tweakable {
         collapsibleContentView?.removeFromSuperview()
 
         let collapsibleContentView = AdTipsCollapsibleView(identifier: "adtips-demo-view", delegate: self, withAutoLayout: true)
-        collapsibleContentView.configure(with: title, expandCollapseButtonTitles: (expanded: "Vis mindre", collapsed: "Vis mer"), headerImage: UIImage(named: "virtualViewing"), contentView: contentView ?? self.contentView)
+        collapsibleContentView.configure(with: title, expandCollapseButtonTitles: (expanded: "Vis mindre", collapsed: "Vis mer"), headerImage: UIImage(named: .buyingTipsCat), contentView: contentView ?? self.contentView)
 
         scrollView.addSubview(collapsibleContentView)
         collapsibleContentView.fillInSuperview(margin: .spacingM)
