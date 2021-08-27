@@ -107,6 +107,11 @@ public class AdTipsCollapsibleView: UIView {
         addContentView(contentView)
     }
 
+    public func configure(isExpanded: Bool, withAnimation: Bool) {
+        self.isExpanded = isExpanded
+        updateExpandedState(withAnimation: withAnimation)
+    }
+
     // MARK: - Private methods
 
     private func addContentView(_ newContentView: UIView) {
@@ -125,22 +130,32 @@ public class AdTipsCollapsibleView: UIView {
         ])
     }
 
+    // MARK: - Private methods
+
+    private func updateExpandedState(withAnimation: Bool) {
+        expandButton.setTitle(isExpanded ? expandCollapseButtonTitles?.expanded : expandCollapseButtonTitles?.collapsed, for: .normal)
+
+        let viewChanges = { [weak self] in
+            guard let self = self else { return }
+            self.contentContainerView.isHidden = !self.isExpanded
+            self.contentContainerView.alpha = self.isExpanded ? 1 : 0
+            self.stackView.layoutIfNeeded()
+        }
+
+        if withAnimation {
+            UIView.animate(
+                withDuration: 0.3,
+                animations: viewChanges
+            )
+        } else {
+            viewChanges()
+        }
+    }
+
     // MARK: - Actions
 
     @objc private func handleExpandButtonTap() {
-        isExpanded.toggle()
-        expandButton.setTitle(isExpanded ? expandCollapseButtonTitles?.expanded : expandCollapseButtonTitles?.collapsed, for: .normal)
-
-        UIView.animate(
-            withDuration: 0.3,
-            animations: { [weak self] in
-                guard let self = self else { return }
-                self.contentContainerView.isHidden = !self.isExpanded
-                self.contentContainerView.alpha = self.isExpanded ? 1 : 0
-                self.stackView.layoutIfNeeded()
-            }
-        )
-
+        configure(isExpanded: !isExpanded, withAnimation: true)
         delegate?.adTipsCollapsibleView(self, withIdentifier: identifier, didChangeExpandState: isExpanded)
     }
 }
