@@ -23,6 +23,13 @@ class AdTipsCollapsibleDemoView: UIView, Tweakable {
         return stackView
     }()
 
+    private lazy var manualExpandButton: Button = {
+        let button = Button(style: .callToAction, size: .small, withAutoLayout: true)
+        button.setTitle("Expand or collapse view", for: .normal)
+        button.addTarget(self, action: #selector(toggleExpandOrCollapse), for: .touchUpInside)
+        return button
+    }()
+
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Plain style", action: { [weak self] in
             self?.configureCollapsibleContentView(title: "Spesifikasjoner")
@@ -45,10 +52,23 @@ class AdTipsCollapsibleDemoView: UIView, Tweakable {
         contentView.addSubview(stackView)
         stackView.fillInSuperview()
 
+        addSubview(manualExpandButton)
         addSubview(scrollView)
-        scrollView.fillInSuperview()
         scrollView.alwaysBounceVertical = true
+
+        NSLayoutConstraint.activate([
+            manualExpandButton.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+            manualExpandButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            manualExpandButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+
+            scrollView.topAnchor.constraint(equalTo: manualExpandButton.bottomAnchor, constant: .spacingS),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
     }
+
+    // MARK: - Private methods
 
     private func configureCollapsibleContentView(
         title: String,
@@ -64,6 +84,13 @@ class AdTipsCollapsibleDemoView: UIView, Tweakable {
         collapsibleContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -.spacingXL).isActive = true
 
         self.collapsibleContentView = collapsibleContentView
+    }
+
+    // MARK: - Actions
+
+    @objc private func toggleExpandOrCollapse() {
+        guard let collapsibleContentView = collapsibleContentView else { return }
+        collapsibleContentView.configure(isExpanded: !collapsibleContentView.isExpanded, withAnimation: false)
     }
 }
 
