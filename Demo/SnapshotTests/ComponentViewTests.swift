@@ -66,4 +66,12 @@ class ComponentViewTests: XCTestCase {
     func testTagCloudGridView() {
         snapshot(.tagCloudGridView)
     }
+
+    func testAdTipsCollapsibleView() {
+        snapshot(.adTipsCollapsibleView)
+    }
+
+    func testNumberedAdTipsCollapsibleView() {
+        snapshot(.numberedAdTipsCollapsibleView)
+    }
 }
