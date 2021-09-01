@@ -39,10 +39,6 @@ class SwiftUIViewTests: XCTestCase {
         snapshot(.basicCellVariations)
     }
 
-    func testMyVehiclesListView() {
-        snapshot(.myVehiclesListView)
-    }
-
     func testBapAdView() {
         snapshot(.bapAdView)
     }

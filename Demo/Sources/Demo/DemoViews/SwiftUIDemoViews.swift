@@ -10,7 +10,6 @@ public enum SwiftUIDemoViews: String, DemoViews {
     case buttons
     case settings
     case basicCellVariations
-    case myVehiclesListView
     case bapAdView
 
     public var viewController: UIViewController {
@@ -29,8 +28,6 @@ public enum SwiftUIDemoViews: String, DemoViews {
             SettingsView_Previews.previews
         case .basicCellVariations:
             BasicListCell_Previews.previews
-        case .myVehiclesListView:
-            MyVehiclesListView_Previews.previews
         case .bapAdView:
             BapAdView_Previews.previews
         }

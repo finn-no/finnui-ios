@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'FinnUI'
-  s.version      = '22.2.1'
+  s.version      = '23.5.0'
   s.summary      = "FINN's iOS UI Features"
   s.author       = 'FINN.no'
   s.homepage     = 'https://schibsted.frontify.com/d/oCLrx0cypXJM/design-system'
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
                    DESC
 
   s.license      = 'MIT'
-  s.platform      = :ios, '12.0'
+  s.platform      = :ios, '13.0'
   s.swift_version = '5.0'
   s.source        = { :git => "https://github.com/finn-no/finnui-ios.git", :tag => "#{s.version}" }
   s.requires_arc  = true

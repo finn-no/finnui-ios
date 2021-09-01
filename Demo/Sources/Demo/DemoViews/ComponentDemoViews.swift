@@ -17,6 +17,9 @@ public enum ComponentDemoViews: String, DemoViews {
     case iconLinkListView
     case searchDropdownGroupView
     case popularSearchesView
+    case tagCloudGridView
+    case adTipsCollapsibleView
+    case numberedAdTipsCollapsibleView
 
     public var viewController: UIViewController {
         switch self {
@@ -44,6 +47,12 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<SearchDropdownGroupDemoView>(dismissType: .dismissButton)
         case .popularSearchesView:
             return DemoViewController<PopularSearchesDemoView>(dismissType: .dismissButton)
+        case .tagCloudGridView:
+            return DemoViewController<TagCloudGridDemoView>()
+        case .adTipsCollapsibleView:
+            return DemoViewController<AdTipsCollapsibleDemoView>()
+        case .numberedAdTipsCollapsibleView:
+            return DemoViewController<NumberedAdTipsCollapsibleDemoView>()
         }
     }
 }
