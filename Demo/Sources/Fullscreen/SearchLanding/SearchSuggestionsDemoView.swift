@@ -7,13 +7,13 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
         TweakingOption(title: "Search suggestions", description: "With location permission cell") { [weak self] in
             self?.searchSuggestionsView.configure(with: .suggestions(withLocationPermission: true))
         },
-        TweakingOption(title: "Search suggestions", description: "With location permission cell") { [weak self] in
+        TweakingOption(title: "Search suggestions", description: "Without location permission cell") { [weak self] in
             self?.searchSuggestionsView.configure(with: .suggestions())
         },
         TweakingOption(title: "Search landingpage", description: "With location permission cell") { [weak self] in
             self?.searchSuggestionsView.configure(with: .landingPage(withLocationPermission: true))
         },
-        TweakingOption(title: "Search landingpage", description: "With location permission cell") { [weak self] in
+        TweakingOption(title: "Search landingpage", description: "Without location permission cell") { [weak self] in
             self?.searchSuggestionsView.configure(with: .landingPage())
         }
     ]
@@ -46,6 +46,7 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
 
 extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
     func searchSuggestionsView(_ view: SearchSuggestionsView, didSelectResultAt indexPath: IndexPath) {
+        print("🔥🔥🔥🔥 indexPath = \(indexPath)")
         print("🔥🔥🔥🔥 \(#function)")
     }
 
