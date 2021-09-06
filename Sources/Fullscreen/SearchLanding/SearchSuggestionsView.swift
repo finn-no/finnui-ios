@@ -71,7 +71,15 @@ extension SearchSuggestionsView: UITableViewDelegate {
 
         switch section {
         case .group:
-            delegate?.searchSuggestionsView(self, didSelectResultAt: indexPath)
+            let sectionOffset = sections[0..<indexPath.section].reduce(0, { groupOffset, section in
+                if case .group = section {
+                    return groupOffset
+                } else {
+                    return groupOffset + 1
+                }
+            })
+            let offsetIndexPath = IndexPath(row: indexPath.row, section: indexPath.section - sectionOffset)
+            delegate?.searchSuggestionsView(self, didSelectResultAt: offsetIndexPath)
         case .viewMoreResults:
             delegate?.searchSuggestionsViewDidSelectViewMoreResults(self)
         case .locationPermission:
