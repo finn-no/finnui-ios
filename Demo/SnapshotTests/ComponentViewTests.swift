@@ -74,4 +74,8 @@ class ComponentViewTests: XCTestCase {
     func testNumberedAdTipsCollapsibleView() {
         snapshot(.numberedAdTipsCollapsibleView)
     }
+
+    func testHelthjemView() {
+        snapshot(.helthjemView)
+    }
 }
