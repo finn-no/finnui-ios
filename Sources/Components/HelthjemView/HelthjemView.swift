@@ -106,9 +106,8 @@ public final class HelthjemView: UIView {
         switch previousTraitCollection?.userInterfaceStyle {
         case .light:
             helthjemImage = .init(named: .shipWithHelthjemDarkmode)
-        case .dark:
+        default:
             helthjemImage = .init(named: .shipWithHelthjem)
-        default: return
         }
 
         imageView.image = helthjemImage
