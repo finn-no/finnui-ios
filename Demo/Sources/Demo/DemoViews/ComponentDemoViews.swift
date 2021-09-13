@@ -20,6 +20,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case tagCloudGridView
     case adTipsCollapsibleView
     case numberedAdTipsCollapsibleView
+    case helthjemView
 
     public var viewController: UIViewController {
         switch self {
@@ -53,6 +54,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<AdTipsCollapsibleDemoView>()
         case .numberedAdTipsCollapsibleView:
             return DemoViewController<NumberedAdTipsCollapsibleDemoView>()
+        case .helthjemView:
+            return DemoViewController<HelthjemDemoView>()
         }
     }
 }
