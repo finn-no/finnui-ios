@@ -6,14 +6,18 @@ extension HelthjemViewModel {
         title: "Prøv Helthjem fra 80 kr",
         detail: "Vi hjelper selger å sende varen til deg",
         primaryButtonTitle: "Mer om Helthjem",
-        secondaryButtonTitle: "Se alle fraktalternativer"
+        primaryButtonAccessibilityLabel: "Trykk for å lese mer om Helthjem",
+        secondaryButtonTitle: "Se alle fraktalternativer",
+        secondaryButtonAccessibilityLabel: "Trykk for å lese mer om alle fraktalternativer",
+        accessibilityLabel: "Få varen levert på døren av Helthjem for kun \(NumberFormatter.spokenFormatter.string(from: 80) ?? String(80)) kroner"
     )
 
     static var AdsWithOptIn: HelthjemViewModel = .init(
         title: "Prøv Helthjem fra 80 kr",
         detail: "Vi hjelper selger å sende varen til deg",
         primaryButtonTitle: "Mer om Helthjem",
-        secondaryButtonTitle: nil
+        primaryButtonAccessibilityLabel: "Trykk for å lese mer om Helthjem",
+        accessibilityLabel: "Få varen levert på døren av Helthjem for kun \(NumberFormatter.spokenFormatter.string(from: 80) ?? String(80)) kroner"
     )
 }
 
@@ -62,4 +66,13 @@ extension HelthjemDemoView: HelthjemViewDelegate {
     public func helthjemViewDidSelectSecondaryButton(_ view: HelthjemView) {
         print("Did tap secondary button")
     }
+}
+
+private extension NumberFormatter {
+    static var spokenFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .spellOut
+        formatter.locale = Locale(identifier: "nb_NO")
+        return formatter
+    }()
 }

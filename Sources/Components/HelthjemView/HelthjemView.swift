@@ -91,6 +91,7 @@ public final class HelthjemView: UIView {
 
     public init() {
         super.init(frame: .zero)
+        isAccessibilityElement = true
         translatesAutoresizingMaskIntoConstraints = false
         setup()
     }
@@ -165,8 +166,12 @@ public final class HelthjemView: UIView {
     // MARK: - Public
 
     public func configure(_ viewModel: HelthjemViewModel) {
+        accessibilityLabel = viewModel.accessibilityLabel
+
         titleLabel.text = viewModel.title
         detailLabel.text = viewModel.detail
+
+        primaryButton.accessibilityLabel = viewModel.primaryButtonAccessibilityLabel
         primaryButton.setTitle(viewModel.primaryButtonTitle, for: .normal)
 
         buttonContainerViewTrailingAnchor.isActive = false
@@ -175,6 +180,7 @@ public final class HelthjemView: UIView {
             !secondaryButtonTitle.isEmpty {
             secondaryButton.isHidden = false
             secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
+            primaryButton.accessibilityLabel = viewModel.secondaryButtonAccessibilityLabel
         } else {
             secondaryButton.isHidden = true
         }
