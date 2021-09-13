@@ -103,8 +103,8 @@ public final class HelthjemView: UIView {
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        switch previousTraitCollection?.userInterfaceStyle {
-        case .light:
+        switch traitCollection.userInterfaceStyle {
+        case .dark:
             helthjemImage = .init(named: .shipWithHelthjemDarkmode)
         default:
             helthjemImage = .init(named: .shipWithHelthjem)
