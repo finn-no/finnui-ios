@@ -68,9 +68,9 @@ public final class ExploreDetailView: UIView {
         let collectionView = UICollectionView(
             frame: bounds,
             collectionViewLayout: UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
-                guard let self = self else { return nil }
+                guard let self = self, let section = self.sections[safe: sectionIndex] else { return nil }
                 return self.layoutBuilder.collectionLayoutSection(
-                    for: self.sections[safe: sectionIndex],
+                    for: section,
                     at: sectionIndex,
                     traitCollection: self.traitCollection
                 )
