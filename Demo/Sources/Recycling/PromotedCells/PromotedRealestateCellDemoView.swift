@@ -106,7 +106,8 @@ private extension PromotedRealestateCellViewModel {
             realtorName: "FINN Eiendom",
             realtorImageUrl: "https://kommunikasjon.ntb.no/data/images/00171/daaffdf6-fb0e-4e74-9b6b-7f973dbfa6a3.png",
             highlightColor: UIColor(hex: "#0063FB"),
-            mapCoordinates: CLLocationCoordinate2D(latitude: 59.9137496948242, longitude: 10.7438659667969)
+            mapCoordinates: CLLocationCoordinate2D(latitude: 59.9137496948242, longitude: 10.7438659667969),
+            zoomLevel: 14
         )
     }
 
@@ -123,7 +124,8 @@ private extension PromotedRealestateCellViewModel {
             realtorName: nil,
             realtorImageUrl: "https://kommunikasjon.ntb.no/data/images/00171/daaffdf6-fb0e-4e74-9b6b-7f973dbfa6a3.png",
             highlightColor: UIColor(hex: "#0063FB"),
-            mapCoordinates: CLLocationCoordinate2D(latitude: 59.9137496948242, longitude: 10.7438659667969)
+            mapCoordinates: CLLocationCoordinate2D(latitude: 59.9137496948242, longitude: 10.7438659667969),
+            zoomLevel: nil
         )
     }
 }
