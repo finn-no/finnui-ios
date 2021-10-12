@@ -103,7 +103,7 @@ class ImageMapGridView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard let mapCoordinates = mapCoordinates else { return }
+        guard promoKind == .imagesAndMap, let mapCoordinates = mapCoordinates else { return }
         if let zoomLevel = zoomLevel {
             mapView.layoutIfNeeded()
             mapView.centerToLocation(coordinates: mapCoordinates, zoomLevel: zoomLevel)
