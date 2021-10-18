@@ -140,7 +140,11 @@ public final class ExploreView: UIView {
         }
 
         refreshControl.endRefreshing()
-        collectionViewDataSource.apply(snapshot, animatingDifferences: false)
+        if #available(iOS 15.0, *) {
+            collectionViewDataSource.applySnapshotUsingReloadData(snapshot)
+        } else {
+            collectionViewDataSource.apply(snapshot, animatingDifferences: false)
+        }
     }
 
     private func setup() {
