@@ -140,11 +140,16 @@ public final class ExploreView: UIView {
         }
 
         refreshControl.endRefreshing()
-        if #available(iOS 15.0, *) {
-            collectionViewDataSource.applySnapshotUsingReloadData(snapshot)
-        } else {
+        // Support compiling on both Xcode 12 and Xcode 13 (and above)
+        #if swift(>=5.5)
+            if #available(iOS 15.0, *) {
+                collectionViewDataSource.applySnapshotUsingReloadData(snapshot)
+            } else {
+                collectionViewDataSource.apply(snapshot, animatingDifferences: false)
+            }
+        #else
             collectionViewDataSource.apply(snapshot, animatingDifferences: false)
-        }
+        #endif
     }
 
     private func setup() {

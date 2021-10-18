@@ -99,11 +99,17 @@ public final class TagCloudGridView: UIView, UICollectionViewDelegate {
         var snapshot = NSDiffableDataSourceSnapshot<Int, TagCloudCellViewModel>()
         snapshot.appendSections([0])
         snapshot.appendItems(items)
-        if #available(iOS 15.0, *) {
-            dataSource.applySnapshotUsingReloadData(snapshot)
-        } else {
+
+        // Support compiling on both Xcode 12 and Xcode 13 (and above)
+        #if swift(>=5.5)
+            if #available(iOS 15.0, *) {
+                dataSource.applySnapshotUsingReloadData(snapshot)
+            } else {
+                dataSource.apply(snapshot, animatingDifferences: false)
+            }
+        #else
             dataSource.apply(snapshot, animatingDifferences: false)
-        }
+        #endif
     }
 
     private func setup() {
