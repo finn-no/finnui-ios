@@ -73,11 +73,17 @@ public class RealestateAgencyContentView: UIView {
 
         let articleViews: [UIView]
         if articleDirection == .horizontal, viewModel.articles.count == 1 {
-            articleViews = []
+            articleViews = viewModel.articles.map {
+                RealestateAgencyHighlightedContentItemView(
+                    article: $0,
+                    remoteImageViewDataSource: remoteImageViewDataSource,
+                    delegate: self
+                )
+            }
         } else {
-            articleViews = viewModel.articles.map { articleItem in
+            articleViews = viewModel.articles.map {
                 RealestateAgencyContentItemView(
-                    article: articleItem,
+                    article: $0,
                     imageHeight: articleDirection.imageHeight,
                     remoteImageViewDataSource: remoteImageViewDataSource,
                     delegate: self
@@ -102,6 +108,18 @@ public class RealestateAgencyContentView: UIView {
 
 extension RealestateAgencyContentView: RealestateAgencyContentItemViewDelegate {
     func realestateAgencyContentItemViewDidSelectActionButton(_ view: RealestateAgencyContentItemView) {
+        guard let viewIndex = articleStackView?.arrangedSubviews.firstIndex(of: view) else {
+            return
+        }
+
+        delegate?.realestateAgencyContentView(self, didSelectActionButtonForArticleAt: viewIndex)
+    }
+}
+
+// MARK: - RealestateAgencyHighlightedContentItemViewDelegate
+
+extension RealestateAgencyContentView: RealestateAgencyHighlightedContentItemViewDelegate {
+    func realestateAgencyHighlightedContentItemViewDidSelectActionButton(_ view: RealestateAgencyHighlightedContentItemView) {
         guard let viewIndex = articleStackView?.arrangedSubviews.firstIndex(of: view) else {
             return
         }
