@@ -95,24 +95,3 @@ class RealestateAgencyContentItemView: UIView {
         delegate?.realestateAgencyContentItemViewDidSelectActionButton(self)
     }
 }
-
-// MARK: - Private extensions
-
-private extension Button {
-    static func create(for article: RealestateAgencyContentViewModel.ArticleItem) -> Button {
-        let button = Button(style: article.buttonKind.style, size: .normal, withAutoLayout: true)
-        button.setTitle(article.buttonTitle, for: .normal)
-        return button
-    }
-}
-
-private extension RealestateAgencyContentViewModel.ArticleItem.ButtonKind {
-    var style: Button.Style {
-        switch self {
-        case .highlighted:
-            return .callToAction
-        case .normal:
-            return .flat
-        }
-    }
-}
