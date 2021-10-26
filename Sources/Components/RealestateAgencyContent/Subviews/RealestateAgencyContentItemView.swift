@@ -17,7 +17,8 @@ class RealestateAgencyContentItemView: UIView {
 
     // MARK: - Private properties
 
-    private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+    private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
+    private lazy var buttonStackView = UIStackView(axis: .horizontal, spacing: 0, withAutoLayout: true)
 
     private lazy var titleLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
@@ -60,7 +61,7 @@ class RealestateAgencyContentItemView: UIView {
     // MARK: - Setup
 
     private func setup(imageHeight: ImageHeight) {
-        stackView.addArrangedSubviews([titleLabel, imageView, bodyLabel])
+        stackView.addArrangedSubviews([titleLabel, imageView, bodyLabel, buttonStackView])
         addSubview(stackView)
         stackView.fillInSuperview()
 
@@ -85,7 +86,7 @@ class RealestateAgencyContentItemView: UIView {
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
         let actionButton = Button.create(for: article)
-        stackView.addArrangedSubview(actionButton)
+        buttonStackView.addArrangedSubviews([actionButton, UIView(withAutoLayout: true)])
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
     }
 

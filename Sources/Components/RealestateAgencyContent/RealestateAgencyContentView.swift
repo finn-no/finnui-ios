@@ -40,7 +40,6 @@ public class RealestateAgencyContentView: UIView {
         NSLayoutConstraint.activate([
             logoImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
             logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
-//            logoImageView.trailingAnchor.constraint(lessThanOrEqualTo: centerXAnchor),
             logoImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.spacingS),
             logoImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 150),
             logoImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 48)
@@ -134,11 +133,11 @@ private extension NSLayoutConstraint.Axis {
     var articleSpacing: CGFloat {
         switch self {
         case .horizontal:
-            return .spacingS
+            return .spacingL
         case .vertical:
-            return .spacingM
+            return .spacingXL
         @unknown default:
-            return .spacingS
+            return .spacingXL
         }
     }
 
