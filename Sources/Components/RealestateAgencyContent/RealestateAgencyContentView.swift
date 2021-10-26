@@ -71,11 +71,18 @@ public class RealestateAgencyContentView: UIView {
         )
         articleStackView.distribution = articleDirection.stackViewDistribution
 
-        let articleViews = viewModel.articles.map { articleItem -> RealestateAgencyContentItemView in
-            let view = RealestateAgencyContentItemView(withAutoLayout: true)
-            view.delegate = self
-            view.configure(with: articleItem, remoteImageViewDataSource: remoteImageViewDataSource)
-            return view
+        let articleViews: [UIView]
+        if articleDirection == .horizontal, viewModel.articles.count == 1 {
+            articleViews = []
+        } else {
+            articleViews = viewModel.articles.map { articleItem in
+                RealestateAgencyContentItemView(
+                    article: articleItem,
+                    imageHeight: articleDirection.imageHeight,
+                    remoteImageViewDataSource: remoteImageViewDataSource,
+                    delegate: self
+                )
+            }
         }
 
         articleStackView.addArrangedSubviews(articleViews)
@@ -125,6 +132,17 @@ private extension NSLayoutConstraint.Axis {
             return .fill
         @unknown default:
             return .fill
+        }
+    }
+
+    var imageHeight: RealestateAgencyContentItemView.ImageHeight {
+        switch self {
+        case .horizontal:
+            return .constant(200)
+        case .vertical:
+            return .widthMultiplier()
+        @unknown default:
+            return .widthMultiplier()
         }
     }
 }

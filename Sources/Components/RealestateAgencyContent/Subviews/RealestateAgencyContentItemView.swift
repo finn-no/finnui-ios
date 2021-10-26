@@ -6,6 +6,10 @@ protocol RealestateAgencyContentItemViewDelegate: AnyObject {
 }
 
 class RealestateAgencyContentItemView: UIView {
+    enum ImageHeight {
+        case constant(CGFloat)
+        case widthMultiplier(multiplier: CGFloat = 9/16)
+    }
 
     // MARK: - Internal properties
 
@@ -14,7 +18,6 @@ class RealestateAgencyContentItemView: UIView {
     // MARK: - Private properties
 
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
-    private var actionButton: Button?
 
     private lazy var titleLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
@@ -38,26 +41,40 @@ class RealestateAgencyContentItemView: UIView {
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
+    init(
+        article: RealestateAgencyContentViewModel.ArticleItem,
+        imageHeight: ImageHeight,
+        remoteImageViewDataSource: RemoteImageViewDataSource,
+        delegate: RealestateAgencyContentItemViewDelegate?
+    ) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
+
+        setup(imageHeight: imageHeight)
+        configure(with: article, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
     required init?(coder: NSCoder) { fatalError() }
 
     // MARK: - Setup
 
-    private func setup() {
+    private func setup(imageHeight: ImageHeight) {
         stackView.addArrangedSubviews([titleLabel, imageView, bodyLabel])
         addSubview(stackView)
         stackView.fillInSuperview()
 
-        imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 9/16).isActive = true
+        switch imageHeight {
+        case .constant(let heightConstant):
+            imageView.heightAnchor.constraint(equalToConstant: heightConstant).isActive = true
+        case .widthMultiplier(let multiplier):
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: multiplier).isActive = true
+        }
     }
 
-    // MARK: - Internal methods
+    // MARK: - Private methods
 
-    func configure(
+    private func configure(
         with article: RealestateAgencyContentViewModel.ArticleItem,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
@@ -67,15 +84,9 @@ class RealestateAgencyContentItemView: UIView {
         imageView.dataSource = remoteImageViewDataSource
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
-        if let actionButton = actionButton {
-            stackView.removeArrangedSubview(actionButton)
-            self.actionButton = nil
-        }
-
         let actionButton = Button.create(for: article)
         stackView.addArrangedSubview(actionButton)
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
-        self.actionButton = actionButton
     }
 
     // MARK: - Actions
@@ -87,7 +98,7 @@ class RealestateAgencyContentItemView: UIView {
 
 // MARK: - Private extensions
 
-extension Button {
+private extension Button {
     static func create(for article: RealestateAgencyContentViewModel.ArticleItem) -> Button {
         let button = Button(style: article.buttonKind.style, size: .normal, withAutoLayout: true)
         button.setTitle(article.buttonTitle, for: .normal)
@@ -95,7 +106,7 @@ extension Button {
     }
 }
 
-extension RealestateAgencyContentViewModel.ArticleItem.ButtonKind {
+private extension RealestateAgencyContentViewModel.ArticleItem.ButtonKind {
     var style: Button.Style {
         switch self {
         case .highlighted:
