@@ -31,8 +31,11 @@ extension XCTestCase {
             if let delay = delay {
                 snapshotting = .wait(for: delay, on: snapshotting)
             }
+
+            let wrapperViewController = iPadSnapshotWrapperViewController()
+            wrapperViewController.setDemoViewController(viewController)
             assertSnapshot(
-                matching: viewController, as: snapshotting, named: "iPad",
+                matching: wrapperViewController, as: snapshotting, named: "iPad",
                 record: recording, file: file, testName: testName, line: line
             )
         }
