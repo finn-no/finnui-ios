@@ -38,9 +38,9 @@ public class RealestateAgencyContentView: UIView {
         addSubview(logoImageView)
 
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
-            logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
-            logoImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.spacingS),
+            logoImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingL),
+            logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            logoImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.spacingM),
             logoImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 150),
             logoImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 48)
         ])
@@ -100,9 +100,9 @@ public class RealestateAgencyContentView: UIView {
 
         NSLayoutConstraint.activate([
             articleStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: .spacingM),
-            articleStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
-            articleStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
-            articleStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingS)
+            articleStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            articleStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            articleStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingL)
         ])
     }
 }

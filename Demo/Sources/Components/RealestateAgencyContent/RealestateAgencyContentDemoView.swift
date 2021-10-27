@@ -44,8 +44,8 @@ class RealestateAgencyContentDemoView: UIView, Tweakable {
         scrollView.fillInSuperview()
         scrollView.addSubview(agencyContentView)
 
-        agencyContentView.fillInSuperview(margin: .spacingM)
-        agencyContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -.spacingXL).isActive = true
+        agencyContentView.fillInSuperview()
+        agencyContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
 
     // MARK: - Private methods
