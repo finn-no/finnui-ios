@@ -47,6 +47,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
 
     init(
         article: RealestateAgencyContentViewModel.ArticleItem,
+        colors: RealestateAgencyContentViewModel.Colors,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         delegate: RealestateAgencyHighlightedContentItemViewDelegate?
     ) {
@@ -55,7 +56,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         setup()
-        configure(with: article, remoteImageViewDataSource: remoteImageViewDataSource)
+        configure(with: article, colors: colors, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -77,15 +78,19 @@ class RealestateAgencyHighlightedContentItemView: UIView {
 
     private func configure(
         with article: RealestateAgencyContentViewModel.ArticleItem,
+        colors: RealestateAgencyContentViewModel.Colors,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
+        titleLabel.textColor = colors.main.text
+        bodyLabel.textColor = colors.main.text
+
         titleLabel.text = article.title
         bodyLabel.text = article.body
 
         imageView.dataSource = remoteImageViewDataSource
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
-        let actionButton = Button.create(for: article)
+        let actionButton = Button.create(for: article, textColor: colors.actionButton.text, backgroundColor: colors.actionButton.background)
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
         buttonStackView.addArrangedSubviews([actionButton, UIView(withAutoLayout: true)])
     }

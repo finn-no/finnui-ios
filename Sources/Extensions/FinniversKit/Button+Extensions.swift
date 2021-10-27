@@ -2,13 +2,17 @@ import UIKit
 import FinniversKit
 
 extension Button {
-    static func create(for article: RealestateAgencyContentViewModel.ArticleItem) -> Button {
+    static func create(
+        for article: RealestateAgencyContentViewModel.ArticleItem,
+        textColor: UIColor,
+        backgroundColor: UIColor
+    ) -> Button {
         let style: Button.Style = {
             switch article.buttonKind {
             case .highlighted:
-                return .callToAction
+                return .callToAction.overrideStyle(bodyColor: backgroundColor, textColor: textColor)
             case .normal:
-                return .flat
+                return .flat.overrideStyle(textColor: backgroundColor)
             }
         }()
 

@@ -60,6 +60,8 @@ public class RealestateAgencyContentView: UIView {
         }
 
         // Setup/configure new views.
+        backgroundColor = viewModel.colors.main.background
+
         logoImageView.dataSource = remoteImageViewDataSource
         logoImageView.loadImage(for: viewModel.logoUrl, imageWidth: .zero)
 
@@ -75,6 +77,7 @@ public class RealestateAgencyContentView: UIView {
             articleViews = viewModel.articles.map {
                 RealestateAgencyHighlightedContentItemView(
                     article: $0,
+                    colors: viewModel.colors,
                     remoteImageViewDataSource: remoteImageViewDataSource,
                     delegate: self
                 )
@@ -83,6 +86,7 @@ public class RealestateAgencyContentView: UIView {
             articleViews = viewModel.articles.map {
                 RealestateAgencyContentItemView(
                     article: $0,
+                    colors: viewModel.colors,
                     imageHeight: articleDirection.imageHeight,
                     remoteImageViewDataSource: remoteImageViewDataSource,
                     delegate: self

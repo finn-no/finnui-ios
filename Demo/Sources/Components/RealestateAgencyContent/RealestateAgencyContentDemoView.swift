@@ -77,7 +77,11 @@ private extension RealestateAgencyContentViewModel {
 
         return RealestateAgencyContentViewModel(
             logoUrl: "https://kommunikasjon.ntb.no/data/images/00171/daaffdf6-fb0e-4e74-9b6b-7f973dbfa6a3.png",
-            articles: articles
+            articles: articles,
+            colors: Colors(
+                main: Colors.Group(text: .milk, background: .primaryBlue),
+                actionButton: Colors.Group(text: .primaryBlue, background: .milk)
+            )
         )
     }
 }
