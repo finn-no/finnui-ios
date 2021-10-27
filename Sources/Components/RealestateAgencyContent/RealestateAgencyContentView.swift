@@ -17,14 +17,10 @@ public class RealestateAgencyContentView: UIView {
     // MARK: - Private properties
 
     private var articleStackView: UIStackView?
-
-    private lazy var logoImageView: RemoteImageView = {
-        let imageView = RemoteImageView(withAutoLayout: true)
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
+    private lazy var logoImageWrapperView = RealestateAgencyLogoWrapperView(withAutoLayout: true)
 
     // MARK: - Init
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -35,14 +31,13 @@ public class RealestateAgencyContentView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        addSubview(logoImageView)
+        addSubview(logoImageWrapperView)
 
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingL),
-            logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            logoImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.spacingM),
-            logoImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 150),
-            logoImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 48)
+            logoImageWrapperView.topAnchor.constraint(equalTo: topAnchor),
+            logoImageWrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            logoImageWrapperView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.spacingM),
+            logoImageWrapperView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingM)
         ])
     }
 
@@ -61,9 +56,7 @@ public class RealestateAgencyContentView: UIView {
 
         // Setup/configure new views.
         backgroundColor = viewModel.colors.main.background
-
-        logoImageView.dataSource = remoteImageViewDataSource
-        logoImageView.loadImage(for: viewModel.logoUrl, imageWidth: .zero)
+        logoImageWrapperView.configure(with: viewModel, remoteImageViewDataSource: remoteImageViewDataSource)
 
         let articleStackView = UIStackView(
             axis: articleDirection,
@@ -99,7 +92,7 @@ public class RealestateAgencyContentView: UIView {
         self.articleStackView = articleStackView
 
         NSLayoutConstraint.activate([
-            articleStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: .spacingM),
+            articleStackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
             articleStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             articleStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
             articleStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingL)
