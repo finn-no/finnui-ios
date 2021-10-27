@@ -1,4 +1,5 @@
 import FinniversKit
+import UIKit
 
 class DemoViewController<View: UIView>: UIViewController {
 
@@ -34,8 +35,23 @@ class DemoViewController<View: UIView>: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .black
+        setupChildViewController()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            setupChildViewController()
+        }
+    }
+
+    private func setupChildViewController() {
+        if let childViewController = childViewController {
+            childViewController.willMove(toParent: nil)
+            childViewController.view.removeFromSuperview()
+            childViewController.removeFromParent()
+        }
+
         let viewController = BaseDemoViewController<View>(
             dismissType: dismissType,
             containmentOptions: containmentOptions,
