@@ -32,7 +32,7 @@ extension XCTestCase {
                 snapshotting = .wait(for: delay, on: snapshotting)
             }
 
-            let wrapperViewController = iPadSnapshotWrapperViewController()
+            let wrapperViewController = IPadSnapshotWrapperViewController()
             wrapperViewController.setDemoViewController(viewController)
             assertSnapshot(
                 matching: wrapperViewController, as: snapshotting, named: "iPad",

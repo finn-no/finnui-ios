@@ -1,6 +1,6 @@
 import UIKit
 
-class iPadSnapshotWrapperViewController: UIViewController {
+class IPadSnapshotWrapperViewController: UIViewController {
     func setDemoViewController(_ viewController: UIViewController) {
         view.addSubview(viewController.view)
         addChild(viewController)
