@@ -42,10 +42,12 @@ extension RealestateAgencyContentViewModel {
 extension RealestateAgencyContentViewModel {
     public struct Colors {
         public let main: Group
+        public let logoBackground: UIColor
         public let actionButton: Group
 
-        public init(main: Group, actionButton: Group) {
+        public init(main: Group, logoBackground: UIColor, actionButton: Group) {
             self.main = main
+            self.logoBackground = logoBackground
             self.actionButton = actionButton
         }
 

@@ -85,6 +85,7 @@ private extension RealestateAgencyContentViewModel {
             articles: articles,
             colors: Colors(
                 main: Colors.Group(text: .milk, background: .primaryBlue),
+                logoBackground: .milk,
                 actionButton: Colors.Group(text: .primaryBlue, background: .milk)
             )
         )
