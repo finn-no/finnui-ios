@@ -40,7 +40,7 @@ class DemoViewController<View: UIView>: UIViewController {
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+        if TestCheck.isTesting, previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
             setupChildViewController()
         }
     }
