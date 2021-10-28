@@ -44,8 +44,13 @@ class RealestateAgencyContentDemoView: UIView, Tweakable {
         scrollView.fillInSuperview()
         scrollView.addSubview(agencyContentView)
 
-        agencyContentView.fillInSuperview()
-        agencyContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            agencyContentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            agencyContentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            agencyContentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            agencyContentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
+        ])
     }
 
     // MARK: - Private methods
@@ -80,6 +85,7 @@ private extension RealestateAgencyContentViewModel {
             articles: articles,
             colors: Colors(
                 main: Colors.Group(text: .milk, background: .primaryBlue),
+                logoBackground: .milk,
                 actionButton: Colors.Group(text: .primaryBlue, background: .milk)
             )
         )

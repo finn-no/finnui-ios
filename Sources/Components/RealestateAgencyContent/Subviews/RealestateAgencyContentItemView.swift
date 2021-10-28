@@ -1,10 +1,6 @@
 import UIKit
 import FinniversKit
 
-protocol RealestateAgencyContentItemViewDelegate: AnyObject {
-    func realestateAgencyContentItemViewDidSelectActionButton(_ view: RealestateAgencyContentItemView)
-}
-
 class RealestateAgencyContentItemView: UIView {
     enum ImageHeight {
         case constant(CGFloat)
@@ -13,7 +9,7 @@ class RealestateAgencyContentItemView: UIView {
 
     // MARK: - Internal properties
 
-    weak var delegate: RealestateAgencyContentItemViewDelegate?
+    weak var delegate: RealestateAgencyContentItemDelegate?
 
     // MARK: - Private properties
 
@@ -47,7 +43,7 @@ class RealestateAgencyContentItemView: UIView {
         colors: RealestateAgencyContentViewModel.Colors,
         imageHeight: ImageHeight,
         remoteImageViewDataSource: RemoteImageViewDataSource,
-        delegate: RealestateAgencyContentItemViewDelegate?
+        delegate: RealestateAgencyContentItemDelegate?
     ) {
         self.delegate = delegate
         super.init(frame: .zero)
@@ -98,6 +94,6 @@ class RealestateAgencyContentItemView: UIView {
     // MARK: - Actions
 
     @objc private func handleActionButton() {
-        delegate?.realestateAgencyContentItemViewDidSelectActionButton(self)
+        delegate?.realestateAgencyContentItemDidSelectActionButton(self)
     }
 }
