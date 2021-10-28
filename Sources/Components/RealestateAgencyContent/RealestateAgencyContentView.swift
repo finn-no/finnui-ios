@@ -100,22 +100,10 @@ public class RealestateAgencyContentView: UIView {
     }
 }
 
-// MARK: - RealestateAgencyContentItemViewDelegate
+// MARK: - RealestateAgencyContentItemDelegate
 
-extension RealestateAgencyContentView: RealestateAgencyContentItemViewDelegate {
-    func realestateAgencyContentItemViewDidSelectActionButton(_ view: RealestateAgencyContentItemView) {
-        guard let viewIndex = articleStackView?.arrangedSubviews.firstIndex(of: view) else {
-            return
-        }
-
-        delegate?.realestateAgencyContentView(self, didSelectActionButtonForArticleAt: viewIndex)
-    }
-}
-
-// MARK: - RealestateAgencyHighlightedContentItemViewDelegate
-
-extension RealestateAgencyContentView: RealestateAgencyHighlightedContentItemViewDelegate {
-    func realestateAgencyHighlightedContentItemViewDidSelectActionButton(_ view: RealestateAgencyHighlightedContentItemView) {
+extension RealestateAgencyContentView: RealestateAgencyContentItemDelegate {
+    func realestateAgencyContentItemDidSelectActionButton(_ view: UIView) {
         guard let viewIndex = articleStackView?.arrangedSubviews.firstIndex(of: view) else {
             return
         }

@@ -1,15 +1,11 @@
 import UIKit
 import FinniversKit
 
-protocol RealestateAgencyHighlightedContentItemViewDelegate: AnyObject {
-    func realestateAgencyHighlightedContentItemViewDidSelectActionButton(_ view: RealestateAgencyHighlightedContentItemView)
-}
-
 class RealestateAgencyHighlightedContentItemView: UIView {
 
     // MARK: - Internal properties
 
-    weak var delegate: RealestateAgencyHighlightedContentItemViewDelegate?
+    weak var delegate: RealestateAgencyContentItemDelegate?
 
     // MARK: - Private properties
 
@@ -49,7 +45,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
         article: RealestateAgencyContentViewModel.ArticleItem,
         colors: RealestateAgencyContentViewModel.Colors,
         remoteImageViewDataSource: RemoteImageViewDataSource,
-        delegate: RealestateAgencyHighlightedContentItemViewDelegate?
+        delegate: RealestateAgencyContentItemDelegate?
     ) {
         self.delegate = delegate
         super.init(frame: .zero)
@@ -98,6 +94,6 @@ class RealestateAgencyHighlightedContentItemView: UIView {
     // MARK: - Actions
 
     @objc private func handleActionButton() {
-        delegate?.realestateAgencyHighlightedContentItemViewDidSelectActionButton(self)
+        delegate?.realestateAgencyContentItemDidSelectActionButton(self)
     }
 }
