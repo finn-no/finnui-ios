@@ -14,6 +14,7 @@ public enum FullscreenDemoViews: String, DemoViews {
     case searchDropdown
     case exploreView
     case exploreDetailView
+    case stories
 
     public var viewController: UIViewController {
         switch self {
@@ -37,6 +38,8 @@ public enum FullscreenDemoViews: String, DemoViews {
             return makeExploreView()
         case .exploreDetailView:
             return DemoViewController<ExploreDetailDemoView>(constrainToTopSafeArea: true, constrainToBottomSafeArea: false)
+        case .stories:
+            return DemoViewController<StoriesDemoView>(constrainToTopSafeArea: false, constrainToBottomSafeArea: false)
         }
     }
 }
