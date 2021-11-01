@@ -8,6 +8,12 @@ class StoriesDemoView: UIView {
         return view
     }()
 
+    private let images: [UIImage] = [
+        UIImage(named: .storiesCat),
+        UIImage(named: .storiesCatSky),
+        UIImage(named: .storiesCatTravel)
+    ]
+
     // MARK: - Init
 
     public override init(frame: CGRect) {
@@ -24,5 +30,7 @@ class StoriesDemoView: UIView {
     private func setup() {
         addSubview(storiesView)
         storiesView.fillInSuperview()
+
+        storiesView.configure(with: images)
     }
 }
