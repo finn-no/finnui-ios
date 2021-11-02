@@ -52,6 +52,16 @@ class ProgressView: UIView {
         startNextProgress()
     }
 
+    func setActiveIndex(_ index: Int) {
+        guard progressViews.indices.contains(index) else { return }
+        currentIndex = index
+        timer?.invalidate()
+
+        progressViews.prefix(upTo: index).forEach({ $0.progress = 1 })
+        progressViews.suffix(from: index).forEach({ $0.progress = 0 })
+        startNextProgress()
+    }
+
     private func startNextProgress() {
         guard let progressView = progressViews[safe: currentIndex] else { return }
         self.currentProgressView = progressView

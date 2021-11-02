@@ -20,9 +20,14 @@ public class StoriesView: UIView {
         return progressView
     }()
 
+    private var currentIndex = 0
     private var imageUrls = [String]()
     private var downloadedImages = [String: UIImage?]()
-    private var currentImageUrl: String?
+    private let tapGestureRecognizer = UITapGestureRecognizer()
+
+    private var currentImageUrl: String? {
+        imageUrls[safe: currentIndex]
+    }
 
     // MARK: - Public properties
 
@@ -43,6 +48,9 @@ public class StoriesView: UIView {
 
         addSubview(progressView)
 
+        tapGestureRecognizer.addTarget(self, action: #selector(handleTap(recognizer:)))
+        addGestureRecognizer(tapGestureRecognizer)
+
         NSLayoutConstraint.activate([
             progressView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
             progressView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -57,25 +65,51 @@ public class StoriesView: UIView {
     }
 
     public func startStory() {
-        showNextImage()
+        currentIndex = 0
+        showImage(forIndex: currentIndex)
         progressView.startAnimating()
     }
 
-    private func showNextImage() {
-        guard !imageUrls.isEmpty else { return }
-        let imageUrl = imageUrls.removeFirst()
-        self.currentImageUrl = imageUrl
+    @objc private func handleTap(recognizer: UITapGestureRecognizer) {
+        let tapLocation = recognizer.location(in: self).x
+        if tapLocation > frame.size.width / 2 {
+            showNextSlide()
+        } else {
+            showPreviousSlide()
+        }
+    }
 
-        if !downloadedImages.keys.contains(imageUrl) {
-            downloadImage(withUrl: imageUrl)
-        } else if let image = downloadedImages[imageUrl] {
+    private func showNextSlide() {
+        guard currentIndex + 1 < imageUrls.count else {
+            // Tell delegate to finish
+            return
+        }
+        currentIndex += 1
+        progressView.setActiveIndex(currentIndex)
+        showImage(forIndex: currentIndex)
+    }
+
+    private func showPreviousSlide() {
+        currentIndex = max(0, currentIndex - 1)
+        progressView.setActiveIndex(currentIndex)
+        showImage(forIndex: currentIndex)
+    }
+
+    private func showImage(forIndex index: Int) {
+        guard let imageUrl = imageUrls[safe: index] else { return }
+
+        if let image = downloadedImages[imageUrl] {
             imageView.image = image
+        } else {
+            downloadImage(withUrl: imageUrl)
         }
 
-        if !imageUrls.isEmpty {
-            let nextImageUrl = imageUrls[0]
-            downloadImage(withUrl: nextImageUrl)
-        }
+        predownloadNextImageIfNeeded()
+    }
+
+    private func predownloadNextImageIfNeeded() {
+        guard let imageUrl = imageUrls[safe: currentIndex + 1] else { return }
+        downloadImage(withUrl: imageUrl)
     }
 
     private func downloadImage(withUrl imageUrl: String) {
@@ -96,7 +130,8 @@ public class StoriesView: UIView {
 extension StoriesView: ProgressViewDelegate {
     func progressViewDidFinishProgress(_ progressView: ProgressView, isLastProgress: Bool) {
         if !isLastProgress {
-            showNextImage()
+            currentIndex += 1
+            showImage(forIndex: currentIndex)
         } else {
             // tell delegate to dismiss story
         }
