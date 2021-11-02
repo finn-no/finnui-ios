@@ -5,6 +5,8 @@ import FinnUI
 class StoriesDemoView: UIView {
     private lazy var storiesView: StoriesView = {
         let view = StoriesView(withAutoLayout: true)
+        view.delegate = self
+        view.dataSource = self
         return view
     }()
 
@@ -40,6 +42,12 @@ class StoriesDemoView: UIView {
 
         storiesView.configure(with: imageUrls)
         storiesView.startStory()
+    }
+}
+
+extension StoriesDemoView: StoriesViewDelegate {
+    func storiesViewDidFinishStory(_ view: StoriesView) {
+        print("DISMISS STORY")
     }
 }
 

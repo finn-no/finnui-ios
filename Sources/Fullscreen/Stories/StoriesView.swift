@@ -7,6 +7,10 @@ public protocol StoriesViewDataSource: AnyObject {
     func storiesView(_ view: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
 }
 
+public protocol StoriesViewDelegate: AnyObject {
+    func storiesViewDidFinishStory(_ view: StoriesView)
+}
+
 public class StoriesView: UIView {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
@@ -32,6 +36,7 @@ public class StoriesView: UIView {
     // MARK: - Public properties
 
     public weak var dataSource: StoriesViewDataSource?
+    public weak var delegate: StoriesViewDelegate?
 
     public override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -81,7 +86,7 @@ public class StoriesView: UIView {
 
     private func showNextSlide() {
         guard currentIndex + 1 < imageUrls.count else {
-            // Tell delegate to finish
+            delegate?.storiesViewDidFinishStory(self)
             return
         }
         currentIndex += 1
@@ -133,7 +138,7 @@ extension StoriesView: ProgressViewDelegate {
             currentIndex += 1
             showImage(forIndex: currentIndex)
         } else {
-            // tell delegate to dismiss story
+            delegate?.storiesViewDidFinishStory(self)
         }
     }
 }
