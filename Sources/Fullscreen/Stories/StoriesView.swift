@@ -14,17 +14,14 @@ public class StoriesView: UIView {
         return imageView
     }()
 
-    private lazy var progressView: UIProgressView = {
-        let progressView = UIProgressView(withAutoLayout: true)
-        progressView.progressTintColor = .milk
-        progressView.trackTintColor = .sardine.withAlphaComponent(0.5)
+    private lazy var progressView: ProgressView = {
+        let progressView = ProgressView(withAutoLayout: true)
+        progressView.delegate = self
         return progressView
     }()
 
-    private var currentIndex: Int? = nil
     private var viewModels = [StoryViewModel]()
     private var images = [UIImage]()
-    private var timer: Timer?
 
     // MARK: - Public properties
 
@@ -49,6 +46,7 @@ public class StoriesView: UIView {
             progressView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
             progressView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
+            progressView.heightAnchor.constraint(equalToConstant: 3)
         ])
     }
 
@@ -57,40 +55,24 @@ public class StoriesView: UIView {
     }
 
     public func configure(with images: [UIImage]) {
-        currentIndex = nil
         self.images = images
+        progressView.configure(withNumberOfProgresses: images.count)
         showNextImage()
-    }
-
-    func updateIndex() {
-        if currentIndex == nil {
-            currentIndex = 0
-            return
-        }
-        if let currentIndex = currentIndex {
-            self.currentIndex = currentIndex + 1
-        }
+        progressView.startAnimating()
     }
 
     private func showNextImage() {
-        updateIndex()
-
-        guard let currentIndex = currentIndex, currentIndex < images.count else {
-            // did finish delegate
-            return
-        }
-
-        imageView.image = images[currentIndex]
-        progressView.progress = 0
-        timer = Timer.scheduledTimer(timeInterval: 0.005, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
+        guard !images.isEmpty else { return }
+        imageView.image = images.removeFirst()
     }
+}
 
-    @objc func updateProgressView() {
-        progressView.progress += 0.001
-        progressView.setProgress(progressView.progress, animated: true)
-        if progressView.progress == 1 {
-            timer?.invalidate()
+extension StoriesView: ProgressViewDelegate {
+    func progressViewDidFinishProgress(_ progressView: ProgressView, isLastProgress: Bool) {
+        if !isLastProgress {
             showNextImage()
+        } else {
+            // tell delegate to dismiss story
         }
     }
 }
