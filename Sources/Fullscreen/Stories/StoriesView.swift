@@ -20,8 +20,9 @@ public class StoriesView: UIView {
         return progressView
     }()
 
-    private var viewModels = [StoryViewModel]()
-    private var images = [UIImage]()
+    private var imageUrls = [String]()
+    private var downloadedImages = [String: UIImage?]()
+    private var currentImageUrl: String?
 
     // MARK: - Public properties
 
@@ -50,20 +51,45 @@ public class StoriesView: UIView {
         ])
     }
 
-    public func configure(withViewModels viewModels: [StoryViewModel]) {
-        self.viewModels = viewModels
+    public func configure(with imageUrls: [String]) {
+        self.imageUrls = imageUrls
+        progressView.configure(withNumberOfProgresses: imageUrls.count)
     }
 
-    public func configure(with images: [UIImage]) {
-        self.images = images
-        progressView.configure(withNumberOfProgresses: images.count)
+    public func startStory() {
         showNextImage()
         progressView.startAnimating()
     }
 
     private func showNextImage() {
-        guard !images.isEmpty else { return }
-        imageView.image = images.removeFirst()
+        guard !imageUrls.isEmpty else { return }
+        let imageUrl = imageUrls.removeFirst()
+        self.currentImageUrl = imageUrl
+
+        if !downloadedImages.keys.contains(imageUrl) {
+            downloadImage(withUrl: imageUrl)
+        } else if let image = downloadedImages[imageUrl] {
+            imageView.image = image
+        }
+
+        if !imageUrls.isEmpty {
+            let nextImageUrl = imageUrls[0]
+            downloadImage(withUrl: nextImageUrl)
+        }
+    }
+
+    private func downloadImage(withUrl imageUrl: String) {
+        guard !downloadedImages.keys.contains(imageUrl) else { return }
+        downloadedImages[imageUrl] = nil
+
+        dataSource?.storiesView(self, loadImageWithPath: imageUrl, imageWidth: frame.size.width, completion: { [weak self] image in
+            guard let self = self else { return }
+            if imageUrl == self.currentImageUrl {
+                self.imageView.image = image
+            } else {
+                self.downloadedImages[imageUrl] = image
+            }
+        })
     }
 }
 

@@ -14,6 +14,12 @@ class StoriesDemoView: UIView {
         UIImage(named: .storiesCatTravel)
     ]
 
+    private let imageUrls: [String] = [
+        "https://finn-content-hub.imgix.net/bilder/HR-bildearkiv/PuseFINN_regnoncho.jpg?auto=compress&crop=focalpoint&domain=finn-content-hub.imgix.net&fit=crop&fm=jpg&fp-x=0.5282&fp-y=0.3725&h=720&ixlib=php-3.3.0&w=1280",
+        "https://yt3.ggpht.com/ytc/AKedOLTYio64rqGJoLKqcaHBKtVJYohlmsVSzXOcBpG6oA=s900-c-k-c0x00ffffff-no-rj",
+        "https://scontent.fosl4-1.fna.fbcdn.net/v/t1.6435-9/246412357_10159436417758446_835789635389117397_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=e3f864&_nc_ohc=adntSSR_2_cAX9Rk-5f&_nc_ht=scontent.fosl4-1.fna&oh=f29ce65eda2652b6fd1487175a3e86c1&oe=61A51CC2"
+    ]
+
     // MARK: - Init
 
     public override init(frame: CGRect) {
@@ -30,7 +36,32 @@ class StoriesDemoView: UIView {
     private func setup() {
         addSubview(storiesView)
         storiesView.fillInSuperview()
+        storiesView.dataSource = self
 
-        storiesView.configure(with: images)
+        storiesView.configure(with: imageUrls)
+        storiesView.startStory()
+    }
+}
+
+extension StoriesDemoView: StoriesViewDataSource {
+    func storiesView(_ view: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void)) {
+        guard let url = URL(string: imagePath) else {
+            completion(nil)
+            return
+        }
+
+        // Demo code only.
+        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
+            usleep(50_000)
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                    completion(image)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+
+        task.resume()
     }
 }
