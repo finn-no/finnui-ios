@@ -16,9 +16,17 @@ class ProgressView: UIView {
     private var currentIndex: Int = 0
     private var progressViews = [UIProgressView]()
     private var currentProgressView: UIProgressView?
+
     private var timer: Timer?
+    private var durationPerSlideInSeconds: Double = 5
+    private let progressSteps: Double = 1000
+    private var timeInterval: Double { durationPerSlideInSeconds / progressSteps }
+
+    // MARK: - Internal properties
 
     weak var delegate: ProgressViewDelegate?
+
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,6 +42,8 @@ class ProgressView: UIView {
         stackView.fillInSuperview()
     }
 
+    // MARK: - Internal methods
+
     func configure(withNumberOfProgresses numberOfProgresses: Int) {
         progressViews.forEach({ $0.removeFromSuperview() })
         progressViews.removeAll()
@@ -47,7 +57,8 @@ class ProgressView: UIView {
         }
     }
 
-    func startAnimating() {
+    func startAnimating(durationPerSlideInSeconds: Double) {
+        self.durationPerSlideInSeconds = durationPerSlideInSeconds
         currentIndex = 0
         startNextProgress()
     }
@@ -62,13 +73,15 @@ class ProgressView: UIView {
         startNextProgress()
     }
 
+    // MARK: - Private methods
+
     private func startNextProgress() {
         timer?.invalidate()
 
         guard let progressView = progressViews[safe: currentIndex] else { return }
 
         self.currentProgressView = progressView
-        timer = Timer.scheduledTimer(timeInterval: 0.005, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
     }
 
     private func finishProgressAndContinueIfNext() {
@@ -81,10 +94,10 @@ class ProgressView: UIView {
         startNextProgress()
     }
 
-    @objc func updateProgressView() {
+    @objc private func updateProgressView() {
         guard let progressView = currentProgressView else { return }
 
-        progressView.progress += 0.001
+        progressView.progress +=  1 / Float(progressSteps)
         progressView.setProgress(progressView.progress, animated: true)
         if progressView.progress == 1 {
             timer?.invalidate()

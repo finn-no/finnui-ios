@@ -113,8 +113,8 @@ public class StoriesView: UIView {
         progressView.configure(withNumberOfProgresses: slides.count)
     }
 
-    public func startStory() {
-        progressView.startAnimating()
+    public func startStory(durationPerSlideInSeconds: Double = 5) {
+        progressView.startAnimating(durationPerSlideInSeconds: durationPerSlideInSeconds)
     }
 
     // MARK: - Private methods
