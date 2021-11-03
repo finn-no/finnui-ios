@@ -108,7 +108,8 @@ class ProgressView: UIView {
     private func createProgressView() -> UIProgressView {
         let progressView = UIProgressView(withAutoLayout: true)
         progressView.progressTintColor = .milk
-        progressView.trackTintColor = .sardine.withAlphaComponent(0.5)
+        progressView.trackTintColor = .milk.withAlphaComponent(0.5)
+        progressView.dropShadow(color: .black, opacity: 0.2, offset: .zero, radius: 5)
         return progressView
     }
 }

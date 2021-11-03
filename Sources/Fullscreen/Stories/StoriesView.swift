@@ -24,14 +24,12 @@ public class StoriesView: UIView {
     private lazy var titleLabel: Label = {
         let label = Label(style: .title3Strong, withAutoLayout: true)
         label.textColor = .white
-        label.dropShadow(color: .licorice, opacity: 1, offset: CGSize(width: 1, height: 2), radius: 2)
         return label
     }()
 
     private lazy var detailLabel: Label = {
         let label = Label(style: .detail, withAutoLayout: true)
         label.textColor = .white
-        label.dropShadow(color: .licorice, opacity: 1, offset: CGSize(width: 1, height: 2), radius: 2)
         return label
     }()
 
@@ -101,6 +99,11 @@ public class StoriesView: UIView {
             detailLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -.spacingS),
             detailLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingM),
         ])
+    }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        imageView.addGradients()
     }
 
     // MARK: - Public methods
@@ -201,6 +204,51 @@ extension StoriesView: ProgressViewDelegate {
 
 extension UIImage {
     var isLandscapeOrientation: Bool {
-        size.width > size.height // should square images be treated like landscape?
+        return size.width > size.height // should square images be treated like landscape?
+    }
+}
+
+extension UIView {
+    func addGradients() {
+        guard frame.width > 0 else { return }
+        if let sublayers = layer.sublayers, !sublayers.isEmpty {
+            return
+        }
+        addGradient(for: .top)
+        addGradient(for: .bottom)
+    }
+
+    private enum ShadowEdge {
+        case top
+        case bottom
+    }
+
+    private func addGradient(for shadowEdge: ShadowEdge) {
+        let gradientLayer = CAGradientLayer()
+
+        switch shadowEdge {
+        case .top:
+            let radius: CGFloat = 250
+            gradientLayer.opacity = 0.5
+            gradientLayer.colors = [UIColor.topGradientColor.cgColor, UIColor.clear.cgColor]
+            gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+            gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+            gradientLayer.frame = CGRect(x: 0.0, y: 0.0, width: frame.width, height: radius)
+        case .bottom:
+            let radius: CGFloat = 250
+            gradientLayer.opacity = 0.75
+            gradientLayer.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
+            gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
+            gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+            gradientLayer.frame = CGRect(x: 0.0, y: frame.height - radius, width: frame.width, height: radius)
+        }
+
+        layer.addSublayer(gradientLayer)
+    }
+}
+
+private extension UIColor {
+    class var topGradientColor: UIColor {
+        .dynamicColorIfAvailable(defaultColor: .sardine, darkModeColor: .darkSardine)
     }
 }
