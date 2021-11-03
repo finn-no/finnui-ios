@@ -40,7 +40,12 @@ class StoriesDemoView: UIView {
         storiesView.fillInSuperview()
         storiesView.dataSource = self
 
-        storiesView.configure(with: StoriesDemoView.slides)
+        storiesView.configure(
+            with: StoriesDemoView.slides,
+            storyTitle: "Pusefinn - Torget",
+            storyIconImageUrl: "https://static.finncdn.no/_c/static/search-assets/newfrontier/bap/torget_general.png"
+        )
+
         storiesView.startStory()
     }
 }
