@@ -12,10 +12,27 @@ public protocol StoriesViewDelegate: AnyObject {
 }
 
 public class StoriesView: UIView {
+
+    // MARK: - Subviews
+
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFill
         return imageView
+    }()
+
+    private lazy var titleLabel: Label = {
+        let label = Label(style: .title3Strong, withAutoLayout: true)
+        label.textColor = .white
+        label.dropShadow(color: .licorice, opacity: 1, offset: CGSize(width: 1, height: 2), radius: 2)
+        return label
+    }()
+
+    private lazy var detailLabel: Label = {
+        let label = Label(style: .detail, withAutoLayout: true)
+        label.textColor = .white
+        label.dropShadow(color: .licorice, opacity: 1, offset: CGSize(width: 1, height: 2), radius: 2)
+        return label
     }()
 
     private lazy var progressView: ProgressView = {
@@ -24,7 +41,15 @@ public class StoriesView: UIView {
         return progressView
     }()
 
-    private var currentIndex = 0
+    // MARK: - Private properties
+
+    private var currentIndex = 0 {
+        didSet {
+            updateCurrentSlide()
+        }
+    }
+
+    private var slides = [StorySlideViewModel]()
     private var imageUrls = [String]()
     private var downloadedImages = [String: UIImage?]()
     private let tapGestureRecognizer = UITapGestureRecognizer()
@@ -38,6 +63,8 @@ public class StoriesView: UIView {
     public weak var dataSource: StoriesViewDataSource?
     public weak var delegate: StoriesViewDelegate?
 
+    // MARK: - Init
+
     public override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
@@ -47,11 +74,15 @@ public class StoriesView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Setup
+
     private func setup() {
         addSubview(imageView)
         imageView.fillInSuperview()
 
         addSubview(progressView)
+        addSubview(titleLabel)
+        addSubview(detailLabel)
 
         tapGestureRecognizer.addTarget(self, action: #selector(handleTap(recognizer:)))
         addGestureRecognizer(tapGestureRecognizer)
@@ -60,20 +91,33 @@ public class StoriesView: UIView {
             progressView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
             progressView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
-            progressView.heightAnchor.constraint(equalToConstant: 3)
+            progressView.heightAnchor.constraint(equalToConstant: 3),
+
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant:  -.spacingM),
+            titleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -.spacingXL),
+
+            detailLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            detailLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -.spacingS),
+            detailLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingM),
         ])
     }
 
-    public func configure(with imageUrls: [String]) {
-        self.imageUrls = imageUrls
-        progressView.configure(withNumberOfProgresses: imageUrls.count)
+    // MARK: - Public methods
+
+    public func configure(with slides: [StorySlideViewModel]) {
+        self.slides = slides
+        self.imageUrls = slides.map({ $0.imageUrl })
+
+        currentIndex = 0
+        progressView.configure(withNumberOfProgresses: slides.count)
     }
 
     public func startStory() {
-        currentIndex = 0
-        showImage(forIndex: currentIndex)
         progressView.startAnimating()
     }
+
+    // MARK: - Private methods
 
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
         let tapLocation = recognizer.location(in: self).x
@@ -85,28 +129,29 @@ public class StoriesView: UIView {
     }
 
     private func showNextSlide() {
-        guard currentIndex + 1 < imageUrls.count else {
+        guard currentIndex + 1 < slides.count else {
             delegate?.storiesViewDidFinishStory(self)
             return
         }
         currentIndex += 1
-        progressView.setActiveIndex(currentIndex)
-        showImage(forIndex: currentIndex)
     }
 
     private func showPreviousSlide() {
         currentIndex = max(0, currentIndex - 1)
-        progressView.setActiveIndex(currentIndex)
-        showImage(forIndex: currentIndex)
     }
 
-    private func showImage(forIndex index: Int) {
-        guard let imageUrl = imageUrls[safe: index] else { return }
+    private func updateCurrentSlide() {
+        guard let slide = slides[safe: currentIndex] else { return }
+        progressView.setActiveIndex(currentIndex)
 
-        if let image = downloadedImages[imageUrl] {
+        titleLabel.text = slide.title
+        detailLabel.text = slide.detailText
+
+        if let image = downloadedImages[slide.imageUrl] {
             imageView.image = image
         } else {
-            downloadImage(withUrl: imageUrl)
+            imageView.image = nil
+            downloadImage(withUrl: slide.imageUrl)
         }
 
         predownloadNextImageIfNeeded()
@@ -132,11 +177,12 @@ public class StoriesView: UIView {
     }
 }
 
+// MARK: - ProgressViewDelegate
+
 extension StoriesView: ProgressViewDelegate {
     func progressViewDidFinishProgress(_ progressView: ProgressView, isLastProgress: Bool) {
         if !isLastProgress {
             currentIndex += 1
-            showImage(forIndex: currentIndex)
         } else {
             delegate?.storiesViewDidFinishStory(self)
         }

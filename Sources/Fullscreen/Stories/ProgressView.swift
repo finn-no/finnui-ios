@@ -55,15 +55,18 @@ class ProgressView: UIView {
     func setActiveIndex(_ index: Int) {
         guard progressViews.indices.contains(index) else { return }
         currentIndex = index
-        timer?.invalidate()
 
         progressViews.prefix(upTo: index).forEach({ $0.progress = 1 })
         progressViews.suffix(from: index).forEach({ $0.progress = 0 })
+
         startNextProgress()
     }
 
     private func startNextProgress() {
+        timer?.invalidate()
+
         guard let progressView = progressViews[safe: currentIndex] else { return }
+
         self.currentProgressView = progressView
         timer = Timer.scheduledTimer(timeInterval: 0.005, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
     }
