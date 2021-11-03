@@ -148,7 +148,7 @@ public class StoriesView: UIView {
         detailLabel.text = slide.detailText
 
         if let image = downloadedImages[slide.imageUrl] {
-            imageView.image = image
+            showImage(image)
         } else {
             imageView.image = nil
             downloadImage(withUrl: slide.imageUrl)
@@ -169,11 +169,21 @@ public class StoriesView: UIView {
         dataSource?.storiesView(self, loadImageWithPath: imageUrl, imageWidth: frame.size.width, completion: { [weak self] image in
             guard let self = self else { return }
             if imageUrl == self.currentImageUrl {
-                self.imageView.image = image
+                self.showImage(image)
             } else {
                 self.downloadedImages[imageUrl] = image
             }
         })
+    }
+
+    private func showImage(_ image: UIImage?) {
+        guard let image = image else {
+            imageView.image = nil
+            return
+        }
+        let contentMode: UIView.ContentMode = image.isLandscapeOrientation ? .scaleAspectFit : .scaleAspectFill
+        imageView.contentMode = contentMode
+        imageView.image = image
     }
 }
 
@@ -186,5 +196,11 @@ extension StoriesView: ProgressViewDelegate {
         } else {
             delegate?.storiesViewDidFinishStory(self)
         }
+    }
+}
+
+extension UIImage {
+    var isLandscapeOrientation: Bool {
+        size.width > size.height // should square images be treated like landscape?
     }
 }
