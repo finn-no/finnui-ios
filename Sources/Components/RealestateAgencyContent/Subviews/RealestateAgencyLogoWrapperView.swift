@@ -33,10 +33,10 @@ class RealestateAgencyLogoWrapperView: UIView {
             logoImageHeightConstraint,
             logoImageWidthConstraint,
 
-            logoImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
-            logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
-            logoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
-            logoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingS)
+            logoImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+            logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            logoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            logoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
         ])
     }
 
