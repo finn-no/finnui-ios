@@ -81,7 +81,7 @@ private extension RealestateAgencyContentViewModel {
         }
 
         return RealestateAgencyContentViewModel(
-            logoUrl: "https://kommunikasjon.ntb.no/data/images/00171/daaffdf6-fb0e-4e74-9b6b-7f973dbfa6a3.png",
+            logoUrl: "FINN-LOGO",
             articles: articles,
             colors: Colors(
                 main: Colors.Group(text: .milk, background: .primaryBlue),
@@ -111,6 +111,11 @@ extension RealestateAgencyContentDemoView: RemoteImageViewDataSource {
     }
 
     func remoteImageView(_ view: RemoteImageView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void)) {
+        if imagePath == "FINN-LOGO" {
+            completion(UIImage(named: .finnLogoLarge))
+            return
+        }
+
         guard let url = URL(string: imagePath) else {
             completion(nil)
             return

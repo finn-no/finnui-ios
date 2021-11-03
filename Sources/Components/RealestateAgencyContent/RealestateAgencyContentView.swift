@@ -35,7 +35,7 @@ public class RealestateAgencyContentView: UIView {
 
         NSLayoutConstraint.activate([
             logoImageWrapperView.topAnchor.constraint(equalTo: topAnchor),
-            logoImageWrapperView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            logoImageWrapperView.leadingAnchor.constraint(equalTo: leadingAnchor),
             logoImageWrapperView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.spacingM),
             logoImageWrapperView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingM)
         ])

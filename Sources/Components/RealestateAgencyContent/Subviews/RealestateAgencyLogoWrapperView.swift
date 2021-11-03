@@ -5,6 +5,10 @@ class RealestateAgencyLogoWrapperView: UIView {
 
     // MARK: - Private properties
 
+    private let imageHeight: CGFloat = 32
+    private lazy var logoImageHeightConstraint = logoImageView.heightAnchor.constraint(equalToConstant: imageHeight)
+    private lazy var logoImageWidthConstraint = logoImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 150)
+
     private lazy var logoImageView: RemoteImageView = {
         let imageView = RemoteImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFit
@@ -24,11 +28,15 @@ class RealestateAgencyLogoWrapperView: UIView {
 
     private func setup() {
         addSubview(logoImageView)
-        logoImageView.fillInSuperview(margin: .spacingM)
 
         NSLayoutConstraint.activate([
-            logoImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 150),
-            logoImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 48)
+            logoImageHeightConstraint,
+            logoImageWidthConstraint,
+
+            logoImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+            logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            logoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            logoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
         ])
     }
 
@@ -41,6 +49,13 @@ class RealestateAgencyLogoWrapperView: UIView {
         backgroundColor = viewModel.colors.logoBackground
 
         logoImageView.dataSource = remoteImageViewDataSource
-        logoImageView.loadImage(for: viewModel.logoUrl, imageWidth: .zero)
+        logoImageView.loadImage(for: viewModel.logoUrl, imageWidth: .zero, modify: { [weak self] image in
+            if let self = self, let image = image {
+                let heightWidthRatio = image.size.width / image.size.height
+                self.logoImageWidthConstraint.constant = self.imageHeight * heightWidthRatio
+            }
+
+            return image
+        })
     }
 }
