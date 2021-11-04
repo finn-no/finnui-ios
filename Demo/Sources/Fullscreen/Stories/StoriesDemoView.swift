@@ -45,6 +45,10 @@ class StoriesDemoView: UIView {
 }
 
 extension StoriesDemoView: StoriesViewDelegate {
+    func storiesViewDidSelectSearch(_ view: StoriesView) {
+        print("OPEN SEARCH")
+    }
+
     func storiesViewDidSelectAd(_ view: StoriesView) {
         print("OPEN AD")
     }

@@ -11,13 +11,20 @@ public protocol StoriesViewDelegate: AnyObject {
     func storiesViewDidSelectAd(_ view: StoriesView)
     func storiesViewDidSelectNextStory(_ view: StoriesView)
     func storiesViewDidSelectPreviousStory(_ view: StoriesView)
+    func storiesViewDidSelectSearch(_ view: StoriesView)
 }
 
 public class StoriesView: UIView {
 
     // MARK: - Subviews
 
-    private lazy var storyIconImageView: UIImageView = {
+    private lazy var searchInfoStackView: UIStackView = {
+        let stackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
+        stackView.alignment = .center
+        return stackView
+    }()
+
+    private lazy var searchIconImageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -25,7 +32,7 @@ public class StoriesView: UIView {
         return imageView
     }()
 
-    private lazy var storyTitleLabel: Label = {
+    private lazy var searchTitleLabel: Label = {
         let label = Label(style: .captionStrong, withAutoLayout: true)
         label.textColor = .milk
         return label
@@ -124,9 +131,10 @@ public class StoriesView: UIView {
         addSubview(progressView)
         addSubview(adTitleLabel)
         addSubview(adDetailLabel)
-        addSubview(storyTitleLabel)
-        addSubview(storyIconImageView)
+        addSubview(searchInfoStackView)
         addSubview(priceContainerView)
+
+        searchInfoStackView.addArrangedSubviews([searchIconImageView, searchTitleLabel])
 
         priceContainerView.contentView.addSubview(priceLabel)
         priceLabel.fillInSuperview(margin: .spacingS)
@@ -145,14 +153,12 @@ public class StoriesView: UIView {
             progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
             progressView.heightAnchor.constraint(equalToConstant: 3),
 
-            storyIconImageView.leadingAnchor.constraint(equalTo: progressView.leadingAnchor),
-            storyIconImageView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: .spacingS),
-            storyIconImageView.widthAnchor.constraint(equalToConstant: storyIconImageSize),
-            storyIconImageView.heightAnchor.constraint(equalToConstant: storyIconImageSize),
+            searchInfoStackView.leadingAnchor.constraint(equalTo: progressView.leadingAnchor),
+            searchInfoStackView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 3 * .spacingXS),
+            searchInfoStackView.trailingAnchor.constraint(lessThanOrEqualTo: progressView.trailingAnchor),
 
-            storyTitleLabel.leadingAnchor.constraint(equalTo: storyIconImageView.trailingAnchor, constant: .spacingS),
-            storyTitleLabel.centerYAnchor.constraint(equalTo: storyIconImageView.centerYAnchor),
-            storyTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: progressView.trailingAnchor),
+            searchIconImageView.widthAnchor.constraint(equalToConstant: storyIconImageSize),
+            searchIconImageView.heightAnchor.constraint(equalToConstant: storyIconImageSize),
 
             adTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             adTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant:  -.spacingM),
@@ -172,8 +178,7 @@ public class StoriesView: UIView {
     }
 
     private func setupGestureRecognizers() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
-        addGestureRecognizer(tapGestureRecognizer)
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:))))
 
         let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeUp))
         swipeUpGestureRecognizer.direction = .up
@@ -205,12 +210,12 @@ public class StoriesView: UIView {
 
         progressView.configure(withNumberOfProgresses: slides.count)
 
-        storyTitleLabel.text = viewModel.title
+        searchTitleLabel.text = viewModel.title
         openAdButton.setTitle(viewModel.openAdButtonTitle, for: .normal)
 
         if let storyIconImageUrl = viewModel.iconImageUrl {
             dataSource?.storiesView(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconImageSize, completion: { [weak self] image in
-                self?.storyIconImageView.image = image
+                self?.searchIconImageView.image = image
             })
         }
     }
@@ -285,8 +290,11 @@ public class StoriesView: UIView {
     // MARK: - Gesture recognizers
 
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
-        let tapLocation = recognizer.location(in: self).x
-        if tapLocation > frame.size.width / 2 {
+        let tapLocation = recognizer.location(in: self)
+
+        if searchInfoStackView.frame.contains(tapLocation) {
+            delegate?.storiesViewDidSelectSearch(self)
+        } else if tapLocation.x > frame.size.width / 2 {
             showNextSlide()
         } else {
             showPreviousSlide()
