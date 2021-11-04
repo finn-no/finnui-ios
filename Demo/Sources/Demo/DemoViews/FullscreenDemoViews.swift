@@ -39,7 +39,7 @@ public enum FullscreenDemoViews: String, DemoViews {
         case .exploreDetailView:
             return DemoViewController<ExploreDetailDemoView>(constrainToTopSafeArea: true, constrainToBottomSafeArea: false)
         case .stories:
-            return DemoViewController<StoriesDemoView>(constrainToTopSafeArea: false, constrainToBottomSafeArea: false)
+            return DemoViewController<StoriesDemoView>()
         }
     }
 }

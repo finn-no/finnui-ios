@@ -31,7 +31,14 @@ public class StoriesView: UIView {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = .spacingM
+        imageView.clipsToBounds = true
         return imageView
+    }()
+
+    private lazy var openAdButton: Button = {
+        let button = Button(style: .callToAction, size: .normal, withAutoLayout: true)
+        return button
     }()
 
     private lazy var adTitleLabel: Label = {
@@ -89,9 +96,10 @@ public class StoriesView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        addSubview(imageView)
-        imageView.fillInSuperview()
+        backgroundColor = .storyBackgroundColor
 
+        addSubview(imageView)
+        addSubview(openAdButton)
         addSubview(progressView)
         addSubview(adTitleLabel)
         addSubview(adDetailLabel)
@@ -102,6 +110,14 @@ public class StoriesView: UIView {
         addGestureRecognizer(tapGestureRecognizer)
 
         NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: openAdButton.topAnchor, constant: -.spacingM),
+
+            openAdButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            openAdButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+
             progressView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
             progressView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: .spacingS),
             progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
@@ -118,7 +134,7 @@ public class StoriesView: UIView {
 
             adTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             adTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant:  -.spacingM),
-            adTitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -.spacingXL),
+            adTitleLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -.spacingXL),
 
             adDetailLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             adDetailLabel.bottomAnchor.constraint(equalTo: adTitleLabel.topAnchor, constant: -.spacingS),
@@ -133,20 +149,18 @@ public class StoriesView: UIView {
 
     // MARK: - Public methods
 
-    public func configure(
-        with slides: [StorySlideViewModel],
-        storyTitle: String?,
-        storyIconImageUrl: String?
-    ) {
-        self.slides = slides
+    public func configure(with viewModel: StoryViewModel) {
+        self.slides = viewModel.slides
         self.imageUrls = slides.map({ $0.imageUrl })
 
         currentIndex = 0
+
         progressView.configure(withNumberOfProgresses: slides.count)
 
-        storyTitleLabel.text = storyTitle
+        storyTitleLabel.text = viewModel.title
+        openAdButton.setTitle(viewModel.openAdButtonTitle, for: .normal)
 
-        if let storyIconImageUrl = storyIconImageUrl {
+        if let storyIconImageUrl = viewModel.iconImageUrl {
             dataSource?.storiesView(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconImageWidth, completion: { [weak self] image in
                 self?.storyIconImageView.image = image
             })
@@ -287,5 +301,9 @@ extension UIView {
 private extension UIColor {
     class var topGradientColor: UIColor {
         .dynamicColorIfAvailable(defaultColor: .sardine, darkModeColor: .darkSardine)
+    }
+
+    class var storyBackgroundColor: UIColor {
+        UIColor(hex: "#1B1B24")
     }
 }

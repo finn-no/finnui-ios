@@ -39,13 +39,7 @@ class StoriesDemoView: UIView {
         addSubview(storiesView)
         storiesView.fillInSuperview()
         storiesView.dataSource = self
-
-        storiesView.configure(
-            with: StoriesDemoView.slides,
-            storyTitle: "Pusefinn - Torget",
-            storyIconImageUrl: "https://static.finncdn.no/_c/static/search-assets/newfrontier/bap/torget_general.png"
-        )
-
+        storiesView.configure(with: Self.viewModel)
         storiesView.startStory()
     }
 }
@@ -80,6 +74,13 @@ extension StoriesDemoView: StoriesViewDataSource {
 }
 
 extension StoriesDemoView {
+    static var viewModel = StoryViewModel(
+        slides: slides,
+        title: "Pusefinn - Torget",
+        iconImageUrl: "https://static.finncdn.no/_c/static/search-assets/newfrontier/bap/torget_general.png",
+        openAdButtonTitle: "Se hele annonsen"
+    )
+
     static var slides: [StorySlideViewModel] = [
         StorySlideViewModel(
             imageUrl: "https://finn-content-hub.imgix.net/bilder/HR-bildearkiv/PuseFINN_regnoncho.jpg?auto=compress&crop=focalpoint&domain=finn-content-hub.imgix.net&fit=crop&fm=jpg&fp-x=0.5282&fp-y=0.3725&h=720&ixlib=php-3.3.0&w=1280",
