@@ -45,6 +45,18 @@ class StoriesDemoView: UIView {
 }
 
 extension StoriesDemoView: StoriesViewDelegate {
+    func storiesViewDidSelectAd(_ view: StoriesView) {
+        print("OPEN AD")
+    }
+
+    func storiesViewDidSelectNextStory(_ view: StoriesView) {
+        print("SHOW NEXT STORY")
+    }
+
+    func storiesViewDidSelectPreviousStory(_ view: StoriesView) {
+        print("SHOW PREVIOUS STORY")
+    }
+
     func storiesViewDidFinishStory(_ view: StoriesView) {
         print("DISMISS STORY")
     }

@@ -8,6 +8,9 @@ public protocol StoriesViewDataSource: AnyObject {
 
 public protocol StoriesViewDelegate: AnyObject {
     func storiesViewDidFinishStory(_ view: StoriesView)
+    func storiesViewDidSelectAd(_ view: StoriesView)
+    func storiesViewDidSelectNextStory(_ view: StoriesView)
+    func storiesViewDidSelectPreviousStory(_ view: StoriesView)
 }
 
 public class StoriesView: UIView {
@@ -87,7 +90,6 @@ public class StoriesView: UIView {
     private var slides = [StorySlideViewModel]()
     private var imageUrls = [String]()
     private var downloadedImages = [String: UIImage?]()
-    private let tapGestureRecognizer = UITapGestureRecognizer()
 
     private let storyIconImageSize: CGFloat = 32
     private let priceLabelHeight: CGFloat = 32
@@ -129,9 +131,6 @@ public class StoriesView: UIView {
         priceContainerView.contentView.addSubview(priceLabel)
         priceLabel.fillInSuperview(margin: .spacingS)
 
-        tapGestureRecognizer.addTarget(self, action: #selector(handleTap(recognizer:)))
-        addGestureRecognizer(tapGestureRecognizer)
-
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -168,7 +167,28 @@ public class StoriesView: UIView {
             priceContainerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
             priceContainerView.heightAnchor.constraint(equalToConstant: priceLabelHeight)
         ])
+
+        setupGestureRecognizers()
     }
+
+    private func setupGestureRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
+        addGestureRecognizer(tapGestureRecognizer)
+
+        let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeUp))
+        swipeUpGestureRecognizer.direction = .up
+        addGestureRecognizer(swipeUpGestureRecognizer)
+
+        let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeft))
+        swipeLeftGestureRecognizer.direction = .left
+        addGestureRecognizer(swipeLeftGestureRecognizer)
+
+        let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeRight))
+        swipeRightGestureRecognizer.direction = .right
+        addGestureRecognizer(swipeRightGestureRecognizer)
+    }
+
+    // MARK: - Overrides
 
     public override func layoutSubviews() {
         super.layoutSubviews()
@@ -200,15 +220,6 @@ public class StoriesView: UIView {
     }
 
     // MARK: - Private methods
-
-    @objc private func handleTap(recognizer: UITapGestureRecognizer) {
-        let tapLocation = recognizer.location(in: self).x
-        if tapLocation > frame.size.width / 2 {
-            showNextSlide()
-        } else {
-            showPreviousSlide()
-        }
-    }
 
     private func showNextSlide() {
         guard currentIndex + 1 < slides.count else {
@@ -269,6 +280,29 @@ public class StoriesView: UIView {
         let contentMode: UIView.ContentMode = image.isLandscapeOrientation ? .scaleAspectFit : .scaleAspectFill
         imageView.contentMode = contentMode
         imageView.image = image
+    }
+
+    // MARK: - Gesture recognizers
+
+    @objc private func handleTap(recognizer: UITapGestureRecognizer) {
+        let tapLocation = recognizer.location(in: self).x
+        if tapLocation > frame.size.width / 2 {
+            showNextSlide()
+        } else {
+            showPreviousSlide()
+        }
+    }
+
+    @objc private func handleSwipeUp() {
+        delegate?.storiesViewDidSelectAd(self)
+    }
+
+    @objc private func handleSwipeLeft(recognizer: UISwipeGestureRecognizer) {
+        delegate?.storiesViewDidSelectNextStory(self)
+    }
+ 
+    @objc private func handleSwipeRight(recognizer: UISwipeGestureRecognizer) {
+        delegate?.storiesViewDidSelectPreviousStory(self)
     }
 }
 
