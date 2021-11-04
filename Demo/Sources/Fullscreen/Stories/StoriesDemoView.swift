@@ -85,17 +85,20 @@ extension StoriesDemoView {
         StorySlideViewModel(
             imageUrl: "https://finn-content-hub.imgix.net/bilder/HR-bildearkiv/PuseFINN_regnoncho.jpg?auto=compress&crop=focalpoint&domain=finn-content-hub.imgix.net&fit=crop&fm=jpg&fp-x=0.5282&fp-y=0.3725&h=720&ixlib=php-3.3.0&w=1280",
             title: "Regnjakke",
-            detailText: "23 min siden, Trondheim"
+            detailText: "23 min siden, Trondheim",
+            price: "1500 kr"
         ),
         StorySlideViewModel(
             imageUrl: "https://yt3.ggpht.com/ytc/AKedOLTYio64rqGJoLKqcaHBKtVJYohlmsVSzXOcBpG6oA=s900-c-k-c0x00ffffff-no-rj",
             title: "Katt",
-            detailText: "4 t siden, Tromsø"
+            detailText: "4 t siden, Tromsø",
+            price: "20 kr"
         ),
         StorySlideViewModel(
             imageUrl: "https://scontent.fosl4-1.fna.fbcdn.net/v/t1.6435-9/246412357_10159436417758446_835789635389117397_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=e3f864&_nc_ohc=adntSSR_2_cAX9Rk-5f&_nc_ht=scontent.fosl4-1.fna&oh=f29ce65eda2652b6fd1487175a3e86c1&oe=61A51CC2",
             title: "Munch",
-            detailText: "23 t siden, Oslo"
+            detailText: "23 t siden, Oslo",
+            price: "12 500 kr"
         )
     ]
 }

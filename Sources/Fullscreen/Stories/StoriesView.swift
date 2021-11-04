@@ -18,7 +18,7 @@ public class StoriesView: UIView {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = storyIconImageWidth/2
+        imageView.layer.cornerRadius = storyIconImageSize/2
         return imageView
     }()
 
@@ -34,6 +34,23 @@ public class StoriesView: UIView {
         imageView.layer.cornerRadius = .spacingM
         imageView.clipsToBounds = true
         return imageView
+    }()
+
+    private lazy var priceContainerView: UIVisualEffectView = {
+        let view = UIVisualEffectView(withAutoLayout: true)
+        view.effect = UIBlurEffect(style: .systemThinMaterialDark)
+        view.alpha = 1.0
+        view.layer.cornerRadius = priceLabelHeight / 2
+        view.clipsToBounds = true
+        return view
+    }()
+
+    private lazy var priceLabel: Label = {
+        let label = Label(style: .captionStrong)
+        label.textColor = .textTertiary
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
+        return label
     }()
 
     private lazy var openAdButton: Button = {
@@ -71,7 +88,9 @@ public class StoriesView: UIView {
     private var imageUrls = [String]()
     private var downloadedImages = [String: UIImage?]()
     private let tapGestureRecognizer = UITapGestureRecognizer()
-    private let storyIconImageWidth: CGFloat = 32
+
+    private let storyIconImageSize: CGFloat = 32
+    private let priceLabelHeight: CGFloat = 32
 
     private var currentImageUrl: String? {
         imageUrls[safe: currentIndex]
@@ -105,6 +124,10 @@ public class StoriesView: UIView {
         addSubview(adDetailLabel)
         addSubview(storyTitleLabel)
         addSubview(storyIconImageView)
+        addSubview(priceContainerView)
+
+        priceContainerView.contentView.addSubview(priceLabel)
+        priceLabel.fillInSuperview(margin: .spacingS)
 
         tapGestureRecognizer.addTarget(self, action: #selector(handleTap(recognizer:)))
         addGestureRecognizer(tapGestureRecognizer)
@@ -125,8 +148,8 @@ public class StoriesView: UIView {
 
             storyIconImageView.leadingAnchor.constraint(equalTo: progressView.leadingAnchor),
             storyIconImageView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: .spacingS),
-            storyIconImageView.widthAnchor.constraint(equalToConstant: storyIconImageWidth),
-            storyIconImageView.heightAnchor.constraint(equalToConstant: storyIconImageWidth),
+            storyIconImageView.widthAnchor.constraint(equalToConstant: storyIconImageSize),
+            storyIconImageView.heightAnchor.constraint(equalToConstant: storyIconImageSize),
 
             storyTitleLabel.leadingAnchor.constraint(equalTo: storyIconImageView.trailingAnchor, constant: .spacingS),
             storyTitleLabel.centerYAnchor.constraint(equalTo: storyIconImageView.centerYAnchor),
@@ -134,11 +157,16 @@ public class StoriesView: UIView {
 
             adTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             adTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant:  -.spacingM),
-            adTitleLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -.spacingXL),
+            adTitleLabel.bottomAnchor.constraint(equalTo: adDetailLabel.topAnchor, constant: -.spacingXS),
 
             adDetailLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            adDetailLabel.bottomAnchor.constraint(equalTo: adTitleLabel.topAnchor, constant: -.spacingS),
-            adDetailLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingM),
+            adDetailLabel.bottomAnchor.constraint(equalTo: priceContainerView.topAnchor, constant: -.spacingS),
+            adDetailLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingS),
+
+            priceContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            priceContainerView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -.spacingM),
+            priceContainerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            priceContainerView.heightAnchor.constraint(equalToConstant: priceLabelHeight)
         ])
     }
 
@@ -161,7 +189,7 @@ public class StoriesView: UIView {
         openAdButton.setTitle(viewModel.openAdButtonTitle, for: .normal)
 
         if let storyIconImageUrl = viewModel.iconImageUrl {
-            dataSource?.storiesView(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconImageWidth, completion: { [weak self] image in
+            dataSource?.storiesView(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconImageSize, completion: { [weak self] image in
                 self?.storyIconImageView.image = image
             })
         }
@@ -200,6 +228,9 @@ public class StoriesView: UIView {
 
         adTitleLabel.text = slide.title
         adDetailLabel.text = slide.detailText
+
+        priceLabel.text = slide.price
+        priceLabel.isHidden = slide.price == nil
 
         if let image = downloadedImages[slide.imageUrl] {
             showImage(image)
