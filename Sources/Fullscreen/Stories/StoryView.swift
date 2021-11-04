@@ -2,19 +2,19 @@ import Foundation
 import UIKit
 import FinniversKit
 
-public protocol StoriesViewDataSource: AnyObject {
-    func storiesView(_ view: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
+public protocol StoryViewDataSource: AnyObject {
+    func storyView(_ view: StoryView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
 }
 
-public protocol StoriesViewDelegate: AnyObject {
-    func storiesViewDidFinishStory(_ view: StoriesView)
-    func storiesViewDidSelectAd(_ view: StoriesView)
-    func storiesViewDidSelectNextStory(_ view: StoriesView)
-    func storiesViewDidSelectPreviousStory(_ view: StoriesView)
-    func storiesViewDidSelectSearch(_ view: StoriesView)
+public protocol StoryViewDelegate: AnyObject {
+    func storyViewDidFinishStory(_ view: StoryView)
+    func storyViewDidSelectAd(_ view: StoryView)
+    func storyViewDidSelectNextStory(_ view: StoryView)
+    func storyViewDidSelectPreviousStory(_ view: StoryView)
+    func storyViewDidSelectSearch(_ view: StoryView)
 }
 
-public class StoriesView: UIView {
+public class StoryView: UIView {
 
     // MARK: - Subviews
 
@@ -28,7 +28,7 @@ public class StoriesView: UIView {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = storyIconImageSize/2
+        imageView.layer.cornerRadius = storyIconSize/2
         return imageView
     }()
 
@@ -98,7 +98,7 @@ public class StoriesView: UIView {
     private var imageUrls = [String]()
     private var downloadedImages = [String: UIImage?]()
 
-    private let storyIconImageSize: CGFloat = 32
+    private let storyIconSize: CGFloat = 32
     private let priceLabelHeight: CGFloat = 32
 
     private var currentImageUrl: String? {
@@ -107,8 +107,8 @@ public class StoriesView: UIView {
 
     // MARK: - Public properties
 
-    public weak var dataSource: StoriesViewDataSource?
-    public weak var delegate: StoriesViewDelegate?
+    public weak var dataSource: StoryViewDataSource?
+    public weak var delegate: StoryViewDelegate?
 
     // MARK: - Init
 
@@ -157,8 +157,8 @@ public class StoriesView: UIView {
             searchInfoStackView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 3 * .spacingXS),
             searchInfoStackView.trailingAnchor.constraint(lessThanOrEqualTo: progressView.trailingAnchor),
 
-            searchIconImageView.widthAnchor.constraint(equalToConstant: storyIconImageSize),
-            searchIconImageView.heightAnchor.constraint(equalToConstant: storyIconImageSize),
+            searchIconImageView.widthAnchor.constraint(equalToConstant: storyIconSize),
+            searchIconImageView.heightAnchor.constraint(equalToConstant: storyIconSize),
 
             adTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             adTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant:  -.spacingM),
@@ -214,7 +214,7 @@ public class StoriesView: UIView {
         openAdButton.setTitle(viewModel.openAdButtonTitle, for: .normal)
 
         if let storyIconImageUrl = viewModel.iconImageUrl {
-            dataSource?.storiesView(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconImageSize, completion: { [weak self] image in
+            dataSource?.storyView(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconSize, completion: { [weak self] image in
                 self?.searchIconImageView.image = image
             })
         }
@@ -228,7 +228,7 @@ public class StoriesView: UIView {
 
     private func showNextSlide() {
         guard currentIndex + 1 < slides.count else {
-            delegate?.storiesViewDidFinishStory(self)
+            delegate?.storyViewDidFinishStory(self)
             return
         }
         currentIndex += 1
@@ -267,7 +267,7 @@ public class StoriesView: UIView {
         guard !downloadedImages.keys.contains(imageUrl) else { return }
         downloadedImages[imageUrl] = nil
 
-        dataSource?.storiesView(self, loadImageWithPath: imageUrl, imageWidth: frame.size.width, completion: { [weak self] image in
+        dataSource?.storyView(self, loadImageWithPath: imageUrl, imageWidth: frame.size.width, completion: { [weak self] image in
             guard let self = self else { return }
             if imageUrl == self.currentImageUrl {
                 self.showImage(image)
@@ -292,7 +292,7 @@ public class StoriesView: UIView {
         let tapLocation = recognizer.location(in: self)
 
         if searchInfoStackView.frame.contains(tapLocation) {
-            delegate?.storiesViewDidSelectSearch(self)
+            delegate?.storyViewDidSelectSearch(self)
         } else if tapLocation.x > frame.size.width / 2 {
             showNextSlide()
         } else {
@@ -301,26 +301,26 @@ public class StoriesView: UIView {
     }
 
     @objc private func handleSwipeUp() {
-        delegate?.storiesViewDidSelectAd(self)
+        delegate?.storyViewDidSelectAd(self)
     }
 
     @objc private func handleSwipeLeft(recognizer: UISwipeGestureRecognizer) {
-        delegate?.storiesViewDidSelectNextStory(self)
+        delegate?.storyViewDidSelectNextStory(self)
     }
  
     @objc private func handleSwipeRight(recognizer: UISwipeGestureRecognizer) {
-        delegate?.storiesViewDidSelectPreviousStory(self)
+        delegate?.storyViewDidSelectPreviousStory(self)
     }
 }
 
 // MARK: - ProgressViewDelegate
 
-extension StoriesView: ProgressViewDelegate {
+extension StoryView: ProgressViewDelegate {
     func progressViewDidFinishProgress(_ progressView: ProgressView, isLastProgress: Bool) {
         if !isLastProgress {
             currentIndex += 1
         } else {
-            delegate?.storiesViewDidFinishStory(self)
+            delegate?.storyViewDidFinishStory(self)
         }
     }
 }
