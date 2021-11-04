@@ -271,9 +271,8 @@ public class StoriesView: UIView {
             guard let self = self else { return }
             if imageUrl == self.currentImageUrl {
                 self.showImage(image)
-            } else {
-                self.downloadedImages[imageUrl] = image
             }
+            self.downloadedImages[imageUrl] = image
         })
     }
 
