@@ -83,7 +83,7 @@ extension StoriesDemoView {
 
     static var slides: [StorySlideViewModel] = [
         StorySlideViewModel(
-            imageUrl: "https://finn-content-hub.imgix.net/bilder/HR-bildearkiv/PuseFINN_regnoncho.jpg?auto=compress&crop=focalpoint&domain=finn-content-hub.imgix.net&fit=crop&fm=jpg&fp-x=0.5282&fp-y=0.3725&h=720&ixlib=php-3.3.0&w=1280",
+            imageUrl: "https://scontent-cph2-1.xx.fbcdn.net/v/t31.18172-8/11864788_10153534768223446_3480239839577516822_o.jpg?_nc_cat=109&ccb=1-5&_nc_sid=9267fe&_nc_ohc=ipbFGlm3XSgAX-lxXZi&_nc_ht=scontent-cph2-1.xx&oh=0464cc29097580e3699015ffea21d2ac&oe=61A85031",
             title: "Regnjakke",
             detailText: "23 min siden, Trondheim",
             price: "1500 kr"

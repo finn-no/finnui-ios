@@ -286,7 +286,7 @@ extension StoriesView: ProgressViewDelegate {
 
 extension UIImage {
     var isLandscapeOrientation: Bool {
-        return size.width > size.height // should square images be treated like landscape?
+        return size.width >= size.height
     }
 }
 
