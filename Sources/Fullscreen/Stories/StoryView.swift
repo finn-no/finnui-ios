@@ -4,6 +4,7 @@ import FinniversKit
 
 public protocol StoryViewDataSource: AnyObject {
     func storyView(_ view: StoryView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
+    func storyView(_ view: StoryView, slideAtIndexIsFavorite index: Int) -> Bool
 }
 
 public protocol StoryViewDelegate: AnyObject {
@@ -12,6 +13,8 @@ public protocol StoryViewDelegate: AnyObject {
     func storyViewDidSelectNextStory(_ view: StoryView)
     func storyViewDidSelectPreviousStory(_ view: StoryView)
     func storyViewDidSelectSearch(_ view: StoryView)
+    func storyView(_ view: StoryView, didTapFavoriteButton button: UIButton, forIndex index: Int)
+    func storyViewDidSelectShare(_ view: StoryView, forIndex index: Int)
 }
 
 public class StoryView: UIView {
@@ -87,6 +90,23 @@ public class StoryView: UIView {
         return progressView
     }()
 
+    private lazy var favoriteButton: UIButton = {
+        let button = UIButton(withAutoLayout: true)
+        button.tintColor = .milk
+        button.imageEdgeInsets = UIEdgeInsets(vertical: 3 * .spacingXS, horizontal: 3 * .spacingXS)
+        button.addTarget(self, action: #selector(handleFavoriteButtonTap), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var shareButton: UIButton = {
+        let button = UIButton(withAutoLayout: true)
+        button.tintColor = .milk
+        button.setImage(UIImage(named: .share).withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(vertical: 3 * .spacingXS, horizontal: 3 * .spacingXS)
+        button.addTarget(self, action: #selector(handleShareButtonTap), for: .touchUpInside)
+        return button
+    }()
+
     // MARK: - Private properties
 
     private var currentIndex = 0 {
@@ -134,6 +154,8 @@ public class StoryView: UIView {
         addSubview(adDetailLabel)
         addSubview(searchInfoStackView)
         addSubview(priceContainerView)
+        addSubview(shareButton)
+        addSubview(favoriteButton)
 
         searchInfoStackView.addArrangedSubviews([searchIconImageView, searchTitleLabel])
 
@@ -172,7 +194,17 @@ public class StoryView: UIView {
             priceContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             priceContainerView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -.spacingM),
             priceContainerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
-            priceContainerView.heightAnchor.constraint(equalToConstant: priceLabelHeight)
+            priceContainerView.heightAnchor.constraint(equalToConstant: priceLabelHeight),
+
+            shareButton.trailingAnchor.constraint(equalTo: progressView.trailingAnchor),
+            shareButton.centerYAnchor.constraint(equalTo: priceContainerView.centerYAnchor),
+            shareButton.widthAnchor.constraint(equalToConstant: 44),
+            shareButton.heightAnchor.constraint(equalToConstant: 44),
+
+            favoriteButton.trailingAnchor.constraint(equalTo: shareButton.leadingAnchor),
+            favoriteButton.centerYAnchor.constraint(equalTo: shareButton.centerYAnchor),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 44),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 44),
         ])
 
         setupGestureRecognizers()
@@ -233,6 +265,12 @@ public class StoryView: UIView {
         progressView.resumeAnimations()
     }
 
+    public func updateFavoriteButtonState() {
+        guard let isFavorite = dataSource?.storyView(self, slideAtIndexIsFavorite: currentIndex) else { return }
+        let favoriteImage = isFavorite ? UIImage(named: .favoriteActive) : UIImage(named: .favoriteDefault)
+        favoriteButton.setImage(favoriteImage.withRenderingMode(.alwaysTemplate), for: .normal)
+    }
+
     // MARK: - Private methods
 
     private func showNextSlide() {
@@ -264,6 +302,7 @@ public class StoryView: UIView {
             downloadImage(withUrl: slide.imageUrl)
         }
 
+        updateFavoriteButtonState()
         predownloadNextImageIfNeeded()
     }
 
@@ -319,6 +358,14 @@ public class StoryView: UIView {
  
     @objc private func handleSwipeRight(recognizer: UISwipeGestureRecognizer) {
         delegate?.storyViewDidSelectPreviousStory(self)
+    }
+
+    @objc private func handleFavoriteButtonTap() {
+        delegate?.storyView(self, didTapFavoriteButton: favoriteButton, forIndex: currentIndex)
+    }
+
+    @objc private func handleShareButtonTap() {
+        delegate?.storyViewDidSelectShare(self, forIndex: currentIndex)
     }
 }
 

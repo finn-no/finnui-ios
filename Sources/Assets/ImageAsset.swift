@@ -59,6 +59,7 @@ enum ImageAsset: String {
     case remove
     case republish
     case schibstedFooter
+    case share
     case shipWithHelthjem
     case shipWithHelthjemDarkmode
     case snowflake
@@ -103,6 +104,7 @@ enum ImageAsset: String {
             .remove,
             .republish,
             .schibstedFooter,
+            .share,
             .shipWithHelthjem,
             .shipWithHelthjemDarkmode,
             .snowflake,
