@@ -65,6 +65,7 @@ public class StoryView: UIView {
 
     private lazy var openAdButton: Button = {
         let button = Button(style: .callToAction, size: .normal, withAutoLayout: true)
+        button.addTarget(self, action: #selector(handleDidSelectAd), for: .touchUpInside)
         return button
     }()
 
@@ -180,7 +181,7 @@ public class StoryView: UIView {
     private func setupGestureRecognizers() {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:))))
 
-        let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeUp))
+        let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleDidSelectAd))
         swipeUpGestureRecognizer.direction = .up
         addGestureRecognizer(swipeUpGestureRecognizer)
 
@@ -294,7 +295,7 @@ public class StoryView: UIView {
         imageView.image = image
     }
 
-    // MARK: - Gesture recognizers
+    // MARK: - Actions
 
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
         let tapLocation = recognizer.location(in: self)
@@ -308,7 +309,7 @@ public class StoryView: UIView {
         }
     }
 
-    @objc private func handleSwipeUp() {
+    @objc private func handleDidSelectAd() {
         delegate?.storyViewDidSelectAd(self)
     }
 
