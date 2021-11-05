@@ -50,18 +50,13 @@ class QuestionItemView: UIView {
         stackView.addArrangedSubviews([checkbox, questionLabel])
         stackView.fillInSuperview()
 
-        NSLayoutConstraint.activate([
-            checkbox.widthAnchor.constraint(equalToConstant: 24),
-            checkbox.heightAnchor.constraint(equalToConstant: 24)
-        ])
-
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     }
 
     // MARK: - Internal methods
 
     func toggleSelection() {
-        checkbox.isHighlighted.toggle()
+        checkbox.animateSelection(selected: !checkbox.isHighlighted)
     }
 
     // MARK: - Actions
