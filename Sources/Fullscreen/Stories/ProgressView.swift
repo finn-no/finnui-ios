@@ -15,7 +15,10 @@ class ProgressView: UIView {
 
     private var currentIndex: Int = 0
     private var progressViews = [UIProgressView]()
-    private var currentProgressView: UIProgressView?
+
+    var currentProgressView: UIProgressView? {
+        progressViews[safe: currentIndex]
+    }
 
     private var timer: Timer?
     private var durationPerSlideInSeconds: Double = 5
@@ -47,7 +50,6 @@ class ProgressView: UIView {
     func configure(withNumberOfProgresses numberOfProgresses: Int) {
         progressViews.forEach({ $0.removeFromSuperview() })
         progressViews.removeAll()
-        currentProgressView = nil
         currentIndex = 0
 
         while progressViews.count < numberOfProgresses {
@@ -59,8 +61,7 @@ class ProgressView: UIView {
 
     func startAnimating(durationPerSlideInSeconds: Double) {
         self.durationPerSlideInSeconds = durationPerSlideInSeconds
-        currentIndex = 0
-        startNextProgress()
+        resumeAnimations()
     }
 
     func pauseAnimations() {
@@ -73,25 +74,19 @@ class ProgressView: UIView {
     }
 
     func setActiveIndex(_ index: Int) {
-        guard progressViews.indices.contains(index) else { return }
+        guard
+            progressViews.indices.contains(index)
+        else { return }
+
         currentIndex = index
 
         progressViews.prefix(upTo: index).forEach({ $0.progress = 1 })
         progressViews.suffix(from: index).forEach({ $0.progress = 0 })
 
-        startNextProgress()
+        resumeAnimations()
     }
 
     // MARK: - Private methods
-
-    private func startNextProgress() {
-        timer?.invalidate()
-
-        guard let progressView = progressViews[safe: currentIndex] else { return }
-
-        self.currentProgressView = progressView
-        resumeAnimations()
-    }
 
     private func finishProgressAndContinueIfNext() {
         if currentIndex == progressViews.count - 1 {
@@ -100,7 +95,7 @@ class ProgressView: UIView {
         }
         currentIndex += 1
         delegate?.progressViewDidFinishProgress(self, isLastProgress: false)
-        startNextProgress()
+        resumeAnimations()
     }
 
     @objc private func updateProgressView() {

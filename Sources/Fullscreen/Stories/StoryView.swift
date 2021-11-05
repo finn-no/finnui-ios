@@ -2,22 +2,24 @@ import Foundation
 import UIKit
 import FinniversKit
 
-public protocol StoryViewDataSource: AnyObject {
-    func storyView(_ view: StoryView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
-    func storyView(_ view: StoryView, slideAtIndexIsFavorite index: Int) -> Bool
+protocol StoryCollectionViewCellDataSource: AnyObject {
+    func storyCollectionViewCell(_ storyCell: StoryCollectionViewCell, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
+    func storyCollectionViewCell(_ storyCell: StoryCollectionViewCell, slideAtIndexIsFavorite index: Int) -> Bool
 }
 
-public protocol StoryViewDelegate: AnyObject {
-    func storyViewDidFinishStory(_ view: StoryView)
-    func storyViewDidSelectAd(_ view: StoryView)
-    func storyViewDidSelectNextStory(_ view: StoryView)
-    func storyViewDidSelectPreviousStory(_ view: StoryView)
-    func storyViewDidSelectSearch(_ view: StoryView)
-    func storyView(_ view: StoryView, didTapFavoriteButton button: UIButton, forIndex index: Int)
-    func storyViewDidSelectShare(_ view: StoryView, forIndex index: Int)
+protocol StoryCollectionViewCellDelegate: AnyObject {
+    func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didSelect action: StoryCollectionViewCell.Action)
 }
 
-public class StoryView: UIView {
+public class StoryCollectionViewCell: UICollectionViewCell {
+    enum Action {
+        case showNextStory
+        case showPreviousStory
+        case goToSearch
+        case openAd(slideIndex: Int)
+        case toggleFavorite(slideIndex: Int, button: UIButton)
+        case share(slideIndex: Int)
+    }
 
     // MARK: - Subviews
 
@@ -109,15 +111,20 @@ public class StoryView: UIView {
 
     // MARK: - Private properties
 
-    private var currentIndex = 0 {
-        didSet {
-            updateCurrentSlide()
-        }
+    private var currentIndex = 0
+    private var didStartAnimating: Bool = false
+
+    private var nextIndex: Int? {
+        currentIndex + 1 < slides.count ? currentIndex + 1 : nil
+    }
+
+    private var previousIndex: Int? {
+        currentIndex - 1 >= 0 ? currentIndex - 1 : nil
     }
 
     private var slides = [StorySlideViewModel]()
+    private var story: Story?
     private var imageUrls = [String]()
-    private var downloadedImages = [String: UIImage?]()
 
     private let storyIconSize: CGFloat = 32
     private let priceLabelHeight: CGFloat = 32
@@ -126,10 +133,10 @@ public class StoryView: UIView {
         imageUrls[safe: currentIndex]
     }
 
-    // MARK: - Public properties
+    // MARK: - Internal properties
 
-    public weak var dataSource: StoryViewDataSource?
-    public weak var delegate: StoryViewDelegate?
+    weak var dataSource: StoryCollectionViewCellDataSource?
+    weak var delegate: StoryCollectionViewCellDelegate?
 
     // MARK: - Init
 
@@ -147,15 +154,15 @@ public class StoryView: UIView {
     private func setup() {
         backgroundColor = .storyBackgroundColor
 
-        addSubview(imageView)
-        addSubview(openAdButton)
-        addSubview(progressView)
-        addSubview(adTitleLabel)
-        addSubview(adDetailLabel)
-        addSubview(searchInfoStackView)
-        addSubview(priceContainerView)
-        addSubview(shareButton)
-        addSubview(favoriteButton)
+        contentView.addSubview(imageView)
+        contentView.addSubview(openAdButton)
+        contentView.addSubview(progressView)
+        contentView.addSubview(adTitleLabel)
+        contentView.addSubview(adDetailLabel)
+        contentView.addSubview(searchInfoStackView)
+        contentView.addSubview(priceContainerView)
+        contentView.addSubview(shareButton)
+        contentView.addSubview(favoriteButton)
 
         searchInfoStackView.addArrangedSubviews([searchIconImageView, searchTitleLabel])
 
@@ -163,17 +170,17 @@ public class StoryView: UIView {
         priceLabel.fillInSuperview(margin: .spacingS)
 
         NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: openAdButton.topAnchor, constant: -.spacingM),
 
-            openAdButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            openAdButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+            openAdButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            openAdButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-            progressView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
-            progressView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: .spacingS),
-            progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
+            progressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingS),
+            progressView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: .spacingS),
+            progressView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacingS),
             progressView.heightAnchor.constraint(equalToConstant: 3),
 
             searchInfoStackView.leadingAnchor.constraint(equalTo: progressView.leadingAnchor),
@@ -183,17 +190,17 @@ public class StoryView: UIView {
             searchIconImageView.widthAnchor.constraint(equalToConstant: storyIconSize),
             searchIconImageView.heightAnchor.constraint(equalToConstant: storyIconSize),
 
-            adTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            adTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
             adTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant:  -.spacingM),
             adTitleLabel.bottomAnchor.constraint(equalTo: adDetailLabel.topAnchor, constant: -.spacingXS),
 
-            adDetailLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            adDetailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
             adDetailLabel.bottomAnchor.constraint(equalTo: priceContainerView.topAnchor, constant: -.spacingS),
             adDetailLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingS),
 
-            priceContainerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            priceContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
             priceContainerView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -.spacingM),
-            priceContainerView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            priceContainerView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
             priceContainerView.heightAnchor.constraint(equalToConstant: priceLabelHeight),
 
             shareButton.trailingAnchor.constraint(equalTo: progressView.trailingAnchor),
@@ -235,19 +242,22 @@ public class StoryView: UIView {
 
     // MARK: - Public methods
 
-    public func configure(with viewModel: StoryViewModel) {
-        self.slides = viewModel.slides
+    func configure(with story: Story) {
+        self.story = story
+        self.slides = story.viewModel.slides
         self.imageUrls = slides.map({ $0.imageUrl })
 
-        currentIndex = 0
+        showSlide(at: story.slideIndex, downloadImageIsEnabled: false)
 
         progressView.configure(withNumberOfProgresses: slides.count)
+        progressView.setActiveIndex(currentIndex)
 
+        let viewModel = story.viewModel
         searchTitleLabel.text = viewModel.title
         openAdButton.setTitle(viewModel.openAdButtonTitle, for: .normal)
 
         if let storyIconImageUrl = viewModel.iconImageUrl {
-            dataSource?.storyView(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconSize, completion: { [weak self] image in
+            dataSource?.storyCollectionViewCell(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconSize, completion: { [weak self] image in
                 self?.searchIconImageView.image = image
             })
         }
@@ -266,61 +276,92 @@ public class StoryView: UIView {
     }
 
     public func updateFavoriteButtonState() {
-        guard let isFavorite = dataSource?.storyView(self, slideAtIndexIsFavorite: currentIndex) else { return }
+        guard let isFavorite = dataSource?.storyCollectionViewCell(self, slideAtIndexIsFavorite: currentIndex) else { return }
         let favoriteImage = isFavorite ? UIImage(named: .favoriteActive) : UIImage(named: .favoriteDefault)
         favoriteButton.setImage(favoriteImage.withRenderingMode(.alwaysTemplate), for: .normal)
+    }
+
+    public func loadImage() {
+        guard let currentImageUrl = currentImageUrl else { return }
+        downloadImage(withUrl: currentImageUrl)
+        predownloadNextImageIfNeeded()
     }
 
     // MARK: - Private methods
 
     private func showNextSlide() {
-        guard currentIndex + 1 < slides.count else {
-            delegate?.storyViewDidFinishStory(self)
+        guard let nextIndex = nextIndex else {
+            delegate?.storyCollectionViewCell(self, didSelect: .showNextStory)
             return
         }
-        currentIndex += 1
+        progressView.setActiveIndex(nextIndex)
+        showSlide(at: nextIndex)
     }
 
     private func showPreviousSlide() {
-        currentIndex = max(0, currentIndex - 1)
+        guard let previousIndex = previousIndex else {
+            delegate?.storyCollectionViewCell(self, didSelect: .showPreviousStory)
+            return
+        }
+        progressView.setActiveIndex(previousIndex)
+        showSlide(at: previousIndex)
     }
 
-    private func updateCurrentSlide() {
-        guard let slide = slides[safe: currentIndex] else { return }
-        progressView.setActiveIndex(currentIndex)
+    private func showSlide(at index: Int, downloadImageIsEnabled: Bool = true) {
+        guard let slide = slides[safe: index] else { return }
+
+        currentIndex = index
+        story?.slideIndex = currentIndex
 
         adTitleLabel.text = slide.title
         adDetailLabel.text = slide.detailText
 
         priceLabel.text = slide.price
         priceLabel.isHidden = slide.price == nil
+        updateFavoriteButtonState()
 
-        if let image = downloadedImages[slide.imageUrl] {
+        if let image = story?.images[slide.imageUrl] {
             showImage(image)
-        } else {
+        } else if downloadImageIsEnabled {
             imageView.image = nil
             downloadImage(withUrl: slide.imageUrl)
+        } else {
+            imageView.image = nil
         }
 
-        updateFavoriteButtonState()
-        predownloadNextImageIfNeeded()
+        if downloadImageIsEnabled {
+            predownloadNextImageIfNeeded()
+        }
     }
 
     private func predownloadNextImageIfNeeded() {
-        guard let imageUrl = imageUrls[safe: currentIndex + 1] else { return }
+        guard
+            let nextIndex = nextIndex,
+            let imageUrl = imageUrls[safe: nextIndex]
+        else { return }
+
         downloadImage(withUrl: imageUrl)
     }
 
     private func downloadImage(withUrl imageUrl: String) {
-        guard !downloadedImages.keys.contains(imageUrl) else { return }
-        downloadedImages[imageUrl] = nil
+        guard
+            let story = story,
+            !story.images.keys.contains(imageUrl)
+        else { return }
 
-        dataSource?.storyView(self, loadImageWithPath: imageUrl, imageWidth: frame.size.width, completion: { [weak self] image in
+        story.images[imageUrl] = nil
+
+        dataSource?.storyCollectionViewCell(self, loadImageWithPath: imageUrl, imageWidth: frame.size.width, completion: { [weak self] image in
             guard let self = self else { return }
             if imageUrl == self.currentImageUrl {
                 self.showImage(image)
             }
-            self.downloadedImages[imageUrl] = image
+            if let image = image {
+                self.story?.images[imageUrl] = image
+            } else {
+                // to enable a retry next time the slide is shown
+                self.story?.images.removeValue(forKey: imageUrl)
+            }
         })
     }
 
@@ -340,7 +381,7 @@ public class StoryView: UIView {
         let tapLocation = recognizer.location(in: self)
 
         if searchInfoStackView.frame.contains(tapLocation) {
-            delegate?.storyViewDidSelectSearch(self)
+            delegate?.storyCollectionViewCell(self, didSelect: .goToSearch)
         } else if tapLocation.x > frame.size.width / 2 {
             showNextSlide()
         } else {
@@ -349,34 +390,34 @@ public class StoryView: UIView {
     }
 
     @objc private func handleDidSelectAd() {
-        delegate?.storyViewDidSelectAd(self)
+        delegate?.storyCollectionViewCell(self, didSelect: .openAd(slideIndex: currentIndex))
     }
 
     @objc private func handleSwipeLeft(recognizer: UISwipeGestureRecognizer) {
-        delegate?.storyViewDidSelectNextStory(self)
+        // REMOVE?
     }
  
     @objc private func handleSwipeRight(recognizer: UISwipeGestureRecognizer) {
-        delegate?.storyViewDidSelectPreviousStory(self)
+        // REMOVE?
     }
 
     @objc private func handleFavoriteButtonTap() {
-        delegate?.storyView(self, didTapFavoriteButton: favoriteButton, forIndex: currentIndex)
+        delegate?.storyCollectionViewCell(self, didSelect: .toggleFavorite(slideIndex: currentIndex, button: favoriteButton))
     }
 
     @objc private func handleShareButtonTap() {
-        delegate?.storyViewDidSelectShare(self, forIndex: currentIndex)
+        delegate?.storyCollectionViewCell(self, didSelect: .share(slideIndex: currentIndex))
     }
 }
 
 // MARK: - ProgressViewDelegate
 
-extension StoryView: ProgressViewDelegate {
+extension StoryCollectionViewCell: ProgressViewDelegate {
     func progressViewDidFinishProgress(_ progressView: ProgressView, isLastProgress: Bool) {
         if !isLastProgress {
-            currentIndex += 1
+            showSlide(at: currentIndex + 1)
         } else {
-            delegate?.storyViewDidFinishStory(self)
+            delegate?.storyCollectionViewCell(self, didSelect: .showNextStory)
         }
     }
 }
