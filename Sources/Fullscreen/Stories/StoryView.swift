@@ -224,6 +224,14 @@ public class StoryView: UIView {
         progressView.startAnimating(durationPerSlideInSeconds: durationPerSlideInSeconds)
     }
 
+    public func pauseStory() {
+        progressView.pauseAnimations()
+    }
+
+    public func resumeStory() {
+        progressView.resumeAnimations()
+    }
+
     // MARK: - Private methods
 
     private func showNextSlide() {

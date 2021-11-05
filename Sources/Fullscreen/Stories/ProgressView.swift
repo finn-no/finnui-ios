@@ -63,6 +63,15 @@ class ProgressView: UIView {
         startNextProgress()
     }
 
+    func pauseAnimations() {
+        timer?.invalidate()
+    }
+
+    func resumeAnimations() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
+    }
+
     func setActiveIndex(_ index: Int) {
         guard progressViews.indices.contains(index) else { return }
         currentIndex = index
@@ -81,7 +90,7 @@ class ProgressView: UIView {
         guard let progressView = progressViews[safe: currentIndex] else { return }
 
         self.currentProgressView = progressView
-        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
+        resumeAnimations()
     }
 
     private func finishProgressAndContinueIfNext() {
