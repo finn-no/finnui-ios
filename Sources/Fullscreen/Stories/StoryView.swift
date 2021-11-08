@@ -74,9 +74,17 @@ public class StoryCollectionViewCell: UICollectionViewCell {
         return button
     }()
 
+    private lazy var swipeUpIconImageView: UIImageView = {
+        let imageView = UIImageView(withAutoLayout: true)
+        imageView.image = UIImage(named: .arrowUp)
+        imageView.tintColor = .milk
+        return imageView
+    }()
+
     private lazy var adTitleLabel: Label = {
         let label = Label(style: .title3Strong, withAutoLayout: true)
         label.textColor = .milk
+        label.numberOfLines = 2
         return label
     }()
 
@@ -155,6 +163,7 @@ public class StoryCollectionViewCell: UICollectionViewCell {
         backgroundColor = .storyBackgroundColor
 
         contentView.addSubview(imageView)
+        contentView.addSubview(swipeUpIconImageView)
         contentView.addSubview(openAdButton)
         contentView.addSubview(progressView)
         contentView.addSubview(adTitleLabel)
@@ -173,10 +182,13 @@ public class StoryCollectionViewCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: openAdButton.topAnchor, constant: -.spacingM),
+            imageView.bottomAnchor.constraint(equalTo: swipeUpIconImageView.topAnchor, constant: -.spacingXS),
 
             openAdButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             openAdButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
+            swipeUpIconImageView.centerXAnchor.constraint(equalTo: openAdButton.centerXAnchor),
+            swipeUpIconImageView.bottomAnchor.constraint(equalTo: openAdButton.topAnchor, constant: -.spacingXS),
 
             progressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingS),
             progressView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: .spacingS),

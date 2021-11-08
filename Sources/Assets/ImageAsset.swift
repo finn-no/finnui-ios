@@ -34,6 +34,7 @@ extension UIImage {
 //swiftlint:disable type_body_length
 enum ImageAsset: String {
     case alphabeticalSortingAscending
+    case arrowUp
     case balloon0
     case balloon1
     case balloon2
@@ -79,6 +80,7 @@ enum ImageAsset: String {
     static var imageNames: [ImageAsset] {
         return [
             .alphabeticalSortingAscending,
+            .arrowUp,
             .balloon0,
             .balloon1,
             .balloon2,
