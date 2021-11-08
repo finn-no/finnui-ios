@@ -2,7 +2,7 @@ import UIKit
 import FinniversKit
 
 protocol QuestionFormViewDelegate: AnyObject {
-    func questionFormView(_ view: QuestionFormView, didSelectQuestion question: String)
+    func questionFormViewDidToggleTextView(_ view: QuestionFormView)
 }
 
 class QuestionFormView: UIView {
@@ -13,12 +13,20 @@ class QuestionFormView: UIView {
 
     // MARK: - Private properties
 
-    private lazy var questionsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+    private var questions = [RealestateSoldStateQuestionModel]()
+    private lazy var questionsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
 
     private lazy var titleLabel: Label = {
         let label = Label(style: .title3Strong, withAutoLayout: true)
         label.numberOfLines = 0
         return label
+    }()
+
+    private lazy var textView: TextView = {
+        let textView = TextView(withAutoLayout: true)
+        textView.delegate = self
+        textView.isScrollEnabled = false
+        return textView
     }()
 
     // MARK: - Init
@@ -33,7 +41,6 @@ class QuestionFormView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        titleLabel.text = "Yo?"
         addSubview(titleLabel)
         addSubview(questionsStackView)
 
@@ -42,7 +49,6 @@ class QuestionFormView: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            /// Heyo
             questionsStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
             questionsStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             questionsStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -52,14 +58,24 @@ class QuestionFormView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(with questions: [String], questionsAlreadySelected: [String]) {
+    func configure(with title: String, questions: [RealestateSoldStateQuestionModel]) {
+        self.questions = questions
+
+        titleLabel.text = title
         questionsStackView.removeArrangedSubviews()
 
-        let questionItemViews = questions.map { question -> QuestionItemView in
-            let isSelected = questionsAlreadySelected.contains(question)
-            return QuestionItemView(question: question, isSelected: isSelected, delegate: self)
+        let questionItemViews = questions.filterProvided.map { question -> QuestionItemView in
+            QuestionItemView(question: question, delegate: self)
         }
         questionsStackView.addArrangedSubviews(questionItemViews)
+
+        if let userFreetextQuestion = questions.firstUserFreetext {
+            let questionItemView = QuestionItemView(question: userFreetextQuestion, delegate: self)
+            questionsStackView.addArrangedSubviews([questionItemView, textView])
+
+            textView.isHidden = !userFreetextQuestion.isSelected
+            textView.text = userFreetextQuestion.value ?? ""
+        }
     }
 }
 
@@ -67,7 +83,33 @@ class QuestionFormView: UIView {
 
 extension QuestionFormView: QuestionItemViewDelegate {
     func questionItemViewWasSelected(_ view: QuestionItemView) {
-        view.toggleSelection()
-        delegate?.questionFormView(self, didSelectQuestion: view.question)
+        view.question.isSelected.toggle()
+        view.updateView()
+
+        if case .userFreetext = view.question.kind {
+            textView.isHidden = !view.question.isSelected
+            delegate?.questionFormViewDidToggleTextView(self)
+        }
+    }
+}
+
+// MARK: - TextViewDelegate
+
+extension QuestionFormView: TextViewDelegate {
+    public func textViewDidChange(_ textView: TextView) {
+        guard let question = questions.firstUserFreetext else { return }
+        question.value = textView.text
+    }
+}
+
+// MARK: - Private extensions
+
+private extension Array where Element == RealestateSoldStateQuestionModel {
+    var filterProvided: [RealestateSoldStateQuestionModel] {
+        filter { $0.kind == .provided }
+    }
+
+    var firstUserFreetext: RealestateSoldStateQuestionModel? {
+        first { $0.kind == .userFreetext }
     }
 }

@@ -9,7 +9,7 @@ class QuestionItemView: UIView {
 
     // MARK: - Internal properties
 
-    let question: String
+    let question: RealestateSoldStateQuestionModel
 
     // MARK: - Private properties
 
@@ -30,21 +30,21 @@ class QuestionItemView: UIView {
 
     // MARK: - Init
 
-    init(question: String, isSelected: Bool, delegate: QuestionItemViewDelegate) {
+    init(question: RealestateSoldStateQuestionModel, delegate: QuestionItemViewDelegate) {
         self.question = question
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        setup(question: question, isSelected: isSelected)
+        setup()
     }
 
     required init?(coder: NSCoder) { fatalError() }
 
     // MARK: - Setup
 
-    private func setup(question: String, isSelected: Bool) {
-        questionLabel.text = question
-        checkbox.isHighlighted = isSelected
+    private func setup() {
+        questionLabel.text = question.title
+        checkbox.isHighlighted = question.isSelected
 
         addSubview(stackView)
         stackView.addArrangedSubviews([checkbox, questionLabel])
@@ -55,8 +55,10 @@ class QuestionItemView: UIView {
 
     // MARK: - Internal methods
 
-    func toggleSelection() {
-        checkbox.animateSelection(selected: !checkbox.isHighlighted)
+    func updateView() {
+        if question.isSelected != checkbox.isHighlighted {
+            checkbox.animateSelection(selected: question.isSelected)
+        }
     }
 
     // MARK: - Actions
