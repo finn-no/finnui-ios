@@ -186,9 +186,12 @@ public class StoryCollectionViewCell: UICollectionViewCell {
 
             openAdButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             openAdButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            openAdButton.heightAnchor.constraint(equalToConstant: 44),
 
             swipeUpIconImageView.centerXAnchor.constraint(equalTo: openAdButton.centerXAnchor),
             swipeUpIconImageView.bottomAnchor.constraint(equalTo: openAdButton.topAnchor, constant: -.spacingXS),
+            swipeUpIconImageView.heightAnchor.constraint(equalToConstant: 16),
+            swipeUpIconImageView.widthAnchor.constraint(equalToConstant: 16),
 
             progressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingS),
             progressView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: .spacingS),
