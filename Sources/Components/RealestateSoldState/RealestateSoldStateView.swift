@@ -1,7 +1,9 @@
 import UIKit
 import FinniversKit
 
-public protocol RealestateSoldStateViewDelegate: AnyObject {}
+public protocol RealestateSoldStateViewDelegate: AnyObject {
+    func realestateSoldStateView(_ view: RealestateSoldStateView, didSubmitForm form: RealestateSoldStateQuestionFormSubmit)
+}
 
 public class RealestateSoldStateView: UIView {
 
@@ -38,4 +40,8 @@ public class RealestateSoldStateView: UIView {
 
 // MARK: - QuestionFormContainerViewDelegate
 
-extension RealestateSoldStateView: QuestionFormContainerViewDelegate {}
+extension RealestateSoldStateView: QuestionFormContainerViewDelegate {
+    func questionFormContainerView(_ view: QuestionFormContainerView, didSubmitForm form: RealestateSoldStateQuestionFormSubmit) {
+        delegate?.realestateSoldStateView(self, didSubmitForm: form)
+    }
+}

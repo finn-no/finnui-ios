@@ -2,6 +2,7 @@ import UIKit
 import FinniversKit
 
 protocol QuestionFormContainerViewDelegate: AnyObject {
+    func questionFormContainerView(_ view: QuestionFormContainerView, didSubmitForm form: RealestateSoldStateQuestionFormSubmit)
 }
 
 class QuestionFormContainerView: UIView {
@@ -29,6 +30,7 @@ class QuestionFormContainerView: UIView {
     // MARK: - Init
 
     init(delegate: QuestionFormContainerViewDelegate, withAutoLayout: Bool) {
+        self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
@@ -63,7 +65,18 @@ class QuestionFormContainerView: UIView {
     // MARK: - Actions
 
     @objc private func submitButtonTapped() {
-        // TODO: Handle button tap.
+        guard
+            let contactMethod = userContactMethodView.selectedContactMethod,
+            let contactMethodValue = contactMethod.value
+        else { return }
+
+        let formSubmit = RealestateSoldStateQuestionFormSubmit(
+            contactMethodIdentifier: contactMethod.identifier,
+            contactMethodValue: contactMethodValue,
+            questions: questionFormView.selectedQuestions
+        )
+
+        delegate?.questionFormContainerView(self, didSubmitForm: formSubmit)
     }
 }
 
