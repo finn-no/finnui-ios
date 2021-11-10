@@ -6,6 +6,7 @@ class RealestateSoldStateDemoView: UIView {
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
     private lazy var realestateSoldStateView: RealestateSoldStateView = {
         let view = RealestateSoldStateView(withAutoLayout: true)
+        view.delegate = self
         view.configure(with: .demoModel)
         return view
     }()
@@ -35,6 +36,20 @@ class RealestateSoldStateDemoView: UIView {
             realestateSoldStateView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             realestateSoldStateView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
         ])
+    }
+}
+
+// MARK: - RealestateSoldStateViewDelegate
+
+extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
+    func realestateSoldStateView(_ view: RealestateSoldStateView, didSubmitForm form: RealestateSoldStateQuestionFormSubmit) {
+        print("""
+              ✅ Did submit form!
+              \tContact identifier: '\(form.contactMethodIdentifier)'
+              \tContact value: '\(form.contactMethodValue)'
+              \tSelected questions:
+              \t\t\(form.questions.joined(separator: "\n\t\t"))
+              """)
     }
 }
 
