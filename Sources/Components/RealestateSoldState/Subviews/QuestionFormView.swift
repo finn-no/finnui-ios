@@ -12,8 +12,20 @@ class QuestionFormView: UIView {
     // MARK: - Internal methods
 
     var hasSelectedQuestions: Bool {
-        questions.filterProvided.contains(where: { $0.isSelected }) ||
-        ((questions.firstUserFreetext?.isSelected ?? false) && !(questions.firstUserFreetext?.value?.isEmpty ?? true))
+        !selectedQuestions.isEmpty
+    }
+
+    var selectedQuestions: [String] {
+        var questionStrings = questions.filterProvided.filter({ $0.isSelected }).map(\.title)
+        if
+            let freetextQuestion = questions.firstUserFreetext,
+            freetextQuestion.isSelected,
+            let value = freetextQuestion.value,
+            !value.isEmpty
+        {
+            questionStrings.append(value)
+        }
+        return questionStrings
     }
 
     // MARK: - Private properties
