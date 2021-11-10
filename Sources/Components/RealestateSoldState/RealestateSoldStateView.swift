@@ -22,6 +22,30 @@ public class RealestateSoldStateView: UIView {
         return view
     }()
 
+    private lazy var userContactMethodView: UserContactInformationView = {
+        let view = UserContactInformationView(withAutoLayout: true)
+        view.configure(
+            viewModel: .init(
+                title: "Hvordan kan vi kontakte deg?",
+                contactMethods: [
+                    .init(
+                        identifier: "1",
+                        name: "Svar meg på mail",
+                        textFieldType: .email,
+                        textFieldPlaceholder: "Legg inn din mail-adresse"
+                    ),
+                    .init(
+                        identifier: "2",
+                        name: "Svar meg på telefon",
+                        textFieldType: .phoneNumber,
+                        textFieldPlaceholder: "Legg inn ditt telefonnummer"
+                    ),
+                ]
+            )
+        )
+        return view
+    }()
+
     // MARK: - Init
 
     public override init(frame: CGRect) {
@@ -34,7 +58,7 @@ public class RealestateSoldStateView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        stackView.addArrangedSubviews([questionFormView])
+        stackView.addArrangedSubviews([questionFormView, userContactMethodView])
         addSubview(stackView)
         stackView.fillInSuperview(insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: -16))
     }
