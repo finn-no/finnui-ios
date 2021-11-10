@@ -7,12 +7,9 @@ protocol QuestionFormViewDelegate: AnyObject {
 
 class QuestionFormView: UIView {
 
-    // MARK: - Internal properties
-
-    weak var delegate: QuestionFormViewDelegate?
-
     // MARK: - Private properties
 
+    private weak var delegate: QuestionFormViewDelegate?
     private var questions = [RealestateSoldStateQuestionModel]()
     private lazy var questionsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
 
@@ -31,8 +28,10 @@ class QuestionFormView: UIView {
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: QuestionFormViewDelegate, withAutoLayout: Bool) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 

@@ -10,17 +10,8 @@ class QuestionFormContainerView: UIView {
 
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
-
-    private lazy var questionFormView: QuestionFormView = {
-        let view = QuestionFormView(withAutoLayout: true)
-        view.delegate = self
-        return view
-    }()
-
-    private lazy var userContactMethodView: UserContactInformationView = {
-        let view = UserContactInformationView(withAutoLayout: true)
-        return view
-    }()
+    private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
+    private lazy var userContactMethodView = UserContactInformationView(withAutoLayout: true)
 
     private lazy var dislamerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
