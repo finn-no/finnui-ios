@@ -11,7 +11,7 @@ class QuestionFormContainerView: UIView {
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
     private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
-    private lazy var userContactMethodView = UserContactInformationView(withAutoLayout: true)
+    private lazy var userContactMethodView = UserContactInformationView(delegate: self, withAutoLayout: true)
 
     private lazy var dislamerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
@@ -66,5 +66,13 @@ class QuestionFormContainerView: UIView {
 extension QuestionFormContainerView: QuestionFormViewDelegate {
     func questionFormViewDidToggleTextView(_ view: QuestionFormView) {
         print("✒️ Did toggle textView")
+    }
+}
+
+// MARK: - UserContactInformationViewDelegate
+
+extension QuestionFormContainerView: UserContactInformationViewDelegate {
+    func userContactInformationViewDidUpdateTextField(_ view: UserContactInformationView) {
+        submitButton.isEnabled = view.isInputValid
     }
 }

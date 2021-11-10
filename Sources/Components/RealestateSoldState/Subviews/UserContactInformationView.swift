@@ -1,16 +1,25 @@
 import UIKit
 import FinniversKit
 
+protocol UserContactInformationViewDelegate: AnyObject {
+    func userContactInformationViewDidUpdateTextField(_ view: UserContactInformationView)
+}
+
 class UserContactInformationView: UIView {
 
     // MARK: - Internal methods
 
-    private var selectedContactMethod: UserContactMethodSelectionModel? {
+    var selectedContactMethod: UserContactMethodSelectionModel? {
         contactMethodModels.selectedModel
+    }
+
+    var isInputValid: Bool {
+        textField?.isValid ?? false
     }
 
     // MARK: - Private properties
 
+    private weak var delegate: UserContactInformationViewDelegate?
     private var contactMethodModels = [UserContactMethodSelectionModel]()
     private var textField: TextField?
     private lazy var titleLabel = Label(style: .title3Strong, withAutoLayout: true)
@@ -19,8 +28,10 @@ class UserContactInformationView: UIView {
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: UserContactInformationViewDelegate, withAutoLayout: Bool) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
@@ -69,6 +80,7 @@ class UserContactInformationView: UIView {
             textField.delegate = self
             contentStackView.addArrangedSubview(textField)
             self.textField = textField
+            delegate?.userContactInformationViewDidUpdateTextField(self)
         }
     }
 }
@@ -95,6 +107,7 @@ extension UserContactInformationView: UserContactMethodSelectionViewDelegate {
 extension UserContactInformationView: TextFieldDelegate {
     func textFieldDidChange(_ textField: TextField) {
         contactMethodModels.selectedModel?.value = textField.text
+        delegate?.userContactInformationViewDidUpdateTextField(self)
     }
 }
 
