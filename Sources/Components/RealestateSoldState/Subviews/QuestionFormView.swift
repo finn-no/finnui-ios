@@ -2,10 +2,19 @@ import UIKit
 import FinniversKit
 
 protocol QuestionFormViewDelegate: AnyObject {
+    func questionFormViewDidToggleQuestion(_ view: QuestionFormView)
+    func questionFormViewDidUpdateFreeTextQuestion(_ view: QuestionFormView)
     func questionFormViewDidToggleTextView(_ view: QuestionFormView)
 }
 
 class QuestionFormView: UIView {
+
+    // MARK: - Internal methods
+
+    var hasSelectedQuestions: Bool {
+        questions.filterProvided.contains(where: { $0.isSelected }) ||
+        ((questions.firstUserFreetext?.isSelected ?? false) && !(questions.firstUserFreetext?.value?.isEmpty ?? true))
+    }
 
     // MARK: - Private properties
 
@@ -84,6 +93,7 @@ extension QuestionFormView: QuestionItemViewDelegate {
     func questionItemViewWasSelected(_ view: QuestionItemView) {
         view.question.isSelected.toggle()
         view.updateView()
+        delegate?.questionFormViewDidToggleQuestion(self)
 
         if case .userFreetext = view.question.kind {
             textView.isHidden = !view.question.isSelected
@@ -98,6 +108,7 @@ extension QuestionFormView: TextViewDelegate {
     public func textViewDidChange(_ textView: TextView) {
         guard let question = questions.firstUserFreetext else { return }
         question.value = textView.text
+        delegate?.questionFormViewDidUpdateFreeTextQuestion(self)
     }
 }
 

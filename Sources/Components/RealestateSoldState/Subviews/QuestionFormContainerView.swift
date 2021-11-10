@@ -54,6 +54,12 @@ class QuestionFormContainerView: UIView {
         submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
     }
 
+    // MARK: - Private methods
+
+    private func updateSubmitButtonState() {
+        submitButton.isEnabled = userContactMethodView.isInputValid && questionFormView.hasSelectedQuestions
+    }
+
     // MARK: - Actions
 
     @objc private func submitButtonTapped() {
@@ -64,6 +70,14 @@ class QuestionFormContainerView: UIView {
 // MARK: - QuestionFormViewDelegate
 
 extension QuestionFormContainerView: QuestionFormViewDelegate {
+    func questionFormViewDidToggleQuestion(_ view: QuestionFormView) {
+        updateSubmitButtonState()
+    }
+
+    func questionFormViewDidUpdateFreeTextQuestion(_ view: QuestionFormView) {
+        updateSubmitButtonState()
+    }
+
     func questionFormViewDidToggleTextView(_ view: QuestionFormView) {
         print("✒️ Did toggle textView")
     }
@@ -73,6 +87,6 @@ extension QuestionFormContainerView: QuestionFormViewDelegate {
 
 extension QuestionFormContainerView: UserContactInformationViewDelegate {
     func userContactInformationViewDidUpdateTextField(_ view: UserContactInformationView) {
-        submitButton.isEnabled = view.isInputValid
+        updateSubmitButtonState()
     }
 }
