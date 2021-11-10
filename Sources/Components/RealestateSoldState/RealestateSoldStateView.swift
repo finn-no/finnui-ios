@@ -25,23 +25,21 @@ public class RealestateSoldStateView: UIView {
     private lazy var userContactMethodView: UserContactInformationView = {
         let view = UserContactInformationView(withAutoLayout: true)
         view.configure(
-            viewModel: .init(
-                title: "Hvordan kan vi kontakte deg?",
-                contactMethods: [
-                    .init(
-                        identifier: "1",
-                        name: "Svar meg på mail",
-                        textFieldType: .email,
-                        textFieldPlaceholder: "Legg inn din mail-adresse"
-                    ),
-                    .init(
-                        identifier: "2",
-                        name: "Svar meg på telefon",
-                        textFieldType: .phoneNumber,
-                        textFieldPlaceholder: "Legg inn ditt telefonnummer"
-                    ),
-                ]
-            )
+            with: "Hvordan kan vi kontakte deg?",
+            contactMethodModels: [
+                .init(
+                    identifier: "1",
+                    name: "Svar meg på mail",
+                    textFieldType: .email,
+                    textFieldPlaceholder: "Legg inn din mail-adresse"
+                ),
+                .init(
+                    identifier: "2",
+                    name: "Svar meg på telefon",
+                    textFieldType: .phoneNumber,
+                    textFieldPlaceholder: "Legg inn ditt telefonnummer"
+                ),
+            ]
         )
         return view
     }()

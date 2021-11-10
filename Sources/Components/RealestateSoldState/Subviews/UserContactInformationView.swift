@@ -6,12 +6,12 @@ class UserContactInformationView: UIView {
     // MARK: - Internal methods
 
     private var selectedContactMethod: UserContactMethodSelectionModel? {
-        viewModel?.selectedContactMethod
+        contactMethodModels.selectedModel
     }
 
     // MARK: - Private properties
 
-    private var viewModel: UserContactInformationViewModel?
+    private var contactMethodModels = [UserContactMethodSelectionModel]()
     private var textField: TextField?
     private lazy var titleLabel = Label(style: .title3Strong, withAutoLayout: true)
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
@@ -36,21 +36,21 @@ class UserContactInformationView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(viewModel: UserContactInformationViewModel) {
-        self.viewModel = viewModel
+    func configure(with title: String, contactMethodModels: [UserContactMethodSelectionModel]) {
+        titleLabel.text = title
+        self.contactMethodModels = contactMethodModels
 
         contactMethodStackView.removeArrangedSubviews()
-        titleLabel.text = viewModel.title
 
         // Make sure at only one contact method is marked as selected by default.
-        if viewModel.selectedContactMethod == nil {
-            viewModel.contactMethods.first?.isSelected = true
-        } else if viewModel.contactMethods.filter({ $0.isSelected }).count > 1 {
-            viewModel.contactMethods.forEach { $0.isSelected = false }
-            viewModel.contactMethods.first?.isSelected = true
+        if contactMethodModels.selectedModel == nil {
+            contactMethodModels.first?.isSelected = true
+        } else if contactMethodModels.filter({ $0.isSelected }).count > 1 {
+            contactMethodModels.forEach { $0.isSelected = false }
+            contactMethodModels.first?.isSelected = true
         }
 
-        let contactMethodViews = viewModel.contactMethods.map { UserContactMethodSelectionView(viewModel: $0, delegate: self) }
+        let contactMethodViews = contactMethodModels.map { UserContactMethodSelectionView(viewModel: $0, delegate: self) }
         contactMethodStackView.addArrangedSubviews(contactMethodViews)
 
         createOrReplaceTextField()
@@ -94,7 +94,7 @@ extension UserContactInformationView: UserContactMethodSelectionViewDelegate {
 
 extension UserContactInformationView: TextFieldDelegate {
     func textFieldDidChange(_ textField: TextField) {
-        viewModel?.selectedContactMethod?.value = textField.text
+        contactMethodModels.selectedModel?.value = textField.text
     }
 }
 
@@ -112,12 +112,8 @@ private extension TextField {
     }
 }
 
-extension UserContactInformationViewModel {
-    var selectedContactMethod: UserContactMethodSelectionModel? {
-        contactMethods.first(where: { $0.isSelected })
-    }
-
-    func resetSelectionAndSetFirstSelected() {
-
+extension Array where Element == UserContactMethodSelectionModel {
+    var selectedModel: UserContactMethodSelectionModel? {
+        first(where: { $0.isSelected })
     }
 }
