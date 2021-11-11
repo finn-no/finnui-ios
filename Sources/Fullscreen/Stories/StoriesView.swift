@@ -3,13 +3,24 @@ import UIKit
 
 public protocol StoriesViewDataSource: AnyObject {
     func storiesView(_ storiesView: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
+    func storiesView(_ storiesView: StoriesView, storySlideAtIndexIsFavorite index: StorySlideIndex) -> Bool
 }
 
 public protocol StoriesViewDelegate: AnyObject {
-    
+    func storiesView(_ storiesView: StoriesView, didSelectAction action: StoriesView.Action)
 }
 
+public typealias StorySlideIndex = (storyIndex: Int, slideIndex: Int)
+
 public class StoriesView: UIView {
+    public enum Action {
+        case goToSearch(storyIndex: Int)
+        case openAd(index: StorySlideIndex)
+        case toggleFavorite(index: StorySlideIndex, button: UIButton)
+        case share(index: StorySlideIndex)
+        case dismiss
+    }
+
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CubeCollectionViewLayout())
         collectionView.delegate = self
@@ -44,6 +55,14 @@ public class StoriesView: UIView {
         collectionView.reloadData()
     }
 
+    public func updateFavoriteStates() {
+        for visibleCell in collectionView.visibleCells {
+            if let storyViewCell = visibleCell as? StoryCollectionViewCell {
+                storyViewCell.updateFavoriteButtonState()
+            }
+        }
+    }
+
     private func scroll(to index: Int, animated: Bool = true) {
         let indexPath = IndexPath(item: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
@@ -60,7 +79,7 @@ extension StoriesView: UICollectionViewDataSource {
         guard let story = stories[safe: indexPath.item] else { return cell }
         cell.delegate = self
         cell.dataSource = self
-        cell.configure(with: story)
+        cell.configure(with: story, indexPath: indexPath)
         return cell
     }
 }
@@ -74,32 +93,51 @@ extension StoriesView: UICollectionViewDelegate {
 }
 
 extension StoriesView: StoryCollectionViewCellDataSource {
-    func storyCollectionViewCell(_ storyCell: StoryCollectionViewCell, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void)) {
+    func storyCollectionViewCell(_ cell: StoryCollectionViewCell, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void)) {
         dataSource?.storiesView(self, loadImageWithPath: imagePath, imageWidth: imageWidth, completion: completion)
     }
 
-    func storyCollectionViewCell(_ storyCell: StoryCollectionViewCell, slideAtIndexIsFavorite index: Int) -> Bool {
-        return false
+    func storyCollectionViewCell(_ cell: StoryCollectionViewCell, slideAtIndexIsFavorite index: Int) -> Bool {
+        guard
+            let storyIndex = cell.indexPath?.item,
+            let dataSource = dataSource
+        else { return false }
+
+        return dataSource.storiesView(self, storySlideAtIndexIsFavorite: StorySlideIndex(storyIndex: storyIndex, slideIndex: index))
     }
 }
 
 extension StoriesView: StoryCollectionViewCellDelegate {
     func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didSelect action: StoryCollectionViewCell.Action) {
-        guard let index = collectionView.indexPath(for: cell)?.item else { return }
+        guard let storyIndex = cell.indexPath?.item else { return }
 
         switch action {
         case .showNextStory:
-            if index + 1 < stories.count {
-                scroll(to: index + 1)
+            if storyIndex + 1 < stories.count {
+                scroll(to: storyIndex + 1)
             } else {
-                // delegate dismiss
+                delegate?.storiesView(self, didSelectAction: .dismiss)
             }
 
         case .showPreviousStory:
-            if index - 1 >= 0 {
-                scroll(to: index - 1)
+            if storyIndex - 1 >= 0 {
+                scroll(to: storyIndex - 1)
             }
-        default: break
+
+        case .goToSearch:
+            delegate?.storiesView(self, didSelectAction: .goToSearch(storyIndex: storyIndex))
+
+        case .openAd(let slideIndex):
+            let index = StorySlideIndex(storyIndex: storyIndex, slideIndex: slideIndex)
+            delegate?.storiesView(self, didSelectAction: .openAd(index: index))
+
+        case .share(let slideIndex):
+            let index = StorySlideIndex(storyIndex: storyIndex, slideIndex: slideIndex)
+            delegate?.storiesView(self, didSelectAction: .share(index: index))
+
+        case .toggleFavorite(let slideIndex, let button):
+            let index = StorySlideIndex(storyIndex: storyIndex, slideIndex: slideIndex)
+            delegate?.storiesView(self, didSelectAction: .toggleFavorite(index: index, button: button))
         }
     }
 }

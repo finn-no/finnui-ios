@@ -10,7 +10,7 @@ class StoryDemoView: UIView {
         return view
     }()
 
-    private var favoriteIndexes = [Int]()
+    private var favoriteIndexes = [StorySlideIndex]()
 
     // MARK: - Init
 
@@ -29,46 +29,36 @@ class StoryDemoView: UIView {
         addSubview(storiesView)
         storiesView.fillInSuperview()
         storiesView.configure(with: [Self.story1, Self.story2])
-//        storyView.startStory()
     }
 }
 
 extension StoryDemoView: StoriesViewDelegate {
-    func storyViewDidSelectShare(_ view: StoryCollectionViewCell, forIndex index: Int) {
-        print("SHARE SLIDE \(index)")
-    }
-
-    func storyView(_ view: StoryCollectionViewCell, didTapFavoriteButton button: UIButton, forIndex index: Int) {
-        if let indexForFavoriteItem = favoriteIndexes.firstIndex(of: index) {
-            favoriteIndexes.remove(at: indexForFavoriteItem)
-        } else {
-            favoriteIndexes.append(index)
+    func storiesView(_ storiesView: StoriesView, didSelectAction action: StoriesView.Action) {
+        switch action {
+        case .dismiss:
+            print("DISMISS")
+        case .toggleFavorite(let index, _):
+            if let index = favoriteIndexes.firstIndex(where: { $0.slideIndex == index.slideIndex && $0.storyIndex == index.storyIndex }) {
+                favoriteIndexes.remove(at: index)
+            } else {
+                favoriteIndexes.append(index)
+            }
+            storiesView.updateFavoriteStates()
+        case .share(let index):
+            print("SHARE \(index)")
+        case .openAd(let index):
+            print("OPEN AD \(index)")
+        case .goToSearch(let index):
+            print("GO TO SEARCH \(index)")
         }
-        view.updateFavoriteButtonState()
-    }
-
-    func storyViewDidSelectSearch(_ view: StoryCollectionViewCell) {
-        print("OPEN SEARCH")
-    }
-
-    func storyViewDidSelectAd(_ view: StoryCollectionViewCell) {
-        print("OPEN AD")
-    }
-
-    func storyViewDidSelectNextStory(_ view: StoryCollectionViewCell) {
-        print("SHOW NEXT STORY")
-    }
-
-    func storyViewDidSelectPreviousStory(_ view: StoryCollectionViewCell) {
-        print("SHOW PREVIOUS STORY")
-    }
-
-    func storyViewDidFinishStory(_ view: StoryCollectionViewCell) {
-        print("DISMISS STORY")
     }
 }
 
 extension StoryDemoView: StoriesViewDataSource {
+    func storiesView(_ storiesView: StoriesView, storySlideAtIndexIsFavorite index: StorySlideIndex) -> Bool {
+        favoriteIndexes.contains(where: { $0.slideIndex == index.slideIndex && $0.storyIndex == index.storyIndex })
+    }
+
     func storiesView(_ storiesView: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void)) {
         guard let url = URL(string: imagePath) else {
             completion(nil)
@@ -88,10 +78,6 @@ extension StoryDemoView: StoriesViewDataSource {
         }
 
         task.resume()
-    }
-
-    func storyView(_ view: StoryCollectionViewCell, slideAtIndexIsFavorite index: Int) -> Bool {
-        favoriteIndexes.contains(index)
     }
 }
 

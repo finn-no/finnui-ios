@@ -11,7 +11,7 @@ protocol StoryCollectionViewCellDelegate: AnyObject {
     func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didSelect action: StoryCollectionViewCell.Action)
 }
 
-public class StoryCollectionViewCell: UICollectionViewCell {
+class StoryCollectionViewCell: UICollectionViewCell {
     enum Action {
         case showNextStory
         case showPreviousStory
@@ -145,6 +145,7 @@ public class StoryCollectionViewCell: UICollectionViewCell {
 
     weak var dataSource: StoryCollectionViewCellDataSource?
     weak var delegate: StoryCollectionViewCellDelegate?
+    private(set) var indexPath: IndexPath?
 
     // MARK: - Init
 
@@ -257,8 +258,9 @@ public class StoryCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public methods
 
-    func configure(with story: Story) {
+    func configure(with story: Story, indexPath: IndexPath) {
         self.story = story
+        self.indexPath = indexPath
         self.slides = story.viewModel.slides
         self.imageUrls = slides.map({ $0.imageUrl })
 
@@ -278,25 +280,25 @@ public class StoryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    public func startStory(durationPerSlideInSeconds: Double = 5) {
+    func startStory(durationPerSlideInSeconds: Double = 5) {
         progressView.startAnimating(durationPerSlideInSeconds: durationPerSlideInSeconds)
     }
 
-    public func pauseStory() {
+    func pauseStory() {
         progressView.pauseAnimations()
     }
 
-    public func resumeStory() {
+    func resumeStory() {
         progressView.resumeAnimations()
     }
 
-    public func updateFavoriteButtonState() {
+    func updateFavoriteButtonState() {
         guard let isFavorite = dataSource?.storyCollectionViewCell(self, slideAtIndexIsFavorite: currentIndex) else { return }
         let favoriteImage = isFavorite ? UIImage(named: .favoriteActive) : UIImage(named: .favoriteDefault)
         favoriteButton.setImage(favoriteImage.withRenderingMode(.alwaysTemplate), for: .normal)
     }
 
-    public func loadImage() {
+    func loadImage() {
         guard let currentImageUrl = currentImageUrl else { return }
         downloadImage(withUrl: currentImageUrl)
         predownloadNextImageIfNeeded()
