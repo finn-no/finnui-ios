@@ -149,6 +149,9 @@ extension StoriesView: StoryCollectionViewCellDelegate {
         case .toggleFavorite(let slideIndex, let button):
             let index = StorySlideIndex(storyIndex: storyIndex, slideIndex: slideIndex)
             delegate?.storiesView(self, didSelectAction: .toggleFavorite(index: index, button: button))
+
+        case .dismiss:
+            delegate?.storiesView(self, didSelectAction: .dismiss)
         }
     }
 }

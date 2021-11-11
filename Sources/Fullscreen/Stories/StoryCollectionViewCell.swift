@@ -19,9 +19,24 @@ class StoryCollectionViewCell: UICollectionViewCell {
         case openAd(slideIndex: Int)
         case toggleFavorite(slideIndex: Int, button: UIButton)
         case share(slideIndex: Int)
+        case dismiss
     }
 
     // MARK: - Subviews
+
+    private lazy var imageView: UIImageView = {
+        let imageView = UIImageView(withAutoLayout: true)
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = .spacingM
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+
+    private lazy var progressView: ProgressView = {
+        let progressView = ProgressView(withAutoLayout: true)
+        progressView.delegate = self
+        return progressView
+    }()
 
     private lazy var searchInfoStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
@@ -40,29 +55,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private lazy var searchTitleLabel: Label = {
         let label = Label(style: .captionStrong, withAutoLayout: true)
         label.textColor = .milk
-        return label
-    }()
-
-    private lazy var imageView: UIImageView = {
-        let imageView = UIImageView(withAutoLayout: true)
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = .spacingM
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-
-    private lazy var priceContainerView: UIVisualEffectView = {
-        let view = UIVisualEffectView(withAutoLayout: true)
-        view.effect = UIBlurEffect(style: .systemThinMaterialDark)
-        view.layer.cornerRadius = priceLabelHeight / 2
-        view.clipsToBounds = true
-        return view
-    }()
-
-    private lazy var priceLabel: Label = {
-        let label = Label(style: .captionStrong, withAutoLayout: true)
-        label.textColor = .textTertiary
-        label.backgroundColor = .clear
         return label
     }()
 
@@ -92,10 +84,19 @@ class StoryCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var progressView: ProgressView = {
-        let progressView = ProgressView(withAutoLayout: true)
-        progressView.delegate = self
-        return progressView
+    private lazy var priceContainerView: UIVisualEffectView = {
+        let view = UIVisualEffectView(withAutoLayout: true)
+        view.effect = UIBlurEffect(style: .systemThinMaterialDark)
+        view.layer.cornerRadius = priceLabelHeight / 2
+        view.clipsToBounds = true
+        return view
+    }()
+
+    private lazy var priceLabel: Label = {
+        let label = Label(style: .captionStrong, withAutoLayout: true)
+        label.textColor = .textTertiary
+        label.backgroundColor = .clear
+        return label
     }()
 
     private lazy var favoriteButton: UIButton = {
@@ -112,6 +113,15 @@ class StoryCollectionViewCell: UICollectionViewCell {
         button.setImage(UIImage(named: .share).withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(vertical: 3 * .spacingXS, horizontal: 3 * .spacingXS)
         button.addTarget(self, action: #selector(handleShareButtonTap), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var closeButton: UIButton = {
+        let button = UIButton(withAutoLayout: true)
+        button.tintColor = .milk
+        button.setImage(UIImage(named: .close).withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(vertical: .spacingM, horizontal: .spacingM)
+        button.addTarget(self, action: #selector(handleCloseButtonTap), for: .touchUpInside)
         return button
     }()
 
@@ -134,6 +144,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     private let storyIconSize: CGFloat = 32
     private let priceLabelHeight: CGFloat = 32
+    private let iconSize: CGFloat = 44
 
     private var currentImageUrl: String? {
         imageUrls[safe: currentIndex]
@@ -171,6 +182,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(priceContainerView)
         contentView.addSubview(shareButton)
         contentView.addSubview(favoriteButton)
+        contentView.addSubview(closeButton)
 
         searchInfoStackView.addArrangedSubviews([searchIconImageView, searchTitleLabel])
 
@@ -204,6 +216,11 @@ class StoryCollectionViewCell: UICollectionViewCell {
             searchIconImageView.widthAnchor.constraint(equalToConstant: storyIconSize),
             searchIconImageView.heightAnchor.constraint(equalToConstant: storyIconSize),
 
+            closeButton.centerYAnchor.constraint(equalTo: searchInfoStackView.centerYAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            closeButton.heightAnchor.constraint(equalToConstant: iconSize),
+            closeButton.widthAnchor.constraint(equalToConstant: iconSize),
+
             adTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
             adTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant:  -.spacingM),
             adTitleLabel.bottomAnchor.constraint(equalTo: adDetailLabel.topAnchor, constant: -.spacingXS),
@@ -219,13 +236,13 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
             shareButton.trailingAnchor.constraint(equalTo: progressView.trailingAnchor),
             shareButton.centerYAnchor.constraint(equalTo: priceContainerView.centerYAnchor),
-            shareButton.widthAnchor.constraint(equalToConstant: 44),
-            shareButton.heightAnchor.constraint(equalToConstant: 44),
+            shareButton.widthAnchor.constraint(equalToConstant: iconSize),
+            shareButton.heightAnchor.constraint(equalToConstant: iconSize),
 
             favoriteButton.trailingAnchor.constraint(equalTo: shareButton.leadingAnchor),
             favoriteButton.centerYAnchor.constraint(equalTo: shareButton.centerYAnchor),
-            favoriteButton.widthAnchor.constraint(equalToConstant: 44),
-            favoriteButton.heightAnchor.constraint(equalToConstant: 44),
+            favoriteButton.widthAnchor.constraint(equalToConstant: iconSize),
+            favoriteButton.heightAnchor.constraint(equalToConstant: iconSize),
         ])
 
         setupGestureRecognizers()
@@ -422,6 +439,10 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     @objc private func handleShareButtonTap() {
         delegate?.storyCollectionViewCell(self, didSelect: .share(slideIndex: currentIndex))
+    }
+
+    @objc private func handleCloseButtonTap() {
+        delegate?.storyCollectionViewCell(self, didSelect: .dismiss)
     }
 }
 
