@@ -7,7 +7,7 @@ class RealestateSoldStateDemoView: UIView {
     private lazy var realestateSoldStateView: RealestateSoldStateView = {
         let view = RealestateSoldStateView(withAutoLayout: true)
         view.delegate = self
-        view.configure(with: .demoModel)
+        view.configure(with: .demoModel, remoteImageViewDataSource: self)
         return view
     }()
 
@@ -39,6 +39,37 @@ class RealestateSoldStateDemoView: UIView {
     }
 }
 
+// MARK: - RemoteImageViewDataSource
+
+extension RealestateSoldStateDemoView: RemoteImageViewDataSource {
+    func remoteImageView(_ view: RemoteImageView, cachedImageWithPath imagePath: String, imageWidth: CGFloat) -> UIImage? {
+        nil
+    }
+
+    func remoteImageView(_ view: RemoteImageView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: imagePath) else {
+            completion(nil)
+            return
+        }
+
+        // Demo code only.
+        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
+            usleep(50_000)
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                    completion(image)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    func remoteImageView(_ view: RemoteImageView, cancelLoadingImageWithPath imagePath: String, imageWidth: CGFloat) {}
+}
+
 // MARK: - RealestateSoldStateViewDelegate
 
 extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
@@ -53,7 +84,31 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
     }
 }
 
-extension QuestionFormViewModel {
+// MARK: - Private extensions
+
+private extension RealestateSoldStateModel {
+    static var demoModel: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            agentProfile: .demoModel,
+            questionForm: .demoModel
+        )
+    }
+}
+
+private extension AgentProfileModel {
+    static var demoModel: AgentProfileModel {
+        AgentProfileModel(
+            title: "Ansvarlig megler for dette salget",
+            agentName: "Navn Navnesen",
+            agentJobTitle: "Eiendomsmegler / Partner",
+            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            phoneNumber: "123 45 678",
+            email: "navn.navnesen@megler.no"
+        )
+    }
+}
+
+private extension QuestionFormViewModel {
     static var demoModel: QuestionFormViewModel {
         QuestionFormViewModel(
             questionsTitle: "Hva lurer du på?",
