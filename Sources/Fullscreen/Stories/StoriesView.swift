@@ -32,6 +32,7 @@ public class StoriesView: UIView {
     }()
 
     private var stories = [Story]()
+    private var didSwipeToDismiss: Bool = false
 
     public weak var dataSource: StoriesViewDataSource?
     public weak var delegate: StoriesViewDelegate?
@@ -89,6 +90,16 @@ extension StoriesView: UICollectionViewDelegate {
         guard let cell = cell as? StoryCollectionViewCell else { return }
         cell.loadImage()
         cell.startStory()
+    }
+
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !didSwipeToDismiss else { return }
+
+        // Swipe to dismiss story from first or last cell in collection view.
+        if scrollView.contentOffset.x < scrollView.frame.minY - 50 || scrollView.contentOffset.x > scrollView.frame.maxX + 50 {
+            didSwipeToDismiss = true
+            delegate?.storiesView(self, didSelectAction: .dismiss)
+        }
     }
 }
 
