@@ -8,6 +8,7 @@ class DemoViewController<View: UIView>: UIViewController {
     private let constrainToBottomSafeArea: Bool
     private let constrainToTopSafeArea: Bool
     private var bottomSheet: BottomSheet?
+    var backgroundColor: UIColor = .bgPrimary
 
     public init(dismissType: DismissType = .doubleTap,
                 containmentOptions: ContainmentOptions = .none,
@@ -41,7 +42,9 @@ class DemoViewController<View: UIView>: UIViewController {
             containmentOptions: containmentOptions,
             supportedInterfaceOrientations: supportedInterfaceOrientations,
             constrainToTopSafeArea: constrainToTopSafeArea,
-            constrainToBottomSafeArea: constrainToBottomSafeArea)
+            constrainToBottomSafeArea: constrainToBottomSafeArea,
+            backgroundColor: backgroundColor
+        )
         addChild(viewController)
         view.addSubview(viewController.view)
         viewController.didMove(toParent: self)

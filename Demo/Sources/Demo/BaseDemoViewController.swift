@@ -62,6 +62,7 @@ public class BaseDemoViewController<View: UIView>: UIViewController, Containable
     private var preferredInterfaceOrientation: UIInterfaceOrientationMask = .all
     private let constrainToBottomSafeArea: Bool
     private let constrainToTopSafeArea: Bool
+    private let backgroundColor: UIColor
 
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return preferredInterfaceOrientation
@@ -71,12 +72,14 @@ public class BaseDemoViewController<View: UIView>: UIViewController, Containable
                 containmentOptions: ContainmentOptions = .none,
                 supportedInterfaceOrientations: UIInterfaceOrientationMask = .all,
                 constrainToTopSafeArea: Bool = true,
-                constrainToBottomSafeArea: Bool = true) {
+                constrainToBottomSafeArea: Bool = true,
+                backgroundColor: UIColor = .bgPrimary) {
         self.dismissType = dismissType
         self.containmentOptions = containmentOptions
         self.preferredInterfaceOrientation = supportedInterfaceOrientations
         self.constrainToBottomSafeArea = constrainToBottomSafeArea
         self.constrainToTopSafeArea = constrainToTopSafeArea
+        self.backgroundColor = backgroundColor
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -88,7 +91,7 @@ public class BaseDemoViewController<View: UIView>: UIViewController, Containable
         super.viewDidLoad()
 
         view.addSubview(playgroundView)
-        view.backgroundColor = .bgPrimary
+        view.backgroundColor = backgroundColor
 
         let topAnchor = constrainToTopSafeArea ? view.safeAreaLayoutGuide.topAnchor : view.topAnchor
         let bottomAnchor = constrainToBottomSafeArea ? view.safeAreaLayoutGuide.bottomAnchor : view.bottomAnchor

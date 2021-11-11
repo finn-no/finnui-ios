@@ -29,6 +29,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = .spacingM
         imageView.clipsToBounds = true
+        imageView.backgroundColor = .storyBackgrondColor
         return imageView
     }()
 
@@ -170,8 +171,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     // MARK: - Setup
 
     private func setup() {
-        backgroundColor = .storyBackgroundColor
-
         contentView.addSubview(imageView)
         contentView.addSubview(swipeUpIconImageView)
         contentView.addSubview(openAdButton)
@@ -493,7 +492,7 @@ extension UIView {
         case .bottom:
             let radius: CGFloat = 250
             gradientLayer.opacity = 0.75
-            gradientLayer.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
+            gradientLayer.colors = [UIColor.darkIce.cgColor, UIColor.clear.cgColor] // darkIce or UIColor(hex: "#1B1B24")
             gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
             gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
             gradientLayer.frame = CGRect(x: 0.0, y: frame.height - radius, width: frame.width, height: radius)
@@ -508,7 +507,7 @@ private extension UIColor {
         .dynamicColorIfAvailable(defaultColor: .sardine, darkModeColor: .darkSardine)
     }
 
-    class var storyBackgroundColor: UIColor {
+    class var storyBackgrondColor: UIColor {
         UIColor(hex: "#1B1B24")
     }
 }
