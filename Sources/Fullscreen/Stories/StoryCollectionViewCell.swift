@@ -54,16 +54,14 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private lazy var priceContainerView: UIVisualEffectView = {
         let view = UIVisualEffectView(withAutoLayout: true)
         view.effect = UIBlurEffect(style: .systemThinMaterialDark)
-        view.alpha = 1.0
         view.layer.cornerRadius = priceLabelHeight / 2
         view.clipsToBounds = true
         return view
     }()
 
     private lazy var priceLabel: Label = {
-        let label = Label(style: .captionStrong)
+        let label = Label(style: .captionStrong, withAutoLayout: true)
         label.textColor = .textTertiary
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         return label
     }()

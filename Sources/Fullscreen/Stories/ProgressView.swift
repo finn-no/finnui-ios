@@ -22,8 +22,8 @@ class ProgressView: UIView {
 
     private var timer: Timer?
     private var durationPerSlideInSeconds: Double = 5
-    private let progressSteps: Double = 1000
-    private var timeInterval: Double { durationPerSlideInSeconds / progressSteps }
+    private let frameRate: CGFloat = 60
+    private var stepSize: Double { 1 / (frameRate * durationPerSlideInSeconds) }
 
     // MARK: - Internal properties
 
@@ -70,7 +70,7 @@ class ProgressView: UIView {
 
     func resumeAnimations() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1/frameRate, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
     }
 
     func setActiveIndex(_ index: Int) {
@@ -101,7 +101,7 @@ class ProgressView: UIView {
     @objc private func updateProgressView() {
         guard let progressView = currentProgressView else { return }
 
-        progressView.progress +=  1 / Float(progressSteps)
+        progressView.progress += Float(stepSize)
         progressView.setProgress(progressView.progress, animated: true)
         if progressView.progress == 1 {
             timer?.invalidate()
