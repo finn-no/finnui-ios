@@ -4,6 +4,7 @@ import UIKit
 public protocol StoriesViewDataSource: AnyObject {
     func storiesView(_ storiesView: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
     func storiesView(_ storiesView: StoriesView, storySlideAtIndexIsFavorite index: StorySlideIndex) -> Bool
+    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel]?) -> Void))
 }
 
 public protocol StoriesViewDelegate: AnyObject {
@@ -81,6 +82,14 @@ extension StoriesView: UICollectionViewDataSource {
         cell.delegate = self
         cell.dataSource = self
         cell.configure(with: story, indexPath: indexPath)
+
+        dataSource?.storiesView(self, slidesForStoryWithIndex: indexPath.item, completion: { [weak cell] slides in
+            if let slides = slides {
+                cell?.configue(with: slides, indexPath: indexPath)
+            } else {
+                // error handling in cell?
+            }
+        })
         return cell
     }
 }
@@ -88,8 +97,7 @@ extension StoriesView: UICollectionViewDataSource {
 extension StoriesView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? StoryCollectionViewCell else { return }
-        cell.loadImage()
-        cell.startStory()
+        cell.prepareForDisplay()
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -97,8 +105,9 @@ extension StoriesView: UICollectionViewDelegate {
 
         // Swipe to dismiss story from first or last cell in collection view.
         if scrollView.contentOffset.x < scrollView.frame.minY - 50 || scrollView.contentOffset.x > scrollView.frame.maxX + 50 {
-            didSwipeToDismiss = true
-            delegate?.storiesView(self, didSelectAction: .dismiss)
+            // Check that it's the last cell as well!
+//            didSwipeToDismiss = true
+//            delegate?.storiesView(self, didSelectAction: .dismiss)
         }
     }
 }

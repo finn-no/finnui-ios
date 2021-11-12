@@ -129,7 +129,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     // MARK: - Private properties
 
     private var currentIndex = 0
-    private var didStartAnimating: Bool = false
+    private var wasPreparedForDisplay: Bool = false
 
     private var nextIndex: Int? {
         currentIndex + 1 < slides.count ? currentIndex + 1 : nil
@@ -275,13 +275,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     func configure(with story: Story, indexPath: IndexPath) {
         self.story = story
         self.indexPath = indexPath
-        self.slides = story.viewModel.slides
-        self.imageUrls = slides.map({ $0.imageUrl })
-
-        showSlide(at: story.slideIndex, downloadImageIsEnabled: false)
-
-        progressView.configure(withNumberOfProgresses: slides.count)
-        progressView.setActiveIndex(currentIndex)
 
         let viewModel = story.viewModel
         searchTitleLabel.text = viewModel.title
@@ -294,7 +287,29 @@ class StoryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func startStory(durationPerSlideInSeconds: Double = 5) {
+    func configue(with slides: [StorySlideViewModel], indexPath: IndexPath) {
+        guard let story = story, indexPath == self.indexPath else { return }
+        self.slides = slides
+        self.imageUrls = slides.map({ $0.imageUrl })
+
+        showSlide(at: story.slideIndex, downloadImageIsEnabled: wasPreparedForDisplay)
+        progressView.configure(withNumberOfProgresses: slides.count)
+        progressView.setActiveIndex(currentIndex, resumeAnimations: false)
+
+        if wasPreparedForDisplay {
+            startStory()
+        }
+    }
+
+    func prepareForDisplay() {
+        wasPreparedForDisplay = true
+        if !slides.isEmpty {
+            loadImage()
+            startStory()
+        }
+    }
+
+    private func startStory(durationPerSlideInSeconds: Double = 5) {
         progressView.startAnimating(durationPerSlideInSeconds: durationPerSlideInSeconds)
     }
 
@@ -325,7 +340,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
             delegate?.storyCollectionViewCell(self, didSelect: .showNextStory)
             return
         }
-        progressView.setActiveIndex(nextIndex)
+        progressView.setActiveIndex(nextIndex, resumeAnimations: true)
         showSlide(at: nextIndex)
     }
 
@@ -334,7 +349,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
             delegate?.storyCollectionViewCell(self, didSelect: .showPreviousStory)
             return
         }
-        progressView.setActiveIndex(previousIndex)
+        progressView.setActiveIndex(previousIndex, resumeAnimations: true)
         showSlide(at: previousIndex)
     }
 
@@ -382,6 +397,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
         story.images[imageUrl] = nil
 
+        // UIScreen.main.bounds.widt
         dataSource?.storyCollectionViewCell(self, loadImageWithPath: imageUrl, imageWidth: frame.size.width, completion: { [weak self] image in
             guard let self = self else { return }
             if imageUrl == self.currentImageUrl {
