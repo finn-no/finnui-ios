@@ -6,14 +6,12 @@ public struct AgentProfileModel {
     public let agentJobTitle: String
     public let imageUrl: String
     public let phoneNumber: String?
-    public let email: String?
 
-    public init(title: String, agentName: String, agentJobTitle: String, imageUrl: String, phoneNumber: String?, email: String?) {
+    public init(title: String, agentName: String, agentJobTitle: String, imageUrl: String, phoneNumber: String?) {
         self.title = title
         self.agentName = agentName
         self.agentJobTitle = agentJobTitle
         self.imageUrl = imageUrl
         self.phoneNumber = phoneNumber
-        self.email = email
     }
 }

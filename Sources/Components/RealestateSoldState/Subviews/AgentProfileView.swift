@@ -11,7 +11,6 @@ class AgentProfileView: UIView {
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
     private lazy var phoneLabel = Label.create(style: .body, isHidden: true)
-    private lazy var emailLabel = Label.create(style: .body, isHidden: true)
 
     private lazy var remoteImageView: RemoteImageView = {
         let view = RemoteImageView(withAutoLayout: true)
@@ -34,11 +33,8 @@ class AgentProfileView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        phoneLabel.setContentHuggingPriority(.required, for: .horizontal)
-
-        contactStackView.addArrangedSubviews([phoneLabel, emailLabel])
-        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, contactStackView])
-        textStackView.setCustomSpacing(.spacingS, after: jobTitleLabel)
+        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, phoneLabel])
+        textStackView.setCustomSpacing(.spacingM, after: jobTitleLabel)
 
         addSubview(titleLabel)
         addSubview(remoteImageView)
@@ -72,11 +68,6 @@ class AgentProfileView: UIView {
         if let phoneNumber = model.phoneNumber {
             phoneLabel.text = phoneNumber
             phoneLabel.isHidden = false
-        }
-
-        if let email = model.email {
-            emailLabel.text = email
-            emailLabel.isHidden = false
         }
 
         remoteImageView.dataSource = remoteImageViewDataSource
