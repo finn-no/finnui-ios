@@ -102,8 +102,7 @@ private extension AgentProfileModel {
             agentName: "Navn Navnesen",
             agentJobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            phoneNumber: "123 45 678",
-            email: "navn.navnesen@megler.no"
+            phoneNumber: "123 45 678"
         )
     }
 }
