@@ -292,7 +292,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         self.slides = slides
         self.imageUrls = slides.map({ $0.imageUrl })
 
-        showSlide(at: story.slideIndex, downloadImageIsEnabled: wasPreparedForDisplay)
+        showSlide(at: story.slideIndex)
         progressView.configure(withNumberOfProgresses: slides.count)
         progressView.setActiveIndex(currentIndex, resumeAnimations: false)
 
@@ -304,7 +304,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     func prepareForDisplay() {
         wasPreparedForDisplay = true
         if !slides.isEmpty {
-            loadImage()
             startStory()
         }
     }
@@ -353,7 +352,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         showSlide(at: previousIndex)
     }
 
-    private func showSlide(at index: Int, downloadImageIsEnabled: Bool = true) {
+    private func showSlide(at index: Int) {
         guard let slide = slides[safe: index] else { return }
 
         currentIndex = index
@@ -368,16 +367,12 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
         if let image = story?.images[slide.imageUrl] {
             showImage(image)
-        } else if downloadImageIsEnabled {
-            imageView.image = nil
-            downloadImage(withUrl: slide.imageUrl)
         } else {
             imageView.image = nil
+            downloadImage(withUrl: slide.imageUrl)
         }
 
-        if downloadImageIsEnabled {
-            predownloadNextImageIfNeeded()
-        }
+        predownloadNextImageIfNeeded()
     }
 
     private func predownloadNextImageIfNeeded() {
@@ -397,8 +392,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
         story.images[imageUrl] = nil
 
-        // UIScreen.main.bounds.widt
-        dataSource?.storyCollectionViewCell(self, loadImageWithPath: imageUrl, imageWidth: frame.size.width, completion: { [weak self] image in
+        dataSource?.storyCollectionViewCell(self, loadImageWithPath: imageUrl, imageWidth: UIScreen.main.bounds.width, completion: { [weak self] image in
             guard let self = self else { return }
             if imageUrl == self.currentImageUrl {
                 self.showImage(image)
