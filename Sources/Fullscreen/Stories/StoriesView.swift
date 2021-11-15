@@ -100,6 +100,11 @@ extension StoriesView: UICollectionViewDelegate {
         cell.prepareForDisplay()
     }
 
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? StoryCollectionViewCell else { return }
+        cell.pauseStory()
+    }
+
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard !didSwipeToDismiss else { return }
 
@@ -129,7 +134,10 @@ extension StoriesView: StoryCollectionViewCellDataSource {
 
 extension StoriesView: StoryCollectionViewCellDelegate {
     func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didSelect action: StoryCollectionViewCell.Action) {
-        guard let storyIndex = cell.indexPath?.item else { return }
+        guard
+            collectionView.visibleCells.contains(cell),
+            let storyIndex = cell.indexPath?.item
+        else { return }
 
         switch action {
         case .showNextStory:

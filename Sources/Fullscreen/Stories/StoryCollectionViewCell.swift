@@ -316,20 +316,10 @@ class StoryCollectionViewCell: UICollectionViewCell {
         progressView.pauseAnimations()
     }
 
-    func resumeStory() {
-        progressView.resumeAnimations()
-    }
-
     func updateFavoriteButtonState() {
         guard let isFavorite = dataSource?.storyCollectionViewCell(self, slideAtIndexIsFavorite: currentIndex) else { return }
         let favoriteImage = isFavorite ? UIImage(named: .favoriteActive) : UIImage(named: .favoriteDefault)
         favoriteButton.setImage(favoriteImage.withRenderingMode(.alwaysTemplate), for: .normal)
-    }
-
-    func loadImage() {
-        guard let currentImageUrl = currentImageUrl else { return }
-        downloadImage(withUrl: currentImageUrl)
-        predownloadNextImageIfNeeded()
     }
 
     // MARK: - Private methods
