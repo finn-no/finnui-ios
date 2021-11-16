@@ -354,7 +354,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         adDetailLabel.text = slide.detailText
 
         priceLabel.text = slide.price
-        priceLabel.isHidden = slide.price == nil
+        priceContainerView.isHidden = slide.price == nil
         updateFavoriteButtonState()
 
         if let image = story?.images[slide.imageUrl] {

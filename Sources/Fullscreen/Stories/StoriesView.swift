@@ -15,8 +15,8 @@ public typealias StorySlideIndex = (storyIndex: Int, slideIndex: Int)
 
 public class StoriesView: UIView {
     public enum Action {
-        case goToSearch(storyIndex: Int)
-        case openAd(index: StorySlideIndex)
+        case navigateToSearch(storyIndex: Int)
+        case navigateToAd(index: StorySlideIndex)
         case toggleFavorite(index: StorySlideIndex, button: UIButton)
         case share(index: StorySlideIndex)
         case dismiss
@@ -184,11 +184,11 @@ extension StoriesView: StoryCollectionViewCellDelegate {
             }
 
         case .goToSearch:
-            delegate?.storiesView(self, didSelectAction: .goToSearch(storyIndex: storyIndex))
+            delegate?.storiesView(self, didSelectAction: .navigateToSearch(storyIndex: storyIndex))
 
         case .openAd(let slideIndex):
             let index = StorySlideIndex(storyIndex: storyIndex, slideIndex: slideIndex)
-            delegate?.storiesView(self, didSelectAction: .openAd(index: index))
+            delegate?.storiesView(self, didSelectAction: .navigateToAd(index: index))
 
         case .share(let slideIndex):
             let index = StorySlideIndex(storyIndex: storyIndex, slideIndex: slideIndex)
