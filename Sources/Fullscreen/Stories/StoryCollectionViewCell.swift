@@ -301,7 +301,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func prepareForDisplay() {
+    func prepareForDisplayAndStartStoryIfNeeded() {
         wasPreparedForDisplay = true
         if !slides.isEmpty {
             startStory()
@@ -314,6 +314,10 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     func pauseStory() {
         progressView.pauseAnimations()
+    }
+
+    func resumeStoryIfNecessary() {
+        progressView.resumeOngoingAnimationsIfAny()
     }
 
     func updateFavoriteButtonState() {

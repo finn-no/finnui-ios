@@ -57,6 +57,22 @@ public class StoriesView: UIView {
         collectionView.reloadData()
     }
 
+    public func resumeStory() {
+        for visibleCell in collectionView.visibleCells {
+            if let storyViewCell = visibleCell as? StoryCollectionViewCell {
+                storyViewCell.resumeStoryIfNecessary()
+            }
+        }
+    }
+
+    public func pauseStory() {
+        for visibleCell in collectionView.visibleCells {
+            if let storyViewCell = visibleCell as? StoryCollectionViewCell {
+                storyViewCell.pauseStory()
+            }
+        }
+    }
+
     public func updateFavoriteStates() {
         for visibleCell in collectionView.visibleCells {
             if let storyViewCell = visibleCell as? StoryCollectionViewCell {
@@ -97,7 +113,7 @@ extension StoriesView: UICollectionViewDataSource {
 extension StoriesView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? StoryCollectionViewCell else { return }
-        cell.prepareForDisplay()
+        cell.prepareForDisplayAndStartStoryIfNeeded()
     }
 
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

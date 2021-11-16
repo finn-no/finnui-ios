@@ -61,16 +61,16 @@ class ProgressView: UIView {
 
     func startAnimating(durationPerSlideInSeconds: Double) {
         self.durationPerSlideInSeconds = durationPerSlideInSeconds
-        resumeAnimations()
+        startTimer()
     }
 
     func pauseAnimations() {
         timer?.invalidate()
     }
 
-    func resumeAnimations() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 1/frameRate, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
+    func resumeOngoingAnimationsIfAny() {
+        guard let timer = timer, !timer.isValid else { return }
+        startTimer()
     }
 
     func setActiveIndex(_ index: Int, resumeAnimations: Bool) {
@@ -86,8 +86,13 @@ class ProgressView: UIView {
         progressViews.suffix(from: index).forEach({ $0.progress = 0 })
 
         if resumeAnimations {
-            self.resumeAnimations()
+            startTimer()
         }
+    }
+
+    private func startTimer() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 1/frameRate, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
     }
 
     // MARK: - Private methods
@@ -99,7 +104,7 @@ class ProgressView: UIView {
         }
         currentIndex += 1
         delegate?.progressViewDidFinishProgress(self, isLastProgress: false)
-        resumeAnimations()
+        startTimer()
     }
 
     @objc private func updateProgressView() {
