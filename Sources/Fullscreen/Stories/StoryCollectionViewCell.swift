@@ -253,14 +253,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
         let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleDidSelectAd))
         swipeUpGestureRecognizer.direction = .up
         addGestureRecognizer(swipeUpGestureRecognizer)
-
-        let swipeLeftGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeft))
-        swipeLeftGestureRecognizer.direction = .left
-        addGestureRecognizer(swipeLeftGestureRecognizer)
-
-        let swipeRightGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeRight))
-        swipeRightGestureRecognizer.direction = .right
-        addGestureRecognizer(swipeRightGestureRecognizer)
     }
 
     // MARK: - Overrides
@@ -273,6 +265,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     public override func prepareForReuse() {
         super.prepareForReuse()
         imageView.backgroundColor = .storyBackgrondColor
+        imageView.image = nil
     }
 
     // MARK: - Public methods
@@ -435,14 +428,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     @objc private func handleDidSelectAd() {
         delegate?.storyCollectionViewCell(self, didSelect: .openAd(slideIndex: currentIndex))
-    }
-
-    @objc private func handleSwipeLeft(recognizer: UISwipeGestureRecognizer) {
-        // REMOVE?
-    }
- 
-    @objc private func handleSwipeRight(recognizer: UISwipeGestureRecognizer) {
-        // REMOVE?
     }
 
     @objc private func handleFavoriteButtonTap() {

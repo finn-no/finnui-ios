@@ -131,12 +131,20 @@ extension StoriesView: UICollectionViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard !didSwipeToDismiss else { return }
 
-        // Swipe to dismiss story from first or last cell in collection view.
-        if scrollView.contentOffset.x < scrollView.frame.minY - 50 || scrollView.contentOffset.x > scrollView.frame.maxX + 50 {
-            // Check that it's the last cell as well!
-//            didSwipeToDismiss = true
-//            delegate?.storiesView(self, didSelectAction: .dismiss)
-        }
+        let swipeDistanceToTriggerDismiss = scrollView.frame.size.width * 0.25
+
+        let didSwipeToDismissFromFirstCell =
+            currentStoryIndex == 0 &&
+            scrollView.contentOffset.x < scrollView.frame.minX - swipeDistanceToTriggerDismiss
+
+        let didSwipeToDismissFromLastCell =
+            currentStoryIndex == stories.count - 1 &&
+            scrollView.contentOffset.x > collectionView.contentSize.width - collectionView.frame.size.width + swipeDistanceToTriggerDismiss
+
+        guard didSwipeToDismissFromFirstCell || didSwipeToDismissFromLastCell else { return }
+
+        didSwipeToDismiss = true
+        delegate?.storiesView(self, didSelectAction: .dismiss)
     }
 }
 
