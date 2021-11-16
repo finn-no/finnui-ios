@@ -32,6 +32,7 @@ public class StoriesView: UIView {
         return collectionView
     }()
 
+    private var currentStoryIndex: Int = 0
     private var stories = [Story]()
     private var didSwipeToDismiss: Bool = false
 
@@ -47,6 +48,10 @@ public class StoriesView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private var currentStoryCell: StoryCollectionViewCell? {
+        collectionView.cellForItem(at: IndexPath(item: currentStoryIndex, section: 0)) as? StoryCollectionViewCell
+    }
+
     private func setup() {
         addSubview(collectionView)
         collectionView.fillInSuperview()
@@ -58,18 +63,14 @@ public class StoriesView: UIView {
     }
 
     public func resumeStory() {
-        for visibleCell in collectionView.visibleCells {
-            if let storyViewCell = visibleCell as? StoryCollectionViewCell {
-                storyViewCell.resumeStoryIfNecessary()
-            }
+        if let currentStoryCell = currentStoryCell {
+            currentStoryCell.resumeStoryIfNecessary()
         }
     }
 
     public func pauseStory() {
-        for visibleCell in collectionView.visibleCells {
-            if let storyViewCell = visibleCell as? StoryCollectionViewCell {
-                storyViewCell.pauseStory()
-            }
+        if let currentStoryCell = currentStoryCell {
+            currentStoryCell.pauseStory()
         }
     }
 
@@ -84,6 +85,7 @@ public class StoriesView: UIView {
     private func scroll(to index: Int, animated: Bool = true) {
         let indexPath = IndexPath(item: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
+        currentStoryIndex = index
     }
 }
 
@@ -119,6 +121,11 @@ extension StoriesView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? StoryCollectionViewCell else { return }
         cell.pauseStory()
+    }
+
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageWidth = scrollView.frame.size.width
+        currentStoryIndex = Int(scrollView.contentOffset.x / pageWidth)
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
