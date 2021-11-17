@@ -265,8 +265,17 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     public override func prepareForReuse() {
         super.prepareForReuse()
+        progressView.prepareForReuse()
         imageView.backgroundColor = .storyBackgrondColor
         imageView.image = nil
+        story = nil
+        slides = []
+        imageUrls = []
+        indexPath = nil
+        wasPreparedForDisplay = false
+        currentIndex = 0
+        delegate = nil
+        dataSource = nil
     }
 
     // MARK: - Public methods

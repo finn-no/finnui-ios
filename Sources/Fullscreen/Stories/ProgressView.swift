@@ -68,6 +68,13 @@ class ProgressView: UIView {
         timer?.invalidate()
     }
 
+    func prepareForReuse() {
+        timer?.invalidate()
+        currentIndex = 0
+        progressViews.forEach({ $0.removeFromSuperview() })
+        progressViews.removeAll()
+    }
+
     func resumeOngoingAnimationsIfAny() {
         guard let timer = timer, !timer.isValid else { return }
         startTimer()
