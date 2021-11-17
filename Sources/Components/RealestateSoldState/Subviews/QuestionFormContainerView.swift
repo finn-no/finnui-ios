@@ -43,7 +43,7 @@ class QuestionFormContainerView: UIView {
     private func setup() {
         stackView.addArrangedSubviews([questionFormView, userContactMethodView, dislamerLabel, submitButton])
         addSubview(stackView)
-        stackView.fillInSuperview(insets: UIEdgeInsets(top: 0, left: .spacingM, bottom: 0, right: -.spacingM))
+        stackView.fillInSuperview()
     }
 
     // MARK: - Internal methods

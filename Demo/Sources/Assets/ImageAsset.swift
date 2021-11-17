@@ -57,6 +57,7 @@ enum ImageAsset: String {
     case favouriteAdded
     case filledMoon
     case filter
+    case finnLogoLarge
     case finnLogoSimple
     case gift
     case heartEmpty
@@ -135,6 +136,7 @@ enum ImageAsset: String {
             .favouriteAdded,
             .filledMoon,
             .filter,
+            .finnLogoLarge,
             .finnLogoSimple,
             .gift,
             .heartEmpty,
