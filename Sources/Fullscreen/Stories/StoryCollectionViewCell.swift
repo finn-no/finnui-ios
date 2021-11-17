@@ -286,12 +286,12 @@ class StoryCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func configue(with slides: [StorySlideViewModel], indexPath: IndexPath) {
+    func configue(with slides: [StorySlideViewModel], startIndex: Int, indexPath: IndexPath) {
         guard let story = story, indexPath == self.indexPath else { return }
         self.slides = slides
         self.imageUrls = slides.map({ $0.imageUrl })
 
-        showSlide(at: story.slideIndex)
+        showSlide(at: startIndex)
         progressView.configure(withNumberOfProgresses: slides.count)
         progressView.setActiveIndex(currentIndex, resumeAnimations: false)
 

@@ -4,7 +4,7 @@ import UIKit
 public protocol StoriesViewDataSource: AnyObject {
     func storiesView(_ storiesView: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
     func storiesView(_ storiesView: StoriesView, storySlideAtIndexIsFavorite index: StorySlideIndex) -> Bool
-    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel]?) -> Void))
+    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel]?, Int) -> Void))
 }
 
 public protocol StoriesViewDelegate: AnyObject {
@@ -102,9 +102,9 @@ extension StoriesView: UICollectionViewDataSource {
         cell.dataSource = self
         cell.configure(with: story, indexPath: indexPath)
 
-        dataSource?.storiesView(self, slidesForStoryWithIndex: indexPath.item, completion: { [weak cell] slides in
+        dataSource?.storiesView(self, slidesForStoryWithIndex: indexPath.item, completion: { [weak cell] slides, slideStartIndex in
             if let slides = slides {
-                cell?.configue(with: slides, indexPath: indexPath)
+                cell?.configue(with: slides, startIndex: slideStartIndex, indexPath: indexPath)
             } else {
                 // error handling in cell?
             }
