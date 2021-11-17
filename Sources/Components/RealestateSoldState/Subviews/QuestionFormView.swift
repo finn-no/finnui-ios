@@ -2,17 +2,35 @@ import UIKit
 import FinniversKit
 
 protocol QuestionFormViewDelegate: AnyObject {
+    func questionFormViewDidToggleQuestion(_ view: QuestionFormView)
+    func questionFormViewDidUpdateFreeTextQuestion(_ view: QuestionFormView)
     func questionFormViewDidToggleTextView(_ view: QuestionFormView)
 }
 
 class QuestionFormView: UIView {
 
-    // MARK: - Internal properties
+    // MARK: - Internal methods
 
-    weak var delegate: QuestionFormViewDelegate?
+    var hasSelectedQuestions: Bool {
+        !selectedQuestions.isEmpty
+    }
+
+    var selectedQuestions: [String] {
+        var questionStrings = questions.filterProvided.filter({ $0.isSelected }).map(\.title)
+        if
+            let freetextQuestion = questions.firstUserFreetext,
+            freetextQuestion.isSelected,
+            let value = freetextQuestion.value,
+            !value.isEmpty
+        {
+            questionStrings.append(value)
+        }
+        return questionStrings
+    }
 
     // MARK: - Private properties
 
+    private weak var delegate: QuestionFormViewDelegate?
     private var questions = [RealestateSoldStateQuestionModel]()
     private lazy var questionsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
 
@@ -31,8 +49,10 @@ class QuestionFormView: UIView {
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: QuestionFormViewDelegate, withAutoLayout: Bool) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
@@ -85,6 +105,7 @@ extension QuestionFormView: QuestionItemViewDelegate {
     func questionItemViewWasSelected(_ view: QuestionItemView) {
         view.question.isSelected.toggle()
         view.updateView()
+        delegate?.questionFormViewDidToggleQuestion(self)
 
         if case .userFreetext = view.question.kind {
             textView.isHidden = !view.question.isSelected
@@ -99,6 +120,7 @@ extension QuestionFormView: TextViewDelegate {
     public func textViewDidChange(_ textView: TextView) {
         guard let question = questions.firstUserFreetext else { return }
         question.value = textView.text
+        delegate?.questionFormViewDidUpdateFreeTextQuestion(self)
     }
 }
 
