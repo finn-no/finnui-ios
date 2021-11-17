@@ -103,6 +103,10 @@ extension QuestionFormContainerView: QuestionFormViewDelegate {
 // MARK: - UserContactInformationViewDelegate
 
 extension QuestionFormContainerView: UserContactInformationViewDelegate {
+    func userContactInformationViewDidSwitchContactMethod(_ view: UserContactInformationView) {
+        updateSubmitButtonState()
+    }
+
     func userContactInformationViewDidUpdateTextField(_ view: UserContactInformationView) {
         updateSubmitButtonState()
     }

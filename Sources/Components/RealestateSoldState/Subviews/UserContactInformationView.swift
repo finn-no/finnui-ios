@@ -2,6 +2,7 @@ import UIKit
 import FinniversKit
 
 protocol UserContactInformationViewDelegate: AnyObject {
+    func userContactInformationViewDidSwitchContactMethod(_ view: UserContactInformationView)
     func userContactInformationViewDidUpdateTextField(_ view: UserContactInformationView)
 }
 
@@ -25,6 +26,7 @@ class UserContactInformationView: UIView {
     private weak var delegate: UserContactInformationViewDelegate?
     private let contactMethodEmail: UserContactMethodSelectionModel.Email
     private let contactMethodPhone: UserContactMethodSelectionModel.Phone
+    private var hasDoneInitialSetup = false
     private lazy var titleLabel = Label(style: .title3Strong, withAutoLayout: true)
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var contactMethodStackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
@@ -79,6 +81,7 @@ class UserContactInformationView: UIView {
         contactMethodStackView.addArrangedSubviews(contactMethodViews)
 
         presentSelectedContactMethodView()
+        hasDoneInitialSetup = true
     }
 
     // MARK: - Private methods
@@ -90,7 +93,10 @@ class UserContactInformationView: UIView {
         } else if selectedContactMethod is UserContactMethodSelectionModel.Phone {
             emailAddressView.isHidden = true
             phoneNumberTextField.isHidden = false
-            delegate?.userContactInformationViewDidUpdateTextField(self)
+        }
+
+        if hasDoneInitialSetup {
+            delegate?.userContactInformationViewDidSwitchContactMethod(self)
         }
     }
 }
