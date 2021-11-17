@@ -5,9 +5,8 @@ import FinnUI
 class RealestateSoldStateDemoView: UIView {
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
     private lazy var realestateSoldStateView: RealestateSoldStateView = {
-        let view = RealestateSoldStateView(withAutoLayout: true)
+        let view = RealestateSoldStateView(viewModel: .demoModel, remoteImageViewDataSource: self, withAutoLayout: true)
         view.delegate = self
-        view.configure(with: .demoModel, remoteImageViewDataSource: self)
         return view
     }()
 
@@ -133,20 +132,17 @@ private extension QuestionFormViewModel {
                 .init(kind: .userFreetext, title: "Annet", isSelected: true, value: "Long text\nSeveral lines\nAnother line"),
             ],
             contactMethodTitle: "Hvordan kan vi kontakte deg?",
-            contactMethodModels: [
-                .init(
+            contactMethodEmail: .init(
                     identifier: "1",
-                    name: "Svar meg på mail",
-                    textFieldType: .email,
-                    textFieldPlaceholder: "Legg inn din mail-adresse"
-                ),
-                .init(
-                    identifier: "2",
-                    name: "Svar meg på telefon",
-                    textFieldType: .phoneNumber,
-                    textFieldPlaceholder: "Legg inn ditt telefonnummer"
-                ),
-            ],
+                    name: "Din epost",
+                    disclaimerText: "Du kan endre e-postadressen i FINN-profilen din.",
+                    value: "email@provider.com"
+            ),
+            contactMethodPhone: .init(
+                identifier: "2",
+                name: "Svar meg på telefon",
+                textFieldPlaceholder: "Legg inn ditt telefonnummer"
+            ),
             submitDisclaimer: "Ved å trykke \"Send skjema\" samtykker du til at FINN kan sende dine opplysninger fra skjema over til ansvarlig megler for denne annonsen.",
             submitButtonTitle: "Send skjema"
         )
