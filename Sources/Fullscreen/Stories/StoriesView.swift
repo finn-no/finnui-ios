@@ -9,6 +9,7 @@ public protocol StoriesViewDataSource: AnyObject {
 
 public protocol StoriesViewDelegate: AnyObject {
     func storiesView(_ storiesView: StoriesView, didSelectAction action: StoriesView.Action)
+    func storiesView(_ storiesView: StoriesView, didViewStorySlideWithIndex storySlideIndex: StorySlideIndex)
 }
 
 public typealias StorySlideIndex = (storyIndex: Int, slideIndex: Int)
@@ -164,6 +165,11 @@ extension StoriesView: StoryCollectionViewCellDataSource {
 }
 
 extension StoriesView: StoryCollectionViewCellDelegate {
+    func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didShowSlideWithIndex index: Int) {
+        guard let storyIndex = cell.indexPath?.item else { return }
+        delegate?.storiesView(self, didViewStorySlideWithIndex: StorySlideIndex(storyIndex: storyIndex, slideIndex: index))
+    }
+
     func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didSelect action: StoryCollectionViewCell.Action) {
         guard
             collectionView.visibleCells.contains(cell),

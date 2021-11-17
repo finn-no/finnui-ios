@@ -9,6 +9,7 @@ protocol StoryCollectionViewCellDataSource: AnyObject {
 
 protocol StoryCollectionViewCellDelegate: AnyObject {
     func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didSelect action: StoryCollectionViewCell.Action)
+    func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didShowSlideWithIndex index: Int)
 }
 
 class StoryCollectionViewCell: UICollectionViewCell {
@@ -365,6 +366,8 @@ class StoryCollectionViewCell: UICollectionViewCell {
         }
 
         predownloadNextImageIfNeeded()
+
+        delegate?.storyCollectionViewCell(self, didShowSlideWithIndex: index)
     }
 
     private func predownloadNextImageIfNeeded() {
