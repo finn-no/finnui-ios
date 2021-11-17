@@ -13,7 +13,14 @@ class QuestionFormContainerView: UIView {
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
     private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
-    private lazy var userContactMethodView = UserContactInformationView(delegate: self, withAutoLayout: true)
+
+    private lazy var userContactMethodView = UserContactInformationView(
+        title: viewModel.contactMethodTitle,
+        contactMethodEmail: viewModel.contactMethodEmail,
+        contactMethodPhone: viewModel.contactMethodPhone,
+        delegate: self,
+        withAutoLayout: true
+    )
 
     private lazy var dislamerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
@@ -48,7 +55,6 @@ class QuestionFormContainerView: UIView {
         stackView.fillInSuperview()
 
         questionFormView.configure(with: viewModel.questionsTitle, questions: viewModel.questions)
-        userContactMethodView.configure(with: viewModel.contactMethodTitle, contactMethodModels: viewModel.contactMethodModels)
 
         dislamerLabel.text = viewModel.submitDisclaimer
         submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
