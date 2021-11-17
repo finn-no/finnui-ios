@@ -60,7 +60,7 @@ class AgentProfileView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(with model: AgentProfileModel, remoteImageViewDataSource: RemoteImageViewDataSource) {
+    func configure(with model: AgentProfileModel, remoteImageViewDataSource: RemoteImageViewDataSource?) {
         titleLabel.text = model.title
         nameLabel.text = model.agentName
         jobTitleLabel.text = model.agentJobTitle

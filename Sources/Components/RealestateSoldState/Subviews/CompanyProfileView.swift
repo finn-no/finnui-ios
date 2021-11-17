@@ -89,7 +89,7 @@ class CompanyProfileView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(with viewModel: CompanyProfileModel, remoteImageViewDataSource: RemoteImageViewDataSource) {
+    func configure(with viewModel: CompanyProfileModel, remoteImageViewDataSource: RemoteImageViewDataSource?) {
         logoHeaderView.configure(imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
 
         sloganLabel.text = viewModel.slogan

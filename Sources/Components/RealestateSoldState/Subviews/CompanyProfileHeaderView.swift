@@ -37,7 +37,7 @@ class CompanyProfileHeaderView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(imageUrl: String, remoteImageViewDataSource: RemoteImageViewDataSource) {
+    func configure(imageUrl: String, remoteImageViewDataSource: RemoteImageViewDataSource?) {
         remoteImageView.dataSource = remoteImageViewDataSource
         remoteImageView.loadImage(for: imageUrl, imageWidth: .zero)
     }

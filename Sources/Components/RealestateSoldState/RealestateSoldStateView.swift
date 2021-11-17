@@ -15,15 +15,20 @@ public class RealestateSoldStateView: UIView {
 
     // MARK: - Private properties
 
+    private let viewModel: RealestateSoldStateModel
+    private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
-    private lazy var questionFormView = QuestionFormContainerView(delegate: self, withAutoLayout: true)
+    private lazy var questionFormView = QuestionFormContainerView(viewModel: viewModel.questionForm, delegate: self, withAutoLayout: true)
     private lazy var agentProfileView = AgentProfileView(withAutoLayout: true)
     private lazy var companyProfileView = CompanyProfileView(delegate: self, withAutoLayout: true)
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(viewModel: RealestateSoldStateModel, remoteImageViewDataSource: RemoteImageViewDataSource, withAutoLayout: Bool = false) {
+        self.viewModel = viewModel
+        self.remoteImageViewDataSource = remoteImageViewDataSource
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
@@ -35,12 +40,7 @@ public class RealestateSoldStateView: UIView {
         stackView.addArrangedSubviews([questionFormView, agentProfileView, companyProfileView])
         addSubview(stackView)
         stackView.fillInSuperview(insets: UIEdgeInsets(top: 0, left: .spacingM, bottom: 0, right: -.spacingM))
-    }
 
-    // MARK: - Public methods
-
-    public func configure(with viewModel: RealestateSoldStateModel, remoteImageViewDataSource: RemoteImageViewDataSource) {
-        questionFormView.configure(with: viewModel.questionForm)
         agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
         companyProfileView.configure(with: viewModel.companyProfile, remoteImageViewDataSource: remoteImageViewDataSource)
     }

@@ -9,6 +9,7 @@ class QuestionFormContainerView: UIView {
 
     // MARK: - Private properties
 
+    private let viewModel: QuestionFormViewModel
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
     private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
@@ -29,7 +30,8 @@ class QuestionFormContainerView: UIView {
 
     // MARK: - Init
 
-    init(delegate: QuestionFormContainerViewDelegate, withAutoLayout: Bool) {
+    init(viewModel: QuestionFormViewModel, delegate: QuestionFormContainerViewDelegate, withAutoLayout: Bool) {
+        self.viewModel = viewModel
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
@@ -44,11 +46,7 @@ class QuestionFormContainerView: UIView {
         stackView.addArrangedSubviews([questionFormView, userContactMethodView, dislamerLabel, submitButton])
         addSubview(stackView)
         stackView.fillInSuperview()
-    }
 
-    // MARK: - Internal methods
-
-    func configure(with viewModel: QuestionFormViewModel) {
         questionFormView.configure(with: viewModel.questionsTitle, questions: viewModel.questions)
         userContactMethodView.configure(with: viewModel.contactMethodTitle, contactMethodModels: viewModel.contactMethodModels)
 
