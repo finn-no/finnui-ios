@@ -3,6 +3,10 @@ import FinniversKit
 
 public protocol RealestateSoldStateViewDelegate: AnyObject {
     func realestateSoldStateView(_ view: RealestateSoldStateView, didSubmitForm form: RealestateSoldStateQuestionFormSubmit)
+    func realestateSoldStateViewDidSubmitFormWithoutContactInformation(
+        _ view: RealestateSoldStateView,
+        questionModels: [RealestateSoldStateQuestionModel]
+    )
     func realestateSoldStateViewDidSelectCompanyProfileCtaButton(_ view: RealestateSoldStateView)
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL)
 }
@@ -51,6 +55,13 @@ public class RealestateSoldStateView: UIView {
 extension RealestateSoldStateView: QuestionFormContainerViewDelegate {
     func questionFormContainerView(_ view: QuestionFormContainerView, didSubmitForm form: RealestateSoldStateQuestionFormSubmit) {
         delegate?.realestateSoldStateView(self, didSubmitForm: form)
+    }
+
+    func questionFormContainerViewDidSubmitFormWithoutContactInformation(
+        _ view: QuestionFormContainerView,
+        questionModels: [RealestateSoldStateQuestionModel]
+    ) {
+        delegate?.realestateSoldStateViewDidSubmitFormWithoutContactInformation(self, questionModels: questionModels)
     }
 }
 
