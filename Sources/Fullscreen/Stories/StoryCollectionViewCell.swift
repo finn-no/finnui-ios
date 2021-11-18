@@ -16,8 +16,8 @@ class StoryCollectionViewCell: UICollectionViewCell {
     enum Action {
         case showNextStory
         case showPreviousStory
-        case goToSearch
-        case openAd(slideIndex: Int)
+        case navigateToSearch
+        case navigateToAd(slideIndex: Int)
         case toggleFavorite(slideIndex: Int, button: UIButton)
         case share(slideIndex: Int)
         case dismiss
@@ -25,12 +25,12 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Subviews
 
-    private lazy var imageView: UIImageView = {
-        let imageView = UIImageView(withAutoLayout: true)
+    private lazy var imageView: StoryImageView = {
+        let imageView = StoryImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = .spacingM
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .storyBackgrondColor
+        imageView.backgroundColor = .storyDefaultBackgrondColor
         return imageView
     }()
 
@@ -40,13 +40,13 @@ class StoryCollectionViewCell: UICollectionViewCell {
         return progressView
     }()
 
-    private lazy var searchInfoStackView: UIStackView = {
+    private lazy var storyHeaderStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
         stackView.alignment = .center
         return stackView
     }()
 
-    private lazy var searchIconImageView: UIImageView = {
+    private lazy var storyIconImageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -54,7 +54,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    private lazy var searchTitleLabel: Label = {
+    private lazy var storyTitleLabel: Label = {
         let label = Label(style: .captionStrong, withAutoLayout: true)
         label.textColor = .milk
         return label
@@ -73,14 +73,14 @@ class StoryCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    private lazy var adTitleLabel: Label = {
+    private lazy var slideTitleLabel: Label = {
         let label = Label(style: .title3Strong, withAutoLayout: true)
         label.textColor = .milk
         label.numberOfLines = 2
         return label
     }()
 
-    private lazy var adDetailLabel: Label = {
+    private lazy var slideDetailLabel: Label = {
         let label = Label(style: .detail, withAutoLayout: true)
         label.textColor = .milk
         return label
@@ -131,6 +131,12 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     private var currentIndex = 0
     private var wasPreparedForDisplay: Bool = false
+    private var slides = [StorySlideViewModel]()
+    private var story: Story?
+    private var imageUrls = [String?]()
+    private let storyIconSize: CGFloat = 32
+    private let priceLabelHeight: CGFloat = 32
+    private let iconSize: CGFloat = 44
 
     private var nextIndex: Int? {
         currentIndex + 1 < slides.count ? currentIndex + 1 : nil
@@ -139,14 +145,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private var previousIndex: Int? {
         currentIndex - 1 >= 0 ? currentIndex - 1 : nil
     }
-
-    private var slides = [StorySlideViewModel]()
-    private var story: Story?
-    private var imageUrls = [String]()
-
-    private let storyIconSize: CGFloat = 32
-    private let priceLabelHeight: CGFloat = 32
-    private let iconSize: CGFloat = 44
 
     private var currentImageUrl: String? {
         imageUrls[safe: currentIndex]
@@ -160,7 +158,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
     }
@@ -173,18 +171,18 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     private func setup() {
         contentView.addSubview(imageView)
+        contentView.addSubview(progressView)
+        contentView.addSubview(storyHeaderStackView)
         contentView.addSubview(swipeUpIconImageView)
         contentView.addSubview(openAdButton)
-        contentView.addSubview(progressView)
-        contentView.addSubview(adTitleLabel)
-        contentView.addSubview(adDetailLabel)
-        contentView.addSubview(searchInfoStackView)
+        contentView.addSubview(slideTitleLabel)
+        contentView.addSubview(slideDetailLabel)
         contentView.addSubview(priceContainerView)
         contentView.addSubview(shareButton)
         contentView.addSubview(favoriteButton)
         contentView.addSubview(closeButton)
 
-        searchInfoStackView.addArrangedSubviews([searchIconImageView, searchTitleLabel])
+        storyHeaderStackView.addArrangedSubviews([storyIconImageView, storyTitleLabel])
 
         priceContainerView.contentView.addSubview(priceLabel)
         priceLabel.fillInSuperview(margin: .spacingS)
@@ -209,29 +207,29 @@ class StoryCollectionViewCell: UICollectionViewCell {
             progressView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacingS),
             progressView.heightAnchor.constraint(equalToConstant: 3),
 
-            searchInfoStackView.leadingAnchor.constraint(equalTo: progressView.leadingAnchor),
-            searchInfoStackView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 3 * .spacingXS),
-            searchInfoStackView.trailingAnchor.constraint(lessThanOrEqualTo: progressView.trailingAnchor),
+            storyHeaderStackView.leadingAnchor.constraint(equalTo: progressView.leadingAnchor),
+            storyHeaderStackView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 3 * .spacingXS),
+            storyHeaderStackView.trailingAnchor.constraint(lessThanOrEqualTo: closeButton.leadingAnchor),
 
-            searchIconImageView.widthAnchor.constraint(equalToConstant: storyIconSize),
-            searchIconImageView.heightAnchor.constraint(equalToConstant: storyIconSize),
+            storyIconImageView.widthAnchor.constraint(equalToConstant: storyIconSize),
+            storyIconImageView.heightAnchor.constraint(equalToConstant: storyIconSize),
 
-            closeButton.centerYAnchor.constraint(equalTo: searchInfoStackView.centerYAnchor),
+            closeButton.centerYAnchor.constraint(equalTo: storyHeaderStackView.centerYAnchor),
             closeButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
             closeButton.heightAnchor.constraint(equalToConstant: iconSize),
             closeButton.widthAnchor.constraint(equalToConstant: iconSize),
 
-            adTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
-            adTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant:  -.spacingM),
-            adTitleLabel.bottomAnchor.constraint(equalTo: adDetailLabel.topAnchor, constant: -.spacingXS),
+            slideTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
+            slideTitleLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant:  -.spacingM),
+            slideTitleLabel.bottomAnchor.constraint(equalTo: slideDetailLabel.topAnchor, constant: -.spacingXS),
 
-            adDetailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
-            adDetailLabel.bottomAnchor.constraint(equalTo: priceContainerView.topAnchor, constant: -.spacingS),
-            adDetailLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingS),
+            slideDetailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
+            slideDetailLabel.bottomAnchor.constraint(equalTo: priceContainerView.topAnchor, constant: -.spacingS),
+            slideDetailLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -.spacingS),
 
             priceContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
             priceContainerView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -.spacingM),
-            priceContainerView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
+            priceContainerView.trailingAnchor.constraint(lessThanOrEqualTo: favoriteButton.leadingAnchor),
             priceContainerView.heightAnchor.constraint(equalToConstant: priceLabelHeight),
 
             shareButton.trailingAnchor.constraint(equalTo: progressView.trailingAnchor),
@@ -258,16 +256,12 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Overrides
 
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        imageView.addGradients()
-    }
-
-    public override func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
-        progressView.prepareForReuse()
-        imageView.backgroundColor = .storyBackgrondColor
+        progressView.reset()
+        imageView.backgroundColor = .storyDefaultBackgrondColor
         imageView.image = nil
+        storyIconImageView.image = nil
         story = nil
         slides = []
         imageUrls = []
@@ -278,53 +272,48 @@ class StoryCollectionViewCell: UICollectionViewCell {
         dataSource = nil
     }
 
-    // MARK: - Public methods
+    // MARK: - Internal methods
 
     func configure(with story: Story, indexPath: IndexPath) {
         self.story = story
         self.indexPath = indexPath
 
         let viewModel = story.viewModel
-        searchTitleLabel.text = viewModel.title
+        storyTitleLabel.text = viewModel.title
         openAdButton.setTitle(viewModel.openAdButtonTitle, for: .normal)
 
         if let storyIconImageUrl = viewModel.iconImageUrl {
             dataSource?.storyCollectionViewCell(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconSize, completion: { [weak self] image in
-                self?.searchIconImageView.image = image
+                self?.storyIconImageView.image = image
             })
         }
     }
 
-    func configue(with slides: [StorySlideViewModel], startIndex: Int, indexPath: IndexPath) {
-        guard let story = story, indexPath == self.indexPath else { return }
+    func configue(with slides: [StorySlideViewModel], startIndex: Int) {
         self.slides = slides
         self.imageUrls = slides.map({ $0.imageUrl })
 
         showSlide(at: startIndex)
         progressView.configure(withNumberOfProgresses: slides.count)
-        progressView.setActiveIndex(currentIndex, resumeAnimations: false)
+        progressView.setActiveIndex(startIndex, startAnimations: false)
 
         if wasPreparedForDisplay {
             startStory()
         }
     }
 
-    func prepareForDisplayAndStartStoryIfNeeded() {
+    func prepareForDisplay() {
         wasPreparedForDisplay = true
         if !slides.isEmpty {
             startStory()
         }
     }
 
-    private func startStory(durationPerSlideInSeconds: Double = 5) {
-        progressView.startAnimating(durationPerSlideInSeconds: durationPerSlideInSeconds)
-    }
-
     func pauseStory() {
         progressView.pauseAnimations()
     }
 
-    func resumeStoryIfNecessary() {
+    func resumeStory() {
         progressView.resumeOngoingAnimationsIfAny()
     }
 
@@ -336,12 +325,16 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Private methods
 
+    private func startStory() {
+        progressView.startAnimating(durationPerProgressInSeconds: 5)
+    }
+
     private func showNextSlide() {
         guard let nextIndex = nextIndex else {
             delegate?.storyCollectionViewCell(self, didSelect: .showNextStory)
             return
         }
-        progressView.setActiveIndex(nextIndex, resumeAnimations: true)
+        progressView.setActiveIndex(nextIndex, startAnimations: true)
         showSlide(at: nextIndex)
     }
 
@@ -350,7 +343,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
             delegate?.storyCollectionViewCell(self, didSelect: .showPreviousStory)
             return
         }
-        progressView.setActiveIndex(previousIndex, resumeAnimations: true)
+        progressView.setActiveIndex(previousIndex, startAnimations: true)
         showSlide(at: previousIndex)
     }
 
@@ -360,18 +353,22 @@ class StoryCollectionViewCell: UICollectionViewCell {
         currentIndex = index
         story?.slideIndex = currentIndex
 
-        adTitleLabel.text = slide.title
-        adDetailLabel.text = slide.detailText
+        slideTitleLabel.text = slide.title
+        slideDetailLabel.text = slide.detailText
 
         priceLabel.text = slide.price
         priceContainerView.isHidden = slide.price == nil
         updateFavoriteButtonState()
 
-        if let image = story?.images[slide.imageUrl] {
-            showImage(image)
+        if let imageUrl = slide.imageUrl {
+            if let image = story?.images[imageUrl] {
+                imageView.configure(withImage: image)
+            } else {
+                imageView.image = nil
+                downloadImage(withUrl: imageUrl)
+            }
         } else {
-            imageView.image = nil
-            downloadImage(withUrl: slide.imageUrl)
+            imageView.image = UIImage(named: .noImage)
         }
 
         predownloadNextImageIfNeeded()
@@ -399,7 +396,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         dataSource?.storyCollectionViewCell(self, loadImageWithPath: imageUrl, imageWidth: UIScreen.main.bounds.width, completion: { [weak self] image in
             guard let self = self else { return }
             if imageUrl == self.currentImageUrl {
-                self.showImage(image)
+                self.imageView.configure(withImage: image)
             }
             if let image = image {
                 self.story?.images[imageUrl] = image
@@ -410,27 +407,13 @@ class StoryCollectionViewCell: UICollectionViewCell {
         })
     }
 
-    private func showImage(_ image: UIImage?) {
-        guard let image = image else {
-            imageView.image = nil
-            return
-        }
-        let contentMode: UIView.ContentMode = image.isLandscapeOrientation ? .scaleAspectFit : .scaleAspectFill
-        imageView.contentMode = contentMode
-        imageView.image = image
-
-        if image.isLandscapeOrientation {
-            imageView.backgroundColor = image.averageColor
-        }
-    }
-
     // MARK: - Actions
 
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
         let tapLocation = recognizer.location(in: self)
 
-        if searchInfoStackView.frame.contains(tapLocation) {
-            delegate?.storyCollectionViewCell(self, didSelect: .goToSearch)
+        if storyHeaderStackView.frame.contains(tapLocation) {
+            delegate?.storyCollectionViewCell(self, didSelect: .navigateToSearch)
         } else if tapLocation.x > frame.size.width / 2 {
             showNextSlide()
         } else {
@@ -439,7 +422,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }
 
     @objc private func handleDidSelectAd() {
-        delegate?.storyCollectionViewCell(self, didSelect: .openAd(slideIndex: currentIndex))
+        delegate?.storyCollectionViewCell(self, didSelect: .navigateToAd(slideIndex: currentIndex))
     }
 
     @objc private func handleFavoriteButtonTap() {
@@ -467,72 +450,10 @@ extension StoryCollectionViewCell: ProgressViewDelegate {
     }
 }
 
-extension UIImage {
-    var isLandscapeOrientation: Bool {
-        return size.width >= size.height
-    }
-
-    var averageColor: UIColor? {
-        // https://www.hackingwithswift.com/example-code/media/how-to-read-the-average-color-of-a-uiimage-using-ciareaaverage
-        guard let inputImage = CIImage(image: self) else { return nil }
-        let extentVector = CIVector(x: inputImage.extent.origin.x, y: inputImage.extent.origin.y, z: inputImage.extent.size.width, w: inputImage.extent.size.height)
-
-        guard let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return nil }
-        guard let outputImage = filter.outputImage else { return nil }
-
-        var bitmap = [UInt8](repeating: 0, count: 4)
-        let context = CIContext(options: [.workingColorSpace: kCFNull])
-        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
-
-        return UIColor(red: CGFloat(bitmap[0]) / 255, green: CGFloat(bitmap[1]) / 255, blue: CGFloat(bitmap[2]) / 255, alpha: CGFloat(bitmap[3]) / 255)
-    }
-}
-
-extension UIView {
-    func addGradients() {
-        guard frame.width > 0 else { return }
-        if let sublayers = layer.sublayers, !sublayers.isEmpty {
-            return
-        }
-        addGradient(for: .top)
-        addGradient(for: .bottom)
-    }
-
-    private enum ShadowEdge {
-        case top
-        case bottom
-    }
-
-    private func addGradient(for shadowEdge: ShadowEdge) {
-        let gradientLayer = CAGradientLayer()
-
-        switch shadowEdge {
-        case .top:
-            let radius: CGFloat = 250
-            gradientLayer.opacity = 0.5
-            gradientLayer.colors = [UIColor.topGradientColor.cgColor, UIColor.clear.cgColor]
-            gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-            gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-            gradientLayer.frame = CGRect(x: 0.0, y: 0.0, width: frame.width, height: radius)
-        case .bottom:
-            let radius: CGFloat = 250
-            gradientLayer.opacity = 0.75
-            gradientLayer.colors = [UIColor.darkIce.cgColor, UIColor.clear.cgColor] // darkIce or UIColor(hex: "#1B1B24")
-            gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
-            gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
-            gradientLayer.frame = CGRect(x: 0.0, y: frame.height - radius, width: frame.width, height: radius)
-        }
-
-        layer.addSublayer(gradientLayer)
-    }
-}
+// MARK: - Private extensions
 
 private extension UIColor {
-    class var topGradientColor: UIColor {
-        .dynamicColorIfAvailable(defaultColor: .sardine, darkModeColor: .darkSardine)
-    }
-
-    class var storyBackgrondColor: UIColor {
+    class var storyDefaultBackgrondColor: UIColor {
         UIColor(hex: "#1B1B24")
     }
 }

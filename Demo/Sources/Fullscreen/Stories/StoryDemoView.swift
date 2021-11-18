@@ -3,13 +3,7 @@ import UIKit
 import FinnUI
 
 class StoryDemoView: UIView {
-    private lazy var storiesView: StoriesView = {
-        let view = StoriesView(withAutoLayout: true)
-        view.delegate = self
-        view.dataSource = self
-        return view
-    }()
-
+    private lazy var storiesView: StoriesView = StoriesView(dataSource: self, delegate: self, withAutoLayout: true)
     private var favoriteIndexes = [StorySlideIndex]()
 
     // MARK: - Init
@@ -33,6 +27,8 @@ class StoryDemoView: UIView {
 }
 
 extension StoryDemoView: StoriesViewDelegate {
+    func storiesView(_ storiesView: StoriesView, didViewStorySlideWithIndex storySlideIndex: StorySlideIndex) {}
+
     func storiesView(_ storiesView: StoriesView, didSelectAction action: StoriesView.Action) {
         switch action {
         case .dismiss:
@@ -46,15 +42,19 @@ extension StoryDemoView: StoriesViewDelegate {
             storiesView.updateFavoriteStates()
         case .share(let index):
             print("SHARE \(index)")
-        case .openAd(let index):
+        case .navigateToAd(let index):
             print("OPEN AD \(index)")
-        case .goToSearch(let index):
+        case .navigateToSearch(let index):
             print("GO TO SEARCH \(index)")
         }
     }
 }
 
 extension StoryDemoView: StoriesViewDataSource {
+    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel]?, Int) -> Void)) {
+        completion(Self.slides[index], 0)
+    }
+
     func storiesView(_ storiesView: StoriesView, storySlideAtIndexIsFavorite index: StorySlideIndex) -> Bool {
         favoriteIndexes.contains(where: { $0.slideIndex == index.slideIndex && $0.storyIndex == index.storyIndex })
     }
@@ -81,15 +81,18 @@ extension StoryDemoView: StoriesViewDataSource {
     }
 }
 
+// MARK: - Demo data
+
 extension StoryDemoView {
+    static var slides: [[StorySlideViewModel]] = [story1Slides, story2Slides]
+
     static var story1 = StoryViewModel(
-        slides: slides,
         title: "Pusefinn - Torget",
         iconImageUrl: "https://static.finncdn.no/_c/static/search-assets/newfrontier/bap/torget_general.png",
         openAdButtonTitle: "Se hele annonsen"
     )
 
-    static var slides: [StorySlideViewModel] = [
+    static var story1Slides: [StorySlideViewModel] = [
         StorySlideViewModel(
             imageUrl: "https://scontent-cph2-1.xx.fbcdn.net/v/t31.18172-8/11864788_10153534768223446_3480239839577516822_o.jpg?_nc_cat=109&ccb=1-5&_nc_sid=9267fe&_nc_ohc=ipbFGlm3XSgAX-lxXZi&_nc_ht=scontent-cph2-1.xx&oh=0464cc29097580e3699015ffea21d2ac&oe=61A85031",
             title: "Regnjakke",
@@ -111,13 +114,12 @@ extension StoryDemoView {
     ]
 
     static var story2 = StoryViewModel(
-        slides: slides2,
-        title: "Eiendommer til salgs",
+        title: "Eiendommer til salgs, pris fra 3 000 000 kr, i Norge, nye i dag",
         iconImageUrl: "https://static.finncdn.no/_c/static/search-assets/newfrontier/eiendom.png",
         openAdButtonTitle: "Se hele annonsen"
     )
 
-    static var slides2: [StorySlideViewModel] = [
+    static var story2Slides: [StorySlideViewModel] = [
         StorySlideViewModel(
             imageUrl: "https://images.finncdn.no/dynamic/1280w/2021/10/vertical-2/01/2/233/807/102_2001569597.jpg",
             title: "Småbruk - Tomt bestående av bolig, fjøs, garasje og uthus! Grønt og frodig.",

@@ -48,7 +48,6 @@ public final class CubeCollectionViewLayout: UICollectionViewFlowLayout {
         let itemMiddleOffset = attributes.center.x - collectionView.contentOffset.x
         let itemOriginOffset = attributes.frame.origin.x - collectionView.contentOffset.x
 
-        //attributes.size = collectionView.bounds.size
         attributes.startOffset = itemOriginOffset / attributes.frame.width
         attributes.middleOffset = itemMiddleOffset / distance - 0.5
         attributes.endOffset = (itemOriginOffset - collectionView.frame.width) / attributes.frame.width

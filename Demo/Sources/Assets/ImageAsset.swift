@@ -101,9 +101,6 @@ enum ImageAsset: String {
     case service
     case shopping
     case sold
-    case storiesCat
-    case storiesCatSky
-    case storiesCatTravel
     case travel
     case vehicles
     case virtualViewing
@@ -182,9 +179,6 @@ enum ImageAsset: String {
             .service,
             .shopping,
             .sold,
-            .storiesCat,
-            .storiesCatSky,
-            .storiesCatTravel,
             .travel,
             .vehicles,
             .virtualViewing,

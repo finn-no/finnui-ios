@@ -23,25 +23,37 @@ public class StoriesView: UIView {
         case dismiss
     }
 
+    // MARK: - Private properties
+
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CubeCollectionViewLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
-        collectionView.register(StoryCollectionViewCell.self)
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(StoryCollectionViewCell.self)
+        collectionView.backgroundColor = .black
         return collectionView
     }()
 
+    private weak var dataSource: StoriesViewDataSource?
+    private weak var delegate: StoriesViewDelegate?
     private var currentStoryIndex: Int = 0
     private var stories = [Story]()
     private var didSwipeToDismiss: Bool = false
 
-    public weak var dataSource: StoriesViewDataSource?
-    public weak var delegate: StoriesViewDelegate?
+    private var currentStoryCell: StoryCollectionViewCell? {
+        collectionView.cellForItem(at: IndexPath(item: currentStoryIndex, section: 0)) as? StoryCollectionViewCell
+    }
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    // MARK: - Init
+
+    public init(dataSource: StoriesViewDataSource, delegate: StoriesViewDelegate, withAutoLayout: Bool) {
+        self.dataSource = dataSource
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
@@ -49,14 +61,14 @@ public class StoriesView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var currentStoryCell: StoryCollectionViewCell? {
-        collectionView.cellForItem(at: IndexPath(item: currentStoryIndex, section: 0)) as? StoryCollectionViewCell
-    }
+    // MARK: - Setup
 
     private func setup() {
         addSubview(collectionView)
         collectionView.fillInSuperview()
     }
+
+    // MARK: - Public methods
 
     public func configure(with stories: [StoryViewModel]) {
         self.stories = stories.map({ Story(viewModel: $0) })
@@ -65,7 +77,7 @@ public class StoriesView: UIView {
 
     public func resumeStory() {
         if let currentStoryCell = currentStoryCell {
-            currentStoryCell.resumeStoryIfNecessary()
+            currentStoryCell.resumeStory()
         }
     }
 
@@ -83,12 +95,16 @@ public class StoriesView: UIView {
         }
     }
 
+    // MARK: - Private methods
+
     private func scroll(to index: Int, animated: Bool = true) {
         let indexPath = IndexPath(item: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
         currentStoryIndex = index
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension StoriesView: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -98,25 +114,30 @@ extension StoriesView: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeue(StoryCollectionViewCell.self, for: indexPath)
         guard let story = stories[safe: indexPath.item] else { return cell }
+
         cell.delegate = self
         cell.dataSource = self
         cell.configure(with: story, indexPath: indexPath)
 
         dataSource?.storiesView(self, slidesForStoryWithIndex: indexPath.item, completion: { [weak cell] slides, slideStartIndex in
             if let slides = slides {
-                cell?.configue(with: slides, startIndex: slideStartIndex, indexPath: indexPath)
+                if cell?.indexPath == indexPath {
+                    cell?.configue(with: slides, startIndex: slideStartIndex)
+                }
             } else {
-                // error handling in cell?
+                // TODO: Error handling?
             }
         })
         return cell
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension StoriesView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? StoryCollectionViewCell else { return }
-        cell.prepareForDisplayAndStartStoryIfNeeded()
+        cell.prepareForDisplay()
     }
 
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -134,20 +155,22 @@ extension StoriesView: UICollectionViewDelegate {
 
         let swipeDistanceToTriggerDismiss = scrollView.frame.size.width * 0.25
 
-        let didSwipeToDismissFromFirstCell =
+        let swipeToDismissFromFirstCell =
             currentStoryIndex == 0 &&
             scrollView.contentOffset.x < scrollView.frame.minX - swipeDistanceToTriggerDismiss
 
-        let didSwipeToDismissFromLastCell =
+        let swipeToDismissFromLastCell =
             currentStoryIndex == stories.count - 1 &&
             scrollView.contentOffset.x > collectionView.contentSize.width - collectionView.frame.size.width + swipeDistanceToTriggerDismiss
 
-        guard didSwipeToDismissFromFirstCell || didSwipeToDismissFromLastCell else { return }
+        guard swipeToDismissFromFirstCell || swipeToDismissFromLastCell else { return }
 
         didSwipeToDismiss = true
         delegate?.storiesView(self, didSelectAction: .dismiss)
     }
 }
+
+// MARK: - StoryCollectionViewCellDataSource
 
 extension StoriesView: StoryCollectionViewCellDataSource {
     func storyCollectionViewCell(_ cell: StoryCollectionViewCell, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void)) {
@@ -164,6 +187,8 @@ extension StoriesView: StoryCollectionViewCellDataSource {
     }
 }
 
+// MARK: - StoryCollectionViewCellDelegate
+
 extension StoriesView: StoryCollectionViewCellDelegate {
     func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didShowSlideWithIndex index: Int) {
         guard let storyIndex = cell.indexPath?.item else { return }
@@ -172,8 +197,8 @@ extension StoriesView: StoryCollectionViewCellDelegate {
 
     func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didSelect action: StoryCollectionViewCell.Action) {
         guard
-            collectionView.visibleCells.contains(cell),
-            let storyIndex = cell.indexPath?.item
+            let storyIndex = cell.indexPath?.item,
+            currentStoryIndex == storyIndex
         else { return }
 
         switch action {
@@ -189,10 +214,10 @@ extension StoriesView: StoryCollectionViewCellDelegate {
                 scroll(to: storyIndex - 1)
             }
 
-        case .goToSearch:
+        case .navigateToSearch:
             delegate?.storiesView(self, didSelectAction: .navigateToSearch(storyIndex: storyIndex))
 
-        case .openAd(let slideIndex):
+        case .navigateToAd(let slideIndex):
             let index = StorySlideIndex(storyIndex: storyIndex, slideIndex: slideIndex)
             delegate?.storiesView(self, didSelectAction: .navigateToAd(index: index))
 
