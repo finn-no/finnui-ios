@@ -22,7 +22,7 @@ class QuestionFormContainerView: UIView {
         withAutoLayout: true
     )
 
-    private lazy var dislamerLabel: Label = {
+    private lazy var disclaimerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
         label.numberOfLines = 0
         label.textColor = .textSecondary
@@ -50,13 +50,13 @@ class QuestionFormContainerView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        stackView.addArrangedSubviews([questionFormView, userContactMethodView, dislamerLabel, submitButton])
+        stackView.addArrangedSubviews([questionFormView, userContactMethodView, disclaimerLabel, submitButton])
         addSubview(stackView)
         stackView.fillInSuperview()
 
         questionFormView.configure(with: viewModel.questionsTitle, questions: viewModel.questions)
 
-        dislamerLabel.text = viewModel.submitDisclaimer
+        disclaimerLabel.text = viewModel.submitDisclaimer
         submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
     }
 
