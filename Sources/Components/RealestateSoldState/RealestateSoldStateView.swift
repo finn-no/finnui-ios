@@ -22,7 +22,7 @@ public class RealestateSoldStateView: UIView {
     private let viewModel: RealestateSoldStateModel
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
-    private lazy var questionFormView = QuestionFormContainerView(viewModel: viewModel.questionForm, delegate: self, withAutoLayout: true)
+    private lazy var questionFormView = QuestionFormContainerView(viewModel: viewModel.questionForm, styling: viewModel.styling, delegate: self, withAutoLayout: true)
     private lazy var agentProfileView = AgentProfileView(withAutoLayout: true)
     private lazy var companyProfileView = CompanyProfileView(delegate: self, withAutoLayout: true)
 
@@ -41,6 +41,8 @@ public class RealestateSoldStateView: UIView {
     // MARK: - Setup
 
     private func setup() {
+        backgroundColor = viewModel.styling.backgroundColor
+
         stackView.addArrangedSubviews([questionFormView, agentProfileView, companyProfileView])
         addSubview(stackView)
         stackView.fillInSuperview(insets: UIEdgeInsets(top: 0, left: .spacingM, bottom: 0, right: -.spacingM))
