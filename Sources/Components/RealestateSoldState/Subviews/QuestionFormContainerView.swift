@@ -10,17 +10,11 @@ class QuestionFormContainerView: UIView {
     // MARK: - Private properties
 
     private let viewModel: QuestionFormViewModel
+    private var userContactMethodView: UserContactInformationView?
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
     private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
 
-    private lazy var userContactMethodView = UserContactInformationView(
-        title: viewModel.contactMethodTitle,
-        contactMethodEmail: viewModel.contactMethodEmail,
-        contactMethodPhone: viewModel.contactMethodPhone,
-        delegate: self,
-        withAutoLayout: true
-    )
 
     private lazy var disclaimerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
@@ -50,7 +44,18 @@ class QuestionFormContainerView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        stackView.addArrangedSubviews([questionFormView, userContactMethodView, disclaimerLabel, submitButton])
+        if let contactMethod = viewModel.contactMethod {
+            let userContactMethodView = UserContactInformationView(
+                viewModel: contactMethod,
+                delegate: self,
+                withAutoLayout: true
+            )
+            self.userContactMethodView = userContactMethodView
+            stackView.addArrangedSubviews([questionFormView, userContactMethodView, disclaimerLabel, submitButton])
+        } else {
+            stackView.addArrangedSubviews([questionFormView, disclaimerLabel, submitButton])
+        }
+
         addSubview(stackView)
         stackView.fillInSuperview()
 
@@ -63,13 +68,14 @@ class QuestionFormContainerView: UIView {
     // MARK: - Private methods
 
     private func updateSubmitButtonState() {
-        submitButton.isEnabled = userContactMethodView.isInputValid && questionFormView.hasSelectedQuestions
+        submitButton.isEnabled = (userContactMethodView?.isInputValid ?? true) && questionFormView.hasSelectedQuestions
     }
 
     // MARK: - Actions
 
     @objc private func submitButtonTapped() {
         guard
+            let userContactMethodView = userContactMethodView,
             let contactMethod = userContactMethodView.selectedContactMethod,
             let contactMethodValue = contactMethod.value
         else { return }
