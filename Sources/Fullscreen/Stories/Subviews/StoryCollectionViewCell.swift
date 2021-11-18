@@ -3,6 +3,7 @@ import UIKit
 import FinniversKit
 
 protocol StoryCollectionViewCellDataSource: AnyObject {
+    var allowPredownloadOfImages: Bool { get }
     func storyCollectionViewCell(_ storyCell: StoryCollectionViewCell, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
     func storyCollectionViewCell(_ storyCell: StoryCollectionViewCell, slideAtIndexIsFavorite index: Int) -> Bool
 }
@@ -133,10 +134,10 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private var wasPreparedForDisplay: Bool = false
     private var slides = [StorySlideViewModel]()
     private var story: Story?
-    private var imageUrls = [String?]()
     private let storyIconSize: CGFloat = 32
     private let priceLabelHeight: CGFloat = 32
     private let iconSize: CGFloat = 44
+    private var currentImageUrl: String?
 
     private var nextIndex: Int? {
         currentIndex + 1 < slides.count ? currentIndex + 1 : nil
@@ -144,10 +145,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     private var previousIndex: Int? {
         currentIndex - 1 >= 0 ? currentIndex - 1 : nil
-    }
-
-    private var currentImageUrl: String? {
-        imageUrls[safe: currentIndex]
     }
 
     // MARK: - Internal properties
@@ -264,12 +261,12 @@ class StoryCollectionViewCell: UICollectionViewCell {
         storyIconImageView.image = nil
         story = nil
         slides = []
-        imageUrls = []
         indexPath = nil
         wasPreparedForDisplay = false
         currentIndex = 0
         delegate = nil
         dataSource = nil
+        currentImageUrl = nil
     }
 
     // MARK: - Internal methods
@@ -291,7 +288,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     func configue(with slides: [StorySlideViewModel], startIndex: Int) {
         self.slides = slides
-        self.imageUrls = slides.map({ $0.imageUrl })
 
         showSlide(at: startIndex)
         progressView.configure(withNumberOfProgresses: slides.count)
@@ -355,54 +351,43 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
         slideTitleLabel.text = slide.title
         slideDetailLabel.text = slide.detailText
-
         priceLabel.text = slide.price
         priceContainerView.isHidden = slide.price == nil
+
         updateFavoriteButtonState()
-
-        if let imageUrl = slide.imageUrl {
-            if let image = story?.images[imageUrl] {
-                imageView.configure(withImage: image)
-            } else {
-                imageView.image = nil
-                downloadImage(withUrl: imageUrl)
-            }
-        } else {
-            imageView.image = UIImage(named: .noImage)
-        }
-
-        predownloadNextImageIfNeeded()
+        configureImage(forSlide: slide)
+        predownloadNextImageIfPossible()
 
         delegate?.storyCollectionViewCell(self, didShowSlideWithIndex: index)
     }
 
-    private func predownloadNextImageIfNeeded() {
-        guard
-            let nextIndex = nextIndex,
-            let imageUrl = imageUrls[safe: nextIndex]
-        else { return }
+    private func configureImage(forSlide slide: StorySlideViewModel) {
+        currentImageUrl = slide.imageUrl
+
+        guard let imageUrl = slide.imageUrl, !imageUrl.isEmpty else {
+            imageView.image = UIImage(named: .noImage)
+            return
+        }
 
         downloadImage(withUrl: imageUrl)
     }
 
-    private func downloadImage(withUrl imageUrl: String) {
+    private func predownloadNextImageIfPossible() {
         guard
-            let story = story,
-            !story.images.keys.contains(imageUrl)
+            dataSource?.allowPredownloadOfImages ?? false,
+            let nextIndex = nextIndex,
+            let nextImageUrl = slides[safe: nextIndex]?.imageUrl,
+            !nextImageUrl.isEmpty
         else { return }
 
-        story.images[imageUrl] = nil
+        downloadImage(withUrl: nextImageUrl)
+    }
 
+    private func downloadImage(withUrl imageUrl: String) {
         dataSource?.storyCollectionViewCell(self, loadImageWithPath: imageUrl, imageWidth: UIScreen.main.bounds.width, completion: { [weak self] image in
             guard let self = self else { return }
             if imageUrl == self.currentImageUrl {
                 self.imageView.configure(withImage: image)
-            }
-            if let image = image {
-                self.story?.images[imageUrl] = image
-            } else {
-                // to enable a retry next time the slide is shown
-                self.story?.images.removeValue(forKey: imageUrl)
             }
         })
     }

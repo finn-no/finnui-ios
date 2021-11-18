@@ -2,6 +2,9 @@ import Foundation
 import UIKit
 
 public protocol StoriesViewDataSource: AnyObject {
+    /// If StoriesViewDataSource caches loaded images, StoriesView will prefetch images using loadImageWithPath
+    /// before the story is shown. And then call it a second time to retrieve the cached image.
+    var cachesLoadedImages: Bool { get }
     func storiesView(_ storiesView: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
     func storiesView(_ storiesView: StoriesView, storySlideAtIndexIsFavorite index: StorySlideIndex) -> Bool
     func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel]?, Int) -> Void))
@@ -173,11 +176,23 @@ extension StoriesView: UICollectionViewDelegate {
 // MARK: - StoryCollectionViewCellDataSource
 
 extension StoriesView: StoryCollectionViewCellDataSource {
-    func storyCollectionViewCell(_ cell: StoryCollectionViewCell, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void)) {
+    var allowPredownloadOfImages: Bool {
+        dataSource?.cachesLoadedImages ?? false
+    }
+
+    func storyCollectionViewCell(
+        _ cell: StoryCollectionViewCell,
+        loadImageWithPath imagePath: String,
+        imageWidth: CGFloat,
+        completion: @escaping ((UIImage?) -> Void)
+    ) {
         dataSource?.storiesView(self, loadImageWithPath: imagePath, imageWidth: imageWidth, completion: completion)
     }
 
-    func storyCollectionViewCell(_ cell: StoryCollectionViewCell, slideAtIndexIsFavorite index: Int) -> Bool {
+    func storyCollectionViewCell(
+        _ cell: StoryCollectionViewCell,
+        slideAtIndexIsFavorite index: Int
+    ) -> Bool {
         guard
             let storyIndex = cell.indexPath?.item,
             let dataSource = dataSource
