@@ -40,19 +40,17 @@ class UserContactInformationView: UIView {
     // MARK: - Init
 
     init(
-        title: String,
-        contactMethodEmail: UserContactMethodSelectionModel.Email,
-        contactMethodPhone: UserContactMethodSelectionModel.Phone,
+        viewModel: QuestionFormViewModel.ContactMethod,
         delegate: UserContactInformationViewDelegate,
         withAutoLayout: Bool
     ) {
-        self.contactMethodEmail = contactMethodEmail
-        self.contactMethodPhone = contactMethodPhone
+        contactMethodEmail = viewModel.emailMethod
+        contactMethodPhone = viewModel.phoneMethod
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
 
-        setup(title: title)
+        setup(title: viewModel.title)
     }
 
     required init?(coder: NSCoder) { fatalError() }
