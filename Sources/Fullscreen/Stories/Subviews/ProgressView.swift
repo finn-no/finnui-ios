@@ -14,13 +14,13 @@ class ProgressView: UIView {
     }()
 
     private var currentIndex: Int = 0
-    private var progressViews = [UIProgressView]()
+    private var progressViews = [ProgressBarView]()
     private var timer: Timer?
     private var durationPerProgressInSeconds: Double = 5
     private let frameRate: CGFloat = 60
-    private var stepSize: Double { 1 / (frameRate * durationPerProgressInSeconds) }
+    private var stepSize: CGFloat { 1 / (frameRate * durationPerProgressInSeconds) }
 
-    private var currentProgressView: UIProgressView? {
+    private var currentProgressBarView: ProgressBarView? {
         progressViews[safe: currentIndex]
     }
 
@@ -52,7 +52,7 @@ class ProgressView: UIView {
         reset()
 
         while progressViews.count < numberOfProgresses {
-            let progressView = createProgressView()
+            let progressView = ProgressBarView()
             progressViews.append(progressView)
             stackView.addArrangedSubview(progressView)
         }
@@ -87,8 +87,8 @@ class ProgressView: UIView {
         pauseAnimations()
         currentIndex = index
 
-        progressViews.prefix(upTo: index).forEach({ $0.progress = 1 })
-        progressViews.suffix(from: index).forEach({ $0.progress = 0 })
+        progressViews.prefix(upTo: index).forEach({ $0.setProgress(1) })
+        progressViews.suffix(from: index).forEach({ $0.setProgress(0) })
 
         if startAnimations {
             startTimer()
@@ -103,12 +103,11 @@ class ProgressView: UIView {
     }
 
     @objc private func incrementProgress() {
-        guard let progressView = currentProgressView else { return }
+        guard let progressBarView = currentProgressBarView else { return }
 
-        let progress = progressView.progress + Float(stepSize)
-        progressView.setProgress(progress, animated: true)
+        progressBarView.setProgress(progressBarView.progress + stepSize)
 
-        if progressView.progress == 1 {
+        if progressBarView.progress == 1 {
             finishProgressAndContinueIfNext()
         }
     }
@@ -116,7 +115,7 @@ class ProgressView: UIView {
     private func finishProgressAndContinueIfNext() {
         timer?.invalidate()
 
-        if currentProgressView == progressViews.last {
+        if currentProgressBarView == progressViews.last {
             delegate?.progressViewDidFinishProgress(self, isLastProgress: true)
             return
         }
@@ -124,13 +123,5 @@ class ProgressView: UIView {
         currentIndex += 1
         delegate?.progressViewDidFinishProgress(self, isLastProgress: false)
         startTimer()
-    }
-
-    private func createProgressView() -> UIProgressView {
-        let progressView = UIProgressView(withAutoLayout: true)
-        progressView.progressTintColor = .milk
-        progressView.trackTintColor = .milk.withAlphaComponent(0.5)
-        progressView.dropShadow(color: .black, opacity: 0.2, offset: .zero, radius: 5)
-        return progressView
     }
 }
