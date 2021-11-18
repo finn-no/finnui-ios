@@ -102,6 +102,17 @@ class ProgressView: UIView {
         timer = Timer.scheduledTimer(timeInterval: 1/frameRate, target: self, selector: #selector(incrementProgress), userInfo: nil, repeats: true)
     }
 
+    @objc private func incrementProgress() {
+        guard let progressView = currentProgressView else { return }
+
+        let progress = progressView.progress + Float(stepSize)
+        progressView.setProgress(progress, animated: true)
+
+        if progressView.progress == 1 {
+            finishProgressAndContinueIfNext()
+        }
+    }
+
     private func finishProgressAndContinueIfNext() {
         timer?.invalidate()
 
@@ -113,17 +124,6 @@ class ProgressView: UIView {
         currentIndex += 1
         delegate?.progressViewDidFinishProgress(self, isLastProgress: false)
         startTimer()
-    }
-
-    @objc private func incrementProgress() {
-        guard let progressView = currentProgressView else { return }
-
-        let progress = progressView.progress + Float(stepSize)
-        progressView.setProgress(progress, animated: true)
-
-        if progressView.progress == 1 {
-            finishProgressAndContinueIfNext()
-        }
     }
 
     private func createProgressView() -> UIProgressView {
