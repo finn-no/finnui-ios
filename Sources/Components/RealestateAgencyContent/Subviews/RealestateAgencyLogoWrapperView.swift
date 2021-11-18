@@ -5,8 +5,8 @@ class RealestateAgencyLogoWrapperView: UIView {
 
     // MARK: - Private properties
 
-    private let imageHeight: CGFloat = 32
-    private lazy var logoImageHeightConstraint = logoImageView.heightAnchor.constraint(equalToConstant: imageHeight)
+    private lazy var logoImageHeight: CGFloat = traitCollection.logoImageHeight
+    private lazy var logoImageHeightConstraint = logoImageView.heightAnchor.constraint(equalToConstant: logoImageHeight)
     private lazy var logoImageWidthConstraint = logoImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 150)
 
     private lazy var logoImageView: RemoteImageView = {
@@ -52,10 +52,23 @@ class RealestateAgencyLogoWrapperView: UIView {
         logoImageView.loadImage(for: viewModel.logoUrl, imageWidth: .zero, modify: { [weak self] image in
             if let self = self, let image = image {
                 let heightWidthRatio = image.size.width / image.size.height
-                self.logoImageWidthConstraint.constant = self.imageHeight * heightWidthRatio
+                self.logoImageWidthConstraint.constant = self.logoImageHeight * heightWidthRatio
             }
 
             return image
         })
+    }
+}
+
+// MARK: - Private extensions
+
+private extension UITraitCollection {
+    var logoImageHeight: CGFloat {
+        switch horizontalSizeClass {
+        case .regular:
+            return 32
+        default:
+            return 24
+        }
     }
 }
