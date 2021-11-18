@@ -3,6 +3,10 @@ import FinniversKit
 
 protocol QuestionFormContainerViewDelegate: AnyObject {
     func questionFormContainerView(_ view: QuestionFormContainerView, didSubmitForm form: RealestateSoldStateQuestionFormSubmit)
+    func questionFormContainerViewDidSubmitFormWithoutContactInformation(
+        _ view: QuestionFormContainerView,
+        questionModels: [RealestateSoldStateQuestionModel]
+    )
 }
 
 class QuestionFormContainerView: UIView {
@@ -78,7 +82,10 @@ class QuestionFormContainerView: UIView {
             let userContactMethodView = userContactMethodView,
             let contactMethod = userContactMethodView.selectedContactMethod,
             let contactMethodValue = contactMethod.value
-        else { return }
+        else {
+            delegate?.questionFormContainerViewDidSubmitFormWithoutContactInformation(self, questionModels: viewModel.questions)
+            return
+        }
 
         let formSubmit = RealestateSoldStateQuestionFormSubmit(
             contactMethodIdentifier: contactMethod.identifier,
