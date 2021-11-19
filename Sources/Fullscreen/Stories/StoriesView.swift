@@ -7,7 +7,7 @@ public protocol StoriesViewDataSource: AnyObject {
     var cachesLoadedImages: Bool { get }
     func storiesView(_ storiesView: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
     func storiesView(_ storiesView: StoriesView, storySlideAtIndexIsFavorite index: StorySlideIndex) -> Bool
-    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel]?, Int) -> Void))
+    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel], Int) -> Void))
 }
 
 public protocol StoriesViewDelegate: AnyObject {
@@ -123,13 +123,8 @@ extension StoriesView: UICollectionViewDataSource {
         cell.configure(with: story, indexPath: indexPath)
 
         dataSource?.storiesView(self, slidesForStoryWithIndex: indexPath.item, completion: { [weak cell] slides, slideStartIndex in
-            if let slides = slides {
-                if cell?.indexPath == indexPath {
-                    cell?.configue(with: slides, startIndex: slideStartIndex)
-                }
-            } else {
-                // TODO: Error handling?
-            }
+            guard !slides.isEmpty, cell?.indexPath == indexPath else { return }
+            cell?.configue(with: slides, startIndex: slideStartIndex)
         })
         return cell
     }

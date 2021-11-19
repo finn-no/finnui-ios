@@ -19,6 +19,7 @@ class ProgressBarView: UIView {
 
     private lazy var progressWidthConstraint: NSLayoutConstraint = progressView.widthAnchor.constraint(equalToConstant: 0)
     private(set) var progress: CGFloat
+    private var lastFrameSize: CGSize = .zero
 
     // MARK: - Init
 
@@ -50,11 +51,25 @@ class ProgressBarView: UIView {
         ])
     }
 
+    // MARK: - Overrides
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if frame.size != lastFrameSize {
+            lastFrameSize = frame.size
+            updateProgressBarWidth()
+        }
+    }
+
     // MARK: - Internal methods
 
     func setProgress(_ progress: CGFloat) {
         guard self.progress != progress else { return }
         self.progress = min(progress, 1)
+        updateProgressBarWidth()
+    }
+
+    private func updateProgressBarWidth() {
         progressWidthConstraint.constant = frame.width * self.progress
     }
 }
