@@ -134,7 +134,8 @@ private extension RealestateSoldStateModel {
         RealestateSoldStateModel(
             agentProfile: .demoModel,
             questionForm: .demoModel,
-            companyProfile: .demoModel
+            companyProfile: .demoModel,
+            styling: .demoStyle
         )
     }
 
@@ -142,7 +143,8 @@ private extension RealestateSoldStateModel {
         RealestateSoldStateModel(
             agentProfile: .demoModel,
             questionForm: .demoModel.copyWithoutContactInfo(),
-            companyProfile: .demoModel
+            companyProfile: .demoModel,
+            styling: .demoStyle
         )
     }
 }
@@ -230,6 +232,28 @@ private extension LinkButtonViewModel {
             isExternal: false,
             buttonStyle: Self.demoStyle,
             buttonSize: .small
+        )
+    }
+}
+
+private extension RealestateSoldStateModel.Styling {
+    static var demoStyle: RealestateSoldStateModel.Styling {
+        .init(
+            textColor: UIColor(hex: "#464646"),
+            logoBackgroundColor: UIColor(hex: "#FFFFFF"),
+            backgroundColor: UIColor(hex: "#F6F8FB"),
+            ctaButtonStyle: ButtonStyle(
+                textColor: UIColor(hex: "#FFFFFF"),
+                backgroundColor: UIColor(hex: "#225B9F"),
+                backgroundActiveColor: UIColor(hex: "#225B9F"),
+                borderColor: UIColor(hex: "#225B9F")
+            ),
+            secondayButtonStyle: ButtonStyle(
+                textColor: UIColor(hex: "#FFFFFF"),
+                backgroundColor: UIColor(hex: "#225B9F"),
+                backgroundActiveColor: UIColor(hex: "#225B9F"),
+                borderColor: UIColor(hex: "#225B9F")
+            )
         )
     }
 }
