@@ -58,7 +58,7 @@ public class RealestateSoldStateView: UIView {
 
         stackView.addArrangedSubviews([questionFormView, agentProfileView, companyProfileView])
         addSubview(stackView)
-        stackView.fillInSuperview(insets: UIEdgeInsets(top: 0, left: .spacingM, bottom: 0, right: -.spacingM))
+        stackView.fillInSuperview(margin: .spacingM)
 
         agentProfileView.configure(with: viewModel.agentProfile, styling: viewModel.styling, remoteImageViewDataSource: remoteImageViewDataSource)
     }
