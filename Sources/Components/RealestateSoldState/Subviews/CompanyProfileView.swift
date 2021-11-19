@@ -57,6 +57,10 @@ class CompanyProfileView: UIView {
     // MARK: - Setup
 
     private func setup(remoteImageViewDataSource: RemoteImageViewDataSource?) {
+        clipsToBounds = true
+        layer.borderColor = UIColor.companyProfileBorder.cgColor
+        hairlineView.backgroundColor = .companyProfileBorder
+
         addSubview(logoHeaderView)
         addSubview(hairlineView)
         addSubview(sloganLabel)
@@ -90,7 +94,7 @@ class CompanyProfileView: UIView {
         logoHeaderView.configure(styling: styling, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
 
         sloganLabel.text = viewModel.slogan
-        buttonListView.configure(with: viewModel.buttonLinks)
+        buttonListView.configure(with: viewModel.buttonLinks.map { $0.overrideStyle(using: styling) })
         ctaButton.setTitle(viewModel.ctaButtonTitle, for: .normal)
     }
 
@@ -100,8 +104,6 @@ class CompanyProfileView: UIView {
         super.layoutSubviews()
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = UIColor.sardine.cgColor
-        hairlineView.backgroundColor = .sardine
     }
 
     // MARK: - Actions
@@ -116,5 +118,31 @@ class CompanyProfileView: UIView {
 extension CompanyProfileView: LinkButtonListViewDelegate {
     func linksListView(_ view: LinkButtonListView, didTapButtonWithIdentifier identifier: String?, url: URL) {
         delegate?.companyProfileView(self, didTapButtonWithIdentifier: identifier, url: url)
+    }
+}
+
+// MARK: - Private extensions
+
+private extension UIColor {
+    static var companyProfileBorder = UIColor(hex: "#C3CCD9")
+}
+
+private extension LinkButtonViewModel {
+    func overrideStyle(using styling: RealestateSoldStateModel.Styling) -> LinkButtonViewModel {
+        guard let buttonStyle = buttonStyle else { return self }
+
+        let newButtonStyle = buttonStyle.overrideStyle(
+            textColor: styling.textColor
+        )
+
+        return LinkButtonViewModel(
+            buttonIdentifier: buttonIdentifier,
+            buttonTitle: buttonTitle,
+            subtitle: subtitle,
+            linkUrl: linkUrl,
+            isExternal: isExternal,
+            buttonStyle: newButtonStyle,
+            buttonSize: buttonSize
+        )
     }
 }
