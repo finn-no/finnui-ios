@@ -56,7 +56,7 @@ extension StoryDemoView: StoriesViewDataSource {
         true
     }
 
-    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel]?, Int) -> Void)) {
+    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel], Int) -> Void)) {
         completion(Self.slides[index], 0)
     }
 

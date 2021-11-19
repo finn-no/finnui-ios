@@ -17,8 +17,8 @@ class ProgressView: UIView {
     private var progressViews = [ProgressBarView]()
     private var timer: Timer?
     private var durationPerProgressInSeconds: Double = 5
-    private let frameRate: CGFloat = 60
-    private var stepSize: CGFloat { 1 / (frameRate * durationPerProgressInSeconds) }
+    private let frameRate: Double = 60
+    private var stepSize: Double { 1 / (frameRate * durationPerProgressInSeconds) }
 
     private var currentProgressBarView: ProgressBarView? {
         progressViews[safe: currentIndex]
@@ -105,7 +105,7 @@ class ProgressView: UIView {
     @objc private func incrementProgress() {
         guard let progressBarView = currentProgressBarView else { return }
 
-        progressBarView.setProgress(progressBarView.progress + stepSize)
+        progressBarView.setProgress(progressBarView.progress + CGFloat(stepSize))
 
         if progressBarView.progress == 1 {
             finishProgressAndContinueIfNext()
