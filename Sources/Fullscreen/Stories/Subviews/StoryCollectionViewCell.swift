@@ -130,14 +130,13 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Private properties
 
-    private var currentIndex = 0
-    private var wasPreparedForDisplay: Bool = false
     private var slides = [StorySlideViewModel]()
-    private var story: Story?
+    private var currentIndex = 0
+    private var currentImageUrl: String?
+    private var wasPreparedForDisplay: Bool = false
     private let storyIconSize: CGFloat = 32
     private let priceLabelHeight: CGFloat = 32
     private let iconSize: CGFloat = 44
-    private var currentImageUrl: String?
 
     private var nextIndex: Int? {
         currentIndex + 1 < slides.count ? currentIndex + 1 : nil
@@ -259,7 +258,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
         imageView.backgroundColor = .storyDefaultBackgrondColor
         imageView.image = nil
         storyIconImageView.image = nil
-        story = nil
         slides = []
         indexPath = nil
         wasPreparedForDisplay = false
@@ -271,15 +269,13 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Internal methods
 
-    func configure(with story: Story, indexPath: IndexPath) {
-        self.story = story
+    func configure(with story: StoryViewModel, indexPath: IndexPath) {
         self.indexPath = indexPath
 
-        let viewModel = story.viewModel
-        storyTitleLabel.text = viewModel.title
-        openAdButton.setTitle(viewModel.openAdButtonTitle, for: .normal)
+        storyTitleLabel.text = story.title
+        openAdButton.setTitle(story.openAdButtonTitle, for: .normal)
 
-        if let storyIconImageUrl = viewModel.iconImageUrl {
+        if let storyIconImageUrl = story.iconImageUrl {
             dataSource?.storyCollectionViewCell(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconSize, completion: { [weak self] image in
                 self?.storyIconImageView.image = image
             })
@@ -347,8 +343,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
         guard let slide = slides[safe: index] else { return }
 
         currentIndex = index
-        story?.slideIndex = currentIndex
-
         slideTitleLabel.text = slide.title
         slideDetailLabel.text = slide.detailText
         priceLabel.text = slide.price

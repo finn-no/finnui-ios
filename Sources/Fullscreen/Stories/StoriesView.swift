@@ -43,7 +43,7 @@ public class StoriesView: UIView {
     private weak var dataSource: StoriesViewDataSource?
     private weak var delegate: StoriesViewDelegate?
     private var currentStoryIndex: Int = 0
-    private var stories = [Story]()
+    private var stories = [StoryViewModel]()
     private var didSwipeToDismiss: Bool = false
 
     private var currentStoryCell: StoryCollectionViewCell? {
@@ -74,7 +74,7 @@ public class StoriesView: UIView {
     // MARK: - Public methods
 
     public func configure(with stories: [StoryViewModel]) {
-        self.stories = stories.map({ Story(viewModel: $0) })
+        self.stories = stories
         collectionView.reloadData()
     }
 
