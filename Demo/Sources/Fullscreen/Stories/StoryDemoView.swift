@@ -5,6 +5,7 @@ import FinnUI
 class StoryDemoView: UIView {
     private lazy var storiesView: StoriesView = StoriesView(dataSource: self, delegate: self, withAutoLayout: true)
     private var favoriteIndexes = [StorySlideIndex]()
+    private var imageCache = [String: UIImage]()
 
     // MARK: - Init
 
@@ -52,7 +53,7 @@ extension StoryDemoView: StoriesViewDelegate {
 
 extension StoryDemoView: StoriesViewDataSource {
     var cachesLoadedImages: Bool {
-        false
+        true
     }
 
     func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel]?, Int) -> Void)) {
@@ -64,6 +65,11 @@ extension StoryDemoView: StoriesViewDataSource {
     }
 
     func storiesView(_ storiesView: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void)) {
+        if let cachedImage = imageCache[imagePath] {
+            completion(cachedImage)
+            return
+        }
+
         guard let url = URL(string: imagePath) else {
             completion(nil)
             return
@@ -74,6 +80,7 @@ extension StoryDemoView: StoriesViewDataSource {
             usleep(50_000)
             DispatchQueue.main.async {
                 if let data = data, let image = UIImage(data: data) {
+                    self.imageCache[imagePath] = image
                     completion(image)
                 } else {
                     completion(nil)

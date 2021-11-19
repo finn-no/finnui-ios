@@ -369,6 +369,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
             return
         }
 
+        imageView.image = nil
         downloadImage(withUrl: imageUrl)
     }
 
