@@ -31,6 +31,7 @@ class UserContactInformationView: UIView {
     private lazy var titleLabel = Label(style: .title3Strong, withAutoLayout: true)
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var contactMethodStackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
+    private lazy var contactMethodTitleLabel = Label(style: .captionStrong, withAutoLayout: true)
     private lazy var emailAddressView = EmailAddressView(viewModel: contactMethodEmail, styling: styling, withAutoLayout: true)
     private lazy var phoneNumberTextField = TextField(viewModel: contactMethodPhone, delegate: self)
 
@@ -66,9 +67,10 @@ class UserContactInformationView: UIView {
         emailAddressView.isHidden = true
         phoneNumberTextField.isHidden = true
 
-        contentStackView.addArrangedSubviews([titleLabel, contactMethodStackView, emailAddressView, phoneNumberTextField])
+        contentStackView.addArrangedSubviews([titleLabel, contactMethodStackView, contactMethodTitleLabel, emailAddressView, phoneNumberTextField])
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
+        contentStackView.setCustomSpacing(.spacingXS, after: contactMethodTitleLabel)
 
         titleLabel.text = title
 
@@ -80,6 +82,7 @@ class UserContactInformationView: UIView {
             contactMethodModels.first?.isSelected = true
         }
 
+        contactMethodTitleLabel.textColor = styling.textColor
         let contactMethodViews = contactMethodModels.map { UserContactMethodSelectionView(viewModel: $0, styling: styling, delegate: self) }
         contactMethodStackView.addArrangedSubviews(contactMethodViews)
 
@@ -90,6 +93,8 @@ class UserContactInformationView: UIView {
     // MARK: - Private methods
 
     private func presentSelectedContactMethodView() {
+        contactMethodTitleLabel.text = selectedContactMethod?.name
+
         if selectedContactMethod is UserContactMethodSelectionModel.Email {
             phoneNumberTextField.isHidden = true
             emailAddressView.isHidden = false
@@ -138,9 +143,7 @@ private extension TextField {
         translatesAutoresizingMaskIntoConstraints = false
         text = viewModel.value
         self.delegate = delegate
-
-        // I have no idea why, but this doesn't work if set within the init. I need to defer this call.
-        defer { placeholderText = viewModel.textFieldPlaceholder }
+        textField.placeholder = viewModel.textFieldPlaceholder
     }
 }
 
@@ -158,10 +161,9 @@ private class EmailAddressView: UIView {
 
     private let viewModel: UserContactMethodSelectionModel.Email
     private let styling: RealestateSoldStateModel.Styling
-    private lazy var titleLabel = Label(style: .captionStrong, withAutoLayout: true)
     private lazy var emailLabel = Label(style: .body, withAutoLayout: true)
     private lazy var dislaimerLabel = Label(style: .body, withAutoLayout: true)
-    private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
+    private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
 
     // MARK: - Init
 
@@ -178,14 +180,12 @@ private class EmailAddressView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        titleLabel.text = viewModel.name
         emailLabel.text = viewModel.value
         dislaimerLabel.text = viewModel.disclaimerText
 
-        [titleLabel, emailLabel, dislaimerLabel].forEach { $0.textColor = styling.textColor }
+        [emailLabel, dislaimerLabel].forEach { $0.textColor = styling.textColor }
 
-        stackView.addArrangedSubviews([titleLabel, emailLabel, dislaimerLabel])
-        stackView.setCustomSpacing(.spacingS, after: emailLabel)
+        stackView.addArrangedSubviews([emailLabel, dislaimerLabel])
         addSubview(stackView)
         stackView.fillInSuperview()
     }
