@@ -132,6 +132,7 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
 private extension RealestateSoldStateModel {
     static var demoModel: RealestateSoldStateModel {
         RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
             agentProfile: .demoModel,
             questionForm: .demoModel,
             companyProfile: .demoModel,
@@ -141,6 +142,7 @@ private extension RealestateSoldStateModel {
 
     static var demoModelWithoutContactInfo: RealestateSoldStateModel {
         RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
             agentProfile: .demoModel,
             questionForm: .demoModel.copyWithoutContactInfo(),
             companyProfile: .demoModel,

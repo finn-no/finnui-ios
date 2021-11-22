@@ -24,6 +24,12 @@ public class RealestateSoldStateView: UIView {
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var agentProfileView = AgentProfileView(withAutoLayout: true)
 
+    private lazy var titleLabel: Label = {
+        let label = Label(style: .title2, withAutoLayout: true)
+        label.numberOfLines = 0
+        return label
+    }()
+
     private lazy var questionFormView = QuestionFormContainerView(
         viewModel: viewModel.questionForm,
         styling: viewModel.styling,
@@ -55,10 +61,13 @@ public class RealestateSoldStateView: UIView {
 
     private func setup() {
         backgroundColor = viewModel.styling.backgroundColor
+        titleLabel.text = viewModel.title
+        titleLabel.textColor = viewModel.styling.textColor
 
-        stackView.addArrangedSubviews([questionFormView, agentProfileView, companyProfileView])
+        stackView.addArrangedSubviews([titleLabel, questionFormView, agentProfileView, companyProfileView])
         addSubview(stackView)
         stackView.fillInSuperview(margin: .spacingM)
+        stackView.setCustomSpacing(.spacingL, after: titleLabel)
 
         agentProfileView.configure(with: viewModel.agentProfile, styling: viewModel.styling, remoteImageViewDataSource: remoteImageViewDataSource)
     }
