@@ -72,6 +72,7 @@ enum ImageAsset: String {
     case splashLetters3
     case splashLetters4
     case splashLogo
+    case storyPlaceholder
     case tagMini
     case trashcan
     case verified
@@ -119,6 +120,7 @@ enum ImageAsset: String {
             .splashLetters3,
             .splashLetters4,
             .splashLogo,
+            .storyPlaceholder,
             .tagMini,
             .trashcan,
             .verified,

@@ -359,7 +359,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         currentImageUrl = slide.imageUrl
 
         guard let imageUrl = slide.imageUrl, !imageUrl.isEmpty else {
-            imageView.image = UIImage(named: .noImage)
+            imageView.configureWithPlaceholderImage()
             return
         }
 

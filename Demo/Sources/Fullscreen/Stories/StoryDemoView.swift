@@ -23,7 +23,7 @@ class StoryDemoView: UIView {
     private func setup() {
         addSubview(storiesView)
         storiesView.fillInSuperview()
-        storiesView.configure(with: [Self.story1, Self.story2])
+        storiesView.configure(with: [Self.story1, Self.story2], startIndex: 0)
     }
 }
 
@@ -111,7 +111,7 @@ extension StoryDemoView {
             price: "1500 kr"
         ),
         StorySlideViewModel(
-            imageUrl: "https://yt3.ggpht.com/ytc/AKedOLTYio64rqGJoLKqcaHBKtVJYohlmsVSzXOcBpG6oA=s900-c-k-c0x00ffffff-no-rj",
+            imageUrl: nil,
             title: "Katt",
             detailText: "4 t siden, Tromsø",
             price: "20 kr"

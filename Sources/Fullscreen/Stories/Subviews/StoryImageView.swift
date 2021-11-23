@@ -3,20 +3,35 @@ import UIKit
 
 class StoryImageView: UIImageView {
     private var gradientFrameSize: CGSize?
+    private var containsPlaceholderImage: Bool = false
 
     // MARK: - Internal methods
 
     func configure(withImage image: UIImage?) {
+        if containsPlaceholderImage {
+            containsPlaceholderImage = false
+            addGradients()
+        }
+
         guard let image = image else {
             self.image = nil
             return
         }
+
         self.image = image
         contentMode = image.isLandscapeOrientation ? .scaleAspectFit : .scaleAspectFill
 
         if image.isLandscapeOrientation {
             backgroundColor = image.averageColor
         }
+    }
+
+    func configureWithPlaceholderImage() {
+        containsPlaceholderImage = true
+        layer.sublayers?.removeAll()
+        image = UIImage(named: .storyPlaceholder)
+        contentMode = .scaleAspectFill
+        backgroundColor = .licorice
     }
 
     // MARK: - Overrides
@@ -26,7 +41,6 @@ class StoryImageView: UIImageView {
 
         if frame.size != .zero,
            gradientFrameSize == nil || gradientFrameSize != frame.size {
-            gradientFrameSize = frame.size
             addGradients()
         }
     }
@@ -34,6 +48,8 @@ class StoryImageView: UIImageView {
     // MARK: - Private methods
 
     private func addGradients() {
+        layer.sublayers?.removeAll()
+        gradientFrameSize = frame.size
         addTopGradient()
         addBottomGradient()
     }
