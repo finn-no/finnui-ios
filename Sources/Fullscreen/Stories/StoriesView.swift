@@ -45,6 +45,7 @@ public class StoriesView: UIView {
     private var currentStoryIndex: Int = 0
     private var stories = [StoryViewModel]()
     private var didSwipeToDismiss: Bool = false
+    private var startIndex: Int?
 
     private var currentStoryCell: StoryCollectionViewCell? {
         collectionView.cellForItem(at: IndexPath(item: currentStoryIndex, section: 0)) as? StoryCollectionViewCell
@@ -73,8 +74,9 @@ public class StoriesView: UIView {
 
     // MARK: - Public methods
 
-    public func configure(with stories: [StoryViewModel]) {
+    public func configure(with stories: [StoryViewModel], startIndex: Int) {
         self.stories = stories
+        self.startIndex = startIndex
         collectionView.reloadData()
     }
 
@@ -98,9 +100,20 @@ public class StoriesView: UIView {
         }
     }
 
+    // MARK: - Overrides
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        if let startIndex = startIndex {
+            scroll(to: startIndex, animated: false)
+            self.startIndex = nil
+        }
+    }
+
     // MARK: - Private methods
 
     private func scroll(to index: Int, animated: Bool = true) {
+        guard stories.indices.contains(index) else { return }
         let indexPath = IndexPath(item: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
         currentStoryIndex = index
