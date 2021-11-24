@@ -3,33 +3,47 @@ import FinniversKit
 
 protocol QuestionFormContainerViewDelegate: AnyObject {
     func questionFormContainerView(_ view: QuestionFormContainerView, didSubmitForm form: RealestateSoldStateQuestionFormSubmit)
+    func questionFormContainerViewDidSubmitFormWithoutContactInformation(
+        _ view: QuestionFormContainerView,
+        questionModels: [RealestateSoldStateQuestionModel]
+    )
 }
 
 class QuestionFormContainerView: UIView {
 
     // MARK: - Private properties
 
+    private let viewModel: QuestionFormViewModel
+    private let styling: RealestateSoldStateModel.Styling
+    private var userContactMethodView: UserContactInformationView?
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
-    private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
-    private lazy var userContactMethodView = UserContactInformationView(delegate: self, withAutoLayout: true)
+    private lazy var questionFormView = QuestionFormView(styling: styling, delegate: self, withAutoLayout: true)
 
-    private lazy var dislamerLabel: Label = {
+
+    private lazy var disclaimerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
+        label.textColor = styling.textColor
         label.numberOfLines = 0
-        label.textColor = .textSecondary
         return label
     }()
 
     private lazy var submitButton: Button = {
-        let button = Button(style: .callToAction, size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: styling.ctaButtonStyle, isHighlighted: true), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
 
     // MARK: - Init
 
-    init(delegate: QuestionFormContainerViewDelegate, withAutoLayout: Bool) {
+    init(
+        viewModel: QuestionFormViewModel,
+        styling: RealestateSoldStateModel.Styling,
+        delegate: QuestionFormContainerViewDelegate,
+        withAutoLayout: Bool
+    ) {
+        self.viewModel = viewModel
+        self.styling = styling
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
@@ -41,34 +55,45 @@ class QuestionFormContainerView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        stackView.addArrangedSubviews([questionFormView, userContactMethodView, dislamerLabel, submitButton])
+        if let contactMethod = viewModel.contactMethod {
+            let userContactMethodView = UserContactInformationView(
+                viewModel: contactMethod,
+                styling: styling,
+                delegate: self,
+                withAutoLayout: true
+            )
+            self.userContactMethodView = userContactMethodView
+            stackView.addArrangedSubviews([questionFormView, userContactMethodView, disclaimerLabel, submitButton])
+        } else {
+            stackView.addArrangedSubviews([questionFormView, disclaimerLabel, submitButton])
+        }
+
         addSubview(stackView)
         stackView.fillInSuperview()
-    }
 
-    // MARK: - Internal methods
-
-    func configure(with viewModel: QuestionFormViewModel) {
         questionFormView.configure(with: viewModel.questionsTitle, questions: viewModel.questions)
-        userContactMethodView.configure(with: viewModel.contactMethodTitle, contactMethodModels: viewModel.contactMethodModels)
 
-        dislamerLabel.text = viewModel.submitDisclaimer
+        disclaimerLabel.text = viewModel.submitDisclaimer
         submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
     }
 
     // MARK: - Private methods
 
     private func updateSubmitButtonState() {
-        submitButton.isEnabled = userContactMethodView.isInputValid && questionFormView.hasSelectedQuestions
+        submitButton.isEnabled = (userContactMethodView?.isInputValid ?? true) && questionFormView.hasSelectedQuestions
     }
 
     // MARK: - Actions
 
     @objc private func submitButtonTapped() {
         guard
+            let userContactMethodView = userContactMethodView,
             let contactMethod = userContactMethodView.selectedContactMethod,
             let contactMethodValue = contactMethod.value
-        else { return }
+        else {
+            delegate?.questionFormContainerViewDidSubmitFormWithoutContactInformation(self, questionModels: viewModel.questions)
+            return
+        }
 
         let formSubmit = RealestateSoldStateQuestionFormSubmit(
             contactMethodIdentifier: contactMethod.identifier,
@@ -99,6 +124,10 @@ extension QuestionFormContainerView: QuestionFormViewDelegate {
 // MARK: - UserContactInformationViewDelegate
 
 extension QuestionFormContainerView: UserContactInformationViewDelegate {
+    func userContactInformationViewDidSwitchContactMethod(_ view: UserContactInformationView) {
+        updateSubmitButtonState()
+    }
+
     func userContactInformationViewDidUpdateTextField(_ view: UserContactInformationView) {
         updateSubmitButtonState()
     }

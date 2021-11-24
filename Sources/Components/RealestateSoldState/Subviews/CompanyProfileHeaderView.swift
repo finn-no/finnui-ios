@@ -37,7 +37,8 @@ class CompanyProfileHeaderView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(imageUrl: String, remoteImageViewDataSource: RemoteImageViewDataSource) {
+    func configure(styling: RealestateSoldStateModel.Styling, imageUrl: String, remoteImageViewDataSource: RemoteImageViewDataSource?) {
+        backgroundColor = styling.logoBackgroundColor
         remoteImageView.dataSource = remoteImageViewDataSource
         remoteImageView.loadImage(for: imageUrl, imageWidth: .zero)
     }

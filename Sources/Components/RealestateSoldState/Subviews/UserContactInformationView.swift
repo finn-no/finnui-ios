@@ -2,6 +2,7 @@ import UIKit
 import FinniversKit
 
 protocol UserContactInformationViewDelegate: AnyObject {
+    func userContactInformationViewDidSwitchContactMethod(_ view: UserContactInformationView)
     func userContactInformationViewDidUpdateTextField(_ view: UserContactInformationView)
 }
 
@@ -14,44 +15,64 @@ class UserContactInformationView: UIView {
     }
 
     var isInputValid: Bool {
-        textField?.isValid ?? false
+        if selectedContactMethod is UserContactMethodSelectionModel.Phone {
+            return phoneNumberTextField.isValid
+        }
+        return true
     }
 
     // MARK: - Private properties
 
     private weak var delegate: UserContactInformationViewDelegate?
-    private var contactMethodModels = [UserContactMethodSelectionModel]()
-    private var textField: TextField?
+    private let styling: RealestateSoldStateModel.Styling
+    private let contactMethodEmail: UserContactMethodSelectionModel.Email
+    private let contactMethodPhone: UserContactMethodSelectionModel.Phone
+    private var hasDoneInitialSetup = false
     private lazy var titleLabel = Label(style: .title3Strong, withAutoLayout: true)
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var contactMethodStackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
+    private lazy var contactMethodTitleLabel = Label(style: .captionStrong, withAutoLayout: true)
+    private lazy var emailAddressView = EmailAddressView(viewModel: contactMethodEmail, styling: styling, withAutoLayout: true)
+    private lazy var phoneNumberTextField = TextField(viewModel: contactMethodPhone, delegate: self)
+
+    private var contactMethodModels: [UserContactMethodSelectionModel] {
+        [contactMethodEmail, contactMethodPhone]
+    }
 
     // MARK: - Init
 
-    init(delegate: UserContactInformationViewDelegate, withAutoLayout: Bool) {
+    init(
+        viewModel: QuestionFormViewModel.ContactMethod,
+        styling: RealestateSoldStateModel.Styling,
+        delegate: UserContactInformationViewDelegate,
+        withAutoLayout: Bool
+    ) {
+        self.styling = styling
+        contactMethodEmail = viewModel.emailMethod
+        contactMethodPhone = viewModel.phoneMethod
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
-        setup()
+
+        setup(title: viewModel.title)
     }
 
     required init?(coder: NSCoder) { fatalError() }
 
     // MARK: - Setup
 
-    private func setup() {
-        contentStackView.addArrangedSubviews([titleLabel, contactMethodStackView])
+    private func setup(title: String) {
+        titleLabel.textColor = styling.textColor
+
+        emailAddressView.isHidden = true
+        phoneNumberTextField.isHidden = true
+
+        contentStackView.addArrangedSubviews([titleLabel, contactMethodStackView, contactMethodTitleLabel, emailAddressView, phoneNumberTextField])
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
-    }
+        contentStackView.setCustomSpacing(.spacingXS, after: contactMethodTitleLabel)
 
-    // MARK: - Internal methods
-
-    func configure(with title: String, contactMethodModels: [UserContactMethodSelectionModel]) {
         titleLabel.text = title
-        self.contactMethodModels = contactMethodModels
-
-        contactMethodStackView.removeArrangedSubviews()
 
         // Make sure at only one contact method is marked as selected by default.
         if contactMethodModels.selectedModel == nil {
@@ -61,26 +82,29 @@ class UserContactInformationView: UIView {
             contactMethodModels.first?.isSelected = true
         }
 
-        let contactMethodViews = contactMethodModels.map { UserContactMethodSelectionView(viewModel: $0, delegate: self) }
+        contactMethodTitleLabel.textColor = styling.textColor
+        let contactMethodViews = contactMethodModels.map { UserContactMethodSelectionView(viewModel: $0, styling: styling, delegate: self) }
         contactMethodStackView.addArrangedSubviews(contactMethodViews)
 
-        createOrReplaceTextField()
+        presentSelectedContactMethodView()
+        hasDoneInitialSetup = true
     }
 
     // MARK: - Private methods
 
-    private func createOrReplaceTextField() {
-        if let textField = textField {
-            contentStackView.removeArrangedSubview(textField)
-            textField.removeFromSuperview()
-            self.textField = nil
+    private func presentSelectedContactMethodView() {
+        contactMethodTitleLabel.text = selectedContactMethod?.name
+
+        if selectedContactMethod is UserContactMethodSelectionModel.Email {
+            phoneNumberTextField.isHidden = true
+            emailAddressView.isHidden = false
+        } else if selectedContactMethod is UserContactMethodSelectionModel.Phone {
+            emailAddressView.isHidden = true
+            phoneNumberTextField.isHidden = false
         }
 
-        if let textField = TextField(viewModel: selectedContactMethod) {
-            textField.delegate = self
-            contentStackView.addArrangedSubview(textField)
-            self.textField = textField
-            delegate?.userContactInformationViewDidUpdateTextField(self)
+        if hasDoneInitialSetup {
+            delegate?.userContactInformationViewDidSwitchContactMethod(self)
         }
     }
 }
@@ -98,7 +122,7 @@ extension UserContactInformationView: UserContactMethodSelectionViewDelegate {
             }
         }
 
-        createOrReplaceTextField()
+        presentSelectedContactMethodView()
     }
 }
 
@@ -106,7 +130,7 @@ extension UserContactInformationView: UserContactMethodSelectionViewDelegate {
 
 extension UserContactInformationView: TextFieldDelegate {
     func textFieldDidChange(_ textField: TextField) {
-        contactMethodModels.selectedModel?.value = textField.text
+        contactMethodPhone.value = textField.text
         delegate?.userContactInformationViewDidUpdateTextField(self)
     }
 }
@@ -114,19 +138,55 @@ extension UserContactInformationView: TextFieldDelegate {
 // MARK: - Private extensions
 
 private extension TextField {
-    convenience init?(viewModel: UserContactMethodSelectionModel?) {
-        guard let viewModel = viewModel else { return nil }
-        self.init(inputType: viewModel.textFieldType)
+    convenience init(viewModel: UserContactMethodSelectionModel.Phone, delegate: TextFieldDelegate) {
+        self.init(inputType: .phoneNumber)
         translatesAutoresizingMaskIntoConstraints = false
         text = viewModel.value
-
-        // I have no idea why, but this doesn't work if set within the init. I need to defer this call.
-        defer { placeholderText = viewModel.textFieldPlaceholder }
+        self.delegate = delegate
+        textField.placeholder = viewModel.textFieldPlaceholder
     }
 }
 
-extension Array where Element == UserContactMethodSelectionModel {
+private extension Array where Element == UserContactMethodSelectionModel {
     var selectedModel: UserContactMethodSelectionModel? {
         first(where: { $0.isSelected })
+    }
+}
+
+// MARK: - Private types
+
+private class EmailAddressView: UIView {
+
+    // MARK: - Private properties
+
+    private let viewModel: UserContactMethodSelectionModel.Email
+    private let styling: RealestateSoldStateModel.Styling
+    private lazy var emailLabel = Label(style: .body, withAutoLayout: true)
+    private lazy var dislaimerLabel = Label(style: .body, withAutoLayout: true)
+    private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+
+    // MARK: - Init
+
+    init(viewModel: UserContactMethodSelectionModel.Email, styling: RealestateSoldStateModel.Styling, withAutoLayout: Bool = false) {
+        self.viewModel = viewModel
+        self.styling = styling
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
+        setup()
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
+
+    // MARK: - Setup
+
+    private func setup() {
+        emailLabel.text = viewModel.value
+        dislaimerLabel.text = viewModel.disclaimerText
+
+        [emailLabel, dislaimerLabel].forEach { $0.textColor = styling.textColor }
+
+        stackView.addArrangedSubviews([emailLabel, dislaimerLabel])
+        addSubview(stackView)
+        stackView.fillInSuperview()
     }
 }

@@ -56,7 +56,7 @@ public class RealestateAgencyContentView: UIView {
 
         // Setup/configure new views.
         backgroundColor = viewModel.colors.main.background
-        logoImageWrapperView.configure(with: viewModel, remoteImageViewDataSource: remoteImageViewDataSource)
+        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.colors.logoBackground, remoteImageViewDataSource: remoteImageViewDataSource)
 
         let articleStackView = UIStackView(
             axis: articleDirection,

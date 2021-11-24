@@ -2,20 +2,25 @@ import UIKit
 import FinniversKit
 import FinnUI
 
-class RealestateSoldStateDemoView: UIView {
+class RealestateSoldStateDemoView: UIView, Tweakable {
+    lazy var tweakingOptions: [TweakingOption] = [
+        .init(title: "Default") { [weak self] in
+            self?.setupDemoView(with: .demoModel)
+        },
+        .init(title: "Without contact information") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithoutContactInfo)
+        }
+    ]
+
+    private var realestateSoldStateView: RealestateSoldStateView?
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
-    private lazy var realestateSoldStateView: RealestateSoldStateView = {
-        let view = RealestateSoldStateView(withAutoLayout: true)
-        view.delegate = self
-        view.configure(with: .demoModel, remoteImageViewDataSource: self)
-        return view
-    }()
 
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
+        tweakingOptions.first?.action?()
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -27,15 +32,29 @@ class RealestateSoldStateDemoView: UIView {
 
         addSubview(scrollView)
         scrollView.fillInSuperview()
-        scrollView.addSubview(realestateSoldStateView)
+        scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor).isActive = true
+    }
 
+    // MARK: - Private methods
+
+    private func setupDemoView(with viewModel: RealestateSoldStateModel) {
+        if let oldView = realestateSoldStateView {
+            oldView.removeFromSuperview()
+            realestateSoldStateView = nil
+        }
+
+        let view = RealestateSoldStateView(viewModel: viewModel, remoteImageViewDataSource: self, withAutoLayout: true)
+        view.delegate = self
+
+        scrollView.addSubview(view)
         NSLayoutConstraint.activate([
-            scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-            realestateSoldStateView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            realestateSoldStateView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            realestateSoldStateView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            realestateSoldStateView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
+            view.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            view.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
         ])
+
+        realestateSoldStateView = view
     }
 }
 
@@ -88,6 +107,17 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
               """)
     }
 
+    func realestateSoldStateViewDidSubmitFormWithoutContactInformation(
+        _ view: RealestateSoldStateView,
+        questionModels: [RealestateSoldStateQuestionModel]
+    ) {
+        print("""
+              ✅ Did submit form without contact info, aka. user needs to log in.
+              \tQuestions:
+              \t\t\(questionModels)
+              """)
+    }
+
     func realestateSoldStateViewDidSelectCompanyProfileCtaButton(_ view: RealestateSoldStateView) {
         print("👉 Did select company profile CTA button.")
     }
@@ -102,9 +132,23 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
 private extension RealestateSoldStateModel {
     static var demoModel: RealestateSoldStateModel {
         RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
             agentProfile: .demoModel,
             questionForm: .demoModel,
-            companyProfile: .demoModel
+            companyProfile: .demoModel,
+            styling: .demoStyle
+        )
+    }
+
+    static var demoModelWithoutContactInfo: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
+            agentProfile: .demoModel,
+            questionForm: .demoModel.copyWithoutContactInfo(),
+            companyProfile: .demoModel,
+            styling: .demoStyle
         )
     }
 }
@@ -132,23 +176,34 @@ private extension QuestionFormViewModel {
                 .init(kind: .provided, title: "Kan jeg få en verdivurdering av min bolig?", isSelected: false),
                 .init(kind: .userFreetext, title: "Annet", isSelected: true, value: "Long text\nSeveral lines\nAnother line"),
             ],
-            contactMethodTitle: "Hvordan kan vi kontakte deg?",
-            contactMethodModels: [
-                .init(
+            contactMethod: .init(
+                title: "Hvordan kan vi kontakte deg?",
+                emailMethod: .init(
                     identifier: "1",
-                    name: "Svar meg på mail",
-                    textFieldType: .email,
-                    textFieldPlaceholder: "Legg inn din mail-adresse"
+                    name: "Din epost",
+                    disclaimerText: "Du kan endre e-postadressen i FINN-profilen din.",
+                    value: "email@provider.com"
                 ),
-                .init(
+                phoneMethod: .init(
                     identifier: "2",
                     name: "Svar meg på telefon",
-                    textFieldType: .phoneNumber,
                     textFieldPlaceholder: "Legg inn ditt telefonnummer"
-                ),
-            ],
+                )
+            ),
             submitDisclaimer: "Ved å trykke \"Send skjema\" samtykker du til at FINN kan sende dine opplysninger fra skjema over til ansvarlig megler for denne annonsen.",
             submitButtonTitle: "Send skjema"
+        )
+    }
+}
+
+private extension QuestionFormViewModel {
+    func copyWithoutContactInfo() -> QuestionFormViewModel {
+        QuestionFormViewModel(
+            questionsTitle: questionsTitle,
+            questions: questions,
+            contactMethod: nil,
+            submitDisclaimer: submitDisclaimer,
+            submitButtonTitle: submitButtonTitle
         )
     }
 }
@@ -181,6 +236,28 @@ private extension LinkButtonViewModel {
             isExternal: false,
             buttonStyle: Self.demoStyle,
             buttonSize: .small
+        )
+    }
+}
+
+private extension RealestateSoldStateModel.Styling {
+    static var demoStyle: RealestateSoldStateModel.Styling {
+        .init(
+            textColor: UIColor(hex: "#464646"),
+            logoBackgroundColor: UIColor(hex: "#FFFFFF"),
+            backgroundColor: UIColor(hex: "#F6F8FB"),
+            ctaButtonStyle: ButtonStyle(
+                textColor: UIColor(hex: "#FFFFFF"),
+                backgroundColor: UIColor(hex: "#225B9F"),
+                backgroundActiveColor: UIColor(hex: "#225B9F"),
+                borderColor: UIColor(hex: "#225B9F")
+            ),
+            secondayButtonStyle: ButtonStyle(
+                textColor: UIColor(hex: "#FFFFFF"),
+                backgroundColor: UIColor(hex: "#225B9F"),
+                backgroundActiveColor: UIColor(hex: "#225B9F"),
+                borderColor: UIColor(hex: "#225B9F")
+            )
         )
     }
 }

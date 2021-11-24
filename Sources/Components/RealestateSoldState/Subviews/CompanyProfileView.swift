@@ -10,6 +10,8 @@ class CompanyProfileView: UIView {
 
     // MARK: - Private properties
 
+    private let viewModel: CompanyProfileModel
+    private let styling: RealestateSoldStateModel.Styling
     private weak var delegate: CompanyProfileViewDelegate?
     private lazy var logoHeaderView = CompanyProfileHeaderView(withAutoLayout: true)
     private lazy var hairlineView = UIView(withAutoLayout: true)
@@ -17,6 +19,7 @@ class CompanyProfileView: UIView {
     private lazy var sloganLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
         label.numberOfLines = 0
+        label.textColor = styling.textColor
         return label
     }()
 
@@ -27,25 +30,37 @@ class CompanyProfileView: UIView {
     }()
 
     private lazy var ctaButton: Button = {
-        let button = Button(style: .callToAction, size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: styling.ctaButtonStyle, isHighlighted: true), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(handleCtaButtonTap), for: .touchUpInside)
         return button
     }()
 
     // MARK: - Init
 
-    init(delegate: CompanyProfileViewDelegate, withAutoLayout: Bool) {
+    init(
+        viewModel: CompanyProfileModel,
+        styling: RealestateSoldStateModel.Styling,
+        remoteImageViewDataSource: RemoteImageViewDataSource?,
+        delegate: CompanyProfileViewDelegate,
+        withAutoLayout: Bool
+    ) {
+        self.viewModel = viewModel
+        self.styling = styling
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
-        setup()
+        setup(remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
     required init?(coder: NSCoder) { fatalError() }
 
     // MARK: - Setup
 
-    private func setup() {
+    private func setup(remoteImageViewDataSource: RemoteImageViewDataSource?) {
+        clipsToBounds = true
+        layer.borderColor = UIColor.companyProfileBorder.cgColor
+        hairlineView.backgroundColor = .companyProfileBorder
+
         addSubview(logoHeaderView)
         addSubview(hairlineView)
         addSubview(sloganLabel)
@@ -75,6 +90,12 @@ class CompanyProfileView: UIView {
             ctaButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
             ctaButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
         ])
+
+        logoHeaderView.configure(styling: styling, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
+
+        sloganLabel.text = viewModel.slogan
+        buttonListView.configure(with: viewModel.buttonLinks.map { $0.overrideStyle(using: styling) })
+        ctaButton.setTitle(viewModel.ctaButtonTitle, for: .normal)
     }
 
     // MARK: - Overrides
@@ -83,18 +104,6 @@ class CompanyProfileView: UIView {
         super.layoutSubviews()
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = UIColor.sardine.cgColor
-        hairlineView.backgroundColor = .sardine
-    }
-
-    // MARK: - Internal methods
-
-    func configure(with viewModel: CompanyProfileModel, remoteImageViewDataSource: RemoteImageViewDataSource) {
-        logoHeaderView.configure(imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
-
-        sloganLabel.text = viewModel.slogan
-        buttonListView.configure(with: viewModel.buttonLinks)
-        ctaButton.setTitle(viewModel.ctaButtonTitle, for: .normal)
     }
 
     // MARK: - Actions
@@ -109,5 +118,31 @@ class CompanyProfileView: UIView {
 extension CompanyProfileView: LinkButtonListViewDelegate {
     func linksListView(_ view: LinkButtonListView, didTapButtonWithIdentifier identifier: String?, url: URL) {
         delegate?.companyProfileView(self, didTapButtonWithIdentifier: identifier, url: url)
+    }
+}
+
+// MARK: - Private extensions
+
+private extension UIColor {
+    static var companyProfileBorder = UIColor(hex: "#C3CCD9")
+}
+
+private extension LinkButtonViewModel {
+    func overrideStyle(using styling: RealestateSoldStateModel.Styling) -> LinkButtonViewModel {
+        guard let buttonStyle = buttonStyle else { return self }
+
+        let newButtonStyle = buttonStyle.overrideStyle(
+            textColor: styling.textColor
+        )
+
+        return LinkButtonViewModel(
+            buttonIdentifier: buttonIdentifier,
+            buttonTitle: buttonTitle,
+            subtitle: subtitle,
+            linkUrl: linkUrl,
+            isExternal: isExternal,
+            buttonStyle: newButtonStyle,
+            buttonSize: buttonSize
+        )
     }
 }
