@@ -18,6 +18,11 @@ public protocol StoriesViewDelegate: AnyObject {
 public typealias StorySlideIndex = (storyIndex: Int, slideIndex: Int)
 
 public class StoriesView: UIView {
+    public enum Section: Int, CaseIterable {
+        case story
+        case feedback
+    }
+
     public enum Action {
         case navigateToSearch(storyIndex: Int)
         case navigateToAd(index: StorySlideIndex)
@@ -36,6 +41,7 @@ public class StoriesView: UIView {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(StoryCollectionViewCell.self)
+        collectionView.register(FeedbackCollectionViewCell.self)
         collectionView.backgroundColor = .black
         return collectionView
     }()
@@ -45,6 +51,7 @@ public class StoriesView: UIView {
     private var currentStoryIndex: Int = 0
     private var stories = [StoryViewModel]()
     private var didSwipeToDismiss: Bool = false
+    private var isFeedbackEnabled: Bool = false
     private var startIndex: Int?
 
     private var currentStoryCell: StoryCollectionViewCell? {
@@ -74,9 +81,10 @@ public class StoriesView: UIView {
 
     // MARK: - Public methods
 
-    public func configure(with stories: [StoryViewModel], startIndex: Int) {
+    public func configure(with stories: [StoryViewModel], startIndex: Int, isFeedbackEnabled: Bool = false) {
         self.stories = stories
         self.startIndex = startIndex
+        self.isFeedbackEnabled = isFeedbackEnabled
         collectionView.reloadData()
     }
 
@@ -123,11 +131,28 @@ public class StoriesView: UIView {
 // MARK: - UICollectionViewDataSource
 
 extension StoriesView: UICollectionViewDataSource {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        isFeedbackEnabled ? 2 : 1
+    }
+
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        stories.count
+        guard let section = Section(rawValue: section) else { return 0 }
+        switch section {
+        case .story:
+            return stories.count
+        case .feedback:
+            return 1
+        }
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let section = Section(rawValue: indexPath.section) else { return UICollectionViewCell() }
+
+        if case .feedback = section {
+            let cell = collectionView.dequeue(FeedbackCollectionViewCell.self, for: indexPath)
+            return cell
+        }
+
         let cell = collectionView.dequeue(StoryCollectionViewCell.self, for: indexPath)
         guard let story = stories[safe: indexPath.item] else { return cell }
 

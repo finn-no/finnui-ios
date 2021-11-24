@@ -23,7 +23,7 @@ class StoryDemoView: UIView {
     private func setup() {
         addSubview(storiesView)
         storiesView.fillInSuperview()
-        storiesView.configure(with: [Self.story1, Self.story2], startIndex: 0)
+        storiesView.configure(with: [Self.story1, Self.story2], startIndex: 0, isFeedbackEnabled: true)
     }
 }
 
