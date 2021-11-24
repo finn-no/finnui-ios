@@ -20,6 +20,15 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
         return view
     }()
 
+    private lazy var closeButton: UIButton = {
+        let button = UIButton(withAutoLayout: true)
+        button.tintColor = .milk
+        button.setImage(UIImage(named: .close).withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(vertical: .spacingM, horizontal: .spacingM)
+        button.addTarget(self, action: #selector(handleCloseButtonTap), for: .touchUpInside)
+        return button
+    }()
+
     weak var delegate: FeedbackCollectionViewCellDelegate?
 
     override init(frame: CGRect) {
@@ -34,11 +43,18 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
     private func setup() {
         contentView.addSubview(containerView)
 
+        containerView.addSubview(closeButton)
+
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -68)
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -68), // This constant aligns the background with the image background for stories.
+
+            closeButton.topAnchor.constraint(equalTo: containerView.topAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            closeButton.heightAnchor.constraint(equalToConstant: 44),
+            closeButton.widthAnchor.constraint(equalToConstant: 44),
         ])
 
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:))))
@@ -54,5 +70,9 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
         } else {
             delegate?.feedbackCollectionViewCell(self, didSelectAction: .previous)
         }
+    }
+
+    @objc private func handleCloseButtonTap() {
+        delegate?.feedbackCollectionViewCell(self, didSelectAction: .dismiss)
     }
 }
