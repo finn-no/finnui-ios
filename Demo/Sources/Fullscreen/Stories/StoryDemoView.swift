@@ -32,6 +32,10 @@ class StoryDemoView: UIView {
 }
 
 extension StoryDemoView: StoriesViewDelegate {
+    func storiesView(_ storiesView: StoriesView, didSelectFeedbackOptionWithIndex index: Int) {
+        print("Selected feedback option with index \(index)")
+    }
+
     func storiesView(_ storiesView: StoriesView, didViewStorySlideWithIndex storySlideIndex: StorySlideIndex) {}
 
     func storiesView(_ storiesView: StoriesView, didSelectAction action: StoriesView.Action) {
@@ -153,9 +157,10 @@ extension StoryDemoView {
         title: "Gir stories mer oversikt over nye annonser i dine lagrede søk?",
         disclaimerText: "Svarene på undersøkelsen vil bli brukt i vårt produkt-forbedringsarbeid, og lagres uten å kunne spores tilbake til deg.",
         feedbackOptions: [
-            StoryFeedbackViewModel.FeedbackOption(id: 1, title: "😍   Absolutt"),
-            StoryFeedbackViewModel.FeedbackOption(id: 2, title: "👌   Litt"),
-            StoryFeedbackViewModel.FeedbackOption(id: 3, title: "👎   Nei")
-        ]
+            "😍   Absolutt",
+            "👌   Litt",
+            "👎   Nei"
+        ],
+        feedbackGivenText: "🎉\nTakk for din tilbakemelding!"
     )
 }

@@ -4,6 +4,7 @@ import FinniversKit
 
 protocol FeedbackCollectionViewCellDelegate: AnyObject {
     func feedbackCollectionViewCell(_ feedbackCollectionViewCell: FeedbackCollectionViewCell, didSelectAction action: FeedbackCollectionViewCell.Action)
+    func feedbackCollectionViewCell(_ feedbackCollectionViewCell: FeedbackCollectionViewCell, didSelectOptionWithIndex index: Int)
 }
 
 class FeedbackCollectionViewCell: UICollectionViewCell {
@@ -50,6 +51,14 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
+    private lazy var successLabel: Label = {
+        let label = Label(style: .title1, withAutoLayout: true)
+        label.textColor = .milk
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+
     private var optionButtons = [OptionButton]()
 
     weak var delegate: FeedbackCollectionViewCellDelegate?
@@ -83,7 +92,8 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -68), // This constant aligns the background with the image background for stories.
+            // This constant aligns the background with the image background for stories.
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -68),
 
             closeButton.topAnchor.constraint(equalTo: containerView.topAnchor),
             closeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
@@ -119,12 +129,13 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
     func configure(with viewModel: StoryFeedbackViewModel) {
         titleLabel.text = viewModel.title
         disclaimerLabel.text = viewModel.disclaimerText
+        successLabel.text = viewModel.feedbackGivenText
 
         optionButtons.forEach({ $0.removeFromSuperview() })
         optionButtons.removeAll()
 
         for feedbackOption in viewModel.feedbackOptions {
-            let button = OptionButton(option: feedbackOption)
+            let button = OptionButton(title: feedbackOption)
             optionButtons.append(button)
             optionsStackView.addArrangedSubview(button)
             button.addTarget(self, action: #selector(optionTapped), for: .touchUpInside)
@@ -132,8 +143,27 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
     }
 
     @objc private func optionTapped(sender: UIButton) {
-        guard let optionButton = sender as? OptionButton else { return }
-        print("OPTION \(optionButton.id) TAPPED")
+        guard
+            let optionButton = sender as? OptionButton,
+            let index = optionButtons.firstIndex(of: optionButton)
+        else { return }
+
+        delegate?.feedbackCollectionViewCell(self, didSelectOptionWithIndex: index)
+
+        optionsStackView.isHidden = true
+        titleLabel.isHidden = true
+        containerView.addSubview(successLabel)
+
+        NSLayoutConstraint.activate([
+            successLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            successLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            successLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+        ])
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.feedbackCollectionViewCell(self, didSelectAction: .dismiss)
+        })
     }
 
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
@@ -159,7 +189,6 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
 }
 
 private class OptionButton: UIButton {
-    var id: Int
     private let highlightedColor: UIColor = .white.withAlphaComponent(0.2)
 
     private lazy var checkImageView: UIImageView = {
@@ -180,11 +209,9 @@ private class OptionButton: UIButton {
         return CGSize(width: bounds.width, height: 57)
     }
 
-    init(option: StoryFeedbackViewModel.FeedbackOption) {
-        self.id = option.id
+    init(title: String) {
         super.init(frame: .zero)
-
-        setTitle(option.title, for: .normal)
+        setTitle(title, for: .normal)
         setup()
     }
 

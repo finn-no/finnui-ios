@@ -13,6 +13,7 @@ public protocol StoriesViewDataSource: AnyObject {
 public protocol StoriesViewDelegate: AnyObject {
     func storiesView(_ storiesView: StoriesView, didSelectAction action: StoriesView.Action)
     func storiesView(_ storiesView: StoriesView, didViewStorySlideWithIndex storySlideIndex: StorySlideIndex)
+    func storiesView(_ storiesView: StoriesView, didSelectFeedbackOptionWithIndex index: Int)
 }
 
 public typealias StorySlideIndex = (storyIndex: Int, slideIndex: Int)
@@ -308,6 +309,10 @@ extension StoriesView: StoryCollectionViewCellDelegate {
 // MARK: - FeedbackCollectionViewCellDelegate
 
 extension StoriesView: FeedbackCollectionViewCellDelegate {
+    func feedbackCollectionViewCell(_ feedbackCollectionViewCell: FeedbackCollectionViewCell, didSelectOptionWithIndex index: Int) {
+        delegate?.storiesView(self, didSelectFeedbackOptionWithIndex: index)
+    }
+
     func feedbackCollectionViewCell(_ feedbackCollectionViewCell: FeedbackCollectionViewCell, didSelectAction action: FeedbackCollectionViewCell.Action) {
         switch action {
         case .next, .dismiss:
