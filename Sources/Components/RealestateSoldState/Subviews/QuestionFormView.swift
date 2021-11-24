@@ -30,6 +30,7 @@ class QuestionFormView: UIView {
 
     // MARK: - Private properties
 
+    private let styling: RealestateSoldStateModel.Styling
     private weak var delegate: QuestionFormViewDelegate?
     private var questions = [RealestateSoldStateQuestionModel]()
     private lazy var questionsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
@@ -37,6 +38,7 @@ class QuestionFormView: UIView {
     private lazy var titleLabel: Label = {
         let label = Label(style: .title3Strong, withAutoLayout: true)
         label.numberOfLines = 0
+        label.textColor = styling.textColor
         return label
     }()
 
@@ -49,7 +51,8 @@ class QuestionFormView: UIView {
 
     // MARK: - Init
 
-    init(delegate: QuestionFormViewDelegate, withAutoLayout: Bool) {
+    init(styling: RealestateSoldStateModel.Styling, delegate: QuestionFormViewDelegate, withAutoLayout: Bool) {
+        self.styling = styling
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
@@ -85,12 +88,12 @@ class QuestionFormView: UIView {
         questionsStackView.removeArrangedSubviews()
 
         let questionItemViews = questions.filterProvided.map { question -> QuestionItemView in
-            QuestionItemView(question: question, delegate: self)
+            QuestionItemView(question: question, textColor: styling.textColor, delegate: self)
         }
         questionsStackView.addArrangedSubviews(questionItemViews)
 
         if let userFreetextQuestion = questions.firstUserFreetext {
-            let questionItemView = QuestionItemView(question: userFreetextQuestion, delegate: self)
+            let questionItemView = QuestionItemView(question: userFreetextQuestion, textColor: styling.textColor, delegate: self)
             questionsStackView.addArrangedSubviews([questionItemView, textView])
 
             textView.isHidden = !userFreetextQuestion.isSelected

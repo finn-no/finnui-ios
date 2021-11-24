@@ -14,29 +14,36 @@ class QuestionFormContainerView: UIView {
     // MARK: - Private properties
 
     private let viewModel: QuestionFormViewModel
+    private let styling: RealestateSoldStateModel.Styling
     private var userContactMethodView: UserContactInformationView?
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
-    private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
+    private lazy var questionFormView = QuestionFormView(styling: styling, delegate: self, withAutoLayout: true)
 
 
     private lazy var disclaimerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
+        label.textColor = styling.textColor
         label.numberOfLines = 0
-        label.textColor = .textSecondary
         return label
     }()
 
     private lazy var submitButton: Button = {
-        let button = Button(style: .callToAction, size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: styling.ctaButtonStyle, isHighlighted: true), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
 
     // MARK: - Init
 
-    init(viewModel: QuestionFormViewModel, delegate: QuestionFormContainerViewDelegate, withAutoLayout: Bool) {
+    init(
+        viewModel: QuestionFormViewModel,
+        styling: RealestateSoldStateModel.Styling,
+        delegate: QuestionFormContainerViewDelegate,
+        withAutoLayout: Bool
+    ) {
         self.viewModel = viewModel
+        self.styling = styling
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
@@ -51,6 +58,7 @@ class QuestionFormContainerView: UIView {
         if let contactMethod = viewModel.contactMethod {
             let userContactMethodView = UserContactInformationView(
                 viewModel: contactMethod,
+                styling: styling,
                 delegate: self,
                 withAutoLayout: true
             )

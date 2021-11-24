@@ -21,10 +21,31 @@ public class RealestateSoldStateView: UIView {
 
     private let viewModel: RealestateSoldStateModel
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
+    private lazy var logoImageWrapperView = RealestateAgencyLogoWrapperView(withAutoLayout: true)
+    private lazy var logoBackgroundView = UIView(withAutoLayout: true)
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
-    private lazy var questionFormView = QuestionFormContainerView(viewModel: viewModel.questionForm, delegate: self, withAutoLayout: true)
     private lazy var agentProfileView = AgentProfileView(withAutoLayout: true)
-    private lazy var companyProfileView = CompanyProfileView(delegate: self, withAutoLayout: true)
+
+    private lazy var titleLabel: Label = {
+        let label = Label(style: .title2, withAutoLayout: true)
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private lazy var questionFormView = QuestionFormContainerView(
+        viewModel: viewModel.questionForm,
+        styling: viewModel.styling,
+        delegate: self,
+        withAutoLayout: true
+    )
+
+    private lazy var companyProfileView = CompanyProfileView(
+        viewModel: viewModel.companyProfile,
+        styling: viewModel.styling,
+        remoteImageViewDataSource: remoteImageViewDataSource,
+        delegate: self,
+        withAutoLayout: true
+    )
 
     // MARK: - Init
 
@@ -41,12 +62,36 @@ public class RealestateSoldStateView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        stackView.addArrangedSubviews([questionFormView, agentProfileView, companyProfileView])
-        addSubview(stackView)
-        stackView.fillInSuperview(insets: UIEdgeInsets(top: 0, left: .spacingM, bottom: 0, right: -.spacingM))
+        backgroundColor = viewModel.styling.backgroundColor
+        logoBackgroundView.backgroundColor = viewModel.styling.logoBackgroundColor
+        titleLabel.text = viewModel.title
+        titleLabel.textColor = viewModel.styling.textColor
 
-        agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
-        companyProfileView.configure(with: viewModel.companyProfile, remoteImageViewDataSource: remoteImageViewDataSource)
+        stackView.addArrangedSubviews([titleLabel, questionFormView, agentProfileView, companyProfileView])
+        stackView.setCustomSpacing(.spacingL, after: titleLabel)
+
+        addSubview(logoBackgroundView)
+        addSubview(logoImageWrapperView)
+        addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            logoImageWrapperView.topAnchor.constraint(equalTo: topAnchor),
+            logoImageWrapperView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            logoImageWrapperView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+
+            logoBackgroundView.topAnchor.constraint(equalTo: topAnchor),
+            logoBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            logoBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            logoBackgroundView.bottomAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor),
+
+            stackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+        ])
+
+        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
+        agentProfileView.configure(with: viewModel.agentProfile, styling: viewModel.styling, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 }
 
