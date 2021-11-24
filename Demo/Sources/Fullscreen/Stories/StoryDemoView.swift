@@ -23,7 +23,11 @@ class StoryDemoView: UIView {
     private func setup() {
         addSubview(storiesView)
         storiesView.fillInSuperview()
-        storiesView.configure(with: [Self.story1, Self.story2], startIndex: 0, isFeedbackEnabled: true)
+        storiesView.configure(
+            with: [Self.story1, Self.story2],
+            startIndex: 0,
+            feedbackViewModel: Self.feedbackViewModel
+        )
     }
 }
 
@@ -144,4 +148,13 @@ extension StoryDemoView {
             price: "8 500 000 kr"
         )
     ]
+
+    static var feedbackViewModel = StoryFeedbackViewModel(
+        title: "Gir stories mer oversikt over nye annonser i dine lagrede søk?",
+        feedbackOptions: [
+            StoryFeedbackViewModel.FeedbackOption(id: 1, title: "😍 Absolutt"),
+            StoryFeedbackViewModel.FeedbackOption(id: 2, title: "👌 Litt"),
+            StoryFeedbackViewModel.FeedbackOption(id: 3, title: "👎 Nei")
+        ]
+    )
 }

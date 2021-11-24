@@ -60,6 +60,10 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:))))
     }
 
+    func configure(with viewModel: StoryFeedbackViewModel) {
+        
+    }
+
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
         let tapLocation = recognizer.location(in: self)
 

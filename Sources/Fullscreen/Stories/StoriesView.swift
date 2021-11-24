@@ -51,8 +51,12 @@ public class StoriesView: UIView {
     private var currentStoryIndex: Int = 0
     private var stories = [StoryViewModel]()
     private var didSwipeToDismiss: Bool = false
-    private var isFeedbackEnabled: Bool = false
+    private var feedbackViewModel: StoryFeedbackViewModel?
     private var startIndex: Int?
+
+    private var isFeedbackEnabled: Bool {
+        feedbackViewModel != nil
+    }
 
     private var currentStoryCell: StoryCollectionViewCell? {
         collectionView.cellForItem(at: IndexPath(item: currentStoryIndex, section: 0)) as? StoryCollectionViewCell
@@ -81,10 +85,14 @@ public class StoriesView: UIView {
 
     // MARK: - Public methods
 
-    public func configure(with stories: [StoryViewModel], startIndex: Int, isFeedbackEnabled: Bool = false) {
+    public func configure(
+        with stories: [StoryViewModel],
+        startIndex: Int,
+        feedbackViewModel: StoryFeedbackViewModel? = nil
+    ) {
         self.stories = stories
         self.startIndex = startIndex
-        self.isFeedbackEnabled = isFeedbackEnabled
+        self.feedbackViewModel = feedbackViewModel
         collectionView.reloadData()
     }
 
@@ -157,6 +165,9 @@ extension StoriesView: UICollectionViewDataSource {
         if case .feedback = section {
             let cell = collectionView.dequeue(FeedbackCollectionViewCell.self, for: indexPath)
             cell.delegate = self
+            if let viewModel = feedbackViewModel {
+                cell.configure(with: viewModel)
+            }
             return cell
         }
 
