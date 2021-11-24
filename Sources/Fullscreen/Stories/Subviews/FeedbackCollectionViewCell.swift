@@ -66,6 +66,14 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
     private func setup() {
         contentView.addSubview(containerView)
 
+        let backgroundFigureLeft = createBackgroundImageView(with: UIImage(named: .backgroundFigureLeft))
+        let backgroundFigureTop = createBackgroundImageView(with: UIImage(named: .backgroundFigureTop))
+        let backgroundFigureRight = createBackgroundImageView(with: UIImage(named: .backgroundFigureRight))
+
+        containerView.addSubview(backgroundFigureLeft)
+        containerView.addSubview(backgroundFigureTop)
+        containerView.addSubview(backgroundFigureRight)
+
         containerView.addSubview(closeButton)
         containerView.addSubview(titleLabel)
         containerView.addSubview(optionsStackView)
@@ -82,12 +90,21 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
             closeButton.heightAnchor.constraint(equalToConstant: 44),
             closeButton.widthAnchor.constraint(equalToConstant: 44),
 
+            backgroundFigureLeft.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            backgroundFigureLeft.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 50, priority: .defaultLow),
+
+            backgroundFigureTop.topAnchor.constraint(equalTo: containerView.topAnchor),
+            backgroundFigureTop.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -70),
+
+            backgroundFigureRight.topAnchor.constraint(equalTo: containerView.centerYAnchor, constant: -70),
+            backgroundFigureRight.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: .spacingM),
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: backgroundFigureLeft.bottomAnchor, constant: .spacingXL, priority: .defaultLow),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -.spacingM),
 
+            optionsStackView.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor),
             optionsStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: .spacingM),
-            optionsStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             optionsStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -.spacingM),
             optionsStackView.bottomAnchor.constraint(equalTo: disclaimerLabel.topAnchor, constant: -60),
 
@@ -95,10 +112,6 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
             disclaimerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -.spacingM),
             disclaimerLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -.spacingM),
         ])
-
-        disclaimerLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        optionsStackView.setContentHuggingPriority(.defaultHigh - 1, for: .vertical)
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
 
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:))))
     }
@@ -135,6 +148,13 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
 
     @objc private func handleCloseButtonTap() {
         delegate?.feedbackCollectionViewCell(self, didSelectAction: .dismiss)
+    }
+
+    private func createBackgroundImageView(with image: UIImage) -> UIImageView {
+        let imageView = UIImageView(withAutoLayout: true)
+        imageView.image = image
+        imageView.setContentHuggingPriority(.required, for: .vertical)
+        return imageView
     }
 }
 

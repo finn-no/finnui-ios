@@ -35,6 +35,9 @@ extension UIImage {
 enum ImageAsset: String {
     case alphabeticalSortingAscending
     case arrowUp
+    case backgroundFigureLeft
+    case backgroundFigureRight
+    case backgroundFigureTop
     case balloon0
     case balloon1
     case balloon2
@@ -83,6 +86,9 @@ enum ImageAsset: String {
         return [
             .alphabeticalSortingAscending,
             .arrowUp,
+            .backgroundFigureLeft,
+            .backgroundFigureRight,
+            .backgroundFigureTop,
             .balloon0,
             .balloon1,
             .balloon2,
