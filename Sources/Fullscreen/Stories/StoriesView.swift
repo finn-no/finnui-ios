@@ -126,6 +126,12 @@ public class StoriesView: UIView {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
         currentStoryIndex = index
     }
+
+    private func scrollToFeedbackCell() {
+        guard isFeedbackEnabled else { return }
+        let indexPath = IndexPath(item: 0, section: 1)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -150,6 +156,7 @@ extension StoriesView: UICollectionViewDataSource {
 
         if case .feedback = section {
             let cell = collectionView.dequeue(FeedbackCollectionViewCell.self, for: indexPath)
+            cell.delegate = self
             return cell
         }
 
@@ -254,7 +261,11 @@ extension StoriesView: StoryCollectionViewCellDelegate {
             if storyIndex + 1 < stories.count {
                 scroll(to: storyIndex + 1)
             } else {
-                delegate?.storiesView(self, didSelectAction: .dismiss)
+                if isFeedbackEnabled {
+                    scrollToFeedbackCell()
+                } else {
+                    delegate?.storiesView(self, didSelectAction: .dismiss)
+                }
             }
 
         case .showPreviousStory:
@@ -279,6 +290,20 @@ extension StoriesView: StoryCollectionViewCellDelegate {
 
         case .dismiss:
             delegate?.storiesView(self, didSelectAction: .dismiss)
+        }
+    }
+}
+
+// MARK: - FeedbackCollectionViewCellDelegate
+
+extension StoriesView: FeedbackCollectionViewCellDelegate {
+    func feedbackCollectionViewCell(_ feedbackCollectionViewCell: FeedbackCollectionViewCell, didSelectAction action: FeedbackCollectionViewCell.Action) {
+        switch action {
+        case .next, .dismiss:
+            // Next is equal to dismiss, since it's the last cell.
+            delegate?.storiesView(self, didSelectAction: .dismiss)
+        case .previous:
+            scroll(to: currentStoryIndex)
         }
     }
 }
