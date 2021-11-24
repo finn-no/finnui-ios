@@ -132,6 +132,8 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
 private extension RealestateSoldStateModel {
     static var demoModel: RealestateSoldStateModel {
         RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
             agentProfile: .demoModel,
             questionForm: .demoModel,
             companyProfile: .demoModel,
@@ -141,6 +143,8 @@ private extension RealestateSoldStateModel {
 
     static var demoModelWithoutContactInfo: RealestateSoldStateModel {
         RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
             agentProfile: .demoModel,
             questionForm: .demoModel.copyWithoutContactInfo(),
             companyProfile: .demoModel,
