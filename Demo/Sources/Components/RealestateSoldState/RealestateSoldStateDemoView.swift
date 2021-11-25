@@ -243,19 +243,19 @@ private extension LinkButtonViewModel {
 private extension RealestateSoldStateModel.Styling {
     static var demoStyle: RealestateSoldStateModel.Styling {
         .init(
-            textColor: UIColor(hex: "#464646"),
+            textColor: UIColor(hex: "#FFFFFF"),
             logoBackgroundColor: UIColor(hex: "#FFFFFF"),
-            backgroundColor: UIColor(hex: "#F6F8FB"),
+            backgroundColor: UIColor(hex: "#0063FB"),
             ctaButtonStyle: ButtonStyle(
-                textColor: UIColor(hex: "#FFFFFF"),
-                backgroundColor: UIColor(hex: "#225B9F"),
-                backgroundActiveColor: UIColor(hex: "#225B9F"),
+                textColor: UIColor(hex: "#464646"),
+                backgroundColor: UIColor(hex: "#FFFFFF"),
+                backgroundActiveColor: UIColor(hex: "#E7E7E7"),
                 borderColor: UIColor(hex: "#225B9F")
             ),
             secondayButtonStyle: ButtonStyle(
                 textColor: UIColor(hex: "#FFFFFF"),
-                backgroundColor: UIColor(hex: "#225B9F"),
-                backgroundActiveColor: UIColor(hex: "#225B9F"),
+                backgroundColor: UIColor(hex: "#0063FB"),
+                backgroundActiveColor: UIColor(hex: "#0059E1"),
                 borderColor: UIColor(hex: "#225B9F")
             )
         )
