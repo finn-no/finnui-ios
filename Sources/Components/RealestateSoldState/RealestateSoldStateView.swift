@@ -34,7 +34,6 @@ public class RealestateSoldStateView: UIView {
     private lazy var logoBackgroundView = UIView(withAutoLayout: true)
     private lazy var agentProfileView = AgentProfileView(withAutoLayout: true)
     private lazy var expandToggleView = RealestateSoldStateExpandToggleView(withAutoLayout: true)
-    private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var leftStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var rightStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
 
