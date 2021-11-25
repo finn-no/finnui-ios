@@ -65,7 +65,6 @@ public class RealestateSoldStateView: UIView {
         backgroundColor = .bgQuaternary
         logoBackgroundView.backgroundColor = viewModel.styling.backgroundColor
         titleLabel.text = viewModel.title
-        titleLabel.textColor = viewModel.styling.textColor
 
         stackView.addArrangedSubviews([titleLabel, questionFormView, agentProfileView, companyProfileView])
         stackView.setCustomSpacing(.spacingL, after: titleLabel)
