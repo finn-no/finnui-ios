@@ -113,6 +113,7 @@ public class RealestateSoldStateView: UIView {
         leftStackView.setCustomSpacing(.spacingL, after: titleLabel)
 
         rightStackView.addArrangedSubviews([agentProfileView, companyProfileView])
+        rightStackView.distribution = .equalCentering
 
         addSubview(backgroundView)
         addSubview(expandToggleView)
