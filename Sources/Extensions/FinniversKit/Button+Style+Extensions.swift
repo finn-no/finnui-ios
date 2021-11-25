@@ -1,13 +1,12 @@
 import FinniversKit
 
 extension Button.Style {
-    func override(using styling: RealestateSoldStateModel.Styling.ButtonStyle, isHighlighted: Bool) -> Button.Style {
-        let backgroundColor = isHighlighted ? styling.backgroundActiveColor : styling.backgroundColor
-
-        return overrideStyle(
-            bodyColor: backgroundColor,
+    func override(using styling: RealestateSoldStateModel.Styling.ButtonStyle) -> Button.Style {
+        overrideStyle(
+            bodyColor: styling.backgroundColor,
             borderColor: styling.borderColor,
-            textColor: styling.textColor
+            textColor: styling.textColor,
+            highlightedBodyColor: styling.backgroundActiveColor
         )
     }
 }
