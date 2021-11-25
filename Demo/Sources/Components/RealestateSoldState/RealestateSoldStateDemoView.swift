@@ -138,6 +138,7 @@ private extension RealestateSoldStateModel {
         RealestateSoldStateModel(
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
             agentProfile: .demoModel,
             questionForm: .demoModel,
             companyProfile: .demoModel,
@@ -149,6 +150,7 @@ private extension RealestateSoldStateModel {
         RealestateSoldStateModel(
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
             agentProfile: .demoModel,
             questionForm: .demoModel.copyWithoutContactInfo(),
             companyProfile: .demoModel,

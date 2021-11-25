@@ -82,6 +82,13 @@ public class RealestateSoldStateView: UIView {
         withAutoLayout: true
     )
 
+    private lazy var presentFormButton: Button = {
+        let button = Button(style: .callToAction.override(using: viewModel.styling.secondayButtonStyle), size: .normal, withAutoLayout: true)
+        button.setTitle(viewModel.presentFormButtonTitle, for: .normal)
+        button.addTarget(self, action: #selector(presentFormButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     // MARK: - Init
 
     public init(viewModel: RealestateSoldStateModel, remoteImageViewDataSource: RemoteImageViewDataSource, withAutoLayout: Bool = false) {
@@ -174,6 +181,10 @@ public class RealestateSoldStateView: UIView {
     // MARK: - Actions
 
     @objc private func presentFormButtonTapped() {
+        delegate?.realestateSoldStateViewDidToggleExpandedState(self)
+    }
+
+    @objc private func handleExpandViewTap() {
         delegate?.realestateSoldStateViewDidToggleExpandedState(self)
     }
 }
