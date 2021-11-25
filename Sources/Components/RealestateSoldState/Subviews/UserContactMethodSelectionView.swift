@@ -10,7 +10,6 @@ class UserContactMethodSelectionView: UIView {
     // MARK: - Private properties
 
     let viewModel: UserContactMethodSelectionModel
-    private let styling: RealestateSoldStateModel.Styling
     private weak var delegate: UserContactMethodSelectionViewDelegate?
     private lazy var radioButton = AnimatedRadioButtonView(frame: .zero)
 
@@ -29,9 +28,8 @@ class UserContactMethodSelectionView: UIView {
 
     // MARK: - Init
 
-    init(viewModel: UserContactMethodSelectionModel, styling: RealestateSoldStateModel.Styling, delegate: UserContactMethodSelectionViewDelegate) {
+    init(viewModel: UserContactMethodSelectionModel, delegate: UserContactMethodSelectionViewDelegate) {
         self.viewModel = viewModel
-        self.styling = styling
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +43,6 @@ class UserContactMethodSelectionView: UIView {
     private func setup() {
         radioButton.isHighlighted = viewModel.isSelected
         titleLabel.text = viewModel.name
-        titleLabel.textColor = styling.textColor
 
         addSubview(stackView)
         stackView.fillInSuperview()
