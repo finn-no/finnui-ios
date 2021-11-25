@@ -30,7 +30,7 @@ class CompanyProfileView: UIView {
     }()
 
     private lazy var ctaButton: Button = {
-        let button = Button(style: .callToAction.override(using: styling.ctaButtonStyle, isHighlighted: true), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: styling.ctaButtonStyle), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(handleCtaButtonTap), for: .touchUpInside)
         return button
     }()
@@ -58,6 +58,7 @@ class CompanyProfileView: UIView {
 
     private func setup(remoteImageViewDataSource: RemoteImageViewDataSource?) {
         clipsToBounds = true
+        backgroundColor = styling.backgroundColor
         layer.borderColor = UIColor.companyProfileBorder.cgColor
         hairlineView.backgroundColor = .companyProfileBorder
 
@@ -91,7 +92,7 @@ class CompanyProfileView: UIView {
             ctaButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
         ])
 
-        logoHeaderView.configure(styling: styling, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
+        logoHeaderView.configure(backgroundColor: styling.logoBackgroundColor, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
 
         sloganLabel.text = viewModel.slogan
         buttonListView.configure(with: viewModel.buttonLinks.map { $0.overrideStyle(using: styling) })
