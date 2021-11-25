@@ -4,11 +4,14 @@ import FinnUI
 
 class RealestateSoldStateDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
-        .init(title: "Default") { [weak self] in
-            self?.setupDemoView(with: .demoModel)
+        .init(title: "Default - expanded") { [weak self] in
+            self?.setupDemoView(with: .demoModel, isExpanded: true)
         },
-        .init(title: "Without contact information") { [weak self] in
-            self?.setupDemoView(with: .demoModelWithoutContactInfo)
+        .init(title: "Default - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModel, isExpanded: false)
+        },
+        .init(title: "Without contact information - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithoutContactInfo, isExpanded: false)
         }
     ]
 
@@ -37,13 +40,14 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
 
     // MARK: - Private methods
 
-    private func setupDemoView(with viewModel: RealestateSoldStateModel) {
+    private func setupDemoView(with viewModel: RealestateSoldStateModel, isExpanded: Bool) {
         if let oldView = realestateSoldStateView {
             oldView.removeFromSuperview()
             realestateSoldStateView = nil
         }
 
         let view = RealestateSoldStateView(viewModel: viewModel, remoteImageViewDataSource: self, withAutoLayout: true)
+        view.isExpanded = isExpanded
         view.delegate = self
 
         scrollView.addSubview(view)
