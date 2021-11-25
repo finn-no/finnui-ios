@@ -91,7 +91,7 @@ public class RealestateSoldStateView: UIView {
         ])
 
         logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
-        agentProfileView.configure(with: viewModel.agentProfile, styling: viewModel.styling, remoteImageViewDataSource: remoteImageViewDataSource)
+        agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 }
 
