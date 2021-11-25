@@ -25,9 +25,34 @@ public class RealestateSoldStateView: UIView {
     private lazy var backgroundView = UIView(withAutoLayout: true)
     private lazy var logoImageWrapperView = RealestateAgencyLogoWrapperView(withAutoLayout: true)
     private lazy var logoBackgroundView = UIView(withAutoLayout: true)
-    private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var agentProfileView = AgentProfileView(withAutoLayout: true)
     private lazy var expandToggleView = RealestateSoldStateExpandToggleView(withAutoLayout: true)
+    private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
+    private lazy var leftStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
+    private lazy var rightStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
+
+    private lazy var regularScreenConstraints: [NSLayoutConstraint] = [
+        leftStackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
+        leftStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+        leftStackView.trailingAnchor.constraint(equalTo: centerXAnchor, constant: -.spacingS),
+        leftStackView.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -.spacingM),
+
+        rightStackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
+        rightStackView.leadingAnchor.constraint(equalTo: centerXAnchor, constant: .spacingS),
+        rightStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+        rightStackView.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -.spacingM)
+    ]
+
+    private lazy var compactScreenConstraints: [NSLayoutConstraint] = [
+        leftStackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
+        leftStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+        leftStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+
+        rightStackView.topAnchor.constraint(equalTo: leftStackView.bottomAnchor, constant: .spacingM),
+        rightStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+        rightStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+        rightStackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -.spacingM)
+    ]
 
     private lazy var titleLabel: Label = {
         let label = Label(style: .title2, withAutoLayout: true)
@@ -71,14 +96,17 @@ public class RealestateSoldStateView: UIView {
         logoBackgroundView.backgroundColor = viewModel.styling.backgroundColor
         titleLabel.text = viewModel.title
 
-        stackView.addArrangedSubviews([titleLabel, questionFormView, agentProfileView, companyProfileView])
-        stackView.setCustomSpacing(.spacingL, after: titleLabel)
+        leftStackView.addArrangedSubviews([titleLabel, questionFormView, presentFormButton])
+        leftStackView.setCustomSpacing(.spacingL, after: titleLabel)
+
+        rightStackView.addArrangedSubviews([agentProfileView, companyProfileView])
 
         addSubview(backgroundView)
         addSubview(expandToggleView)
         addSubview(logoBackgroundView)
         addSubview(logoImageWrapperView)
-        addSubview(stackView)
+        addSubview(leftStackView)
+        addSubview(rightStackView)
 
         NSLayoutConstraint.activate([
             backgroundView.topAnchor.constraint(equalTo: topAnchor),
@@ -95,19 +123,43 @@ public class RealestateSoldStateView: UIView {
             logoBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
             logoBackgroundView.bottomAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor),
 
-            stackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            stackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -.spacingM),
-
             expandToggleView.bottomAnchor.constraint(equalTo: bottomAnchor),
             expandToggleView.centerXAnchor.constraint(equalTo: centerXAnchor),
             expandToggleView.heightAnchor.constraint(equalToConstant: expandToggleViewHeight),
             expandToggleView.widthAnchor.constraint(equalToConstant: expandToggleViewHeight)
         ])
 
+        configurePresentation(updateStackViewConstraints: true)
+
         logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
         agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
+    }
+
+    // MARK: - Private methods
+
+    private func configurePresentation(updateStackViewConstraints: Bool) {
+        if isExpanded {
+            questionFormView.isHidden = false
+            companyProfileView.isHidden = false
+            presentFormButton.isHidden = true
+            expandToggleView.configure(with: UIImage(named: .chevronUp))
+        } else {
+            questionFormView.isHidden = true
+            companyProfileView.isHidden = true
+            presentFormButton.isHidden = false
+            expandToggleView.configure(with: UIImage(named: .chevronDown))
+        }
+
+        if updateStackViewConstraints {
+            switch traitCollection.horizontalSizeClass {
+            case .regular:
+                NSLayoutConstraint.deactivate(compactScreenConstraints)
+                NSLayoutConstraint.activate(regularScreenConstraints)
+            default:
+                NSLayoutConstraint.deactivate(regularScreenConstraints)
+                NSLayoutConstraint.activate(compactScreenConstraints)
+            }
+        }
     }
 }
 
