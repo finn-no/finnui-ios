@@ -9,6 +9,7 @@ public protocol RealestateSoldStateViewDelegate: AnyObject {
     )
     func realestateSoldStateViewDidSelectCompanyProfileCtaButton(_ view: RealestateSoldStateView)
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL)
+    func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView)
 }
 
 public class RealestateSoldStateView: UIView {
@@ -16,6 +17,12 @@ public class RealestateSoldStateView: UIView {
     // MARK: - Public properties
 
     public weak var delegate: RealestateSoldStateViewDelegate?
+
+    public var isExpanded: Bool = false {
+        didSet {
+            configurePresentation(updateStackViewConstraints: false)
+        }
+    }
 
     // MARK: - Private properties
 
@@ -131,6 +138,8 @@ public class RealestateSoldStateView: UIView {
 
         configurePresentation(updateStackViewConstraints: true)
 
+        expandToggleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleExpandViewTap)))
+
         logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
         agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
     }
@@ -160,6 +169,12 @@ public class RealestateSoldStateView: UIView {
                 NSLayoutConstraint.activate(compactScreenConstraints)
             }
         }
+    }
+
+    // MARK: - Actions
+
+    @objc private func presentFormButtonTapped() {
+        delegate?.realestateSoldStateViewDidToggleExpandedState(self)
     }
 }
 

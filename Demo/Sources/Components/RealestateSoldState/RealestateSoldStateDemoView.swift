@@ -125,6 +125,10 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL) {
         print("👉 Did select company profile button with identifier '\(identifier ?? "??")'")
     }
+
+    func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView) {
+        view.isExpanded.toggle()
+    }
 }
 
 // MARK: - Private extensions
