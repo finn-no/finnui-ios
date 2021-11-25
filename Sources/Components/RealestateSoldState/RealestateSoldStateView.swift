@@ -62,7 +62,7 @@ public class RealestateSoldStateView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        backgroundColor = viewModel.styling.backgroundColor
+        backgroundColor = .bgQuaternary
         logoBackgroundView.backgroundColor = viewModel.styling.logoBackgroundColor
         titleLabel.text = viewModel.title
         titleLabel.textColor = viewModel.styling.textColor
