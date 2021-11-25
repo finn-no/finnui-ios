@@ -14,7 +14,6 @@ class CompanyProfileView: UIView {
     private let styling: RealestateSoldStateModel.Styling
     private weak var delegate: CompanyProfileViewDelegate?
     private lazy var logoHeaderView = CompanyProfileHeaderView(withAutoLayout: true)
-    private lazy var hairlineView = UIView(withAutoLayout: true)
 
     private lazy var sloganLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
@@ -60,10 +59,8 @@ class CompanyProfileView: UIView {
         clipsToBounds = true
         backgroundColor = styling.backgroundColor
         layer.borderColor = UIColor.companyProfileBorder.cgColor
-        hairlineView.backgroundColor = .companyProfileBorder
 
         addSubview(logoHeaderView)
-        addSubview(hairlineView)
         addSubview(sloganLabel)
         addSubview(buttonListView)
         addSubview(ctaButton)
@@ -73,12 +70,7 @@ class CompanyProfileView: UIView {
             logoHeaderView.leadingAnchor.constraint(equalTo: leadingAnchor),
             logoHeaderView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            hairlineView.topAnchor.constraint(equalTo: logoHeaderView.bottomAnchor),
-            hairlineView.heightAnchor.constraint(equalToConstant: 1),
-            hairlineView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            hairlineView.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-            sloganLabel.topAnchor.constraint(equalTo: hairlineView.bottomAnchor, constant: .spacingM),
+            sloganLabel.topAnchor.constraint(equalTo: logoHeaderView.bottomAnchor, constant: .spacingM),
             sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             sloganLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
 
