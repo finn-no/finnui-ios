@@ -125,7 +125,7 @@ extension CompanyProfileView: LinkButtonListViewDelegate {
 // MARK: - Private extensions
 
 private extension UIColor {
-    static var companyProfileBorder = UIColor(hex: "#C3CCD9")
+    static var companyProfileBorder = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }
 
 private extension LinkButtonViewModel {
