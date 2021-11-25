@@ -151,6 +151,16 @@ public class RealestateSoldStateView: UIView {
         agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
+    // MARK: - Overrides
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            configurePresentation(updateStackViewConstraints: true)
+        }
+    }
+
     // MARK: - Private methods
 
     private func configurePresentation(updateStackViewConstraints: Bool) {
