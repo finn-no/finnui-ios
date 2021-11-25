@@ -38,10 +38,7 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var optionsStackView: UIStackView = {
-        let stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
-        return stackView
-    }()
+    private lazy var optionsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
 
     private lazy var disclaimerLabel: Label = {
         let label = Label(style: .detail, withAutoLayout: true)
@@ -193,8 +190,9 @@ private class OptionButton: UIButton {
 
     private lazy var checkImageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
-        imageView.image = UIImage(named: .arrowUp)
+        imageView.image = UIImage(named: .checkMark)
         imageView.isHidden = true
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
@@ -227,9 +225,10 @@ private class OptionButton: UIButton {
         contentHorizontalAlignment = .leading
 
         addSubview(checkImageView)
+
         NSLayoutConstraint.activate([
             checkImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            checkImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            checkImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
 }
