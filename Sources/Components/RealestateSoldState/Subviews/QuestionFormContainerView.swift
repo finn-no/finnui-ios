@@ -18,18 +18,16 @@ class QuestionFormContainerView: UIView {
     private var userContactMethodView: UserContactInformationView?
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
-    private lazy var questionFormView = QuestionFormView(styling: styling, delegate: self, withAutoLayout: true)
-
+    private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
 
     private lazy var disclaimerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
-        label.textColor = styling.textColor
         label.numberOfLines = 0
         return label
     }()
 
     private lazy var submitButton: Button = {
-        let button = Button(style: .callToAction.override(using: styling.ctaButtonStyle, isHighlighted: true), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: styling.secondayButtonStyle), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
