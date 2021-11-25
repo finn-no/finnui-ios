@@ -20,11 +20,14 @@ public class RealestateSoldStateView: UIView {
     // MARK: - Private properties
 
     private let viewModel: RealestateSoldStateModel
+    private let expandToggleViewHeight = CGFloat(56)
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
+    private lazy var backgroundView = UIView(withAutoLayout: true)
     private lazy var logoImageWrapperView = RealestateAgencyLogoWrapperView(withAutoLayout: true)
     private lazy var logoBackgroundView = UIView(withAutoLayout: true)
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var agentProfileView = AgentProfileView(withAutoLayout: true)
+    private lazy var expandToggleView = RealestateSoldStateExpandToggleView(withAutoLayout: true)
 
     private lazy var titleLabel: Label = {
         let label = Label(style: .title2, withAutoLayout: true)
@@ -62,18 +65,27 @@ public class RealestateSoldStateView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        backgroundColor = .bgQuaternary
+        backgroundColor = .clear
+        backgroundView.backgroundColor = .bgTertiary
+        expandToggleView.backgroundColor = .bgTertiary
         logoBackgroundView.backgroundColor = viewModel.styling.backgroundColor
         titleLabel.text = viewModel.title
 
         stackView.addArrangedSubviews([titleLabel, questionFormView, agentProfileView, companyProfileView])
         stackView.setCustomSpacing(.spacingL, after: titleLabel)
 
+        addSubview(backgroundView)
+        addSubview(expandToggleView)
         addSubview(logoBackgroundView)
         addSubview(logoImageWrapperView)
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: topAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -(expandToggleViewHeight / 2)),
+
             logoImageWrapperView.topAnchor.constraint(equalTo: topAnchor),
             logoImageWrapperView.leadingAnchor.constraint(equalTo: leadingAnchor),
             logoImageWrapperView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
@@ -86,7 +98,12 @@ public class RealestateSoldStateView: UIView {
             stackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+            stackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -.spacingM),
+
+            expandToggleView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            expandToggleView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            expandToggleView.heightAnchor.constraint(equalToConstant: expandToggleViewHeight),
+            expandToggleView.widthAnchor.constraint(equalToConstant: expandToggleViewHeight)
         ])
 
         logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
