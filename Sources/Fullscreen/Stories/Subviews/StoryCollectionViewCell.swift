@@ -228,15 +228,15 @@ class StoryCollectionViewCell: UICollectionViewCell {
             priceContainerView.trailingAnchor.constraint(lessThanOrEqualTo: favoriteButton.leadingAnchor),
             priceContainerView.heightAnchor.constraint(equalToConstant: priceLabelHeight),
 
-            shareButton.trailingAnchor.constraint(equalTo: progressView.trailingAnchor),
-            shareButton.centerYAnchor.constraint(equalTo: priceContainerView.centerYAnchor),
-            shareButton.widthAnchor.constraint(equalToConstant: iconSize),
-            shareButton.heightAnchor.constraint(equalToConstant: iconSize),
-
-            favoriteButton.trailingAnchor.constraint(equalTo: shareButton.leadingAnchor),
-            favoriteButton.centerYAnchor.constraint(equalTo: shareButton.centerYAnchor),
+            favoriteButton.trailingAnchor.constraint(equalTo: progressView.trailingAnchor),
+            favoriteButton.centerYAnchor.constraint(equalTo: priceContainerView.centerYAnchor),
             favoriteButton.widthAnchor.constraint(equalToConstant: iconSize),
             favoriteButton.heightAnchor.constraint(equalToConstant: iconSize),
+
+            shareButton.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor),
+            shareButton.centerYAnchor.constraint(equalTo: favoriteButton.centerYAnchor),
+            shareButton.widthAnchor.constraint(equalToConstant: iconSize),
+            shareButton.heightAnchor.constraint(equalToConstant: iconSize),
         ])
 
         setupGestureRecognizers()
@@ -275,7 +275,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         storyTitleLabel.text = story.title
         openAdButton.setTitle(story.openAdButtonTitle, for: .normal)
 
-        if let storyIconImageUrl = story.iconImageUrl {
+        if let storyIconImageUrl = story.iconImageUrl, !storyIconImageUrl.isEmpty {
             dataSource?.storyCollectionViewCell(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconSize, completion: { [weak self] image in
                 self?.storyIconImageView.image = image
             })
