@@ -248,6 +248,8 @@ class StoryCollectionViewCell: UICollectionViewCell {
         let swipeUpGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleDidSelectAd))
         swipeUpGestureRecognizer.direction = .up
         addGestureRecognizer(swipeUpGestureRecognizer)
+
+        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:))))
     }
 
     // MARK: - Overrides
@@ -398,6 +400,17 @@ class StoryCollectionViewCell: UICollectionViewCell {
             showNextSlide()
         } else {
             showPreviousSlide()
+        }
+    }
+
+    @objc private func handleLongPress(recognizer: UILongPressGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            progressView.pauseAnimations()
+        case .ended, .cancelled:
+            progressView.resumeOngoingAnimationsIfAny()
+        default:
+            break
         }
     }
 
