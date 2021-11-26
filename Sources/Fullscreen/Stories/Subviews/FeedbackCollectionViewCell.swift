@@ -157,7 +157,7 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
             successLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
         ])
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: { [weak self] in
             guard let self = self else { return }
             self.delegate?.feedbackCollectionViewCell(self, didSelectAction: .dismiss)
         })
