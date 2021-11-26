@@ -14,6 +14,7 @@ public protocol StoriesViewDelegate: AnyObject {
     func storiesView(_ storiesView: StoriesView, didSelectAction action: StoriesView.Action)
     func storiesView(_ storiesView: StoriesView, didViewStorySlideWithIndex storySlideIndex: StorySlideIndex)
     func storiesView(_ storiesView: StoriesView, didSelectFeedbackOptionWithIndex index: Int)
+    func storiesViewDidDisplayFeedbackModule(_ storiesView: StoriesView)
 }
 
 public typealias StorySlideIndex = (storyIndex: Int, slideIndex: Int)
@@ -193,8 +194,11 @@ extension StoriesView: UICollectionViewDataSource {
 
 extension StoriesView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? StoryCollectionViewCell else { return }
-        cell.prepareForDisplay()
+        if let cell = cell as? StoryCollectionViewCell {
+            cell.prepareForDisplay()
+        } else if cell as? FeedbackCollectionViewCell != nil {
+            delegate?.storiesViewDidDisplayFeedbackModule(self)
+        }
     }
 
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

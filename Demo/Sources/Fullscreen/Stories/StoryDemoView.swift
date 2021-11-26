@@ -32,6 +32,10 @@ class StoryDemoView: UIView {
 }
 
 extension StoryDemoView: StoriesViewDelegate {
+    func storiesViewDidDisplayFeedbackModule(_ storiesView: StoriesView) {
+        print("Did display feedback module")
+    }
+
     func storiesView(_ storiesView: StoriesView, didSelectFeedbackOptionWithIndex index: Int) {
         print("Selected feedback option with index \(index)")
     }
