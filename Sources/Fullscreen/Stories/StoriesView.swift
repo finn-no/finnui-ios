@@ -212,7 +212,11 @@ extension StoriesView: UICollectionViewDelegate {
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !didSwipeToDismiss else { return }
+        guard
+            collectionView.contentSize.width > 0,
+            collectionView.frame.size.width > 0,
+            !didSwipeToDismiss
+        else { return }
 
         let swipeDistanceToTriggerDismiss = scrollView.frame.size.width * 0.25
 
