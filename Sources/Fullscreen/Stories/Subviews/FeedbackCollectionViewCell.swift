@@ -60,6 +60,8 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
 
     weak var delegate: FeedbackCollectionViewCellDelegate?
 
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
@@ -68,6 +70,8 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Setup
 
     private func setup() {
         contentView.addSubview(containerView)
@@ -123,6 +127,8 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:))))
     }
 
+    // MARK: - Internal methods
+
     func configure(with viewModel: StoryFeedbackViewModel) {
         titleLabel.text = viewModel.title
         disclaimerLabel.text = viewModel.disclaimerText
@@ -138,6 +144,8 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
             button.addTarget(self, action: #selector(optionTapped), for: .touchUpInside)
         }
     }
+
+    // MARK: - Private methods
 
     @objc private func optionTapped(sender: UIButton) {
         guard
