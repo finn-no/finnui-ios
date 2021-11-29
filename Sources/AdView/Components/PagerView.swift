@@ -6,7 +6,6 @@
 //
 import SwiftUI
 
-@available(iOS 13.0, *)
 struct PagerView<Content: View>: View {
     let pageCount: Int
     @Binding var currentIndex: Int

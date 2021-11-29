@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-@available(iOS 13.0, *)
 struct AuthorView<ImageProvider: SingleImageProvider>: View {
     let author: AuthorViewModel
     @ObservedObject var imageProvider: ImageProvider
@@ -32,7 +31,6 @@ struct AuthorView<ImageProvider: SingleImageProvider>: View {
     }
 }
 
-@available(iOS 13.0, *)
 extension AuthorView {
     var profilePicture: some View {
         Image(uiImage: imageProvider.image)
@@ -58,7 +56,6 @@ extension AuthorView {
     }
 }
 
-@available(iOS 13.0, *)
 //swiftlint:disable:next type_name superfluous_disable_command
 struct AuthorView_Previews: PreviewProvider {
     static var previews: some View {

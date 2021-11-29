@@ -5,7 +5,6 @@
 import SwiftUI
 @testable import FinnUI
 
-@available(iOS 13.0, *)
 public enum SwiftUIDemoViews: String, DemoViews {
     case buttons
     case settings
