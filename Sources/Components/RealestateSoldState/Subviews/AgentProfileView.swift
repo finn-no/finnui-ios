@@ -60,12 +60,10 @@ class AgentProfileView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(with model: AgentProfileModel, styling: RealestateSoldStateModel.Styling, remoteImageViewDataSource: RemoteImageViewDataSource?) {
+    func configure(with model: AgentProfileModel, remoteImageViewDataSource: RemoteImageViewDataSource?) {
         titleLabel.text = model.title
         nameLabel.text = model.agentName
         jobTitleLabel.text = model.agentJobTitle
-
-        [titleLabel, nameLabel, jobTitleLabel, phoneLabel].forEach { $0.textColor = styling.textColor }
 
         if let phoneNumber = model.phoneNumber {
             phoneLabel.text = phoneNumber

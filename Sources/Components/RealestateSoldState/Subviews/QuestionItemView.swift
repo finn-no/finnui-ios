@@ -30,14 +30,12 @@ class QuestionItemView: UIView {
 
     // MARK: - Init
 
-    init(question: RealestateSoldStateQuestionModel, textColor: UIColor, delegate: QuestionItemViewDelegate) {
+    init(question: RealestateSoldStateQuestionModel, delegate: QuestionItemViewDelegate) {
         self.question = question
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         setup()
-
-        questionLabel.textColor = textColor
     }
 
     required init?(coder: NSCoder) { fatalError() }

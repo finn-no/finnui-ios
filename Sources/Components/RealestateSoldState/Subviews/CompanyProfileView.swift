@@ -14,7 +14,6 @@ class CompanyProfileView: UIView {
     private let styling: RealestateSoldStateModel.Styling
     private weak var delegate: CompanyProfileViewDelegate?
     private lazy var logoHeaderView = CompanyProfileHeaderView(withAutoLayout: true)
-    private lazy var hairlineView = UIView(withAutoLayout: true)
 
     private lazy var sloganLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
@@ -30,7 +29,7 @@ class CompanyProfileView: UIView {
     }()
 
     private lazy var ctaButton: Button = {
-        let button = Button(style: .callToAction.override(using: styling.ctaButtonStyle, isHighlighted: true), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: styling.ctaButtonStyle), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(handleCtaButtonTap), for: .touchUpInside)
         return button
     }()
@@ -58,11 +57,10 @@ class CompanyProfileView: UIView {
 
     private func setup(remoteImageViewDataSource: RemoteImageViewDataSource?) {
         clipsToBounds = true
+        backgroundColor = styling.backgroundColor
         layer.borderColor = UIColor.companyProfileBorder.cgColor
-        hairlineView.backgroundColor = .companyProfileBorder
 
         addSubview(logoHeaderView)
-        addSubview(hairlineView)
         addSubview(sloganLabel)
         addSubview(buttonListView)
         addSubview(ctaButton)
@@ -72,12 +70,7 @@ class CompanyProfileView: UIView {
             logoHeaderView.leadingAnchor.constraint(equalTo: leadingAnchor),
             logoHeaderView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            hairlineView.topAnchor.constraint(equalTo: logoHeaderView.bottomAnchor),
-            hairlineView.heightAnchor.constraint(equalToConstant: 1),
-            hairlineView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            hairlineView.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-            sloganLabel.topAnchor.constraint(equalTo: hairlineView.bottomAnchor, constant: .spacingM),
+            sloganLabel.topAnchor.constraint(equalTo: logoHeaderView.bottomAnchor, constant: .spacingM),
             sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             sloganLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
 
@@ -91,7 +84,7 @@ class CompanyProfileView: UIView {
             ctaButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
         ])
 
-        logoHeaderView.configure(styling: styling, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
+        logoHeaderView.configure(backgroundColor: styling.logoBackgroundColor, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
 
         sloganLabel.text = viewModel.slogan
         buttonListView.configure(with: viewModel.buttonLinks.map { $0.overrideStyle(using: styling) })
@@ -124,7 +117,7 @@ extension CompanyProfileView: LinkButtonListViewDelegate {
 // MARK: - Private extensions
 
 private extension UIColor {
-    static var companyProfileBorder = UIColor(hex: "#C3CCD9")
+    static var companyProfileBorder = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }
 
 private extension LinkButtonViewModel {

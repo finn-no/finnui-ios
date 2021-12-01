@@ -4,11 +4,14 @@ import FinnUI
 
 class RealestateSoldStateDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
-        .init(title: "Default") { [weak self] in
-            self?.setupDemoView(with: .demoModel)
+        .init(title: "Default - expanded") { [weak self] in
+            self?.setupDemoView(with: .demoModel, isExpanded: true)
         },
-        .init(title: "Without contact information") { [weak self] in
-            self?.setupDemoView(with: .demoModelWithoutContactInfo)
+        .init(title: "Default - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModel, isExpanded: false)
+        },
+        .init(title: "Without contact information - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithoutContactInfo, isExpanded: false)
         }
     ]
 
@@ -37,13 +40,14 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
 
     // MARK: - Private methods
 
-    private func setupDemoView(with viewModel: RealestateSoldStateModel) {
+    private func setupDemoView(with viewModel: RealestateSoldStateModel, isExpanded: Bool) {
         if let oldView = realestateSoldStateView {
             oldView.removeFromSuperview()
             realestateSoldStateView = nil
         }
 
         let view = RealestateSoldStateView(viewModel: viewModel, remoteImageViewDataSource: self, withAutoLayout: true)
+        view.isExpanded = isExpanded
         view.delegate = self
 
         scrollView.addSubview(view)
@@ -125,6 +129,10 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL) {
         print("👉 Did select company profile button with identifier '\(identifier ?? "??")'")
     }
+
+    func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView) {
+        view.isExpanded.toggle()
+    }
 }
 
 // MARK: - Private extensions
@@ -134,6 +142,7 @@ private extension RealestateSoldStateModel {
         RealestateSoldStateModel(
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
             agentProfile: .demoModel,
             questionForm: .demoModel,
             companyProfile: .demoModel,
@@ -145,6 +154,7 @@ private extension RealestateSoldStateModel {
         RealestateSoldStateModel(
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
             agentProfile: .demoModel,
             questionForm: .demoModel.copyWithoutContactInfo(),
             companyProfile: .demoModel,
@@ -243,19 +253,19 @@ private extension LinkButtonViewModel {
 private extension RealestateSoldStateModel.Styling {
     static var demoStyle: RealestateSoldStateModel.Styling {
         .init(
-            textColor: UIColor(hex: "#464646"),
+            textColor: UIColor(hex: "#FFFFFF"),
             logoBackgroundColor: UIColor(hex: "#FFFFFF"),
-            backgroundColor: UIColor(hex: "#F6F8FB"),
+            backgroundColor: UIColor(hex: "#0063FB"),
             ctaButtonStyle: ButtonStyle(
-                textColor: UIColor(hex: "#FFFFFF"),
-                backgroundColor: UIColor(hex: "#225B9F"),
-                backgroundActiveColor: UIColor(hex: "#225B9F"),
+                textColor: UIColor(hex: "#464646"),
+                backgroundColor: UIColor(hex: "#FFFFFF"),
+                backgroundActiveColor: UIColor(hex: "#E7E7E7"),
                 borderColor: UIColor(hex: "#225B9F")
             ),
             secondayButtonStyle: ButtonStyle(
                 textColor: UIColor(hex: "#FFFFFF"),
-                backgroundColor: UIColor(hex: "#225B9F"),
-                backgroundActiveColor: UIColor(hex: "#225B9F"),
+                backgroundColor: UIColor(hex: "#0063FB"),
+                backgroundActiveColor: UIColor(hex: "#0059E1"),
                 borderColor: UIColor(hex: "#225B9F")
             )
         )
