@@ -300,6 +300,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         wasPreparedForDisplay = true
         if !slides.isEmpty {
             startStory()
+            delegate?.storyCollectionViewCell(self, didShowSlideWithIndex: currentIndex)
         }
     }
 
@@ -354,7 +355,9 @@ class StoryCollectionViewCell: UICollectionViewCell {
         configureImage(forSlide: slide)
         predownloadNextImageIfPossible()
 
-        delegate?.storyCollectionViewCell(self, didShowSlideWithIndex: index)
+        if wasPreparedForDisplay {
+            delegate?.storyCollectionViewCell(self, didShowSlideWithIndex: index)
+        }
     }
 
     private func configureImage(forSlide slide: StorySlideViewModel) {
