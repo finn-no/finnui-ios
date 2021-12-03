@@ -33,7 +33,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = .spacingM
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .storyDefaultBackgrondColor
+        imageView.backgroundColor = Style.defaultImageBackgroundColor
         return imageView
     }()
 
@@ -58,13 +58,13 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }()
 
     private lazy var storyTitleLabel: Label = {
-        let label = Label(style: .captionStrong, withAutoLayout: true)
-        label.textColor = .milk
+        let label = Label(style: Style.storyTitleStyle, withAutoLayout: true)
+        label.textColor = Style.primaryTextColor
         return label
     }()
 
     private lazy var openAdButton: Button = {
-        let button = Button(style: .callToAction, size: .normal, withAutoLayout: true)
+        let button = Button(style: Style.openAdButtonStyle, size: Style.openAdButtonSize, withAutoLayout: true)
         button.addTarget(self, action: #selector(handleDidSelectAd), for: .touchUpInside)
         return button
     }()
@@ -72,20 +72,20 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private lazy var swipeUpIconImageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.image = UIImage(named: .arrowUp)
-        imageView.tintColor = .milk
+        imageView.tintColor = Style.iconTintColor
         return imageView
     }()
 
     private lazy var slideTitleLabel: Label = {
-        let label = Label(style: .title3Strong, withAutoLayout: true)
-        label.textColor = .milk
+        let label = Label(style: Style.slideTitleStyle, withAutoLayout: true)
+        label.textColor = Style.primaryTextColor
         label.numberOfLines = 2
         return label
     }()
 
     private lazy var slideDetailLabel: Label = {
-        let label = Label(style: .detail, withAutoLayout: true)
-        label.textColor = .milk
+        let label = Label(style: Style.slideDetailStyle, withAutoLayout: true)
+        label.textColor = Style.primaryTextColor
         return label
     }()
 
@@ -98,15 +98,15 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }()
 
     private lazy var priceLabel: Label = {
-        let label = Label(style: .captionStrong, withAutoLayout: true)
-        label.textColor = .textTertiary
+        let label = Label(style: Style.priceLabelStyle, withAutoLayout: true)
+        label.textColor = Style.priceLabelColor
         label.backgroundColor = .clear
         return label
     }()
 
     private lazy var favoriteButton: UIButton = {
         let button = UIButton(withAutoLayout: true)
-        button.tintColor = .milk
+        button.tintColor = Style.iconTintColor
         button.imageEdgeInsets = UIEdgeInsets(vertical: 3 * .spacingXS, horizontal: 3 * .spacingXS)
         button.addTarget(self, action: #selector(handleFavoriteButtonTap), for: .touchUpInside)
         return button
@@ -114,7 +114,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     private lazy var shareButton: UIButton = {
         let button = UIButton(withAutoLayout: true)
-        button.tintColor = .milk
+        button.tintColor = Style.iconTintColor
         button.setImage(UIImage(named: .share).withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(vertical: 3 * .spacingXS, horizontal: 3 * .spacingXS)
         button.addTarget(self, action: #selector(handleShareButtonTap), for: .touchUpInside)
@@ -123,7 +123,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
     private lazy var closeButton: UIButton = {
         let button = UIButton(withAutoLayout: true)
-        button.tintColor = .milk
+        button.tintColor = Style.iconTintColor
         button.setImage(UIImage(named: .close).withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(vertical: .spacingM, horizontal: .spacingM)
         button.addTarget(self, action: #selector(handleCloseButtonTap), for: .touchUpInside)
@@ -142,6 +142,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private static var openAdButtonHeight: CGFloat = 44
     private static var swipeUpIconSize: CGFloat = 16
     private static var swipeUpIconVerticalSpacing: CGFloat = .spacingXS
+    private typealias Style = StoriesStyling
 
     private var nextIndex: Int? {
         currentIndex + 1 < slides.count ? currentIndex + 1 : nil
@@ -262,7 +263,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         progressView.reset()
-        imageView.backgroundColor = .storyDefaultBackgrondColor
+        imageView.backgroundColor = Style.defaultImageBackgroundColor
         imageView.image = nil
         storyIconImageView.image = nil
         slides = []
@@ -448,13 +449,5 @@ extension StoryCollectionViewCell: ProgressViewDelegate {
         } else {
             delegate?.storyCollectionViewCell(self, didSelect: .showNextStory)
         }
-    }
-}
-
-// MARK: - Private extensions
-
-private extension UIColor {
-    class var storyDefaultBackgrondColor: UIColor {
-        UIColor(hex: "#1B1B24")
     }
 }

@@ -24,7 +24,7 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
 
     private lazy var closeButton: UIButton = {
         let button = UIButton(withAutoLayout: true)
-        button.tintColor = .milk
+        button.tintColor = StoriesStyling.iconTintColor
         button.setImage(UIImage(named: .close).withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(vertical: .spacingM, horizontal: .spacingM)
         button.addTarget(self, action: #selector(handleCloseButtonTap), for: .touchUpInside)
@@ -32,8 +32,8 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
     }()
 
     private lazy var titleLabel: Label = {
-        let label = Label(style: .title2, withAutoLayout: true)
-        label.textColor = .milk
+        let label = Label(style: StoriesStyling.feedbackTitleStyle, withAutoLayout: true)
+        label.textColor = StoriesStyling.primaryTextColor
         label.numberOfLines = 0
         return label
     }()
@@ -41,16 +41,16 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
     private lazy var optionsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
 
     private lazy var disclaimerLabel: Label = {
-        let label = Label(style: .detail, withAutoLayout: true)
-        label.textColor = .milk
+        let label = Label(style: StoriesStyling.feedbackDisclaimerStyle, withAutoLayout: true)
+        label.textColor = StoriesStyling.primaryTextColor
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
     }()
 
     private lazy var successLabel: Label = {
-        let label = Label(style: .title1, withAutoLayout: true)
-        label.textColor = .milk
+        let label = Label(style: StoriesStyling.feedbackSuccessLabelStyle, withAutoLayout: true)
+        label.textColor = StoriesStyling.primaryTextColor
         label.numberOfLines = 0
         label.textAlignment = .center
         return label

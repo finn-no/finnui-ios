@@ -4,7 +4,7 @@ import UIKit
 class ProgressBarView: UIView {
     private lazy var backgroundView: UIView = {
         let view = UIView(withAutoLayout: true)
-        view.backgroundColor = .milk
+        view.backgroundColor = StoriesStyling.progressBarColor
         view.alpha = 0.5
         view.layer.cornerRadius = 1.5
         return view
@@ -12,7 +12,7 @@ class ProgressBarView: UIView {
 
     private lazy var progressView: UIView = {
         let view = UIView(withAutoLayout: true)
-        view.backgroundColor = .milk
+        view.backgroundColor = StoriesStyling.progressBarColor
         view.layer.cornerRadius = 1.5
         return view
     }()
