@@ -11,6 +11,7 @@ class AgentProfileView: UIView {
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
     private lazy var phoneLabel = Label.create(style: .body, isHidden: true)
+    private lazy var imageSize = CGSize(width: 96, height: 96)
 
     private lazy var remoteImageView: RemoteImageView = {
         let view = RemoteImageView(withAutoLayout: true)
@@ -48,8 +49,8 @@ class AgentProfileView: UIView {
             remoteImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
             remoteImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             remoteImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
-            remoteImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 96),
-            remoteImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 96),
+            remoteImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
+            remoteImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
 
             textStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
             textStackView.leadingAnchor.constraint(equalTo: remoteImageView.trailingAnchor, constant: .spacingM),
@@ -71,7 +72,7 @@ class AgentProfileView: UIView {
         }
 
         remoteImageView.dataSource = remoteImageViewDataSource
-        remoteImageView.loadImage(for: model.imageUrl, imageWidth: .zero)
+        remoteImageView.loadImage(for: model.imageUrl, imageWidth: imageSize.width)
     }
 
     // MARK: - Overrides
