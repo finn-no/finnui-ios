@@ -93,8 +93,7 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            // This constant aligns the background with the image background for stories.
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -68),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -StoryCollectionViewCell.imageContainerToContentViewBottomSpacing),
 
             closeButton.topAnchor.constraint(equalTo: containerView.topAnchor),
             closeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),

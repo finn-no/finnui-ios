@@ -24,6 +24,8 @@ class StoryCollectionViewCell: UICollectionViewCell {
         case dismiss
     }
 
+    static var imageContainerToContentViewBottomSpacing: CGFloat = openAdButtonHeight + swipeUpIconSize + 2 * swipeUpIconVerticalSpacing
+
     // MARK: - Subviews
 
     private lazy var imageView: StoryImageView = {
@@ -137,6 +139,9 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private let storyIconSize: CGFloat = 32
     private let priceLabelHeight: CGFloat = 32
     private let iconSize: CGFloat = 44
+    private static var openAdButtonHeight: CGFloat = 44
+    private static var swipeUpIconSize: CGFloat = 16
+    private static var swipeUpIconVerticalSpacing: CGFloat = .spacingXS
 
     private var nextIndex: Int? {
         currentIndex + 1 < slides.count ? currentIndex + 1 : nil
@@ -187,16 +192,16 @@ class StoryCollectionViewCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: swipeUpIconImageView.topAnchor, constant: -.spacingXS),
+            imageView.bottomAnchor.constraint(equalTo: swipeUpIconImageView.topAnchor, constant: -Self.swipeUpIconVerticalSpacing),
 
             openAdButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             openAdButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            openAdButton.heightAnchor.constraint(equalToConstant: 44),
+            openAdButton.heightAnchor.constraint(equalToConstant: Self.openAdButtonHeight),
 
             swipeUpIconImageView.centerXAnchor.constraint(equalTo: openAdButton.centerXAnchor),
-            swipeUpIconImageView.bottomAnchor.constraint(equalTo: openAdButton.topAnchor, constant: -.spacingXS),
-            swipeUpIconImageView.heightAnchor.constraint(equalToConstant: 16),
-            swipeUpIconImageView.widthAnchor.constraint(equalToConstant: 16),
+            swipeUpIconImageView.bottomAnchor.constraint(equalTo: openAdButton.topAnchor, constant: -Self.swipeUpIconVerticalSpacing),
+            swipeUpIconImageView.heightAnchor.constraint(equalToConstant: Self.swipeUpIconSize),
+            swipeUpIconImageView.widthAnchor.constraint(equalToConstant: Self.swipeUpIconSize),
 
             progressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingS),
             progressView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: .spacingS),
