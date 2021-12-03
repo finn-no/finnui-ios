@@ -13,11 +13,18 @@ public protocol StoriesViewDataSource: AnyObject {
 public protocol StoriesViewDelegate: AnyObject {
     func storiesView(_ storiesView: StoriesView, didSelectAction action: StoriesView.Action)
     func storiesView(_ storiesView: StoriesView, didViewStorySlideWithIndex storySlideIndex: StorySlideIndex)
+    func storiesView(_ storiesView: StoriesView, didSelectFeedbackOptionWithIndex index: Int)
+    func storiesViewDidDisplayFeedbackModule(_ storiesView: StoriesView)
 }
 
 public typealias StorySlideIndex = (storyIndex: Int, slideIndex: Int)
 
 public class StoriesView: UIView {
+    public enum Section: Int, CaseIterable {
+        case story
+        case feedback
+    }
+
     public enum Action {
         case navigateToSearch(storyIndex: Int)
         case navigateToAd(index: StorySlideIndex)
@@ -36,18 +43,26 @@ public class StoriesView: UIView {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(StoryCollectionViewCell.self)
+        collectionView.register(FeedbackCollectionViewCell.self)
         collectionView.backgroundColor = .black
         return collectionView
     }()
 
     private weak var dataSource: StoriesViewDataSource?
     private weak var delegate: StoriesViewDelegate?
-    private var currentStoryIndex: Int = 0
+    private var currentIndex: Int = 0
     private var stories = [StoryViewModel]()
     private var didSwipeToDismiss: Bool = false
+    private var feedbackViewModel: StoryFeedbackViewModel?
+    private var startIndex: Int?
+
+    private var isFeedbackEnabled: Bool {
+        feedbackViewModel != nil
+    }
 
     private var currentStoryCell: StoryCollectionViewCell? {
-        collectionView.cellForItem(at: IndexPath(item: currentStoryIndex, section: 0)) as? StoryCollectionViewCell
+        guard stories.indices.contains(currentIndex) else { return nil }
+        return collectionView.cellForItem(at: IndexPath(item: currentIndex, section: 0)) as? StoryCollectionViewCell
     }
 
     // MARK: - Init
@@ -73,9 +88,16 @@ public class StoriesView: UIView {
 
     // MARK: - Public methods
 
-    public func configure(with stories: [StoryViewModel]) {
+    public func configure(
+        with stories: [StoryViewModel],
+        startIndex: Int,
+        feedbackViewModel: StoryFeedbackViewModel? = nil
+    ) {
         self.stories = stories
+        self.startIndex = startIndex
+        self.feedbackViewModel = feedbackViewModel
         collectionView.reloadData()
+        setNeedsLayout()
     }
 
     public func resumeStory() {
@@ -98,23 +120,62 @@ public class StoriesView: UIView {
         }
     }
 
+    // MARK: - Overrides
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        if let startIndex = startIndex {
+            scrollToStory(at: startIndex, animated: false)
+            self.startIndex = nil
+        }
+    }
+
     // MARK: - Private methods
 
-    private func scroll(to index: Int, animated: Bool = true) {
+    private func scrollToStory(at index: Int, animated: Bool = true) {
+        guard stories.indices.contains(index) else { return }
         let indexPath = IndexPath(item: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
-        currentStoryIndex = index
+        currentIndex = index
+    }
+
+    private func scrollToFeedbackCell() {
+        guard isFeedbackEnabled else { return }
+        let indexPath = IndexPath(item: 0, section: 1)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        currentIndex = stories.count
     }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension StoriesView: UICollectionViewDataSource {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        isFeedbackEnabled ? 2 : 1
+    }
+
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        stories.count
+        guard let section = Section(rawValue: section) else { return 0 }
+        switch section {
+        case .story:
+            return stories.count
+        case .feedback:
+            return 1
+        }
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let section = Section(rawValue: indexPath.section) else { return UICollectionViewCell() }
+
+        if case .feedback = section {
+            let cell = collectionView.dequeue(FeedbackCollectionViewCell.self, for: indexPath)
+            cell.delegate = self
+            if let viewModel = feedbackViewModel {
+                cell.configure(with: viewModel)
+            }
+            return cell
+        }
+
         let cell = collectionView.dequeue(StoryCollectionViewCell.self, for: indexPath)
         guard let story = stories[safe: indexPath.item] else { return cell }
 
@@ -134,8 +195,11 @@ extension StoriesView: UICollectionViewDataSource {
 
 extension StoriesView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? StoryCollectionViewCell else { return }
-        cell.prepareForDisplay()
+        if let cell = cell as? StoryCollectionViewCell {
+            cell.prepareForDisplay()
+        } else if cell as? FeedbackCollectionViewCell != nil {
+            delegate?.storiesViewDidDisplayFeedbackModule(self)
+        }
     }
 
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -145,20 +209,25 @@ extension StoriesView: UICollectionViewDelegate {
 
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.frame.size.width
-        currentStoryIndex = Int(scrollView.contentOffset.x / pageWidth)
+        currentIndex = Int(scrollView.contentOffset.x / pageWidth)
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !didSwipeToDismiss else { return }
+        guard
+            collectionView.contentSize.width > 0,
+            collectionView.frame.size.width > 0,
+            !didSwipeToDismiss
+        else { return }
 
         let swipeDistanceToTriggerDismiss = scrollView.frame.size.width * 0.25
 
         let swipeToDismissFromFirstCell =
-            currentStoryIndex == 0 &&
+            currentIndex == 0 &&
             scrollView.contentOffset.x < scrollView.frame.minX - swipeDistanceToTriggerDismiss
 
+        let lastCellIndex = isFeedbackEnabled ? stories.count : stories.count - 1
         let swipeToDismissFromLastCell =
-            currentStoryIndex == stories.count - 1 &&
+            currentIndex == lastCellIndex &&
             scrollView.contentOffset.x > collectionView.contentSize.width - collectionView.frame.size.width + swipeDistanceToTriggerDismiss
 
         guard swipeToDismissFromFirstCell || swipeToDismissFromLastCell else { return }
@@ -208,20 +277,24 @@ extension StoriesView: StoryCollectionViewCellDelegate {
     func storyCollectionViewCell(_ cell: StoryCollectionViewCell, didSelect action: StoryCollectionViewCell.Action) {
         guard
             let storyIndex = cell.indexPath?.item,
-            currentStoryIndex == storyIndex
+            currentIndex == storyIndex
         else { return }
 
         switch action {
         case .showNextStory:
             if storyIndex + 1 < stories.count {
-                scroll(to: storyIndex + 1)
+                scrollToStory(at: storyIndex + 1)
             } else {
-                delegate?.storiesView(self, didSelectAction: .dismiss)
+                if isFeedbackEnabled {
+                    scrollToFeedbackCell()
+                } else {
+                    delegate?.storiesView(self, didSelectAction: .dismiss)
+                }
             }
 
         case .showPreviousStory:
             if storyIndex - 1 >= 0 {
-                scroll(to: storyIndex - 1)
+                scrollToStory(at: storyIndex - 1)
             }
 
         case .navigateToSearch:
@@ -241,6 +314,26 @@ extension StoriesView: StoryCollectionViewCellDelegate {
 
         case .dismiss:
             delegate?.storiesView(self, didSelectAction: .dismiss)
+        }
+    }
+}
+
+// MARK: - FeedbackCollectionViewCellDelegate
+
+extension StoriesView: FeedbackCollectionViewCellDelegate {
+    func feedbackCollectionViewCell(_ feedbackCollectionViewCell: FeedbackCollectionViewCell, didSelectOptionWithIndex index: Int) {
+        delegate?.storiesView(self, didSelectFeedbackOptionWithIndex: index)
+    }
+
+    func feedbackCollectionViewCell(_ feedbackCollectionViewCell: FeedbackCollectionViewCell, didSelectAction action: FeedbackCollectionViewCell.Action) {
+        switch action {
+        case .next, .dismiss:
+            // Next is equal to dismiss, since it's the last cell.
+            delegate?.storiesView(self, didSelectAction: .dismiss)
+        case .previous:
+            if let lastStoryIndex = stories.indices.last {
+                scrollToStory(at: lastStoryIndex)
+            }
         }
     }
 }

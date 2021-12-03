@@ -23,11 +23,23 @@ class StoryDemoView: UIView {
     private func setup() {
         addSubview(storiesView)
         storiesView.fillInSuperview()
-        storiesView.configure(with: [Self.story1, Self.story2])
+        storiesView.configure(
+            with: [Self.story1, Self.story2],
+            startIndex: 0,
+            feedbackViewModel: Self.feedbackViewModel
+        )
     }
 }
 
 extension StoryDemoView: StoriesViewDelegate {
+    func storiesViewDidDisplayFeedbackModule(_ storiesView: StoriesView) {
+        print("Did display feedback module")
+    }
+
+    func storiesView(_ storiesView: StoriesView, didSelectFeedbackOptionWithIndex index: Int) {
+        print("Selected feedback option with index \(index)")
+    }
+
     func storiesView(_ storiesView: StoriesView, didViewStorySlideWithIndex storySlideIndex: StorySlideIndex) {}
 
     func storiesView(_ storiesView: StoriesView, didSelectAction action: StoriesView.Action) {
@@ -111,7 +123,7 @@ extension StoryDemoView {
             price: "1500 kr"
         ),
         StorySlideViewModel(
-            imageUrl: "https://yt3.ggpht.com/ytc/AKedOLTYio64rqGJoLKqcaHBKtVJYohlmsVSzXOcBpG6oA=s900-c-k-c0x00ffffff-no-rj",
+            imageUrl: nil,
             title: "Katt",
             detailText: "4 t siden, Tromsø",
             price: "20 kr"
@@ -144,4 +156,15 @@ extension StoryDemoView {
             price: "8 500 000 kr"
         )
     ]
+
+    static var feedbackViewModel = StoryFeedbackViewModel(
+        title: "Gir stories mer oversikt over nye annonser i dine lagrede søk?",
+        disclaimerText: "Svarene på undersøkelsen vil bli brukt i vårt produkt-forbedringsarbeid, og lagres uten å kunne spores tilbake til deg.",
+        feedbackOptions: [
+            "😍   Absolutt",
+            "👌   Litt",
+            "👎   Nei"
+        ],
+        feedbackGivenText: "🎉\nTakk for din tilbakemelding!"
+    )
 }

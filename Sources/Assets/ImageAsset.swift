@@ -35,11 +35,15 @@ extension UIImage {
 enum ImageAsset: String {
     case alphabeticalSortingAscending
     case arrowUp
+    case backgroundFigureLeft
+    case backgroundFigureRight
+    case backgroundFigureTop
     case balloon0
     case balloon1
     case balloon2
     case balloon2Red
     case blinkRocket
+    case checkMark
     case clockSmall
     case close
     case emptyPersonalNotificationsIcon
@@ -72,6 +76,7 @@ enum ImageAsset: String {
     case splashLetters3
     case splashLetters4
     case splashLogo
+    case storyPlaceholder
     case tagMini
     case trashcan
     case verified
@@ -82,11 +87,15 @@ enum ImageAsset: String {
         return [
             .alphabeticalSortingAscending,
             .arrowUp,
+            .backgroundFigureLeft,
+            .backgroundFigureRight,
+            .backgroundFigureTop,
             .balloon0,
             .balloon1,
             .balloon2,
             .balloon2Red,
             .blinkRocket,
+            .checkMark,
             .clockSmall,
             .close,
             .emptyPersonalNotificationsIcon,
@@ -119,6 +128,7 @@ enum ImageAsset: String {
             .splashLetters3,
             .splashLetters4,
             .splashLogo,
+            .storyPlaceholder,
             .tagMini,
             .trashcan,
             .verified,
