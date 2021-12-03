@@ -97,7 +97,7 @@ public class StoriesView: UIView {
         self.startIndex = startIndex
         self.feedbackViewModel = feedbackViewModel
         collectionView.reloadData()
-        collectionView.setNeedsLayout()
+        setNeedsLayout()
     }
 
     public func resumeStory() {
