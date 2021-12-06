@@ -31,6 +31,13 @@ public class StoriesView: UIView {
         case toggleFavorite(index: StorySlideIndex, button: UIButton)
         case share(index: StorySlideIndex)
         case dismiss
+        case endStory(action: EndStoryAction, storyIndex: Int)
+    }
+
+    public enum EndStoryAction {
+        case swipeNext
+        case swipePrevious
+        case closeButton
     }
 
     // MARK: - Private properties
@@ -209,7 +216,14 @@ extension StoriesView: UICollectionViewDelegate {
 
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.frame.size.width
-        currentIndex = Int(scrollView.contentOffset.x / pageWidth)
+        let newIndex = Int(scrollView.contentOffset.x / pageWidth)
+
+        if newIndex != currentIndex, stories.indices.contains(currentIndex) {
+            let action: EndStoryAction = newIndex > currentIndex ? .swipeNext : .swipePrevious
+            delegate?.storiesView(self, didSelectAction: .endStory(action: action, storyIndex: currentIndex))
+        }
+
+        currentIndex = newIndex
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -233,6 +247,7 @@ extension StoriesView: UICollectionViewDelegate {
         guard swipeToDismissFromFirstCell || swipeToDismissFromLastCell else { return }
 
         didSwipeToDismiss = true
+        delegate?.storiesView(self, didSelectAction: .endStory(action: swipeToDismissFromFirstCell ? .swipePrevious : .swipeNext, storyIndex: currentIndex))
         delegate?.storiesView(self, didSelectAction: .dismiss)
     }
 }
@@ -313,6 +328,7 @@ extension StoriesView: StoryCollectionViewCellDelegate {
             delegate?.storiesView(self, didSelectAction: .toggleFavorite(index: index, button: button))
 
         case .dismiss:
+            delegate?.storiesView(self, didSelectAction: .endStory(action: .closeButton, storyIndex: currentIndex))
             delegate?.storiesView(self, didSelectAction: .dismiss)
         }
     }

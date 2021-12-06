@@ -59,6 +59,8 @@ extension StoryDemoView: StoriesViewDelegate {
             print("OPEN AD \(index)")
         case .navigateToSearch(let index):
             print("GO TO SEARCH \(index)")
+        case .endStory(action: let action, storyIndex: let storyIndex):
+            print("ENDED A STORY BY ACTION \(action), INDEX: \(storyIndex)")
         }
     }
 }
