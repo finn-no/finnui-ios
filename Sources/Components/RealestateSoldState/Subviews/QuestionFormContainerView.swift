@@ -7,6 +7,7 @@ protocol QuestionFormContainerViewDelegate: AnyObject {
         _ view: QuestionFormContainerView,
         questionModels: [RealestateSoldStateQuestionModel]
     )
+    func questionFormContainerViewDidToggleTextView(_ view: QuestionFormContainerView)
 }
 
 class QuestionFormContainerView: UIView {
@@ -114,7 +115,7 @@ extension QuestionFormContainerView: QuestionFormViewDelegate {
     }
 
     func questionFormViewDidToggleTextView(_ view: QuestionFormView) {
-        print("✒️ Did toggle textView")
+        delegate?.questionFormContainerViewDidToggleTextView(self)
     }
 }
 

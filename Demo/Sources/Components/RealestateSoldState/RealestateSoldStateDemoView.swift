@@ -133,6 +133,10 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
     func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView) {
         view.isExpanded.toggle()
     }
+
+    func realestateSoldStateViewDidToggleTextView(_ view: RealestateSoldStateView) {
+        print("🖌 Did toggle TextView")
+    }
 }
 
 // MARK: - Private extensions

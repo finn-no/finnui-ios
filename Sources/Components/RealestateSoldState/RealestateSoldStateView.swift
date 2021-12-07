@@ -10,6 +10,7 @@ public protocol RealestateSoldStateViewDelegate: AnyObject {
     func realestateSoldStateViewDidSelectCompanyProfileCtaButton(_ view: RealestateSoldStateView)
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL)
     func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView)
+    func realestateSoldStateViewDidToggleTextView(_ view: RealestateSoldStateView)
 }
 
 public class RealestateSoldStateView: UIView {
@@ -211,6 +212,10 @@ extension RealestateSoldStateView: QuestionFormContainerViewDelegate {
         questionModels: [RealestateSoldStateQuestionModel]
     ) {
         delegate?.realestateSoldStateViewDidSubmitFormWithoutContactInformation(self, questionModels: questionModels)
+    }
+
+    func questionFormContainerViewDidToggleTextView(_ view: QuestionFormContainerView) {
+        delegate?.realestateSoldStateViewDidToggleTextView(self)
     }
 }
 
