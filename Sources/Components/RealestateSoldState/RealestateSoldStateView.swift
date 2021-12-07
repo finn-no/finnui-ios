@@ -41,13 +41,13 @@ public class RealestateSoldStateView: UIView {
     private lazy var regularScreenConstraints: [NSLayoutConstraint] = [
         leftStackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
         leftStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-        leftStackView.trailingAnchor.constraint(equalTo: centerXAnchor, constant: -.spacingS),
         leftStackView.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -.spacingM),
 
         rightStackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
-        rightStackView.leadingAnchor.constraint(equalTo: centerXAnchor, constant: .spacingS),
+        rightStackView.leadingAnchor.constraint(equalTo: leftStackView.trailingAnchor, constant: .spacingM),
         rightStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-        rightStackView.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -.spacingM)
+        rightStackView.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -.spacingM),
+        rightStackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 2/5)
     ]
 
     private lazy var compactScreenConstraints: [NSLayoutConstraint] = [
