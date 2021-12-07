@@ -43,7 +43,7 @@ class QuestionFormView: UIView {
     private lazy var textView: TextView = {
         let textView = TextView(withAutoLayout: true)
         textView.delegate = self
-        textView.isScrollEnabled = false
+        textView.isScrollEnabled = true
         return textView
     }()
 
@@ -68,6 +68,8 @@ class QuestionFormView: UIView {
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            textView.heightAnchor.constraint(equalToConstant: 120),
 
             questionsStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
             questionsStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
