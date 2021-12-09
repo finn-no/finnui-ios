@@ -15,7 +15,9 @@ public final class ShippingAlternativesView: UIView {
             borderColor: nil,
             textColor: .link,
             highlightedBorderColor: nil,
-            highlightedTextColor: .linkButtonHighlightedTextColor
+            highlightedTextColor: .linkButtonHighlightedTextColor,
+            margins: UIEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0),
+            normalFont: UIFont.body
         )
         let button = Button(style: buttonStyle)
         button.backgroundColor = .clear
@@ -42,7 +44,7 @@ public final class ShippingAlternativesView: UIView {
         addSubview(linkButton)
 
         NSLayoutConstraint.activate([
-            linkButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            linkButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             linkButton.topAnchor.constraint(equalTo: topAnchor),
             bottomAnchor.constraint(equalTo: linkButton.bottomAnchor)
         ])
