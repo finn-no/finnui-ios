@@ -76,14 +76,14 @@ public class RealestateSoldStateView: UIView {
 
     private lazy var companyProfileView = CompanyProfileView(
         viewModel: viewModel.companyProfile,
-        styling: viewModel.styling,
+        styling: viewModel.styling.profileBox,
         remoteImageViewDataSource: remoteImageViewDataSource,
         delegate: self,
         withAutoLayout: true
     )
 
     private lazy var presentFormButton: Button = {
-        let button = Button(style: .callToAction.override(using: viewModel.styling.secondayButtonStyle), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: viewModel.styling.ctaButton), size: .normal, withAutoLayout: true)
         button.setTitle(viewModel.presentFormButtonTitle, for: .normal)
         button.addTarget(self, action: #selector(presentFormButtonTapped), for: .touchUpInside)
         return button
@@ -107,7 +107,7 @@ public class RealestateSoldStateView: UIView {
         backgroundColor = .clear
         backgroundView.backgroundColor = .bgTertiary
         expandToggleView.backgroundColor = .bgTertiary
-        logoBackgroundView.backgroundColor = viewModel.styling.backgroundColor
+        logoBackgroundView.backgroundColor = viewModel.styling.heading.backgroundColor
         titleLabel.text = viewModel.title
 
         leftStackView.addArrangedSubviews([titleLabel, questionFormView, presentFormButton])
@@ -148,7 +148,7 @@ public class RealestateSoldStateView: UIView {
 
         expandToggleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleExpandViewTap)))
 
-        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
+        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.heading.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
         agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 

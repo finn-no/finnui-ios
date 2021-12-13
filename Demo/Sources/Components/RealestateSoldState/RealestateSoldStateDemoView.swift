@@ -257,20 +257,26 @@ private extension LinkButtonViewModel {
 private extension RealestateSoldStateModel.Styling {
     static var demoStyle: RealestateSoldStateModel.Styling {
         .init(
-            textColor: UIColor(hex: "#FFFFFF"),
-            logoBackgroundColor: UIColor(hex: "#FFFFFF"),
-            backgroundColor: UIColor(hex: "#0063FB"),
-            ctaButtonStyle: ButtonStyle(
-                textColor: UIColor(hex: "#464646"),
-                backgroundColor: UIColor(hex: "#FFFFFF"),
-                backgroundActiveColor: UIColor(hex: "#E7E7E7"),
-                borderColor: UIColor(hex: "#225B9F")
+            heading: .init(
+                backgroundColor: UIColor(hex: "#0063FB"),
+                logoBackgroundColor: UIColor(hex: "#FFFFFF")
             ),
-            secondayButtonStyle: ButtonStyle(
+            profileBox: .init(
+                actionButton: .init(
+                    textColor: UIColor(hex: "#464646"),
+                    backgroundColor: UIColor(hex: "#FFFFFF"),
+                    backgroundActiveColor: UIColor(hex: "#CCDEED"),
+                    borderColor: UIColor(hex: "#FFFFFF")
+                ),
                 textColor: UIColor(hex: "#FFFFFF"),
                 backgroundColor: UIColor(hex: "#0063FB"),
-                backgroundActiveColor: UIColor(hex: "#0059E1"),
-                borderColor: UIColor(hex: "#225B9F")
+                logoBackgroundColor: UIColor(hex: "#FFFFFF")
+            ),
+            ctaButton: .init(
+                textColor: UIColor(hex: "#FFFFFF"),
+                backgroundColor: UIColor(hex: "#0063FB"),
+                backgroundActiveColor: UIColor(hex: "#1E78C2"),
+                borderColor: UIColor(hex: "#005AA4")
             )
         )
     }

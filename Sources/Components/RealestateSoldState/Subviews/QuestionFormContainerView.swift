@@ -28,7 +28,7 @@ class QuestionFormContainerView: UIView {
     }()
 
     private lazy var submitButton: Button = {
-        let button = Button(style: .callToAction.override(using: styling.secondayButtonStyle), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: styling.ctaButton), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
