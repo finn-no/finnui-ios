@@ -49,6 +49,7 @@ public class StoriesView: UIView {
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.alwaysBounceHorizontal = true
         collectionView.register(StoryCollectionViewCell.self)
         collectionView.register(FeedbackCollectionViewCell.self)
         collectionView.backgroundColor = .black
