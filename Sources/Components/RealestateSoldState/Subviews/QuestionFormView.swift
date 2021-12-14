@@ -44,6 +44,10 @@ class QuestionFormView: UIView {
         let textView = TextView(withAutoLayout: true)
         textView.delegate = self
         textView.isScrollEnabled = true
+        textView.configure(textViewBackgroundColor: .bgPrimary)
+        textView.configure(shouldHideUnderLine: true)
+        textView.layer.cornerRadius = 4
+        textView.layer.borderWidth = 1
         return textView
     }()
 
@@ -99,6 +103,13 @@ class QuestionFormView: UIView {
             textView.text = userFreetextQuestion.value ?? ""
         }
     }
+
+    // MARK: - Overrides
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        textView.layer.borderColor = UIColor.textViewBorderColor.cgColor
+    }
 }
 
 // MARK: - QuestionItemViewDelegate
@@ -135,5 +146,11 @@ private extension Array where Element == RealestateSoldStateQuestionModel {
 
     var firstUserFreetext: RealestateSoldStateQuestionModel? {
         first { $0.kind == .userFreetext }
+    }
+}
+
+private extension UIColor {
+    static var textViewBorderColor: UIColor {
+        dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine).cgColor
     }
 }
