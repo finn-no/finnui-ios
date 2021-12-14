@@ -31,7 +31,9 @@ class QuestionFormView: UIView {
     // MARK: - Private properties
 
     private weak var delegate: QuestionFormViewDelegate?
+    private let viewModel: QuestionFormViewModel
     private var questions = [RealestateSoldStateQuestionModel]()
+    private var freeTextCharacterCountSuffix: String?
     private lazy var questionsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
 
     private lazy var titleLabel: Label = {
@@ -51,9 +53,22 @@ class QuestionFormView: UIView {
         return textView
     }()
 
+    private lazy var freeTextCharacterCountLabel: Label = {
+        let label = Label(style: .caption, withAutoLayout: true)
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private lazy var freeTextDisclaimerLabel: Label = {
+        let label = Label(style: .caption, withAutoLayout: true)
+        label.numberOfLines = 0
+        return label
+    }()
+
     // MARK: - Init
 
-    init(delegate: QuestionFormViewDelegate, withAutoLayout: Bool) {
+    init(viewModel: QuestionFormViewModel, delegate: QuestionFormViewDelegate, withAutoLayout: Bool) {
+        self.viewModel = viewModel
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
@@ -80,15 +95,11 @@ class QuestionFormView: UIView {
             questionsStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             questionsStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-    }
 
-    // MARK: - Internal methods
 
-    func configure(with title: String, questions: [RealestateSoldStateQuestionModel]) {
-        self.questions = questions
-
-        titleLabel.text = title
-        questionsStackView.removeArrangedSubviews()
+        titleLabel.text = viewModel.questionsTitle
+        freeTextDisclaimerLabel.text = viewModel.userFreeTextDisclaimer
+        questions = viewModel.questions
 
         let questionItemViews = questions.filterProvided.map { question -> QuestionItemView in
             QuestionItemView(question: question, delegate: self)
@@ -97,10 +108,13 @@ class QuestionFormView: UIView {
 
         if let userFreetextQuestion = questions.firstUserFreetext {
             let questionItemView = QuestionItemView(question: userFreetextQuestion, delegate: self)
-            questionsStackView.addArrangedSubviews([questionItemView, textView])
+            questionsStackView.addArrangedSubviews([questionItemView, textView, freeTextCharacterCountLabel, freeTextDisclaimerLabel])
+            questionsStackView.setCustomSpacing(.spacingXS, after: freeTextCharacterCountLabel)
 
-            textView.isHidden = !userFreetextQuestion.isSelected
+            [textView, freeTextCharacterCountLabel, freeTextDisclaimerLabel].forEach { $0.isHidden = !userFreetextQuestion.isSelected }
+
             textView.text = userFreetextQuestion.value ?? ""
+            updateCharacterCountLabel()
         }
     }
 
@@ -109,6 +123,13 @@ class QuestionFormView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         textView.layer.borderColor = UIColor.textViewBorderColor.cgColor
+    }
+
+    // MARK: - Private methods
+
+    private func updateCharacterCountLabel() {
+        let userFreeTextCount = (textView.text ?? "").count
+        freeTextCharacterCountLabel.text = "\(userFreeTextCount) / \(viewModel.userFreeTextCharacterLimit) \(viewModel.userFreeTextCounterSuffix)"
     }
 }
 
@@ -121,7 +142,7 @@ extension QuestionFormView: QuestionItemViewDelegate {
         delegate?.questionFormViewDidToggleQuestion(self)
 
         if case .userFreetext = view.question.kind {
-            textView.isHidden = !view.question.isSelected
+            [textView, freeTextCharacterCountLabel, freeTextDisclaimerLabel].forEach { $0.isHidden = !view.question.isSelected }
             delegate?.questionFormViewDidToggleTextView(self)
         }
     }
@@ -136,6 +157,7 @@ extension QuestionFormView: TextViewDelegate {
         delegate?.questionFormViewDidUpdateFreeTextQuestion(self)
     }
 }
+
 
 // MARK: - Private extensions
 
