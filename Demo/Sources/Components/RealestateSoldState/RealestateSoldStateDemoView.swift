@@ -214,7 +214,10 @@ private extension QuestionFormViewModel {
                 )
             ),
             submitDisclaimer: "Ved å trykke \"Send skjema\" samtykker du til at FINN kan sende dine opplysninger fra skjema over til ansvarlig megler for denne annonsen.",
-            submitButtonTitle: "Send skjema"
+            submitButtonTitle: "Send skjema",
+            userFreeTextCharacterLimit: 40,
+            userFreeTextCounterSuffix: "tegn",
+            userFreeTextDisclaimer: "FINN.no forbeholder seg retten til å kontrollere og stoppe meldinger."
         )
     }
 }
@@ -226,7 +229,10 @@ private extension QuestionFormViewModel {
             questions: questions,
             contactMethod: nil,
             submitDisclaimer: submitDisclaimer,
-            submitButtonTitle: submitButtonTitle
+            submitButtonTitle: submitButtonTitle,
+            userFreeTextCharacterLimit: userFreeTextCharacterLimit,
+            userFreeTextCounterSuffix: userFreeTextCounterSuffix,
+            userFreeTextDisclaimer: userFreeTextDisclaimer
         )
     }
 }
