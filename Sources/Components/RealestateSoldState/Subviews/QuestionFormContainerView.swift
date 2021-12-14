@@ -19,7 +19,7 @@ class QuestionFormContainerView: UIView {
     private var userContactMethodView: UserContactInformationView?
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
-    private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
+    private lazy var questionFormView = QuestionFormView(viewModel: viewModel, delegate: self, withAutoLayout: true)
 
     private lazy var disclaimerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
@@ -68,8 +68,6 @@ class QuestionFormContainerView: UIView {
 
         addSubview(stackView)
         stackView.fillInSuperview()
-
-        questionFormView.configure(with: viewModel.questionsTitle, questions: viewModel.questions)
 
         disclaimerLabel.text = viewModel.submitDisclaimer
         submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
