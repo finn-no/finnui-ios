@@ -29,6 +29,7 @@ public class RealestateSoldStateView: UIView {
 
     private let viewModel: RealestateSoldStateModel
     private let expandToggleViewHeight = CGFloat(56)
+    private var presentQuestionForm = true
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
     private lazy var backgroundView = UIView(withAutoLayout: true)
     private lazy var logoImageWrapperView = RealestateAgencyLogoWrapperView(withAutoLayout: true)
@@ -63,6 +64,12 @@ public class RealestateSoldStateView: UIView {
 
     private lazy var titleLabel: Label = {
         let label = Label(style: .title2, withAutoLayout: true)
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private lazy var formSubmittedLabel: Label = {
+        let label = Label(style: .body, withAutoLayout: true)
         label.numberOfLines = 0
         return label
     }()
@@ -162,19 +169,41 @@ public class RealestateSoldStateView: UIView {
         }
     }
 
+    // MARK: - Public methods
+
+    public func hideFormAndPresentSuccessLabel(notifyDelegateAboutResize notifyDelegate: Bool = false) {
+        presentQuestionForm = false
+        configurePresentation(updateStackViewConstraints: true)
+
+        if notifyDelegate {
+            delegate?.realestateSoldStateViewDidResize(self)
+        }
+    }
+
     // MARK: - Private methods
 
     private func configurePresentation(updateStackViewConstraints: Bool) {
-        if isExpanded {
-            questionFormView.isHidden = false
-            companyProfileView.isHidden = false
-            presentFormButton.isHidden = true
-            expandToggleView.configure(with: UIImage(named: .chevronUp))
+        if presentQuestionForm {
+            if isExpanded {
+                questionFormView.isHidden = false
+                companyProfileView.isHidden = false
+                presentFormButton.isHidden = true
+                expandToggleView.configure(with: UIImage(named: .chevronUp))
+            } else {
+                questionFormView.isHidden = true
+                companyProfileView.isHidden = true
+                presentFormButton.isHidden = false
+                expandToggleView.configure(with: UIImage(named: .chevronDown))
+            }
         } else {
             questionFormView.isHidden = true
-            companyProfileView.isHidden = true
-            presentFormButton.isHidden = false
-            expandToggleView.configure(with: UIImage(named: .chevronDown))
+            presentFormButton.isHidden = true
+            companyProfileView.isHidden = false
+            expandToggleView.removeFromSuperview()
+            leftStackView.addArrangedSubview(formSubmittedLabel)
+
+            titleLabel.text = viewModel.formSubmitted.title
+            formSubmittedLabel.text = viewModel.formSubmitted.description
         }
 
         if updateStackViewConstraints {

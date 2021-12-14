@@ -12,7 +12,10 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         },
         .init(title: "Without contact information - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModelWithoutContactInfo, isExpanded: false)
-        }
+        },
+        .init(title: "Form submitted") { [weak self] in
+            self?.setupDemoView(with: .demoModel, isExpanded: false, isFormSubmitted: true)
+        },
     ]
 
     private var realestateSoldStateView: RealestateSoldStateView?
@@ -40,7 +43,7 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
 
     // MARK: - Private methods
 
-    private func setupDemoView(with viewModel: RealestateSoldStateModel, isExpanded: Bool) {
+    private func setupDemoView(with viewModel: RealestateSoldStateModel, isExpanded: Bool, isFormSubmitted: Bool = false) {
         if let oldView = realestateSoldStateView {
             oldView.removeFromSuperview()
             realestateSoldStateView = nil
@@ -49,6 +52,10 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         let view = RealestateSoldStateView(viewModel: viewModel, remoteImageViewDataSource: self, withAutoLayout: true)
         view.isExpanded = isExpanded
         view.delegate = self
+
+        if isFormSubmitted {
+            view.hideFormAndPresentSuccessLabel()
+        }
 
         scrollView.addSubview(view)
         NSLayoutConstraint.activate([
@@ -150,6 +157,7 @@ private extension RealestateSoldStateModel {
             agentProfile: .demoModel,
             questionForm: .demoModel,
             companyProfile: .demoModel,
+            formSubmitted: .demoModel,
             styling: .demoStyle
         )
     }
@@ -162,6 +170,7 @@ private extension RealestateSoldStateModel {
             agentProfile: .demoModel,
             questionForm: .demoModel.copyWithoutContactInfo(),
             companyProfile: .demoModel,
+            formSubmitted: .demoModel,
             styling: .demoStyle
         )
     }
@@ -278,6 +287,15 @@ private extension RealestateSoldStateModel.Styling {
                 backgroundActiveColor: UIColor(hex: "#1E78C2"),
                 borderColor: UIColor(hex: "#005AA4")
             )
+        )
+    }
+}
+
+private extension RealestateSoldStateFormSubmittedModel {
+    static var demoModel: RealestateSoldStateFormSubmittedModel {
+        .init(
+            title: "Skjemaet er sendt!",
+            description: "Megler svarer på din henvendelse så raskt som mulig. Forventet responstid er 1-2 dager."
         )
     }
 }
