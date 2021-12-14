@@ -73,6 +73,7 @@ class QuestionFormContainerView: UIView {
 
         disclaimerLabel.text = viewModel.submitDisclaimer
         submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
+        updateSubmitButtonState()
     }
 
     // MARK: - Private methods
