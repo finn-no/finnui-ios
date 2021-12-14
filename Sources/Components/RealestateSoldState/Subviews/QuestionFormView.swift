@@ -154,7 +154,18 @@ extension QuestionFormView: TextViewDelegate {
     public func textViewDidChange(_ textView: TextView) {
         guard let question = questions.firstUserFreetext else { return }
         question.value = textView.text
+        updateCharacterCountLabel()
         delegate?.questionFormViewDidUpdateFreeTextQuestion(self)
+    }
+
+    public func textView(_ textView: TextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard
+            let currentText = textView.text,
+            let stringRange = Range(range, in: currentText)
+        else { return false }
+
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        return updatedText.count <= viewModel.userFreeTextCharacterLimit
     }
 }
 
