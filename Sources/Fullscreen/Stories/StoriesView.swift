@@ -216,15 +216,14 @@ extension StoriesView: UICollectionViewDelegate {
     }
 
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let previousIndex = currentIndex
         let pageWidth = scrollView.frame.size.width
-        let newIndex = Int(scrollView.contentOffset.x / pageWidth)
+        currentIndex = Int(scrollView.contentOffset.x / pageWidth)
 
-        if newIndex != currentIndex, stories.indices.contains(currentIndex) {
-            let action: EndStoryAction = newIndex > currentIndex ? .swipeNext : .swipePrevious
-            delegate?.storiesView(self, didSelectAction: .endStory(action: action, storyIndex: currentIndex))
+        if currentIndex != previousIndex, stories.indices.contains(previousIndex) {
+            let action: EndStoryAction = currentIndex > previousIndex ? .swipeNext : .swipePrevious
+            delegate?.storiesView(self, didSelectAction: .endStory(action: action, storyIndex: previousIndex))
         }
-
-        currentIndex = newIndex
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
