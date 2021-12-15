@@ -5,7 +5,6 @@
 import SwiftUI
 
 /// Logic to fetch a collection of images
-@available(iOS 13.0, *)
 public protocol CollectionImageProvider: ObservableObject {
     init(urls: [URL])
     var images: [UIImage] { get }
@@ -14,7 +13,6 @@ public protocol CollectionImageProvider: ObservableObject {
 }
 
 /// Simple implementation for the CollectionImageProvider protocol for in-project previews
-@available(iOS 13.0, *)
 class SampleCollectionImageDownloader: ObservableObject, CollectionImageProvider {
     @Published var images: [UIImage] = []
     private var dataTasks: [URLSessionDataTask] = []

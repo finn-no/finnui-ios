@@ -6,7 +6,6 @@ import Combine
 import SwiftUI
 
 /// Protocol to fetch a single image given a URL
-@available(iOS 13.0, *)
 public protocol SingleImageProvider: ObservableObject {
     init(url: URL?)
     var image: UIImage { get }
@@ -14,7 +13,6 @@ public protocol SingleImageProvider: ObservableObject {
 }
 
 /// Simple implementation for the SingleImageProvider protocol for in-project previews
-@available(iOS 13.0, *)
 class SampleSingleImageProvider: ObservableObject, SingleImageProvider {
     let url: URL?
     @Published var image: UIImage = UIImage(named: .profile)

@@ -14,17 +14,7 @@ enum Sections: String, CaseIterable {
     case components
     case recycling
     case fullscreen
-    @available(iOS 13.0, *) case swiftui
-
-    static var allCases: [Sections] {
-        var cases: [Sections] = [.components, .recycling, .fullscreen]
-
-        if #available(iOS 13.0, *) {
-            cases.append(.swiftui)
-        }
-
-        return cases
-    }
+    case swiftui
 
     static var items: [Sections] {
         return allCases
@@ -39,10 +29,7 @@ enum Sections: String, CaseIterable {
         case .fullscreen:
             return FullscreenDemoViews.items.count
         case .swiftui:
-            if #available(iOS 13.0, *) {
-                return SwiftUIDemoViews.items.count
-            }
-            return 0
+            return SwiftUIDemoViews.items.count
         }
     }
 
@@ -63,11 +50,7 @@ enum Sections: String, CaseIterable {
         case .fullscreen:
             names = FullscreenDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         case .swiftui:
-            if #available(iOS 13.0, *) {
-                names = SwiftUIDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
-            } else {
-                names = []
-            }
+            names = SwiftUIDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         }
         return names
     }
@@ -83,11 +66,7 @@ enum Sections: String, CaseIterable {
         case .fullscreen:
             rawClassName = FullscreenDemoViews.items[indexPath.row].rawValue
         case .swiftui:
-            if #available(iOS 13.0, *) {
-                rawClassName = SwiftUIDemoViews.items[indexPath.row].rawValue
-            } else {
-                rawClassName = ""
-            }
+            rawClassName = SwiftUIDemoViews.items[indexPath.row].rawValue
         }
 
         return rawClassName.capitalizingFirstLetter
@@ -114,10 +93,8 @@ enum Sections: String, CaseIterable {
             let selectedView = FullscreenDemoViews.items[safe: indexPath.row]
             viewController = selectedView?.viewController
         case .swiftui:
-            if #available(iOS 13.0, *) {
-                let selectedView = SwiftUIDemoViews.items[safe: indexPath.row]
-                viewController = selectedView?.viewController
-            }
+            let selectedView = SwiftUIDemoViews.items[safe: indexPath.row]
+            viewController = selectedView?.viewController
         }
 
         let sectionType = Sections.for(indexPath)

@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-@available(iOS 13.0, *)
 struct ImageGalleryView<ImageProvider: CollectionImageProvider>: View {
     @ObservedObject var imageProvider: ImageProvider
     @State var selectedImageIndex: Int = 0
@@ -21,7 +20,6 @@ struct ImageGalleryView<ImageProvider: CollectionImageProvider>: View {
     }
 }
 
-@available(iOS 13.0, *)
 extension ImageGalleryView {
     var totalImages: Int {
         imageProvider.imageCount

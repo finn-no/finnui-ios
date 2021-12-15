@@ -5,7 +5,6 @@
 import SwiftUI
 import FinniversKit
 
-@available(iOS 13.0, *)
 struct DescriptionView: View {
     let viewModel: DescriptionViewModel
     @SwiftUI.State var isExpanded: Bool = false
@@ -47,7 +46,6 @@ struct DescriptionView: View {
     }
 }
 
-@available(iOS 13.0, *)
 //swiftlint:disable:next type_name superfluous_disable_command
 struct DescriptionView_Previews: PreviewProvider {
     static let ad = BapAdViewModel.sampleData

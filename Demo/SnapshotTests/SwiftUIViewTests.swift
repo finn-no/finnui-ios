@@ -7,7 +7,6 @@ import XCTest
 import SwiftUI
 @testable import FinnUI
 
-@available(iOS 13.0, *)
 class SwiftUIViewTests: XCTestCase {
     private func snapshot(
         _ component: SwiftUIDemoViews,

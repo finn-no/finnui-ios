@@ -5,7 +5,6 @@
 import SwiftUI
 import FinniversKit
 
-@available(iOS 13.0.0, *)
 struct BasicListCellWrapper: UIViewControllerRepresentable {
     let cell: BasicListCell
     let onSelect: (UIView?) -> Void
