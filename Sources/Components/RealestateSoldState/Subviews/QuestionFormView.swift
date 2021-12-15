@@ -184,6 +184,6 @@ private extension Array where Element == RealestateSoldStateQuestionModel {
 
 private extension UIColor {
     static var textViewBorderColor: UIColor {
-        dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine).cgColor
+        dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
     }
 }
