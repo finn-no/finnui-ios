@@ -5,7 +5,6 @@
 import SwiftUI
 import FinniversKit
 
-@available(iOS 13.0, *)
 struct PhoneNumberView: View {
     let viewModel: PhoneNumberViewModel
     @SwiftUI.State var showPhoneNumber: Bool = false
@@ -38,7 +37,6 @@ struct PhoneNumberView: View {
     }
 }
 
-@available(iOS 13.0.0, *)
 //swiftlint:disable:next type_name superfluous_disable_command
 struct PhoneNumberView_Previews: PreviewProvider {
     static var previews: some View {

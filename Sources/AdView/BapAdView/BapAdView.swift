@@ -7,7 +7,6 @@ import FinniversKit
 import UIKit
 import Combine
 
-@available(iOS 13.0.0, *)
 public struct BapAdView<GalleryImageProvider: CollectionImageProvider, AuthorImageProvider: SingleImageProvider>: View {
     let viewModel: BapAdViewModel
     let actions: BapAdViewActions?
@@ -59,7 +58,6 @@ public struct BapAdView<GalleryImageProvider: CollectionImageProvider, AuthorIma
 }
 
 // MARK: - Subviews
-@available(iOS 13.0.0, *)
 extension BapAdView {
     private var imageGallery: some View {
         galleryImageProvider.map {
@@ -185,7 +183,6 @@ extension BapAdView {
 }
 
 // MARK: - Actions
-@available(iOS 13.0.0, *)
 extension BapAdView {
     func addToFavorites() {
         actions?.addToFavorites()
@@ -228,7 +225,6 @@ extension BapAdView {
     }
 }
 
-@available(iOS 13.0.0, *)
 //swiftlint:disable:next type_name superfluous_disable_command
 struct BapAdView_Previews: PreviewProvider {
     static var previews: some View {

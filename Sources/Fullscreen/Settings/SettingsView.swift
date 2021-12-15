@@ -7,7 +7,6 @@ import FinniversKit
 
 // MARK: - View Model
 
-@available(iOS 13.0, *)
 public protocol SettingsViewModel: ObservableObject {
     var sections: [SettingsSection] { get }
     var versionText: String { get }
@@ -15,7 +14,6 @@ public protocol SettingsViewModel: ObservableObject {
 
 // MARK: - View
 
-@available(iOS 13.0.0, *)
 public struct SettingsView<ViewModel: SettingsViewModel>: View {
     @ObservedObject private var viewModel: ViewModel
     private var sections: [SettingsSection] { viewModel.sections }
@@ -85,7 +83,6 @@ public struct SettingsView<ViewModel: SettingsViewModel>: View {
 
 // MARK: - Cells
 
-@available(iOS 13.0.0, *)
 private struct Header: View {
     let text: String
 
@@ -106,7 +103,6 @@ private struct Header: View {
     }
 }
 
-@available(iOS 13.0.0, *)
 private struct Footer: View {
     let text: String
 
@@ -127,7 +123,6 @@ private struct Footer: View {
     }
 }
 
-@available(iOS 13.0.0, *)
 private struct ToggleCell: View {
     let model: SettingsViewToggleCellModel
     let onToggle: (Bool) -> Void
@@ -159,7 +154,6 @@ private struct ToggleCell: View {
     }
 }
 
-@available(iOS 13.0.0, *)
 private extension BasicListCell {
     init(model: SettingsViewConsentCellModel) {
         self.init(model: model, detailText: { _ in
@@ -170,7 +164,6 @@ private extension BasicListCell {
     }
 }
 
-@available(iOS 13.0.0, *)
 private struct VersionView: View {
     let text: String
 
@@ -193,7 +186,6 @@ private struct VersionView: View {
 
 // MARK: - Previews
 
-@available(iOS 13.0.0, *)
 // swiftlint:disable:next superfluous_disable_command type_name
 struct SettingsView_Previews: PreviewProvider {
     private static let viewModel = PreviewViewModel()
@@ -208,7 +200,6 @@ struct SettingsView_Previews: PreviewProvider {
     }
 }
 
-@available(iOS 13.0.0, *)
 private final class PreviewViewModel: SettingsViewModel {
     let versionText = "FinnUI Demo"
 
