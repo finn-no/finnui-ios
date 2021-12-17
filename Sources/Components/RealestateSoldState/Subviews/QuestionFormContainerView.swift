@@ -7,6 +7,7 @@ protocol QuestionFormContainerViewDelegate: AnyObject {
         _ view: QuestionFormContainerView,
         questionModels: [RealestateSoldStateQuestionModel]
     )
+    func questionFormContainerViewDidToggleTextView(_ view: QuestionFormContainerView)
 }
 
 class QuestionFormContainerView: UIView {
@@ -18,7 +19,7 @@ class QuestionFormContainerView: UIView {
     private var userContactMethodView: UserContactInformationView?
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
-    private lazy var questionFormView = QuestionFormView(delegate: self, withAutoLayout: true)
+    private lazy var questionFormView = QuestionFormView(viewModel: viewModel, delegate: self, withAutoLayout: true)
 
     private lazy var disclaimerLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
@@ -27,7 +28,7 @@ class QuestionFormContainerView: UIView {
     }()
 
     private lazy var submitButton: Button = {
-        let button = Button(style: .callToAction.override(using: styling.secondayButtonStyle), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: styling.ctaButton), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -68,10 +69,9 @@ class QuestionFormContainerView: UIView {
         addSubview(stackView)
         stackView.fillInSuperview()
 
-        questionFormView.configure(with: viewModel.questionsTitle, questions: viewModel.questions)
-
         disclaimerLabel.text = viewModel.submitDisclaimer
         submitButton.setTitle(viewModel.submitButtonTitle, for: .normal)
+        updateSubmitButtonState()
     }
 
     // MARK: - Private methods
@@ -114,7 +114,7 @@ extension QuestionFormContainerView: QuestionFormViewDelegate {
     }
 
     func questionFormViewDidToggleTextView(_ view: QuestionFormView) {
-        print("✒️ Did toggle textView")
+        delegate?.questionFormContainerViewDidToggleTextView(self)
     }
 }
 

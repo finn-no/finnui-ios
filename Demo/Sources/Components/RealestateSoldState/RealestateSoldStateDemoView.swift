@@ -12,7 +12,10 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         },
         .init(title: "Without contact information - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModelWithoutContactInfo, isExpanded: false)
-        }
+        },
+        .init(title: "Form submitted") { [weak self] in
+            self?.setupDemoView(with: .demoModel, isExpanded: false, isFormSubmitted: true)
+        },
     ]
 
     private var realestateSoldStateView: RealestateSoldStateView?
@@ -40,7 +43,7 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
 
     // MARK: - Private methods
 
-    private func setupDemoView(with viewModel: RealestateSoldStateModel, isExpanded: Bool) {
+    private func setupDemoView(with viewModel: RealestateSoldStateModel, isExpanded: Bool, isFormSubmitted: Bool = false) {
         if let oldView = realestateSoldStateView {
             oldView.removeFromSuperview()
             realestateSoldStateView = nil
@@ -49,6 +52,10 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         let view = RealestateSoldStateView(viewModel: viewModel, remoteImageViewDataSource: self, withAutoLayout: true)
         view.isExpanded = isExpanded
         view.delegate = self
+
+        if isFormSubmitted {
+            view.hideFormAndPresentSuccessLabel()
+        }
 
         scrollView.addSubview(view)
         NSLayoutConstraint.activate([
@@ -133,6 +140,10 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
     func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView) {
         view.isExpanded.toggle()
     }
+
+    func realestateSoldStateViewDidResize(_ view: RealestateSoldStateView) {
+        print("📏 Did resize itself")
+    }
 }
 
 // MARK: - Private extensions
@@ -146,6 +157,7 @@ private extension RealestateSoldStateModel {
             agentProfile: .demoModel,
             questionForm: .demoModel,
             companyProfile: .demoModel,
+            formSubmitted: .demoModel,
             styling: .demoStyle
         )
     }
@@ -158,6 +170,7 @@ private extension RealestateSoldStateModel {
             agentProfile: .demoModel,
             questionForm: .demoModel.copyWithoutContactInfo(),
             companyProfile: .demoModel,
+            formSubmitted: .demoModel,
             styling: .demoStyle
         )
     }
@@ -201,7 +214,10 @@ private extension QuestionFormViewModel {
                 )
             ),
             submitDisclaimer: "Ved å trykke \"Send skjema\" samtykker du til at FINN kan sende dine opplysninger fra skjema over til ansvarlig megler for denne annonsen.",
-            submitButtonTitle: "Send skjema"
+            submitButtonTitle: "Send skjema",
+            userFreeTextCharacterLimit: 40,
+            userFreeTextCounterSuffix: "tegn",
+            userFreeTextDisclaimer: "FINN.no forbeholder seg retten til å kontrollere og stoppe meldinger."
         )
     }
 }
@@ -213,7 +229,10 @@ private extension QuestionFormViewModel {
             questions: questions,
             contactMethod: nil,
             submitDisclaimer: submitDisclaimer,
-            submitButtonTitle: submitButtonTitle
+            submitButtonTitle: submitButtonTitle,
+            userFreeTextCharacterLimit: userFreeTextCharacterLimit,
+            userFreeTextCounterSuffix: userFreeTextCounterSuffix,
+            userFreeTextDisclaimer: userFreeTextDisclaimer
         )
     }
 }
@@ -253,21 +272,36 @@ private extension LinkButtonViewModel {
 private extension RealestateSoldStateModel.Styling {
     static var demoStyle: RealestateSoldStateModel.Styling {
         .init(
-            textColor: UIColor(hex: "#FFFFFF"),
-            logoBackgroundColor: UIColor(hex: "#FFFFFF"),
-            backgroundColor: UIColor(hex: "#0063FB"),
-            ctaButtonStyle: ButtonStyle(
-                textColor: UIColor(hex: "#464646"),
-                backgroundColor: UIColor(hex: "#FFFFFF"),
-                backgroundActiveColor: UIColor(hex: "#E7E7E7"),
-                borderColor: UIColor(hex: "#225B9F")
+            heading: .init(
+                backgroundColor: UIColor(hex: "#0063FB"),
+                logoBackgroundColor: UIColor(hex: "#FFFFFF")
             ),
-            secondayButtonStyle: ButtonStyle(
+            profileBox: .init(
+                actionButton: .init(
+                    textColor: UIColor(hex: "#464646"),
+                    backgroundColor: UIColor(hex: "#FFFFFF"),
+                    backgroundActiveColor: UIColor(hex: "#CCDEED"),
+                    borderColor: UIColor(hex: "#FFFFFF")
+                ),
                 textColor: UIColor(hex: "#FFFFFF"),
                 backgroundColor: UIColor(hex: "#0063FB"),
-                backgroundActiveColor: UIColor(hex: "#0059E1"),
-                borderColor: UIColor(hex: "#225B9F")
+                logoBackgroundColor: UIColor(hex: "#FFFFFF")
+            ),
+            ctaButton: .init(
+                textColor: UIColor(hex: "#FFFFFF"),
+                backgroundColor: UIColor(hex: "#0063FB"),
+                backgroundActiveColor: UIColor(hex: "#1E78C2"),
+                borderColor: UIColor(hex: "#005AA4")
             )
+        )
+    }
+}
+
+private extension RealestateSoldStateFormSubmittedModel {
+    static var demoModel: RealestateSoldStateFormSubmittedModel {
+        .init(
+            title: "Skjemaet er sendt!",
+            description: "Megler svarer på din henvendelse så raskt som mulig. Forventet responstid er 1-2 dager."
         )
     }
 }

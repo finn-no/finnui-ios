@@ -11,7 +11,7 @@ class CompanyProfileView: UIView {
     // MARK: - Private properties
 
     private let viewModel: CompanyProfileModel
-    private let styling: RealestateSoldStateModel.Styling
+    private let styling: RealestateSoldStateModel.Styling.ProfileBoxStyle
     private weak var delegate: CompanyProfileViewDelegate?
     private lazy var logoHeaderView = CompanyProfileHeaderView(withAutoLayout: true)
 
@@ -29,7 +29,7 @@ class CompanyProfileView: UIView {
     }()
 
     private lazy var ctaButton: Button = {
-        let button = Button(style: .callToAction.override(using: styling.ctaButtonStyle), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: styling.actionButton), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(handleCtaButtonTap), for: .touchUpInside)
         return button
     }()
@@ -38,7 +38,7 @@ class CompanyProfileView: UIView {
 
     init(
         viewModel: CompanyProfileModel,
-        styling: RealestateSoldStateModel.Styling,
+        styling: RealestateSoldStateModel.Styling.ProfileBoxStyle,
         remoteImageViewDataSource: RemoteImageViewDataSource?,
         delegate: CompanyProfileViewDelegate,
         withAutoLayout: Bool
@@ -121,7 +121,7 @@ private extension UIColor {
 }
 
 private extension LinkButtonViewModel {
-    func overrideStyle(using styling: RealestateSoldStateModel.Styling) -> LinkButtonViewModel {
+    func overrideStyle(using styling: RealestateSoldStateModel.Styling.ProfileBoxStyle) -> LinkButtonViewModel {
         guard let buttonStyle = buttonStyle else { return self }
 
         let newButtonStyle = buttonStyle.overrideStyle(

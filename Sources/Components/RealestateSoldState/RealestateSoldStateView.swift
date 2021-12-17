@@ -10,6 +10,7 @@ public protocol RealestateSoldStateViewDelegate: AnyObject {
     func realestateSoldStateViewDidSelectCompanyProfileCtaButton(_ view: RealestateSoldStateView)
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL)
     func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView)
+    func realestateSoldStateViewDidResize(_ view: RealestateSoldStateView)
 }
 
 public class RealestateSoldStateView: UIView {
@@ -28,6 +29,7 @@ public class RealestateSoldStateView: UIView {
 
     private let viewModel: RealestateSoldStateModel
     private let expandToggleViewHeight = CGFloat(56)
+    private var presentQuestionForm = true
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
     private lazy var backgroundView = UIView(withAutoLayout: true)
     private lazy var logoImageWrapperView = RealestateAgencyLogoWrapperView(withAutoLayout: true)
@@ -40,13 +42,13 @@ public class RealestateSoldStateView: UIView {
     private lazy var regularScreenConstraints: [NSLayoutConstraint] = [
         leftStackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
         leftStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-        leftStackView.trailingAnchor.constraint(equalTo: centerXAnchor, constant: -.spacingS),
         leftStackView.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -.spacingM),
 
         rightStackView.topAnchor.constraint(equalTo: logoImageWrapperView.bottomAnchor, constant: .spacingM),
-        rightStackView.leadingAnchor.constraint(equalTo: centerXAnchor, constant: .spacingS),
+        rightStackView.leadingAnchor.constraint(equalTo: leftStackView.trailingAnchor, constant: .spacingM),
         rightStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-        rightStackView.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -.spacingM)
+        rightStackView.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -.spacingM),
+        rightStackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 2/5)
     ]
 
     private lazy var compactScreenConstraints: [NSLayoutConstraint] = [
@@ -66,6 +68,12 @@ public class RealestateSoldStateView: UIView {
         return label
     }()
 
+    private lazy var formSubmittedLabel: Label = {
+        let label = Label(style: .body, withAutoLayout: true)
+        label.numberOfLines = 0
+        return label
+    }()
+
     private lazy var questionFormView = QuestionFormContainerView(
         viewModel: viewModel.questionForm,
         styling: viewModel.styling,
@@ -75,14 +83,14 @@ public class RealestateSoldStateView: UIView {
 
     private lazy var companyProfileView = CompanyProfileView(
         viewModel: viewModel.companyProfile,
-        styling: viewModel.styling,
+        styling: viewModel.styling.profileBox,
         remoteImageViewDataSource: remoteImageViewDataSource,
         delegate: self,
         withAutoLayout: true
     )
 
     private lazy var presentFormButton: Button = {
-        let button = Button(style: .callToAction.override(using: viewModel.styling.secondayButtonStyle), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: viewModel.styling.ctaButton), size: .normal, withAutoLayout: true)
         button.setTitle(viewModel.presentFormButtonTitle, for: .normal)
         button.addTarget(self, action: #selector(presentFormButtonTapped), for: .touchUpInside)
         return button
@@ -106,7 +114,7 @@ public class RealestateSoldStateView: UIView {
         backgroundColor = .clear
         backgroundView.backgroundColor = .bgTertiary
         expandToggleView.backgroundColor = .bgTertiary
-        logoBackgroundView.backgroundColor = viewModel.styling.backgroundColor
+        logoBackgroundView.backgroundColor = viewModel.styling.heading.backgroundColor
         titleLabel.text = viewModel.title
 
         leftStackView.addArrangedSubviews([titleLabel, questionFormView, presentFormButton])
@@ -147,7 +155,7 @@ public class RealestateSoldStateView: UIView {
 
         expandToggleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleExpandViewTap)))
 
-        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
+        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.heading.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
         agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
@@ -161,19 +169,41 @@ public class RealestateSoldStateView: UIView {
         }
     }
 
+    // MARK: - Public methods
+
+    public func hideFormAndPresentSuccessLabel(notifyDelegateAboutResize notifyDelegate: Bool = false) {
+        presentQuestionForm = false
+        configurePresentation(updateStackViewConstraints: true)
+
+        if notifyDelegate {
+            delegate?.realestateSoldStateViewDidResize(self)
+        }
+    }
+
     // MARK: - Private methods
 
     private func configurePresentation(updateStackViewConstraints: Bool) {
-        if isExpanded {
-            questionFormView.isHidden = false
-            companyProfileView.isHidden = false
-            presentFormButton.isHidden = true
-            expandToggleView.configure(with: UIImage(named: .chevronUp))
+        if presentQuestionForm {
+            if isExpanded {
+                questionFormView.isHidden = false
+                companyProfileView.isHidden = false
+                presentFormButton.isHidden = true
+                expandToggleView.configure(with: UIImage(named: .chevronUp))
+            } else {
+                questionFormView.isHidden = true
+                companyProfileView.isHidden = true
+                presentFormButton.isHidden = false
+                expandToggleView.configure(with: UIImage(named: .chevronDown))
+            }
         } else {
             questionFormView.isHidden = true
-            companyProfileView.isHidden = true
-            presentFormButton.isHidden = false
-            expandToggleView.configure(with: UIImage(named: .chevronDown))
+            presentFormButton.isHidden = true
+            companyProfileView.isHidden = false
+            expandToggleView.removeFromSuperview()
+            leftStackView.addArrangedSubview(formSubmittedLabel)
+
+            titleLabel.text = viewModel.formSubmitted.title
+            formSubmittedLabel.text = viewModel.formSubmitted.description
         }
 
         if updateStackViewConstraints {
@@ -211,6 +241,10 @@ extension RealestateSoldStateView: QuestionFormContainerViewDelegate {
         questionModels: [RealestateSoldStateQuestionModel]
     ) {
         delegate?.realestateSoldStateViewDidSubmitFormWithoutContactInformation(self, questionModels: questionModels)
+    }
+
+    func questionFormContainerViewDidToggleTextView(_ view: QuestionFormContainerView) {
+        delegate?.realestateSoldStateViewDidResize(self)
     }
 }
 
