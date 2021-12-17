@@ -52,7 +52,7 @@ public class StoriesView: UIView {
         collectionView.alwaysBounceHorizontal = true
         collectionView.register(StoryCollectionViewCell.self)
         collectionView.register(FeedbackCollectionViewCell.self)
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
 
