@@ -32,7 +32,13 @@ class UserContactInformationView: UIView {
     private lazy var contactMethodStackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
     private lazy var contactMethodTitleLabel = Label(style: .captionStrong, withAutoLayout: true)
     private lazy var emailAddressView = EmailAddressView(viewModel: contactMethodEmail, withAutoLayout: true)
-    private lazy var phoneNumberTextField = TextField(viewModel: contactMethodPhone, delegate: self)
+
+    private lazy var phoneNumberTextField: TextField = {
+        let textField = TextField(viewModel: contactMethodPhone, delegate: self)
+        textField.configure(textFieldBackgroundColor: .bgPrimary)
+        textField.configureBorder(radius: 4, width: 1, color: .dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine))
+        return textField
+    }()
 
     private var contactMethodModels: [UserContactMethodSelectionModel] {
         [contactMethodEmail, contactMethodPhone]
