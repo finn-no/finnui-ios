@@ -97,6 +97,7 @@ class CompanyProfileView: UIView {
         super.layoutSubviews()
         layer.cornerRadius = 8
         layer.borderWidth = 1
+        layer.borderColor = UIColor.companyProfileBorder.cgColor
     }
 
     // MARK: - Actions
