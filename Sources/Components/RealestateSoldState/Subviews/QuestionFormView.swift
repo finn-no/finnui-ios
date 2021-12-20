@@ -15,17 +15,8 @@ class QuestionFormView: UIView {
         !selectedQuestions.isEmpty
     }
 
-    var selectedQuestions: [String] {
-        var questionStrings = questions.filterProvided.filter({ $0.isSelected }).map(\.title)
-        if
-            let freetextQuestion = questions.firstUserFreetext,
-            freetextQuestion.isSelected,
-            let value = freetextQuestion.value,
-            !value.isEmpty
-        {
-            questionStrings.append(value)
-        }
-        return questionStrings
+    var selectedQuestions: [RealestateSoldStateQuestionModel] {
+        questions.filter(\.isSelected)
     }
 
     // MARK: - Private properties

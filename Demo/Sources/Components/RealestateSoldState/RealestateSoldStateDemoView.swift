@@ -113,8 +113,8 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
               ✅ Did submit form!
               \tContact identifier: '\(form.contactMethodIdentifier)'
               \tContact value: '\(form.contactMethodValue)'
-              \tSelected questions:
-              \t\t\(form.questions.joined(separator: "\n\t\t"))
+              \tSelected question ids:
+              \t\t\(form.questions.map(\.id).joined(separator: ", "))
               """)
     }
 
