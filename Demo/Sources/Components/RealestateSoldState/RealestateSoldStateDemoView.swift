@@ -193,11 +193,11 @@ private extension QuestionFormViewModel {
         QuestionFormViewModel(
             questionsTitle: "Hva lurer du på?",
             questions: [
-                .init(kind: .provided, title: "Hva ble boligen solgt for?", isSelected: true),
-                .init(kind: .provided, title: "Hvor mange var det som kom på visning?", isSelected: false),
-                .init(kind: .provided, title: "Hva kan man forvente av en budrunde?", isSelected: false),
-                .init(kind: .provided, title: "Kan jeg få en verdivurdering av min bolig?", isSelected: false),
-                .init(kind: .userFreetext, title: "Annet", isSelected: true, value: "Long text\nSeveral lines\nAnother line"),
+                .init(id: "1", kind: .provided, title: "Hva ble boligen solgt for?", isSelected: true),
+                .init(id: "2", kind: .provided, title: "Hvor mange var det som kom på visning?", isSelected: false),
+                .init(id: "3", kind: .provided, title: "Hva kan man forvente av en budrunde?", isSelected: false),
+                .init(id: "4", kind: .provided, title: "Kan jeg få en verdivurdering av min bolig?", isSelected: false),
+                .init(id: "5", kind: .userFreetext, title: "Annet", isSelected: true, value: "Long text\nSeveral lines\nAnother line"),
             ],
             contactMethod: .init(
                 title: "Hvordan kan vi kontakte deg?",
