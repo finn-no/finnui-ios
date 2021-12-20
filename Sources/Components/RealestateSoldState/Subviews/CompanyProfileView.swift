@@ -126,7 +126,8 @@ private extension LinkButtonViewModel {
         guard let buttonStyle = buttonStyle else { return self }
 
         let newButtonStyle = buttonStyle.overrideStyle(
-            textColor: styling.textColor
+            textColor: styling.textColor,
+            highlightedTextColor: styling.textColor.withAlphaComponent(0.6)
         )
 
         return LinkButtonViewModel(
