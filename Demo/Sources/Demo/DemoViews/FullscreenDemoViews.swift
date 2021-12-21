@@ -4,7 +4,6 @@
 import FinniversKit
 
 public enum FullscreenDemoViews: String, DemoViews {
-    case searchResultsView
     case snowGlobeView
     case newYearsView
     case splashView
@@ -17,8 +16,6 @@ public enum FullscreenDemoViews: String, DemoViews {
 
     public var viewController: UIViewController {
         switch self {
-        case .searchResultsView:
-            return DemoViewController<SearchResultsDemoView>(dismissType: .dismissButton)
         case .snowGlobeView:
             return DemoViewController<SnowGlobeDemoView>()
         case .newYearsView:
