@@ -43,13 +43,14 @@ class RealestateAgencyLogoWrapperView: UIView {
     // MARK: - Internal methods
 
     func configure(
-        with viewModel: RealestateAgencyContentViewModel,
-        remoteImageViewDataSource: RemoteImageViewDataSource
+        imageUrl: String,
+        backgroundColor: UIColor,
+        remoteImageViewDataSource: RemoteImageViewDataSource?
     ) {
-        backgroundColor = viewModel.colors.logoBackground
+        self.backgroundColor = backgroundColor
 
         logoImageView.dataSource = remoteImageViewDataSource
-        logoImageView.loadImage(for: viewModel.logoUrl, imageWidth: .zero, modify: { [weak self] image in
+        logoImageView.loadImage(for: imageUrl, imageWidth: .zero, modify: { [weak self] image in
             if let self = self, let image = image {
                 let heightWidthRatio = image.size.width / image.size.height
                 self.logoImageWidthConstraint.constant = self.logoImageHeight * heightWidthRatio
