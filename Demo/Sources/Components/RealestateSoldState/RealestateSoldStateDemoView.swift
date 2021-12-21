@@ -243,9 +243,9 @@ extension CompanyProfileModel {
             imageUrl: "FINN-LOGO",
             slogan: "Vi selger boligen din – raskt og enkelt",
             buttonLinks: [
-                .init(identifier: "1", title: "Hjemmeside"),
-                .init(identifier: "2", title: "Flere annonser fra oss"),
-                .init(identifier: "3", title: "Skal du selge bolig?"),
+                .init(identifier: "1", title: "Hjemmeside", isExternal: true),
+                .init(identifier: "2", title: "Flere annonser fra oss", isExternal: false),
+                .init(identifier: "3", title: "Skal du selge bolig?", isExternal: true),
             ],
             ctaButtonTitle: "Be om verdivurdering"
         )
@@ -257,12 +257,12 @@ private extension LinkButtonViewModel {
         Button.Style.flat.overrideStyle(margins: UIEdgeInsets(vertical: .spacingS, horizontal: .zero), smallFont: .body)
     }
 
-    init(identifier: String, title: String) {
+    init(identifier: String, title: String, isExternal: Bool) {
         self.init(
             buttonIdentifier: identifier,
             buttonTitle: title,
             linkUrl: URL(string: "https://finn.no")!,
-            isExternal: false,
+            isExternal: isExternal,
             buttonStyle: Self.demoStyle,
             buttonSize: .small
         )

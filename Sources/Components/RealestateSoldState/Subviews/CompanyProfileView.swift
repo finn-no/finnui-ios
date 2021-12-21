@@ -136,6 +136,7 @@ private extension LinkButtonViewModel {
             subtitle: subtitle,
             linkUrl: linkUrl,
             isExternal: isExternal,
+            externalIconColor: styling.textColor,
             buttonStyle: newButtonStyle,
             buttonSize: buttonSize
         )
