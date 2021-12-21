@@ -41,7 +41,6 @@ public class BaseDemoViewController<View: UIView>: UIViewController, Containable
     private(set) lazy var playgroundView: View = {
         let playgroundView = View(frame: view.frame)
         playgroundView.translatesAutoresizingMaskIntoConstraints = false
-        playgroundView.backgroundColor = .bgPrimary
         return playgroundView
     }()
 
@@ -92,6 +91,7 @@ public class BaseDemoViewController<View: UIView>: UIViewController, Containable
 
         view.addSubview(playgroundView)
         view.backgroundColor = backgroundColor
+        playgroundView.backgroundColor = backgroundColor
 
         let topAnchor = constrainToTopSafeArea ? view.safeAreaLayoutGuide.topAnchor : view.topAnchor
         let bottomAnchor = constrainToBottomSafeArea ? view.safeAreaLayoutGuide.bottomAnchor : view.bottomAnchor
