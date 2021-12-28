@@ -2,12 +2,19 @@ import FinniversKit
 import UIKit
 
 public protocol ShippingAlternativesViewDelegate: AnyObject {
-    func didSelectShippingAlternativesView()
+    func didSelectShippingAlternativesView(with link: String)
 }
 
 public final class ShippingAlternativesView: UIView {
 
     public weak var delegate: ShippingAlternativesViewDelegate?
+
+    private var viewModel: ShippingAlternativesViewModel? {
+        didSet {
+            accessibilityLabel = viewModel.accessibilityLabel
+            linkButton.setTitle(viewModel.text, for: .normal)
+        }
+    }
 
     private lazy var linkButton: Button = {
         let buttonStyle = Button.Style.flat.overrideStyle(
@@ -53,14 +60,14 @@ public final class ShippingAlternativesView: UIView {
     // MARK: - Actions
 
     @objc private func handleLinkButtonTap() {
-        delegate?.didSelectShippingAlternativesView()
+        guard let viewModel = viewModel else { return }
+        delegate?.didSelectShippingAlternativesView(with: viewModel.link)
     }
 
     // MARK: - Public
 
     public func configure(_ viewModel: ShippingAlternativesViewModel) {
-        accessibilityLabel = viewModel.accessibilityLabel
-        linkButton.setTitle(viewModel.text, for: .normal)
+        self.viewModel = viewModel
     }
 
 }
