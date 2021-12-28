@@ -11,6 +11,7 @@ public final class ShippingAlternativesView: UIView {
 
     private var viewModel: ShippingAlternativesViewModel? {
         didSet {
+            guard let viewModel = viewModel else { return }
             accessibilityLabel = viewModel.accessibilityLabel
             linkButton.setTitle(viewModel.text, for: .normal)
         }

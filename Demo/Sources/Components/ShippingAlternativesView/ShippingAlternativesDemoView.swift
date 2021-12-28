@@ -27,14 +27,14 @@ public class ShippingAlternativesDemoView: UIView {
             shippingAlternativesView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -.spacingM)
         ])
 
-        let viewModel = ShippingAlternativesViewModel(text: "Hjelp til frakt", accessibilityLabel: "Hjelp til frakt")
+        let viewModel = ShippingAlternativesViewModel(text: "Hjelp til frakt", accessibilityLabel: "Hjelp til frakt", link: "https://www.finn.no")
 
         shippingAlternativesView.configure(viewModel)
     }
 }
 
 extension ShippingAlternativesDemoView: ShippingAlternativesViewDelegate {
-    public func didSelectShippingAlternativesView() {
-        print("did tap button")
+    public func didSelectShippingAlternativesView(with link: String) {
+        print("did tap button with link: \(link)")
     }
 }
