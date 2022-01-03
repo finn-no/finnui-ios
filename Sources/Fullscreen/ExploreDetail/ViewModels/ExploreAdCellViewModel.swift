@@ -4,7 +4,7 @@
 
 import UIKit
 
-public struct ExploreAdCellViewModel: Hashable {
+public class ExploreAdCellViewModel: UniqueHashableItem {
     public let imageUrl: String?
     public let title: String?
     public let location: String?
