@@ -31,6 +31,13 @@ public class StoriesView: UIView {
         case toggleFavorite(index: StorySlideIndex, button: UIButton)
         case share(index: StorySlideIndex)
         case dismiss
+        case endStory(action: EndStoryAction, storyIndex: Int)
+    }
+
+    public enum EndStoryAction {
+        case swipeNext
+        case swipePrevious
+        case closeButton
     }
 
     // MARK: - Private properties
@@ -42,9 +49,10 @@ public class StoriesView: UIView {
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.alwaysBounceHorizontal = true
         collectionView.register(StoryCollectionViewCell.self)
         collectionView.register(FeedbackCollectionViewCell.self)
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
 
@@ -208,8 +216,14 @@ extension StoriesView: UICollectionViewDelegate {
     }
 
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let previousIndex = currentIndex
         let pageWidth = scrollView.frame.size.width
         currentIndex = Int(scrollView.contentOffset.x / pageWidth)
+
+        if currentIndex != previousIndex, stories.indices.contains(previousIndex) {
+            let action: EndStoryAction = currentIndex > previousIndex ? .swipeNext : .swipePrevious
+            delegate?.storiesView(self, didSelectAction: .endStory(action: action, storyIndex: previousIndex))
+        }
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -233,6 +247,7 @@ extension StoriesView: UICollectionViewDelegate {
         guard swipeToDismissFromFirstCell || swipeToDismissFromLastCell else { return }
 
         didSwipeToDismiss = true
+        delegate?.storiesView(self, didSelectAction: .endStory(action: swipeToDismissFromFirstCell ? .swipePrevious : .swipeNext, storyIndex: currentIndex))
         delegate?.storiesView(self, didSelectAction: .dismiss)
     }
 }
@@ -313,6 +328,7 @@ extension StoriesView: StoryCollectionViewCellDelegate {
             delegate?.storiesView(self, didSelectAction: .toggleFavorite(index: index, button: button))
 
         case .dismiss:
+            delegate?.storiesView(self, didSelectAction: .endStory(action: .closeButton, storyIndex: currentIndex))
             delegate?.storiesView(self, didSelectAction: .dismiss)
         }
     }

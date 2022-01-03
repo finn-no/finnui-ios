@@ -285,8 +285,11 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
         if let storyIconImageUrl = story.iconImageUrl, !storyIconImageUrl.isEmpty {
             dataSource?.storyCollectionViewCell(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconSize, completion: { [weak self] image in
-                self?.storyIconImageView.image = image
+                self?.storyIconImageView.image = image ?? UIImage(named: .noImage)
             })
+        } else {
+            storyIconImageView.image = UIImage(named: .noImage)
+            storyIconImageView.backgroundColor = .milk
         }
     }
 
