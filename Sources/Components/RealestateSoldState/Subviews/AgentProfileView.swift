@@ -1,7 +1,15 @@
 import UIKit
 import FinniversKit
 
+protocol AgentProfileViewDelegate: AnyObject {
+    func agentProfileViewDidSelectPhoneButton(_ view: AgentProfileView)
+}
+
 class AgentProfileView: UIView {
+
+    // MARK: - Internal properties
+
+    weak var delegate: AgentProfileViewDelegate?
 
     // MARK: - Private properties
 
@@ -31,8 +39,10 @@ class AgentProfileView: UIView {
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: AgentProfileViewDelegate, withAutoLayout: Bool) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
@@ -92,6 +102,7 @@ class AgentProfileView: UIView {
     // MARK: - Actions
 
     @objc private func phoneButtonTapped() {
+        delegate?.agentProfileViewDidSelectPhoneButton(self)
     }
 }
 
