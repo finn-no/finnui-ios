@@ -13,6 +13,9 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         .init(title: "Without contact information - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModelWithoutContactInfo, isExpanded: false)
         },
+        .init(title: "Without agent phone number - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithoutAgentPhoneNumber, isExpanded: false)
+        },
         .init(title: "Form submitted") { [weak self] in
             self?.setupDemoView(with: .demoModel, isExpanded: false, isFormSubmitted: true)
         },
@@ -144,6 +147,10 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
     func realestateSoldStateViewDidResize(_ view: RealestateSoldStateView) {
         print("📏 Did resize itself")
     }
+
+    func realestateSoldStateViewDidSelectPhoneButton(_ view: RealestateSoldStateView) {
+        print("📲 Did tap phone number")
+    }
 }
 
 // MARK: - Private extensions
@@ -174,6 +181,19 @@ private extension RealestateSoldStateModel {
             styling: .demoStyle
         )
     }
+
+    static var demoModelWithoutAgentPhoneNumber: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
+            agentProfile: .demoModel.copyWithoutPhoneNumber(),
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            styling: .demoStyle
+        )
+    }
 }
 
 private extension AgentProfileModel {
@@ -184,6 +204,16 @@ private extension AgentProfileModel {
             agentJobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
             phoneNumber: "123 45 678"
+        )
+    }
+
+    func copyWithoutPhoneNumber() -> AgentProfileModel {
+        AgentProfileModel(
+            title: title,
+            agentName: agentName,
+            agentJobTitle: agentJobTitle,
+            imageUrl: imageUrl,
+            phoneNumber: nil
         )
     }
 }
@@ -220,9 +250,7 @@ private extension QuestionFormViewModel {
             userFreeTextDisclaimer: "FINN.no forbeholder seg retten til å kontrollere og stoppe meldinger."
         )
     }
-}
 
-private extension QuestionFormViewModel {
     func copyWithoutContactInfo() -> QuestionFormViewModel {
         QuestionFormViewModel(
             questionsTitle: questionsTitle,
