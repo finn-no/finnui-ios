@@ -58,7 +58,7 @@ class RealestateAgencyContentItemView: UIView {
     // MARK: - Setup
 
     private func setup(imageHeight: ImageHeight) {
-        stackView.addArrangedSubviews([titleLabel, imageView, bodyLabel, buttonStackView])
+        stackView.addArrangedSubviews([imageView, titleLabel, bodyLabel, buttonStackView])
         addSubview(stackView)
         stackView.fillInSuperview()
 
