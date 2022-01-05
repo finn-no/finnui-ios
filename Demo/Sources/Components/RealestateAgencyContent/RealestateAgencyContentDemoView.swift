@@ -21,7 +21,7 @@ class RealestateAgencyContentDemoView: UIView, Tweakable {
 
     // MARK: - Private properties
 
-    private lazy var agencyContentView = RealestateAgencyContentView(withAutoLayout: true)
+    private var agencyContentView: RealestateAgencyContentView?
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
 
     // MARK: - Init
@@ -37,31 +37,38 @@ class RealestateAgencyContentDemoView: UIView, Tweakable {
     // MARK: - Setup
 
     private func setup() {
-        agencyContentView.delegate = self
-
         scrollView.alwaysBounceVertical = true
         addSubview(scrollView)
         scrollView.fillInSuperview()
-        scrollView.addSubview(agencyContentView)
 
         NSLayoutConstraint.activate([
             scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-            agencyContentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            agencyContentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            agencyContentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            agencyContentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
         ])
     }
 
     // MARK: - Private methods
 
     private func configure(numberOfArticles: Int) {
-        let viewModel = RealestateAgencyContentViewModel.create(numberOfArticles: numberOfArticles)
-        agencyContentView.configure(
-            with: viewModel,
+        if let oldView = agencyContentView {
+            oldView.removeFromSuperview()
+        }
+
+        let view = RealestateAgencyContentView(
+            viewModel: .create(numberOfArticles: numberOfArticles),
+            delegate: self,
             remoteImageViewDataSource: self,
-            articleDirection: UITraitCollection.current.horizontalSizeClass == .compact ? .vertical : .horizontal
+            withAutoLayout: true
         )
+
+        scrollView.addSubview(view)
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            view.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
+        ])
+
+        agencyContentView = view
     }
 }
 
