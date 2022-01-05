@@ -10,20 +10,30 @@ public protocol RealestateAgencyContentViewDelegate: AnyObject {
 
 public class RealestateAgencyContentView: UIView {
 
-    // MARK: - Public properties
-
-    public weak var delegate: RealestateAgencyContentViewDelegate?
-
     // MARK: - Private properties
 
+    private let viewModel: RealestateAgencyContentViewModel
     private var articleStackView: UIStackView?
+    private weak var delegate: RealestateAgencyContentViewDelegate?
+    private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
     private lazy var logoImageWrapperView = RealestateAgencyLogoWrapperView(withAutoLayout: true)
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(
+        viewModel: RealestateAgencyContentViewModel,
+        delegate: RealestateAgencyContentViewDelegate,
+        remoteImageViewDataSource: RemoteImageViewDataSource,
+        withAutoLayout: Bool = false
+    ) {
+        self.viewModel = viewModel
+        self.delegate = delegate
+        self.remoteImageViewDataSource = remoteImageViewDataSource
+        super.init(frame: .zero)
+
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
+        presentArticles()
     }
 
     public required init?(coder: NSCoder) { fatalError() }
@@ -31,6 +41,9 @@ public class RealestateAgencyContentView: UIView {
     // MARK: - Setup
 
     private func setup() {
+        backgroundColor = viewModel.styling.backgroundColor
+        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
+
         addSubview(logoImageWrapperView)
 
         NSLayoutConstraint.activate([
@@ -41,32 +54,28 @@ public class RealestateAgencyContentView: UIView {
         ])
     }
 
-    // MARK: - Public methods
+    // MARK: - Private methods
 
-    public func configure(
-        with viewModel: RealestateAgencyContentViewModel,
-        remoteImageViewDataSource: RemoteImageViewDataSource,
-        articleDirection: NSLayoutConstraint.Axis
-    ) {
+    private func presentArticles() {
+        guard let remoteImageViewDataSource = remoteImageViewDataSource else { return }
+
         // Cleanup potential old views.
         if let articleStackView = articleStackView {
             articleStackView.removeFromSuperview()
             self.articleStackView = nil
         }
 
-        // Setup/configure new views.
-        backgroundColor = viewModel.styling.backgroundColor
-        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
+        let horizontalSizeClass = traitCollection.horizontalSizeClass
 
         let articleStackView = UIStackView(
-            axis: articleDirection,
-            spacing: articleDirection.articleSpacing,
+            axis: horizontalSizeClass.articleDirection,
+            spacing: horizontalSizeClass.articleSpacing,
             withAutoLayout: true
         )
-        articleStackView.distribution = articleDirection.stackViewDistribution
+        articleStackView.distribution = horizontalSizeClass.stackViewDistribution
 
         let articleViews: [UIView]
-        if articleDirection == .horizontal, viewModel.articles.count == 1 {
+        if horizontalSizeClass == .regular, viewModel.articles.count == 1 {
             articleViews = viewModel.articles.map {
                 RealestateAgencyHighlightedContentItemView(
                     article: $0,
@@ -80,7 +89,7 @@ public class RealestateAgencyContentView: UIView {
                 RealestateAgencyContentItemView(
                     article: $0,
                     styling: viewModel.styling,
-                    imageHeight: articleDirection.imageHeight,
+                    imageHeight: horizontalSizeClass.imageHeight,
                     remoteImageViewDataSource: remoteImageViewDataSource,
                     delegate: self
                 )
@@ -98,6 +107,16 @@ public class RealestateAgencyContentView: UIView {
             articleStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingL)
         ])
     }
+
+    // MARK: - Overrides
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            presentArticles()
+        }
+    }
 }
 
 // MARK: - RealestateAgencyContentItemDelegate
@@ -114,36 +133,39 @@ extension RealestateAgencyContentView: RealestateAgencyContentItemDelegate {
 
 // MARK: - Private extensions
 
-private extension NSLayoutConstraint.Axis {
+private extension UIUserInterfaceSizeClass {
+    var articleDirection: NSLayoutConstraint.Axis {
+        switch self {
+        case .regular:
+            return .horizontal
+        default:
+            return .vertical
+        }
+    }
+
     var articleSpacing: CGFloat {
         switch self {
-        case .horizontal:
+        case .regular:
             return .spacingL
-        case .vertical:
-            return .spacingXL
-        @unknown default:
+        default:
             return .spacingXL
         }
     }
 
     var stackViewDistribution: UIStackView.Distribution {
         switch self {
-        case .horizontal:
+        case .regular:
             return .fillEqually
-        case .vertical:
-            return .fill
-        @unknown default:
+        default:
             return .fill
         }
     }
 
     var imageHeight: RealestateAgencyContentItemView.ImageHeight {
         switch self {
-        case .horizontal:
+        case .regular:
             return .constant(200)
-        case .vertical:
-            return .widthMultiplier()
-        @unknown default:
+        default:
             return .widthMultiplier()
         }
     }
