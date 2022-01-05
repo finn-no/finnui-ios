@@ -55,8 +55,8 @@ public class RealestateAgencyContentView: UIView {
         }
 
         // Setup/configure new views.
-        backgroundColor = viewModel.colors.main.background
-        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.colors.logoBackground, remoteImageViewDataSource: remoteImageViewDataSource)
+        backgroundColor = viewModel.styling.backgroundColor
+        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
 
         let articleStackView = UIStackView(
             axis: articleDirection,
@@ -70,7 +70,7 @@ public class RealestateAgencyContentView: UIView {
             articleViews = viewModel.articles.map {
                 RealestateAgencyHighlightedContentItemView(
                     article: $0,
-                    colors: viewModel.colors,
+                    styling: viewModel.styling,
                     remoteImageViewDataSource: remoteImageViewDataSource,
                     delegate: self
                 )
@@ -79,7 +79,7 @@ public class RealestateAgencyContentView: UIView {
             articleViews = viewModel.articles.map {
                 RealestateAgencyContentItemView(
                     article: $0,
-                    colors: viewModel.colors,
+                    styling: viewModel.styling,
                     imageHeight: articleDirection.imageHeight,
                     remoteImageViewDataSource: remoteImageViewDataSource,
                     delegate: self

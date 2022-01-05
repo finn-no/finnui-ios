@@ -40,7 +40,7 @@ class RealestateAgencyContentItemView: UIView {
 
     init(
         article: RealestateAgencyContentViewModel.ArticleItem,
-        colors: RealestateAgencyContentViewModel.Colors,
+        styling: RealestateAgencyContentViewModel.Styling,
         imageHeight: ImageHeight,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         delegate: RealestateAgencyContentItemDelegate?
@@ -50,7 +50,7 @@ class RealestateAgencyContentItemView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         setup(imageHeight: imageHeight)
-        configure(with: article, colors: colors, remoteImageViewDataSource: remoteImageViewDataSource)
+        configure(with: article, styling: styling, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -74,11 +74,11 @@ class RealestateAgencyContentItemView: UIView {
 
     private func configure(
         with article: RealestateAgencyContentViewModel.ArticleItem,
-        colors: RealestateAgencyContentViewModel.Colors,
+        styling: RealestateAgencyContentViewModel.Styling,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
-        titleLabel.textColor = colors.main.text
-        bodyLabel.textColor = colors.main.text
+        titleLabel.textColor = styling.textColor
+        bodyLabel.textColor = styling.textColor
 
         titleLabel.text = article.title
         bodyLabel.text = article.body
@@ -86,7 +86,7 @@ class RealestateAgencyContentItemView: UIView {
         imageView.dataSource = remoteImageViewDataSource
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
-        let actionButton = Button.create(for: article, textColor: colors.actionButton.text, backgroundColor: colors.actionButton.background)
+        let actionButton = Button.create(for: article, styling: styling)
         buttonStackView.addArrangedSubviews([actionButton, UIView(withAutoLayout: true)])
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
     }
