@@ -20,7 +20,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
     }()
 
     private lazy var titleLabel: Label = {
-        let label = Label(style: .title3, withAutoLayout: true)
+        let label = Label(style: .title3Strong, withAutoLayout: true)
         label.numberOfLines = 0
         return label
     }()

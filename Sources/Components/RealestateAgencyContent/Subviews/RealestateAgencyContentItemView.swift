@@ -17,7 +17,7 @@ class RealestateAgencyContentItemView: UIView {
     private lazy var buttonStackView = UIStackView(axis: .horizontal, spacing: 0, withAutoLayout: true)
 
     private lazy var titleLabel: Label = {
-        let label = Label(style: .bodyStrong, withAutoLayout: true)
+        let label = Label(style: .title3Strong, withAutoLayout: true)
         label.numberOfLines = 0
         return label
     }()
