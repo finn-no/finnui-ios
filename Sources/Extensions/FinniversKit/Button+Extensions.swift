@@ -30,6 +30,7 @@ extension Button {
         button.setTitle(article.buttonTitle, for: .normal)
         button.tintColor = button.currentTitleColor
         button.semanticContentAttribute = .forceRightToLeft
+        button.titleLabel?.lineBreakMode = .byWordWrapping
 
         let defaultImage = UIImage(named: .externalLink).withRenderingMode(.alwaysTemplate)
         button.setImage(defaultImage, for: .normal)

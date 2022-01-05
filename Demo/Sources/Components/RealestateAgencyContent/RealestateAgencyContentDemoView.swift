@@ -78,11 +78,13 @@ private extension RealestateAgencyContentViewModel {
     static func create(numberOfArticles: Int) -> RealestateAgencyContentViewModel {
         let articles = (0..<numberOfArticles).map { index -> ArticleItem in
             let title = (0...index).map { _ in "Vi hjelper deg med boligsalget." }.joined(separator: " ")
+            let buttonTitle = index == 2 ? "Veldig veldig veldig lang knappetekst over 2 linjer" : "Bli kjent med salgsprosessen"
+
             return ArticleItem(
                 title: title,
                 body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis. Faucibus ornare suspendisse sed nisi. Pretium lectus quam id leo in vitae turpis massa sed. ",
                 imageUrl: "https://stockphoto.com/samples/OTQ5NTM5MTEwMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/elephant-on-rope.jpg&size=512",
-                buttonTitle: "Bli kjent med salgsprosessen",
+                buttonTitle: buttonTitle,
                 buttonKind: index == 0 ? .highlighted : .normal,
                 articleUrl: "https://finn.no"
             )
