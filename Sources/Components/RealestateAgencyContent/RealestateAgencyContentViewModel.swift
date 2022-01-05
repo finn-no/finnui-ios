@@ -26,13 +26,15 @@ extension RealestateAgencyContentViewModel {
         public let imageUrl: String
         public let buttonTitle: String
         public let buttonKind: ButtonKind
+        public let articleUrl: String
 
-        public init(title: String, body: String, imageUrl: String, buttonTitle: String, buttonKind: ButtonKind) {
+        public init(title: String, body: String, imageUrl: String, buttonTitle: String, buttonKind: ButtonKind, articleUrl: String) {
             self.title = title
             self.body = body
             self.imageUrl = imageUrl
             self.buttonTitle = buttonTitle
             self.buttonKind = buttonKind
+            self.articleUrl = articleUrl
         }
     }
 }
