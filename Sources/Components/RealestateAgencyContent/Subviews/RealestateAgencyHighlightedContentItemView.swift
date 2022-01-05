@@ -88,7 +88,11 @@ class RealestateAgencyHighlightedContentItemView: UIView {
 
         let actionButton = Button.create(for: article, styling: styling)
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
-        buttonStackView.addArrangedSubviews([actionButton, UIView(withAutoLayout: true)])
+        buttonStackView.addArrangedSubview(actionButton)
+
+        if article.buttonKind == .normal {
+            buttonStackView.addArrangedSubview(UIView(withAutoLayout: true))
+        }
     }
 
     // MARK: - Actions

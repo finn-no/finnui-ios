@@ -87,7 +87,12 @@ class RealestateAgencyContentItemView: UIView {
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
         let actionButton = Button.create(for: article, styling: styling)
-        buttonStackView.addArrangedSubviews([actionButton, UIView(withAutoLayout: true)])
+        buttonStackView.addArrangedSubview(actionButton)
+
+        if article.buttonKind == .normal {
+            buttonStackView.addArrangedSubview(UIView(withAutoLayout: true))
+        }
+
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
     }
 
