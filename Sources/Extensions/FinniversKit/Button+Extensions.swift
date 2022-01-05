@@ -31,7 +31,7 @@ extension Button {
         button.tintColor = button.currentTitleColor
         button.semanticContentAttribute = .forceRightToLeft
 
-        let defaultImage = UIImage(named: .webview).withRenderingMode(.alwaysTemplate)
+        let defaultImage = UIImage(named: .externalLink).withRenderingMode(.alwaysTemplate)
         button.setImage(defaultImage, for: .normal)
 
         let highlightImage = defaultImage.withTintColor(highlightedImageColor, renderingMode: .alwaysOriginal)
