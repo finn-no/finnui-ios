@@ -83,7 +83,8 @@ private extension RealestateAgencyContentViewModel {
                 body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis. Faucibus ornare suspendisse sed nisi. Pretium lectus quam id leo in vitae turpis massa sed. ",
                 imageUrl: "https://stockphoto.com/samples/OTQ5NTM5MTEwMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/elephant-on-rope.jpg&size=512",
                 buttonTitle: "Bli kjent med salgsprosessen",
-                buttonKind: index == 0 ? .highlighted : .normal
+                buttonKind: index == 0 ? .highlighted : .normal,
+                articleUrl: "https://finn.no"
             )
         }
 
@@ -110,9 +111,9 @@ private extension RealestateAgencyContentViewModel {
 extension RealestateAgencyContentDemoView: RealestateAgencyContentViewDelegate {
     func realestateAgencyContentView(
         _ view: RealestateAgencyContentView,
-        didSelectActionButtonForArticleAt articleIndex: Int
+        didSelectActionButtonForArticle article: RealestateAgencyContentViewModel.ArticleItem
     ) {
-        print("✅ Did select actionButton for article at \(articleIndex)")
+        print("✅ Did select actionButton for article with title \(article.title)")
     }
 }
 

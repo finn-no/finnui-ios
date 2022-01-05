@@ -4,7 +4,7 @@ import FinniversKit
 public protocol RealestateAgencyContentViewDelegate: AnyObject {
     func realestateAgencyContentView(
         _ view: RealestateAgencyContentView,
-        didSelectActionButtonForArticleAt articleIndex: Int
+        didSelectActionButtonForArticle article: RealestateAgencyContentViewModel.ArticleItem
     )
 }
 
@@ -127,7 +127,8 @@ extension RealestateAgencyContentView: RealestateAgencyContentItemDelegate {
             return
         }
 
-        delegate?.realestateAgencyContentView(self, didSelectActionButtonForArticleAt: viewIndex)
+        let article = viewModel.articles[viewIndex]
+        delegate?.realestateAgencyContentView(self, didSelectActionButtonForArticle: article)
     }
 }
 
