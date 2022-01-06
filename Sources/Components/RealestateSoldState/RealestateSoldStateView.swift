@@ -11,6 +11,7 @@ public protocol RealestateSoldStateViewDelegate: AnyObject {
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL)
     func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView)
     func realestateSoldStateViewDidResize(_ view: RealestateSoldStateView)
+    func realestateSoldStateViewDidSelectPhoneButton(_ view: RealestateSoldStateView)
 }
 
 public class RealestateSoldStateView: UIView {
@@ -34,7 +35,7 @@ public class RealestateSoldStateView: UIView {
     private lazy var backgroundView = UIView(withAutoLayout: true)
     private lazy var logoImageWrapperView = RealestateAgencyLogoWrapperView(withAutoLayout: true)
     private lazy var logoBackgroundView = UIView(withAutoLayout: true)
-    private lazy var agentProfileView = AgentProfileView(withAutoLayout: true)
+    private lazy var agentProfileView = AgentProfileView(delegate: self, withAutoLayout: true)
     private lazy var expandToggleView = RealestateSoldStateExpandToggleView(withAutoLayout: true)
     private lazy var leftStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var rightStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
@@ -257,5 +258,13 @@ extension RealestateSoldStateView: CompanyProfileViewDelegate {
 
     func companyProfileView(_ view: CompanyProfileView, didTapButtonWithIdentifier identifier: String?, url: URL) {
         delegate?.realestateSoldStateView(self, didTapCompanyProfileButtonWithIdentifier: identifier, url: url)
+    }
+}
+
+// MARK: - AgentProfileViewDelegate
+
+extension RealestateSoldStateView: AgentProfileViewDelegate {
+    func agentProfileViewDidSelectPhoneButton(_ view: AgentProfileView) {
+        delegate?.realestateSoldStateViewDidSelectPhoneButton(self)
     }
 }

@@ -1,7 +1,15 @@
 import UIKit
 import FinniversKit
 
+protocol AgentProfileViewDelegate: AnyObject {
+    func agentProfileViewDidSelectPhoneButton(_ view: AgentProfileView)
+}
+
 class AgentProfileView: UIView {
+
+    // MARK: - Internal properties
+
+    weak var delegate: AgentProfileViewDelegate?
 
     // MARK: - Private properties
 
@@ -10,8 +18,15 @@ class AgentProfileView: UIView {
     private lazy var titleLabel = Label.create(style: .title3Strong)
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
-    private lazy var phoneLabel = Label.create(style: .body, isHidden: true)
     private lazy var imageSize = CGSize(width: 96, height: 96)
+
+    private lazy var phoneButton: Button = {
+        let button = Button(style: .link, withAutoLayout: true)
+        button.contentHorizontalAlignment = .left
+        button.isHidden = true
+        button.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
+        return button
+    }()
 
     private lazy var remoteImageView: RemoteImageView = {
         let view = RemoteImageView(withAutoLayout: true)
@@ -24,8 +39,10 @@ class AgentProfileView: UIView {
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: AgentProfileViewDelegate, withAutoLayout: Bool) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
@@ -34,7 +51,7 @@ class AgentProfileView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, phoneLabel])
+        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, phoneButton])
         textStackView.setCustomSpacing(.spacingM, after: jobTitleLabel)
 
         addSubview(titleLabel)
@@ -67,8 +84,8 @@ class AgentProfileView: UIView {
         jobTitleLabel.text = model.agentJobTitle
 
         if let phoneNumber = model.phoneNumber {
-            phoneLabel.text = phoneNumber
-            phoneLabel.isHidden = false
+            phoneButton.setTitle(phoneNumber, for: .normal)
+            phoneButton.isHidden = false
         }
 
         remoteImageView.dataSource = remoteImageViewDataSource
@@ -81,14 +98,19 @@ class AgentProfileView: UIView {
         super.layoutSubviews()
         remoteImageView.layer.cornerRadius = min(remoteImageView.bounds.height, remoteImageView.bounds.width) / 2
     }
+
+    // MARK: - Actions
+
+    @objc private func phoneButtonTapped() {
+        delegate?.agentProfileViewDidSelectPhoneButton(self)
+    }
 }
 
 // MARK: - Private extensions
 
 private extension Label {
-    static func create(style: Label.Style, isHidden: Bool = false) -> Label {
+    static func create(style: Label.Style) -> Label {
         let label = Label(style: style, withAutoLayout: true)
-        label.isHidden = isHidden
         label.numberOfLines = 0
         return label
     }
