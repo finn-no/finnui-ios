@@ -21,7 +21,7 @@ class RealestateAgencyContentDemoView: UIView, Tweakable {
 
     // MARK: - Private properties
 
-    private lazy var agencyContentView = RealestateAgencyContentView(withAutoLayout: true)
+    private var agencyContentView: RealestateAgencyContentView?
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
 
     // MARK: - Init
@@ -37,31 +37,38 @@ class RealestateAgencyContentDemoView: UIView, Tweakable {
     // MARK: - Setup
 
     private func setup() {
-        agencyContentView.delegate = self
-
         scrollView.alwaysBounceVertical = true
         addSubview(scrollView)
         scrollView.fillInSuperview()
-        scrollView.addSubview(agencyContentView)
 
         NSLayoutConstraint.activate([
             scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-            agencyContentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            agencyContentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            agencyContentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            agencyContentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
         ])
     }
 
     // MARK: - Private methods
 
     private func configure(numberOfArticles: Int) {
-        let viewModel = RealestateAgencyContentViewModel.create(numberOfArticles: numberOfArticles)
-        agencyContentView.configure(
-            with: viewModel,
+        if let oldView = agencyContentView {
+            oldView.removeFromSuperview()
+        }
+
+        let view = RealestateAgencyContentView(
+            viewModel: .create(numberOfArticles: numberOfArticles),
+            delegate: self,
             remoteImageViewDataSource: self,
-            articleDirection: UITraitCollection.current.horizontalSizeClass == .compact ? .vertical : .horizontal
+            withAutoLayout: true
         )
+
+        scrollView.addSubview(view)
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            view.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
+        ])
+
+        agencyContentView = view
     }
 }
 
@@ -71,22 +78,31 @@ private extension RealestateAgencyContentViewModel {
     static func create(numberOfArticles: Int) -> RealestateAgencyContentViewModel {
         let articles = (0..<numberOfArticles).map { index -> ArticleItem in
             let title = (0...index).map { _ in "Vi hjelper deg med boligsalget." }.joined(separator: " ")
+            let buttonTitle = index == 2 ? "Veldig veldig veldig lang knappetekst over 2 linjer" : "Bli kjent med salgsprosessen"
+
             return ArticleItem(
                 title: title,
                 body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis. Faucibus ornare suspendisse sed nisi. Pretium lectus quam id leo in vitae turpis massa sed. ",
                 imageUrl: "https://stockphoto.com/samples/OTQ5NTM5MTEwMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/elephant-on-rope.jpg&size=512",
-                buttonTitle: "Bli kjent med salgsprosessen",
-                buttonKind: index == 0 ? .highlighted : .normal
+                buttonTitle: buttonTitle,
+                buttonKind: index == 0 ? .highlighted : .normal,
+                articleUrl: "https://finn.no"
             )
         }
 
         return RealestateAgencyContentViewModel(
             logoUrl: "FINN-LOGO",
             articles: articles,
-            colors: Colors(
-                main: Colors.Group(text: .milk, background: .primaryBlue),
-                logoBackground: .milk,
-                actionButton: Colors.Group(text: .primaryBlue, background: .milk)
+            styling: RealestateAgencyContentViewModel.Styling(
+                textColor: .milk,
+                backgroundColor: .primaryBlue,
+                logoBackgroundColor: .white,
+                actionButton: .init(
+                    textColor: .primaryBlue,
+                    backgroundColor: .milk,
+                    backgroundActiveColor: .milk.withAlphaComponent(0.7),
+                    borderColor: .milk
+                )
             )
         )
     }
@@ -97,9 +113,9 @@ private extension RealestateAgencyContentViewModel {
 extension RealestateAgencyContentDemoView: RealestateAgencyContentViewDelegate {
     func realestateAgencyContentView(
         _ view: RealestateAgencyContentView,
-        didSelectActionButtonForArticleAt articleIndex: Int
+        didSelectActionButtonForArticle article: RealestateAgencyContentViewModel.ArticleItem
     ) {
-        print("✅ Did select actionButton for article at \(articleIndex)")
+        print("✅ Did select actionButton for article with title \(article.title)")
     }
 }
 

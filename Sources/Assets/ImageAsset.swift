@@ -43,6 +43,7 @@ enum ImageAsset: String {
     case clockSmall
     case emptyPersonalNotificationsIcon
     case emptySavedSearchNotificationsIcon
+    case externalLink
     case favoriteActive
     case favoriteDefault
     case favorited
@@ -88,6 +89,7 @@ enum ImageAsset: String {
             .clockSmall,
             .emptyPersonalNotificationsIcon,
             .emptySavedSearchNotificationsIcon,
+            .externalLink,
             .favoriteActive,
             .favoriteDefault,
             .favorited,
