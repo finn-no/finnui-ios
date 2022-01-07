@@ -20,7 +20,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
     }()
 
     private lazy var titleLabel: Label = {
-        let label = Label(style: .title3, withAutoLayout: true)
+        let label = Label(style: .title3Strong, withAutoLayout: true)
         label.numberOfLines = 0
         return label
     }()
@@ -43,7 +43,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
 
     init(
         article: RealestateAgencyContentViewModel.ArticleItem,
-        colors: RealestateAgencyContentViewModel.Colors,
+        styling: RealestateAgencyContentViewModel.Styling,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         delegate: RealestateAgencyContentItemDelegate?
     ) {
@@ -52,7 +52,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         setup()
-        configure(with: article, colors: colors, remoteImageViewDataSource: remoteImageViewDataSource)
+        configure(with: article, styling: styling, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -74,11 +74,11 @@ class RealestateAgencyHighlightedContentItemView: UIView {
 
     private func configure(
         with article: RealestateAgencyContentViewModel.ArticleItem,
-        colors: RealestateAgencyContentViewModel.Colors,
+        styling: RealestateAgencyContentViewModel.Styling,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
-        titleLabel.textColor = colors.main.text
-        bodyLabel.textColor = colors.main.text
+        titleLabel.textColor = styling.textColor
+        bodyLabel.textColor = styling.textColor
 
         titleLabel.text = article.title
         bodyLabel.text = article.body
@@ -86,9 +86,13 @@ class RealestateAgencyHighlightedContentItemView: UIView {
         imageView.dataSource = remoteImageViewDataSource
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
-        let actionButton = Button.create(for: article, textColor: colors.actionButton.text, backgroundColor: colors.actionButton.background)
+        let actionButton = Button.create(for: article, styling: styling)
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
-        buttonStackView.addArrangedSubviews([actionButton, UIView(withAutoLayout: true)])
+        buttonStackView.addArrangedSubview(actionButton)
+
+        if article.buttonKind == .normal {
+            buttonStackView.addArrangedSubview(UIView(withAutoLayout: true))
+        }
     }
 
     // MARK: - Actions

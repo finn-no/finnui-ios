@@ -38,9 +38,12 @@ enum ImageAsset: String {
     case balloon2
     case balloon2Red
     case blinkRocket
+    case chevronDown
+    case chevronUp
     case clockSmall
     case emptyPersonalNotificationsIcon
     case emptySavedSearchNotificationsIcon
+    case externalLink
     case favoriteActive
     case favoriteDefault
     case favorited
@@ -81,9 +84,12 @@ enum ImageAsset: String {
             .balloon2,
             .balloon2Red,
             .blinkRocket,
+            .chevronDown,
+            .chevronUp,
             .clockSmall,
             .emptyPersonalNotificationsIcon,
             .emptySavedSearchNotificationsIcon,
+            .externalLink,
             .favoriteActive,
             .favoriteDefault,
             .favorited,

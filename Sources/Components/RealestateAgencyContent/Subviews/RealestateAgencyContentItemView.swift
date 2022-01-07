@@ -17,7 +17,7 @@ class RealestateAgencyContentItemView: UIView {
     private lazy var buttonStackView = UIStackView(axis: .horizontal, spacing: 0, withAutoLayout: true)
 
     private lazy var titleLabel: Label = {
-        let label = Label(style: .bodyStrong, withAutoLayout: true)
+        let label = Label(style: .title3Strong, withAutoLayout: true)
         label.numberOfLines = 0
         return label
     }()
@@ -40,7 +40,7 @@ class RealestateAgencyContentItemView: UIView {
 
     init(
         article: RealestateAgencyContentViewModel.ArticleItem,
-        colors: RealestateAgencyContentViewModel.Colors,
+        styling: RealestateAgencyContentViewModel.Styling,
         imageHeight: ImageHeight,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         delegate: RealestateAgencyContentItemDelegate?
@@ -50,7 +50,7 @@ class RealestateAgencyContentItemView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         setup(imageHeight: imageHeight)
-        configure(with: article, colors: colors, remoteImageViewDataSource: remoteImageViewDataSource)
+        configure(with: article, styling: styling, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -58,7 +58,7 @@ class RealestateAgencyContentItemView: UIView {
     // MARK: - Setup
 
     private func setup(imageHeight: ImageHeight) {
-        stackView.addArrangedSubviews([titleLabel, imageView, bodyLabel, buttonStackView])
+        stackView.addArrangedSubviews([imageView, titleLabel, bodyLabel, buttonStackView])
         addSubview(stackView)
         stackView.fillInSuperview()
 
@@ -74,11 +74,11 @@ class RealestateAgencyContentItemView: UIView {
 
     private func configure(
         with article: RealestateAgencyContentViewModel.ArticleItem,
-        colors: RealestateAgencyContentViewModel.Colors,
+        styling: RealestateAgencyContentViewModel.Styling,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
-        titleLabel.textColor = colors.main.text
-        bodyLabel.textColor = colors.main.text
+        titleLabel.textColor = styling.textColor
+        bodyLabel.textColor = styling.textColor
 
         titleLabel.text = article.title
         bodyLabel.text = article.body
@@ -86,8 +86,13 @@ class RealestateAgencyContentItemView: UIView {
         imageView.dataSource = remoteImageViewDataSource
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
-        let actionButton = Button.create(for: article, textColor: colors.actionButton.text, backgroundColor: colors.actionButton.background)
-        buttonStackView.addArrangedSubviews([actionButton, UIView(withAutoLayout: true)])
+        let actionButton = Button.create(for: article, styling: styling)
+        buttonStackView.addArrangedSubview(actionButton)
+
+        if article.buttonKind == .normal {
+            buttonStackView.addArrangedSubview(UIView(withAutoLayout: true))
+        }
+
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
     }
 

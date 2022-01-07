@@ -22,6 +22,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case numberedAdTipsCollapsibleView
     case helthjemView
     case shippingAlternativesView
+    case realestateSoldState
     case realestateAgencyContent
 
     public var viewController: UIViewController {
@@ -60,6 +61,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<HelthjemDemoView>()
         case .shippingAlternativesView:
             return DemoViewController<ShippingAlternativesDemoView>()
+        case .realestateSoldState:
+            return DemoViewController<RealestateSoldStateDemoView>(dismissType: .dismissButton)
         case .realestateAgencyContent:
             return DemoViewController<RealestateAgencyContentDemoView>()
         }

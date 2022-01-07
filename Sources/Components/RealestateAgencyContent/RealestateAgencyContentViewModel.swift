@@ -3,12 +3,12 @@ import UIKit
 public struct RealestateAgencyContentViewModel {
     public let logoUrl: String
     public let articles: [ArticleItem]
-    public let colors: Colors
+    public let styling: Styling
 
-    public init(logoUrl: String, articles: [ArticleItem], colors: Colors) {
+    public init(logoUrl: String, articles: [ArticleItem], styling: Styling) {
         self.logoUrl = logoUrl
         self.articles = articles
-        self.colors = colors
+        self.styling = styling
     }
 }
 
@@ -26,39 +26,51 @@ extension RealestateAgencyContentViewModel {
         public let imageUrl: String
         public let buttonTitle: String
         public let buttonKind: ButtonKind
+        public let articleUrl: String
 
-        public init(title: String, body: String, imageUrl: String, buttonTitle: String, buttonKind: ButtonKind) {
+        public init(title: String, body: String, imageUrl: String, buttonTitle: String, buttonKind: ButtonKind, articleUrl: String) {
             self.title = title
             self.body = body
             self.imageUrl = imageUrl
             self.buttonTitle = buttonTitle
             self.buttonKind = buttonKind
+            self.articleUrl = articleUrl
         }
     }
 }
 
-// MARK: - Colors
+// MARK: - Styling
 
 extension RealestateAgencyContentViewModel {
-    public struct Colors {
-        public let main: Group
-        public let logoBackground: UIColor
-        public let actionButton: Group
+    public struct Styling {
+        public let textColor: UIColor
+        public let backgroundColor: UIColor
+        public let logoBackgroundColor: UIColor
+        public let actionButton: ButtonStyle
 
-        public init(main: Group, logoBackground: UIColor, actionButton: Group) {
-            self.main = main
-            self.logoBackground = logoBackground
+        public init(textColor: UIColor, backgroundColor: UIColor, logoBackgroundColor: UIColor, actionButton: ButtonStyle) {
+            self.textColor = textColor
+            self.backgroundColor = backgroundColor
+            self.logoBackgroundColor = logoBackgroundColor
             self.actionButton = actionButton
         }
+    }
+}
 
-        public struct Group {
-            public let text: UIColor
-            public let background: UIColor
+// MARK: - ButtonStyle
 
-            public init(text: UIColor, background: UIColor) {
-                self.text = text
-                self.background = background
-            }
+extension RealestateAgencyContentViewModel.Styling {
+    public struct ButtonStyle {
+        public let textColor: UIColor
+        public let backgroundColor: UIColor
+        public let backgroundActiveColor: UIColor
+        public let borderColor: UIColor
+
+        public init(textColor: UIColor, backgroundColor: UIColor, backgroundActiveColor: UIColor, borderColor: UIColor) {
+            self.textColor = textColor
+            self.backgroundColor = backgroundColor
+            self.backgroundActiveColor = backgroundActiveColor
+            self.borderColor = borderColor
         }
     }
 }
