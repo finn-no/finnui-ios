@@ -13,7 +13,7 @@ public protocol TagCloudLayoutDataProvider {
 
 // MARK: - View Model
 
-public struct TagCloudCellViewModel: Hashable, TagCloudLayoutDataProvider {
+public class TagCloudCellViewModel: UniqueHashableItem, TagCloudLayoutDataProvider {
     public let title: String
     public let iconUrl: String?
     public let backgroundColor: UIColor
