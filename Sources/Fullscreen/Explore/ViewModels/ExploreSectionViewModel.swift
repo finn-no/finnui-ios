@@ -4,7 +4,7 @@
 
 import UIKit
 
-public struct ExploreSectionViewModel: Hashable {
+public class ExploreSectionViewModel: UniqueHashableItem {
     public enum Layout {
         case hero
         case tagCloud
