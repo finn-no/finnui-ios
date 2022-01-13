@@ -5,13 +5,13 @@ import FinnUI
 class FadedExpandDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Short view", action: { [weak self] in
-            self?.configure(contentView: .shortView)
+            self?.configure(contentView: .shortView, buttonVerticalMargin: .spacingM)
         }),
         TweakingOption(title: "Tall view", action: { [weak self] in
-            self?.configure(contentView: .tallView)
+            self?.configure(contentView: .tallView, buttonVerticalMargin: .spacingM)
         }),
         TweakingOption(title: "Title view", action: { [weak self] in
-            self?.configure(contentView: .titleView, verticalMargin: .spacingM)
+            self?.configure(contentView: .titleView, contentViewVerticalMargin: .spacingM, buttonVerticalMargin: .spacingM)
         }),
     ]
 
@@ -30,14 +30,15 @@ class FadedExpandDemoView: UIView, Tweakable {
 
     // MARK: - Private methods
 
-    private func configure(contentView: UIView, verticalMargin: CGFloat = 0) {
+    private func configure(contentView: UIView, contentViewVerticalMargin: CGFloat = 0, buttonVerticalMargin: CGFloat = 0) {
         if let oldView = fadedExpandView {
             oldView.removeFromSuperview()
         }
 
         let view = FadedExpandView(
             contentView: contentView,
-            verticalMargin: verticalMargin,
+            contentViewVerticalMargin: contentViewVerticalMargin,
+            buttonVerticalMargin: buttonVerticalMargin,
             buttonTitle: "Se hele annonsen",
             delegate: self,
             withAutoLayout: true
