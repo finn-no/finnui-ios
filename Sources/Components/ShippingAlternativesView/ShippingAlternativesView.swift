@@ -21,9 +21,7 @@ public final class ShippingAlternativesView: UIView {
         let buttonStyle = Button.Style.flat.overrideStyle(
             borderWidth: 0.0,
             borderColor: nil,
-            textColor: .link,
-            highlightedBorderColor: nil,
-            highlightedTextColor: .linkButtonHighlightedTextColor,
+            textColor: UIColor.btnAction,
             margins: UIEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0),
             normalFont: UIFont.body
         )
