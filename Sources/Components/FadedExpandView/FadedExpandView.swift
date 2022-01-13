@@ -12,11 +12,12 @@ public class FadedExpandView: UIView {
     private weak var delegate: FadedExpandViewDelegate?
 
     private var gradientColors: [CGColor] {
-        [
-            UIColor.white.withAlphaComponent(0).cgColor,
-            UIColor.white.withAlphaComponent(0).cgColor,
-            UIColor.bgPrimary.cgColor,
-            UIColor.bgPrimary.cgColor
+        let gradientColor = UIColor.bgPrimary
+        return [
+            gradientColor.withAlphaComponent(0).cgColor,
+            gradientColor.withAlphaComponent(0).cgColor,
+            gradientColor.cgColor,
+            gradientColor.cgColor
         ]
     }
 
