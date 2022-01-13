@@ -35,7 +35,8 @@ public class FadedExpandView: UIView {
 
     public init(
         contentView: UIView,
-        verticalMargin: CGFloat = 0,
+        contentViewVerticalMargin: CGFloat = 0,
+        buttonVerticalMargin: CGFloat = 0,
         buttonTitle: String,
         delegate: FadedExpandViewDelegate,
         withAutoLayout: Bool
@@ -45,25 +46,26 @@ public class FadedExpandView: UIView {
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
 
         expandButton.setTitle(buttonTitle, for: .normal)
-        setup(contentView: contentView, verticalMargin: verticalMargin)
+        setup(contentView: contentView, contentViewVerticalMargin: contentViewVerticalMargin, buttonVerticalMargin: buttonVerticalMargin)
     }
 
     required init?(coder: NSCoder) { fatalError() }
 
     // MARK: - Setup
 
-    private func setup(contentView: UIView, verticalMargin: CGFloat) {
+    private func setup(contentView: UIView, contentViewVerticalMargin: CGFloat, buttonVerticalMargin: CGFloat) {
+        clipsToBounds = true
         addSubview(contentView)
         addSubview(expandButton)
         layer.insertSublayer(gradientLayer, below: expandButton.layer)
 
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: verticalMargin),
-            contentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -verticalMargin),
+            contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentViewVerticalMargin),
+            contentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentViewVerticalMargin),
 
-            expandButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            expandButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+            expandButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: buttonVerticalMargin),
+            expandButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -buttonVerticalMargin),
             expandButton.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingM),
 
             heightAnchor.constraint(equalToConstant: 200)
