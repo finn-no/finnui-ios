@@ -79,6 +79,10 @@ class ComponentViewTests: XCTestCase {
         snapshot(.helthjemView)
     }
 
+    func testShippingAlternativesView() {
+        snapshot(.shippingAlternativesView)
+    }
+    
     func testRealestateSoldState() {
         snapshot(.realestateSoldState, includeIPad: true)
     }
