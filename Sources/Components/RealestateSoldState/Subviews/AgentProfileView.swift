@@ -55,24 +55,21 @@ class AgentProfileView: UIView {
         textStackView.setCustomSpacing(.spacingM, after: jobTitleLabel)
 
         addSubview(titleLabel)
-        addSubview(remoteImageView)
-        addSubview(textStackView)
+        addSubview(contactStackView)
+        contactStackView.addArrangedSubview(textStackView)
 
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            remoteImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
-            remoteImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            remoteImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
             remoteImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
             remoteImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
 
-            textStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
-            textStackView.leadingAnchor.constraint(equalTo: remoteImageView.trailingAnchor, constant: .spacingM),
-            textStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            textStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
+            contactStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
+            contactStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contactStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contactStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
