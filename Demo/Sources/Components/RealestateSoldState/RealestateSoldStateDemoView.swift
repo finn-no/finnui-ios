@@ -16,6 +16,12 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         .init(title: "Without agent phone number - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModelWithoutAgentPhoneNumber, isExpanded: false)
         },
+        .init(title: "Without agent image - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithoutAgentImage, isExpanded: false)
+        },
+        .init(title: "Without phone number or agent image - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithoutPhoneNumberOrAgentImage, isExpanded: false)
+        },
         .init(title: "Form submitted") { [weak self] in
             self?.setupDemoView(with: .demoModel, isExpanded: false, isFormSubmitted: true)
         },
@@ -194,6 +200,32 @@ private extension RealestateSoldStateModel {
             styling: .demoStyle
         )
     }
+
+    static var demoModelWithoutAgentImage: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
+            agentProfile: .demoModel.copyWithoutImage(),
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            styling: .demoStyle
+        )
+    }
+
+    static var demoModelWithoutPhoneNumberOrAgentImage: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
+            agentProfile: .demoModel.copyWithoutPhoneNumberOrImage(),
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            styling: .demoStyle
+        )
+    }
 }
 
 private extension AgentProfileModel {
@@ -212,7 +244,27 @@ private extension AgentProfileModel {
             title: title,
             agentName: agentName,
             agentJobTitle: agentJobTitle,
-            imageUrl: imageUrl,
+            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            phoneNumber: nil
+        )
+    }
+
+    func copyWithoutImage() -> AgentProfileModel {
+        AgentProfileModel(
+            title: title,
+            agentName: agentName,
+            agentJobTitle: agentJobTitle,
+            imageUrl: nil,
+            phoneNumber: "123 45 678"
+        )
+    }
+
+    func copyWithoutPhoneNumberOrImage() -> AgentProfileModel {
+        AgentProfileModel(
+            title: title,
+            agentName: agentName,
+            agentJobTitle: agentJobTitle,
+            imageUrl: nil,
             phoneNumber: nil
         )
     }
