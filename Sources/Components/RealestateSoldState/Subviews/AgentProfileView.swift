@@ -99,7 +99,7 @@ class AgentProfileView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        remoteImageView.layer.cornerRadius = min(remoteImageView.bounds.height, remoteImageView.bounds.width) / 2
+        remoteImageView.layer.cornerRadius = min(imageSize.height, imageSize.width) / 2
     }
 
     // MARK: - Actions
