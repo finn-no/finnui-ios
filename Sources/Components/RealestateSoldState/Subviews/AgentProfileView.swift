@@ -86,7 +86,13 @@ class AgentProfileView: UIView {
         }
 
         remoteImageView.dataSource = remoteImageViewDataSource
-        remoteImageView.loadImage(for: model.imageUrl, imageWidth: imageSize.width)
+
+        if let imageUrl = model.imageUrl {
+            remoteImageView.loadImage(for: imageUrl, imageWidth: imageSize.width)
+            contactStackView.insertArrangedSubview(remoteImageView, at: 0)
+        } else {
+            remoteImageView.removeFromSuperview()
+        }
     }
 
     // MARK: - Overrides
