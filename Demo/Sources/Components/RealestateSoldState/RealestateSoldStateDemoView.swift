@@ -10,6 +10,9 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         .init(title: "Default - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModel, isExpanded: false)
         },
+        .init(title: "With several phone numbers - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithSeveralPhoneNumbers, isExpanded: false)
+        },
         .init(title: "Without contact information - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModelWithoutContactInfo, isExpanded: false)
         },
@@ -175,6 +178,19 @@ private extension RealestateSoldStateModel {
         )
     }
 
+    static var demoModelWithSeveralPhoneNumbers: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
+            agentProfile: .demoModelWithSeveralPhoneNumbers,
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            styling: .demoStyle
+        )
+    }
+
     static var demoModelWithoutContactInfo: RealestateSoldStateModel {
         RealestateSoldStateModel(
             title: "Har du noen spørsmål rundt salget av denne boligen?",
@@ -235,7 +251,17 @@ private extension AgentProfileModel {
             agentName: "Navn Navnesen",
             agentJobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            phoneNumber: "123 45 678"
+            phoneNumbers: ["123 45 678"]
+        )
+    }
+
+    static var demoModelWithSeveralPhoneNumbers: AgentProfileModel {
+        AgentProfileModel(
+            title: "Ansvarlig megler for dette salget",
+            agentName: "Navn Navnesen",
+            agentJobTitle: "Eiendomsmegler / Partner",
+            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            phoneNumbers: ["123 45 678", "12 34 56 78", "99 88 77 66"]
         )
     }
 
@@ -245,7 +271,7 @@ private extension AgentProfileModel {
             agentName: agentName,
             agentJobTitle: agentJobTitle,
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            phoneNumber: nil
+            phoneNumbers: []
         )
     }
 
@@ -255,7 +281,7 @@ private extension AgentProfileModel {
             agentName: agentName,
             agentJobTitle: agentJobTitle,
             imageUrl: nil,
-            phoneNumber: "123 45 678"
+            phoneNumbers: ["123 45 678"]
         )
     }
 
@@ -265,7 +291,7 @@ private extension AgentProfileModel {
             agentName: agentName,
             agentJobTitle: agentJobTitle,
             imageUrl: nil,
-            phoneNumber: nil
+            phoneNumbers: []
         )
     }
 }
