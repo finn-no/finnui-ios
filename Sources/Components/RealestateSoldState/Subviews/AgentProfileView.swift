@@ -20,7 +20,7 @@ class AgentProfileView: UIView {
     private lazy var titleLabel = Label.create(style: .title3Strong)
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
-    private lazy var imageSize = CGSize(width: 96, height: 96)
+    private lazy var imageSize = CGSize(width: 88, height: 88)
 
     private lazy var remoteImageView: RemoteImageView = {
         let view = RemoteImageView(withAutoLayout: true)
