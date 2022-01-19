@@ -110,7 +110,15 @@ class AgentProfileView: UIView {
     // MARK: - Actions
 
     @objc private func phoneButtonTapped(button: Button) {
-        guard let buttonIndex = phoneNumberButtonsStackView.arrangedSubviews.firstIndex(of: button) else { return }
+        guard let arrangedStackViews = phoneNumberButtonsStackView.arrangedSubviews as? [UIStackView] else { return }
+
+        var buttonIndex: Int?
+        arrangedStackViews.enumerated().forEach {
+            guard let index = $0.element.arrangedSubviews.firstIndex(of: button) else { return }
+            buttonIndex = ($0.offset * numberOfPhoneNumbersPerRow) + index
+        }
+
+        guard let buttonIndex = buttonIndex else { return }
         delegate?.agentProfileView(self, didSelectPhoneButtonWithIndex: buttonIndex)
     }
 
