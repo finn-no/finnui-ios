@@ -15,18 +15,11 @@ class AgentProfileView: UIView {
 
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
     private lazy var contactStackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
+    private lazy var phoneNumberButtonsStackView = UIStackView(axis: .vertical, spacing: 0, withAutoLayout: true)
     private lazy var titleLabel = Label.create(style: .title3Strong)
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
     private lazy var imageSize = CGSize(width: 96, height: 96)
-
-    private lazy var phoneButton: Button = {
-        let button = Button(style: .link, withAutoLayout: true)
-        button.contentHorizontalAlignment = .left
-        button.isHidden = true
-        button.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
-        return button
-    }()
 
     private lazy var remoteImageView: RemoteImageView = {
         let view = RemoteImageView(withAutoLayout: true)
@@ -51,8 +44,9 @@ class AgentProfileView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, phoneButton])
-        textStackView.setCustomSpacing(.spacingM, after: jobTitleLabel)
+        contactStackView.alignment = .top
+        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, phoneNumberButtonsStackView])
+        textStackView.setCustomSpacing(.spacingXS, after: jobTitleLabel)
 
         addSubview(titleLabel)
         addSubview(contactStackView)
@@ -80,10 +74,8 @@ class AgentProfileView: UIView {
         nameLabel.text = model.agentName
         jobTitleLabel.text = model.agentJobTitle
 
-        if let phoneNumber = model.phoneNumber {
-            phoneButton.setTitle(phoneNumber, for: .normal)
-            phoneButton.isHidden = false
-        }
+        let phoneNumberButtons = model.phoneNumbers.map(createPhoneNumberButton(phoneNumber:))
+        phoneNumberButtonsStackView.addArrangedSubviews(phoneNumberButtons)
 
         remoteImageView.dataSource = remoteImageViewDataSource
 
@@ -104,8 +96,18 @@ class AgentProfileView: UIView {
 
     // MARK: - Actions
 
-    @objc private func phoneButtonTapped() {
+    @objc private func phoneButtonTapped(button: Button) {
         delegate?.agentProfileViewDidSelectPhoneButton(self)
+    }
+
+    // MARK: - Private methods
+
+    private func createPhoneNumberButton(phoneNumber: String) -> Button {
+        let button = Button(style: .link, withAutoLayout: true)
+        button.contentHorizontalAlignment = .left
+        button.setTitle(phoneNumber, for: .normal)
+        button.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
+        return button
     }
 }
 
