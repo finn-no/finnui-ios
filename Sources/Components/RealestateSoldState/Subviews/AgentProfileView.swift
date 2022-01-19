@@ -128,6 +128,7 @@ class AgentProfileView: UIView {
         let button = Button(style: .link, withAutoLayout: true)
         button.contentHorizontalAlignment = .left
         button.setTitle(phoneNumber, for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
         return button
     }
