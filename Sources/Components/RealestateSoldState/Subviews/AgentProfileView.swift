@@ -2,7 +2,7 @@ import UIKit
 import FinniversKit
 
 protocol AgentProfileViewDelegate: AnyObject {
-    func agentProfileViewDidSelectPhoneButton(_ view: AgentProfileView)
+    func agentProfileView(_ view: AgentProfileView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int)
 }
 
 class AgentProfileView: UIView {
@@ -97,7 +97,8 @@ class AgentProfileView: UIView {
     // MARK: - Actions
 
     @objc private func phoneButtonTapped(button: Button) {
-        delegate?.agentProfileViewDidSelectPhoneButton(self)
+        guard let buttonIndex = phoneNumberButtonsStackView.arrangedSubviews.firstIndex(of: button) else { return }
+        delegate?.agentProfileView(self, didSelectPhoneButtonWithIndex: buttonIndex)
     }
 
     // MARK: - Private methods

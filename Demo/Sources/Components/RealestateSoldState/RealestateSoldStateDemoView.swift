@@ -157,8 +157,8 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
         print("📏 Did resize itself")
     }
 
-    func realestateSoldStateViewDidSelectPhoneButton(_ view: RealestateSoldStateView) {
-        print("📲 Did tap phone number")
+    func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int) {
+        print("📲 Did tap phone number with index: \(phoneNumberIndex)")
     }
 }
 
