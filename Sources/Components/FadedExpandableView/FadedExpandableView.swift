@@ -1,15 +1,15 @@
 import UIKit
 import FinniversKit
 
-public protocol FadedExpandViewDelegate: AnyObject {
-    func fadedExpandViewDidSelectExpandButton(_ view: FadedExpandView)
+public protocol FadedExpandableViewDelegate: AnyObject {
+    func fadedExpandableViewDidSelectExpandButton(_ view: FadedExpandableView)
 }
 
-public class FadedExpandView: UIView {
+public class FadedExpandableView: UIView {
 
     // MARK: - Private properties
 
-    private weak var delegate: FadedExpandViewDelegate?
+    private weak var delegate: FadedExpandableViewDelegate?
 
     private var gradientColors: [CGColor] {
         let gradientColor = UIColor.bgPrimary
@@ -41,7 +41,7 @@ public class FadedExpandView: UIView {
         contentViewVerticalMargin: CGFloat = 0,
         buttonVerticalMargin: CGFloat = 0,
         buttonTitle: String,
-        delegate: FadedExpandViewDelegate,
+        delegate: FadedExpandableViewDelegate,
         withAutoLayout: Bool
     ) {
         self.delegate = delegate
@@ -86,6 +86,6 @@ public class FadedExpandView: UIView {
     // MARK: - Actions
 
     @objc private func expandButtonTapped() {
-        delegate?.fadedExpandViewDidSelectExpandButton(self)
+        delegate?.fadedExpandableViewDidSelectExpandButton(self)
     }
 }

@@ -88,6 +88,6 @@ class ComponentViewTests: XCTestCase {
     }
 
     func testFadedExpandView() {
-        snapshot(.fadedExpandView)
+        snapshot(.fadedExpandableView)
     }
 }

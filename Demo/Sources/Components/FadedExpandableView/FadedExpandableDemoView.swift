@@ -2,7 +2,7 @@ import UIKit
 import FinniversKit
 import FinnUI
 
-class FadedExpandDemoView: UIView, Tweakable {
+class FadedExpandableDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Short view", action: { [weak self] in
             self?.configure(contentView: .shortView, buttonVerticalMargin: .spacingM)
@@ -17,7 +17,7 @@ class FadedExpandDemoView: UIView, Tweakable {
 
     // MARK: - Private properties
 
-    private var fadedExpandView: FadedExpandView?
+    private var fadedExpandableView: FadedExpandableView?
 
     // MARK: - Init
 
@@ -31,11 +31,11 @@ class FadedExpandDemoView: UIView, Tweakable {
     // MARK: - Private methods
 
     private func configure(contentView: UIView, contentViewVerticalMargin: CGFloat = 0, buttonVerticalMargin: CGFloat = 0) {
-        if let oldView = fadedExpandView {
+        if let oldView = fadedExpandableView {
             oldView.removeFromSuperview()
         }
 
-        let view = FadedExpandView(
+        let view = FadedExpandableView(
             contentView: contentView,
             contentViewVerticalMargin: contentViewVerticalMargin,
             buttonVerticalMargin: buttonVerticalMargin,
@@ -51,14 +51,14 @@ class FadedExpandDemoView: UIView, Tweakable {
             view.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 
-        fadedExpandView = view
+        fadedExpandableView = view
     }
 }
 
 // MARK: - FadedExpandViewDelegate
 
-extension FadedExpandDemoView: FadedExpandViewDelegate {
-    func fadedExpandViewDidSelectExpandButton(_ view: FadedExpandView) {
+extension FadedExpandableDemoView: FadedExpandableViewDelegate {
+    func fadedExpandableViewDidSelectExpandButton(_ view: FadedExpandableView) {
         print("👉 Did tap expand button.")
     }
 }
