@@ -261,7 +261,7 @@ private extension AgentProfileModel {
             agentName: "Navn Navnesen",
             agentJobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            phoneNumbers: ["123 45 678", "12 34 56 78", "99 88 77 66"]
+            phoneNumbers: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"]
         )
     }
 
