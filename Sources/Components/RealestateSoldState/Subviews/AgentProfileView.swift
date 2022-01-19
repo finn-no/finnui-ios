@@ -13,6 +13,7 @@ class AgentProfileView: UIView {
 
     // MARK: - Private properties
 
+    private let numberOfPhoneNumbersPerRow = 2
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
     private lazy var contactStackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
     private lazy var phoneNumberButtonsStackView = UIStackView(axis: .vertical, spacing: 0, withAutoLayout: true)
@@ -74,8 +75,20 @@ class AgentProfileView: UIView {
         nameLabel.text = model.agentName
         jobTitleLabel.text = model.agentJobTitle
 
-        let phoneNumberButtons = model.phoneNumbers.map(createPhoneNumberButton(phoneNumber:))
-        phoneNumberButtonsStackView.addArrangedSubviews(phoneNumberButtons)
+        let phoneNumbersGrouped = model.phoneNumbers.chunked(by: numberOfPhoneNumbersPerRow)
+        let phoneNumberStackViews = phoneNumbersGrouped.map { phoneNumbers -> UIStackView in
+            let stackView = UIStackView(axis: .horizontal, spacing: .spacingL, withAutoLayout: true)
+            stackView.distribution = .fillEqually
+            stackView.alignment = .center
+            let phoneNumberButtons = phoneNumbers.map(createPhoneNumberButton(phoneNumber:))
+            stackView.addArrangedSubviews(phoneNumberButtons)
+
+            if phoneNumberButtons.count == 1 {
+                stackView.addArrangedSubview(UIView(withAutoLayout: true))
+            }
+            return stackView
+        }
+        phoneNumberButtonsStackView.addArrangedSubviews(phoneNumberStackViews)
 
         remoteImageView.dataSource = remoteImageViewDataSource
 
