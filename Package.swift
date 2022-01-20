@@ -22,11 +22,7 @@ let package = Package(
             ],
             path: "Sources",
             exclude: [
-                "Demo",
-            ],
-            resources: [
-                .process("Assets/Fonts"),
-                .process("Assets/Sounds"),
+                "Assets"
             ]
         ),
     ]
