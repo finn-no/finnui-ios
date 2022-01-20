@@ -20,10 +20,7 @@ let package = Package(
             dependencies: [
                 "FinniversKit",
             ],
-            path: "Sources",
-            exclude: [
-                "Assets"
-            ]
+            path: "Sources"
         ),
     ]
 )
