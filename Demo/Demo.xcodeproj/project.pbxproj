@@ -425,8 +425,11 @@
 		46E7756D242D4736008A5E93 /* SnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
+				46E77578242D476B008A5E93 /* ComponentViewTests.swift */,
+				46E7757B242D476B008A5E93 /* FullscreenViewTests.swift */,
+				46E77579242D476B008A5E93 /* RecyclingViewTests.swift */,
+				DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */,
 				46E77570242D4736008A5E93 /* Info.plist */,
-				F05770F02799AB5400C8DD85 /* ViewTests */,
 				F05770EF2799AB4100C8DD85 /* Wrappers */,
 				46E77582242D478D008A5E93 /* XCTestCastExtensions.swift */,
 			);
@@ -646,17 +649,6 @@
 				F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */,
 			);
 			path = Wrappers;
-			sourceTree = "<group>";
-		};
-		F05770F02799AB5400C8DD85 /* ViewTests */ = {
-			isa = PBXGroup;
-			children = (
-				46E77578242D476B008A5E93 /* ComponentViewTests.swift */,
-				46E7757B242D476B008A5E93 /* FullscreenViewTests.swift */,
-				46E77579242D476B008A5E93 /* RecyclingViewTests.swift */,
-				DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */,
-			);
-			path = ViewTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
