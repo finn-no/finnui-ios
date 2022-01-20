@@ -16,10 +16,6 @@ enum Sections: String, CaseIterable {
     case fullscreen
     case swiftui
 
-    static var items: [Sections] {
-        return allCases
-    }
-
     var numberOfItems: Int {
         switch self {
         case .components:
@@ -34,13 +30,13 @@ enum Sections: String, CaseIterable {
     }
 
     static func title(for section: Int) -> String {
-        let section = Sections.items[section]
+        let section = Sections.allCases[section]
         let rawClassName = section.rawValue
         return rawClassName
     }
 
     static func formattedNames(for section: Int) -> [String] {
-        let section = Sections.items[section]
+        let section = Sections.allCases[section]
         let names: [String]
         switch section {
         case .components:
@@ -56,7 +52,7 @@ enum Sections: String, CaseIterable {
     }
 
     static func formattedName(for indexPath: IndexPath) -> String {
-        let section = Sections.items[indexPath.section]
+        let section = Sections.allCases[indexPath.section]
         var rawClassName: String
         switch section {
         case .components:
@@ -73,12 +69,12 @@ enum Sections: String, CaseIterable {
     }
 
     static func `for`(_ indexPath: IndexPath) -> Sections {
-        return Sections.items[indexPath.section]
+        return Sections.allCases[indexPath.section]
     }
 
     // swiftlint:disable:next cyclomatic_complexity
     static func viewController(for indexPath: IndexPath) -> UIViewController? {
-        guard let section = Sections.items[safe: indexPath.section] else {
+        guard let section = Sections.allCases[safe: indexPath.section] else {
             return nil
         }
         var viewController: UIViewController?

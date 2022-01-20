@@ -173,7 +173,7 @@ extension DemoViewsTableViewController {
 
 extension DemoViewsTableViewController: SelectorTitleViewDelegate {
     func selectorTitleViewDidSelectButton(_ selectorTitleView: SelectorTitleView) {
-        let items = Sections.items.map { BasicTableViewItem(title: $0.rawValue.uppercased()) }
+        let items = Sections.allCases.map { BasicTableViewItem(title: $0.rawValue.uppercased()) }
         let sectionsTableView = BasicTableView(items: items)
         sectionsTableView.selectedIndexPath = IndexPath(row: State.lastSelectedSection, section: 0)
         sectionsTableView.delegate = self
