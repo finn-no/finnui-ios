@@ -12,7 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", .exact("88.0.2")),
+        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", .branch("component/OverflowCollectionView")),
     ],
     targets: [
     	.target(

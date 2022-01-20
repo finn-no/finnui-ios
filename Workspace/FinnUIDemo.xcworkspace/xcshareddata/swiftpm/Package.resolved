@@ -5,9 +5,9 @@
         "package": "FinniversKit",
         "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
         "state": {
-          "branch": null,
-          "revision": "71330f0e842db54d77a8070f63076d5af4ae18a7",
-          "version": "88.0.2"
+          "branch": "component/OverflowCollectionView",
+          "revision": "5ca1a688a25fc15492661bbad6f05fc84abab30b",
+          "version": null
         }
       },
       {
