@@ -1,12 +1,13 @@
 import UIKit
 
-class IPadSnapshotWrapperViewController: UIViewController {
-    func setDemoViewController(_ viewController: UIViewController) {
-        view.addSubview(viewController.view)
-        addChild(viewController)
-        viewController.didMove(toParent: self)
+class IPadSnapshotWrapperViewController: SnapshotWrapperViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-        let regularWidthTraitCollection = UITraitCollection(horizontalSizeClass: .regular)
-        setOverrideTraitCollection(regularWidthTraitCollection, forChild: viewController)
+        let overriddenTraitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceStyle: .light),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+        setOverrideTraitCollection(overriddenTraitCollection, forChild: demoViewController)
     }
 }
