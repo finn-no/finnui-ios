@@ -26,11 +26,13 @@ class NavigationController: UINavigationController {
     // MARK: - Setup
 
     private func setup() {
-        navigationBar.isTranslucent = false
         setBottomBorderColor(navigationBar: navigationBar, color: .textDisabled, height: 0.5)
-        navigationBar.barTintColor = .bgPrimary
-        navigationBar.tintColor = .textAction
-        navigationBar.layoutIfNeeded()
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .bgPrimary
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
     }
 
     // MARK: - Private methods
