@@ -1,7 +1,8 @@
 import UIKit
 import FinniversKit
 
-class PopularSearchCollectionViewCell: UICollectionViewCell {
+class PopularSearchCollectionViewCell: UICollectionViewCell, OverflowCollectionViewCell {
+    typealias Model = String
 
     static let padding = UIEdgeInsets(vertical: .spacingS, horizontal: .spacingM)
     static let titleLabelStyle: Label.Style = .body
@@ -32,8 +33,18 @@ class PopularSearchCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public methods
 
-    func configure(with title: String) {
+    func configure(using title: String) {
         titleLabel.text = title
+    }
+
+    static func size(using title: String) -> CGSize {
+        let font = Self.titleLabelStyle.font
+        let padding = Self.padding
+
+        let width = title.width(withConstrainedHeight: .infinity, font: font) + (padding.leading + padding.trailing)
+        let height = title.height(withConstrainedWidth: .infinity, font: font) + (padding.top + padding.bottom)
+
+        return CGSize(width: width, height: height)
     }
 
     // MARK: - Overrides
@@ -45,6 +56,8 @@ class PopularSearchCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = bounds.height / 2
     }
 }
+
+// MARK: - Private extensions
 
 private extension UIEdgeInsets {
     var toLayoutConstraintInsets: UIEdgeInsets {
