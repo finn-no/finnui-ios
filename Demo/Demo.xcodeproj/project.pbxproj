@@ -34,7 +34,6 @@
 		46E77580242D476B008A5E93 /* RecyclingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77579242D476B008A5E93 /* RecyclingViewTests.swift */; };
 		46E77581242D476B008A5E93 /* FullscreenViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7757B242D476B008A5E93 /* FullscreenViewTests.swift */; };
 		46E77583242D478D008A5E93 /* XCTestCastExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77582242D478D008A5E93 /* XCTestCastExtensions.swift */; };
-		46E77585242D4805008A5E93 /* TestConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77584242D4805008A5E93 /* TestConfig.swift */; };
 		4D529E13258357D0007AE5B6 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D529E12258357D0007AE5B6 /* Icons.xcassets */; };
 		4D529E2125837087007AE5B6 /* ImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D529E2025837087007AE5B6 /* ImageAsset.swift */; };
 		5B959FA1E7529B5DF3EE7315 /* RealestateSoldStateDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9591016C346EF4BB044C96 /* RealestateSoldStateDemoView.swift */; };
@@ -156,7 +155,6 @@
 		46E77579242D476B008A5E93 /* RecyclingViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecyclingViewTests.swift; sourceTree = "<group>"; };
 		46E7757B242D476B008A5E93 /* FullscreenViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenViewTests.swift; sourceTree = "<group>"; };
 		46E77582242D478D008A5E93 /* XCTestCastExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCastExtensions.swift; sourceTree = "<group>"; };
-		46E77584242D4805008A5E93 /* TestConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConfig.swift; sourceTree = "<group>"; };
 		4D529E12258357D0007AE5B6 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		4D529E2025837087007AE5B6 /* ImageAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAsset.swift; sourceTree = "<group>"; };
 		4DBC039A250A4A38004E8044 /* ExpandCollapseButtonDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandCollapseButtonDemoView.swift; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 				46E7757B242D476B008A5E93 /* FullscreenViewTests.swift */,
 				46E77579242D476B008A5E93 /* RecyclingViewTests.swift */,
 				DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */,
-				46E77584242D4805008A5E93 /* TestConfig.swift */,
 				46E77582242D478D008A5E93 /* XCTestCastExtensions.swift */,
 				5B95919B9CFD316597FE1169 /* IPadSnapshotWrapperViewController.swift */,
 			);
@@ -903,7 +900,6 @@
 			files = (
 				46E7757E242D476B008A5E93 /* ComponentViewTests.swift in Sources */,
 				46E77580242D476B008A5E93 /* RecyclingViewTests.swift in Sources */,
-				46E77585242D4805008A5E93 /* TestConfig.swift in Sources */,
 				DAE9CA8724602CB000C7552F /* SwiftUIViewTests.swift in Sources */,
 				46E77581242D476B008A5E93 /* FullscreenViewTests.swift in Sources */,
 				46E77583242D478D008A5E93 /* XCTestCastExtensions.swift in Sources */,
