@@ -16,12 +16,16 @@ public class ExpandCollapseButton: UIButton {
         didSet {
             CATransaction.begin()
             CATransaction.setDisableActions(true)
-            shapeLayer.strokeColor = (isHighlighted ? tintColor.withAlphaComponent(0.7) : tintColor).cgColor
+            shapeLayer.strokeColor = strokeColor
             CATransaction.commit()
         }
     }
 
     private let iconView: UIView
+
+    private var strokeColor: CGColor {
+        (isHighlighted ? tintColor.withAlphaComponent(0.7) : tintColor).cgColor
+    }
 
     // MARK: - Init
 
@@ -57,6 +61,7 @@ public class ExpandCollapseButton: UIButton {
     public override func layoutSubviews() {
         super.layoutSubviews()
         iconView.frame.origin = CGPoint(x: bounds.width - iconView.frame.width, y: 0)
+        shapeLayer.strokeColor = strokeColor
     }
 
     public override func tintColorDidChange() {
