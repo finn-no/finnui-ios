@@ -1,16 +1,12 @@
 //
 //  Copyright © FINN.no AS.
 //
+
 import UIKit
 
 public class ExpandCollapseButton: UIButton {
-    private var expanded = false {
-        didSet {
-            shapeLayer.path = expanded ? collapsePath() : expandPath()
-        }
-    }
 
-    private let shapeLayer: CAShapeLayer
+    // MARK: - Public properties
 
     public override var isHighlighted: Bool {
         didSet {
@@ -21,7 +17,16 @@ public class ExpandCollapseButton: UIButton {
         }
     }
 
+    // MARK: - Private properties
+
+    private let shapeLayer: CAShapeLayer
     private let iconView: UIView
+
+    private var expanded = false {
+        didSet {
+            shapeLayer.path = expanded ? collapsePath() : expandPath()
+        }
+    }
 
     private var strokeColor: CGColor {
         (isHighlighted ? tintColor.withAlphaComponent(0.7) : tintColor).cgColor
@@ -117,11 +122,13 @@ public class ExpandCollapseButton: UIButton {
     private func circlePath() -> UIBezierPath {
         let rect = shapeLayer.bounds.insetBy(dx: shapeLayer.bounds.width * 0.27, dy: shapeLayer.bounds.height * 0.27)
         let path = UIBezierPath()
-        path.addArc(withCenter: shapeLayer.position,
-                    radius: rect.width / 2,
-                    startAngle: 0,
-                    endAngle: CGFloat((360.0 * Double.pi) / 180.0),
-                    clockwise: true)
+        path.addArc(
+            withCenter: shapeLayer.position,
+            radius: rect.width / 2,
+            startAngle: 0,
+            endAngle: CGFloat((360.0 * Double.pi) / 180.0),
+            clockwise: true
+        )
         path.close()
         return path
     }
