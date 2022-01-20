@@ -47,7 +47,6 @@ public class PopularSearchesView: UIView {
 
     public func configure(with items: [String]) {
         overflowCollectionView.configure(with: items)
-        layoutIfNeeded()
     }
 }
 
