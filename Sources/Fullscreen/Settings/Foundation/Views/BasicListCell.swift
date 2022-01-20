@@ -93,7 +93,7 @@ private struct BasicButtonStyle: ButtonStyle {
     }
 
     private var selectedColor: UIColor {
-        return UIColor.dynamicColorIfAvailable(
+        return UIColor.dynamicColor(
             defaultColor: UIColor(r: 230, g: 235, b: 242),
             darkModeColor: UIColor(hex: "2f3039")
         )

@@ -205,18 +205,18 @@ public final class HelthjemView: UIView {
 
 private extension UIColor {
     class var backgroundColor: UIColor {
-        dynamicColorIfAvailable(defaultColor: .init(hex: "#F1F9FF"), darkModeColor: .darkIce)
+        dynamicColor(defaultColor: .init(hex: "#F1F9FF"), darkModeColor: .darkIce)
     }
 
     class var primaryButtonBackgroundColor: UIColor {
-        dynamicColorIfAvailable(defaultColor: .bgPrimary, darkModeColor: .bgTertiary)
+        dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgTertiary)
     }
 
     class var primaryButtonBorderColor: UIColor {
-        dynamicColorIfAvailable(defaultColor: .init(hex: "#C3CCD9"), darkModeColor: .textSecondary)
+        dynamicColor(defaultColor: .init(hex: "#C3CCD9"), darkModeColor: .textSecondary)
     }
 
     class var secondaryButtonColor: UIColor {
-        dynamicColorIfAvailable(defaultColor: .primaryBlue, darkModeColor: .milk)
+        dynamicColor(defaultColor: .primaryBlue, darkModeColor: .milk)
     }
 }
