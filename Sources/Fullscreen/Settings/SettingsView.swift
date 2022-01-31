@@ -196,7 +196,7 @@ struct SettingsView_Previews: PreviewProvider {
             SettingsView(viewModel: viewModel, onSelect: { indexPath, view in
                 print("Cell at \(indexPath) selected, frame: \(String(describing: view?.superview?.frame))")
             })
-        }.environment(\.colorScheme, .dark)
+        }
     }
 }
 
