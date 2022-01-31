@@ -5,7 +5,6 @@
 import SwiftUI
 import FinniversKit
 
-@available(iOS 13.0, *)
 struct TryHeltHjemView: View {
     let viewModel: TryHeltHjemViewModel
     let onReadMore: (() -> Void)
@@ -49,7 +48,6 @@ struct TryHeltHjemView: View {
     }
 }
 
-@available(iOS 13.0, *)
 //swiftlint:disable:next type_name superfluous_disable_command
 struct TryHeltHjemView_Previews: PreviewProvider {
     static var previews: some View {

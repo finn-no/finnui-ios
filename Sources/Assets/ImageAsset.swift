@@ -39,15 +39,17 @@ enum ImageAsset: String {
     case backgroundFigureRight
     case backgroundFigureTop
     case balloon0
-    case balloon1
     case balloon2
     case balloon2Red
     case blinkRocket
     case checkMark
+    case chevronDown
+    case chevronUp
     case clockSmall
     case close
     case emptyPersonalNotificationsIcon
     case emptySavedSearchNotificationsIcon
+    case externalLink
     case favoriteActive
     case favoriteDefault
     case favorited
@@ -91,15 +93,17 @@ enum ImageAsset: String {
             .backgroundFigureRight,
             .backgroundFigureTop,
             .balloon0,
-            .balloon1,
             .balloon2,
             .balloon2Red,
             .blinkRocket,
             .checkMark,
+            .chevronDown,
+            .chevronUp,
             .clockSmall,
             .close,
             .emptyPersonalNotificationsIcon,
             .emptySavedSearchNotificationsIcon,
+            .externalLink,
             .favoriteActive,
             .favoriteDefault,
             .favorited,

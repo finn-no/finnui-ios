@@ -1,3 +1,4 @@
+
 [![CircleCI](https://img.shields.io/circleci/project/github/finn-no/finnui-ios/master.svg)](https://circleci.com/gh/finn-no/finnui-ios/tree/master)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
@@ -94,17 +95,50 @@ Note that the `snapshot` method is a helper method that will call `SnapshotTesti
 
 There can be instances where the snapshot test pass on your machine but don't on circle ci, when that happens, circle CI will fail and inform the presence of the test results in a `.xctestresult` file. To debug this, re-run the workflow with ssh access, then you will get a command to connect through ssh to circle ci, like:
 
-```
-ssh -p PORT IP
-```
-
-Then given the path of the results file circle ci reported, you can run the following command to copy it to your machine, so you will be able to inspect the failed snapshots
-
-```
-scp -v -r -P PORT -i PATH_TO_SSH_KEY distiller@IP:"/Users/distiller/Library/Developer/Xcode/DerivedData/FinnUI-fblxjfyrnvejgxdktracnzlelvsi/Logs/Test/Run-Demo-2019.10.03_00-14-16--0700.xcresult" .
+```sh
+ssh -p [port] [IP]
 ```
 
-Make sure to replace the file path correctly to the one that circle ci reported.
+Then you can navigate to the path where the test results are located:
+
+```sh
+cd Library/Developer/Xcode/DerivedData/[project]/Logs/Test
+```
+
+The `.xcresult` is quite large, and it takes a long time to transfer each file, so compress it before downloading:
+
+```sh
+tar -cvzf test.tar.gz [.xcresult file]
+```
+
+Figure out where you are on the file system so it's easier to `scp` the file to your computer:
+
+```sh
+pwd # Copy this value
+```
+
+Then navigate to somewhere on your machine, copy this command and fill in the blanks which you should already have:
+```sh
+scp -v -r -P [port] distiller@[IP]:"[path you copied]/test.tar.gz" .
+```
+
+##### All commands
+```sh
+# SSH to the machine.
+ssh -p [port] [IP]
+
+# Navigate to the folder containing the test results.
+cd Library/Developer/Xcode/DerivedData/[project]/Logs/Test
+
+# Compress the .xcresult-folder.
+tar -cvzf test.tar.gz [*.xcresult]
+
+# Figure out the absolute path you're at on the machine. Copy this value.
+pwd
+
+# Disconnect from the machine and copy the compressed file.
+scp -v -r -P [port] distiller@[IP]:"[path you copied]/test.tar.gz" .
+```
 
 #### Verifying changes for an existing component
 

@@ -82,20 +82,16 @@ class ImageMapGridView: UIView {
 
         primaryImageView.dataSource = remoteImageViewDataSource
         primaryImageView.loadImage(for: primaryImageUrl, imageWidth: .zero)
+        primaryImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5).isActive = true
 
         if promoKind == .imagesAndMap, let secondaryImageUrl = secondaryImageUrl, let mapCoordinates = mapCoordinates {
             secondaryImageView.dataSource = remoteImageViewDataSource
             secondaryImageView.loadImage(for: secondaryImageUrl, imageWidth: .zero)
 
             mapView.addAnnotation(MapPinAnnotation(coordinate: mapCoordinates))
-
-            NSLayoutConstraint.activate([
-                primaryImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
-                imageAndMapStackView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1/3)
-            ])
+            imageAndMapStackView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1/3).isActive = true
         } else {
             imageAndMapStackView.isHidden = true
-            primaryImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6).isActive = true
         }
     }
 

@@ -27,7 +27,7 @@ public struct ExploreDetailViewModel: Hashable {
 
 // MARK: - Section
 
-public struct ExploreDetailSection: Hashable {
+public class ExploreDetailSection: UniqueHashableItem {
     public enum Items: Hashable {
         case selectedCategories([ExploreCollectionViewModel])
         case collections([ExploreCollectionViewModel])

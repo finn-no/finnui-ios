@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-@available(iOS 13.0.0, *)
 public struct BottomDividerModifier: ViewModifier {
     let show: Bool
     let inset: EdgeInsets
@@ -22,7 +21,6 @@ public struct BottomDividerModifier: ViewModifier {
     }
 }
 
-@available(iOS 13.0.0, *)
 extension View {
     public func bottomDivider(
         _ show: Bool,

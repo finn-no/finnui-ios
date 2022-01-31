@@ -8,6 +8,8 @@ public struct PromotedRealestateCellViewModel {
     public let secondaryAttributes: [String]?
     public let totalPriceText: String?
     public let viewingText: String?
+    public let viewingTextColor: UIColor
+    public let viewingBackgroundColor: UIColor
     public let primaryImageUrl: String
     public let secondaryImageUrl: String?
     public let realtorName: String?
@@ -23,6 +25,8 @@ public struct PromotedRealestateCellViewModel {
         secondaryAttributes: [String]?,
         totalPriceText: String?,
         viewingText: String?,
+        viewingTextColor: UIColor,
+        viewingBackgroundColor: UIColor,
         primaryImageUrl: String,
         secondaryImageUrl: String?,
         realtorName: String?,
@@ -37,6 +41,8 @@ public struct PromotedRealestateCellViewModel {
         self.secondaryAttributes = secondaryAttributes
         self.totalPriceText = totalPriceText
         self.viewingText = viewingText
+        self.viewingTextColor = viewingTextColor
+        self.viewingBackgroundColor = viewingBackgroundColor
         self.primaryImageUrl = primaryImageUrl
         self.secondaryImageUrl = secondaryImageUrl
         self.realtorName = realtorName
