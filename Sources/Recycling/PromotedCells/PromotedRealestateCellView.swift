@@ -130,7 +130,7 @@ public class PromotedRealestateCellView: UIView {
         ])
 
         if let viewingText = viewModel.viewingText {
-            viewingInfoView.configure(with: viewingText)
+            viewingInfoView.configure(with: viewingText, textColor: viewModel.viewingTextColor, backgroundColor: viewModel.viewingBackgroundColor)
         } else {
             viewingInfoView.isHidden = true
         }
