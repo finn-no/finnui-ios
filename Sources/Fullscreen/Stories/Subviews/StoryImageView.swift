@@ -7,15 +7,10 @@ class StoryImageView: UIImageView {
 
     // MARK: - Internal methods
 
-    func configure(withImage image: UIImage?) {
+    func configure(withImage image: UIImage) {
         if containsPlaceholderImage {
             containsPlaceholderImage = false
             addGradients()
-        }
-
-        guard let image = image else {
-            self.image = nil
-            return
         }
 
         self.image = image

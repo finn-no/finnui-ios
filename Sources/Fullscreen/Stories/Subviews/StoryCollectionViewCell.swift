@@ -396,7 +396,11 @@ class StoryCollectionViewCell: UICollectionViewCell {
         dataSource?.storyCollectionViewCell(self, loadImageWithPath: imageUrl, imageWidth: UIScreen.main.bounds.width, completion: { [weak self] image in
             guard let self = self else { return }
             if imageUrl == self.currentImageUrl {
-                self.imageView.configure(withImage: image)
+                if let image = image {
+                    self.imageView.configure(withImage: image)
+                } else {
+                    self.imageView.configureWithPlaceholderImage()
+                }
             }
         })
     }
