@@ -135,6 +135,17 @@ public class PromotedRealestateCellView: UIView {
             viewingInfoView.isHidden = true
         }
 
+        if let ribbonText = viewModel.ribbonText {
+            let ribbonView = RibbonView(viewModel: RibbonViewModel(style: .warning, title: ribbonText))
+            ribbonView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(ribbonView)
+
+            NSLayoutConstraint.activate([
+                ribbonView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
+                ribbonView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS)
+            ])
+        }
+
         configure(isFavorited: isFavorited)
     }
 
