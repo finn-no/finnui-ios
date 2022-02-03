@@ -2,7 +2,7 @@ import UIKit
 import FinniversKit
 
 protocol AgentProfileViewDelegate: AnyObject {
-    func agentProfileViewDidSelectPhoneButton(_ view: AgentProfileView)
+    func agentProfileView(_ view: AgentProfileView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int)
 }
 
 class AgentProfileView: UIView {
@@ -13,20 +13,14 @@ class AgentProfileView: UIView {
 
     // MARK: - Private properties
 
+    private let numberOfPhoneNumbersPerRow = 2
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
     private lazy var contactStackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
+    private lazy var phoneNumberButtonsStackView = UIStackView(axis: .vertical, spacing: 0, withAutoLayout: true)
     private lazy var titleLabel = Label.create(style: .title3Strong)
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
-    private lazy var imageSize = CGSize(width: 96, height: 96)
-
-    private lazy var phoneButton: Button = {
-        let button = Button(style: .link, withAutoLayout: true)
-        button.contentHorizontalAlignment = .left
-        button.isHidden = true
-        button.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
-        return button
-    }()
+    private lazy var imageSize = CGSize(width: 88, height: 88)
 
     private lazy var remoteImageView: RemoteImageView = {
         let view = RemoteImageView(withAutoLayout: true)
@@ -51,28 +45,26 @@ class AgentProfileView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, phoneButton])
-        textStackView.setCustomSpacing(.spacingM, after: jobTitleLabel)
+        contactStackView.alignment = .top
+        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, phoneNumberButtonsStackView])
+        textStackView.setCustomSpacing(.spacingXS, after: jobTitleLabel)
 
         addSubview(titleLabel)
-        addSubview(remoteImageView)
-        addSubview(textStackView)
+        addSubview(contactStackView)
+        contactStackView.addArrangedSubview(textStackView)
 
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            remoteImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
-            remoteImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            remoteImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
             remoteImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
             remoteImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
 
-            textStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
-            textStackView.leadingAnchor.constraint(equalTo: remoteImageView.trailingAnchor, constant: .spacingM),
-            textStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            textStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
+            contactStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
+            contactStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contactStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contactStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
@@ -83,26 +75,62 @@ class AgentProfileView: UIView {
         nameLabel.text = model.agentName
         jobTitleLabel.text = model.agentJobTitle
 
-        if let phoneNumber = model.phoneNumber {
-            phoneButton.setTitle(phoneNumber, for: .normal)
-            phoneButton.isHidden = false
+        let phoneNumbersGrouped = model.phoneNumbers.chunked(by: numberOfPhoneNumbersPerRow)
+        let phoneNumberStackViews = phoneNumbersGrouped.map { phoneNumbers -> UIStackView in
+            let stackView = UIStackView(axis: .horizontal, spacing: .spacingL, withAutoLayout: true)
+            stackView.distribution = .fillEqually
+            stackView.alignment = .center
+            let phoneNumberButtons = phoneNumbers.map(createPhoneNumberButton(phoneNumber:))
+            stackView.addArrangedSubviews(phoneNumberButtons)
+
+            if phoneNumberButtons.count == 1 {
+                stackView.addArrangedSubview(UIView(withAutoLayout: true))
+            }
+            return stackView
         }
+        phoneNumberButtonsStackView.addArrangedSubviews(phoneNumberStackViews)
 
         remoteImageView.dataSource = remoteImageViewDataSource
-        remoteImageView.loadImage(for: model.imageUrl, imageWidth: imageSize.width)
+
+        if let imageUrl = model.imageUrl {
+            remoteImageView.loadImage(for: imageUrl, imageWidth: imageSize.width)
+            contactStackView.insertArrangedSubview(remoteImageView, at: 0)
+        } else {
+            remoteImageView.removeFromSuperview()
+        }
     }
 
     // MARK: - Overrides
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        remoteImageView.layer.cornerRadius = min(remoteImageView.bounds.height, remoteImageView.bounds.width) / 2
+        remoteImageView.layer.cornerRadius = min(imageSize.height, imageSize.width) / 2
     }
 
     // MARK: - Actions
 
-    @objc private func phoneButtonTapped() {
-        delegate?.agentProfileViewDidSelectPhoneButton(self)
+    @objc private func phoneButtonTapped(button: Button) {
+        guard let arrangedStackViews = phoneNumberButtonsStackView.arrangedSubviews as? [UIStackView] else { return }
+
+        var buttonIndex: Int?
+        arrangedStackViews.enumerated().forEach {
+            guard let index = $0.element.arrangedSubviews.firstIndex(of: button) else { return }
+            buttonIndex = ($0.offset * numberOfPhoneNumbersPerRow) + index
+        }
+
+        guard let buttonIndex = buttonIndex else { return }
+        delegate?.agentProfileView(self, didSelectPhoneButtonWithIndex: buttonIndex)
+    }
+
+    // MARK: - Private methods
+
+    private func createPhoneNumberButton(phoneNumber: String) -> Button {
+        let button = Button(style: .link, withAutoLayout: true)
+        button.contentHorizontalAlignment = .left
+        button.setTitle(phoneNumber, for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
+        return button
     }
 }
 

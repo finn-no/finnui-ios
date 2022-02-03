@@ -18,7 +18,7 @@ public class PromotedRealestateCellView: UIView {
     public weak var delegate: PromotedRealestateCellViewDelegate?
 
     public var isFavorited: Bool {
-        primaryFavoriteButton.isToggled
+        favoriteButton.isToggled
     }
 
     // MARK: - Private properties
@@ -27,8 +27,6 @@ public class PromotedRealestateCellView: UIView {
     private let promoKind: PromoKind
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
 
-    private lazy var primaryFavoriteButton = createFavoriteButton()
-    private lazy var secondaryFavoriteButton = createFavoriteButton(includeShadow: true)
     private lazy var viewingInfoView = ViewingInfoView(withAutoLayout: true)
     private lazy var highlightView = UIView(withAutoLayout: true)
     private lazy var titleLabel = createLabel(style: .body, textColor: .textPrimary)
@@ -62,25 +60,30 @@ public class PromotedRealestateCellView: UIView {
         return stackView
     }()
 
-    private lazy var realtorAndFavoriteStackView: UIStackView = {
-        let stackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
-        stackView.addArrangedSubviews([realtorInfoView, primaryFavoriteButton])
-        stackView.alignment = .center
-        return stackView
-    }()
-
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         stackView.addArrangedSubviews([
             imageMapGridView,
             highlightView,
-            realtorAndFavoriteStackView,
+            realtorInfoView,
             textStackView,
             viewingInfoView
         ])
         stackView.setCustomSpacing(0, after: imageMapGridView)
         stackView.alignment = .leading
         return stackView
+    }()
+
+    private lazy var favoriteButton: IconButton = {
+        let button = IconButton(style: .favorite)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleFavoriteButtonTap), for: .touchUpInside)
+        button.imageView?.layer.shadowColor = UIColor.black.cgColor
+        button.imageView?.layer.shadowOpacity = 0.7
+        button.imageView?.layer.shadowRadius = 2
+        button.imageView?.layer.shadowOffset = .zero
+        button.tintColor = .white
+        return button
     }()
 
     // MARK: - Init
@@ -114,28 +117,32 @@ public class PromotedRealestateCellView: UIView {
 
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
+        addSubview(favoriteButton)
 
         NSLayoutConstraint.activate([
             highlightView.heightAnchor.constraint(equalToConstant: .spacingS),
             highlightView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
             imageMapGridView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
-            realtorAndFavoriteStackView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
-            realtorAndFavoriteStackView.heightAnchor.constraint(equalToConstant: 28),
-            primaryFavoriteButton.widthAnchor.constraint(equalTo: realtorAndFavoriteStackView.heightAnchor),
-            textStackView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor)
+            realtorInfoView.heightAnchor.constraint(equalToConstant: 28),
+            textStackView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
+            favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+            favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
         ])
 
         if let viewingText = viewModel.viewingText {
-            viewingInfoView.configure(with: viewingText)
+            viewingInfoView.configure(with: viewingText, textColor: viewModel.viewingTextColor, backgroundColor: viewModel.viewingBackgroundColor)
         } else {
             viewingInfoView.isHidden = true
         }
 
-        if promoKind == .imagesAndMap {
-            addSubview(secondaryFavoriteButton)
+        if let ribbonText = viewModel.ribbonText {
+            let ribbonView = RibbonView(viewModel: RibbonViewModel(style: .warning, title: ribbonText))
+            ribbonView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(ribbonView)
+
             NSLayoutConstraint.activate([
-                secondaryFavoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
-                secondaryFavoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
+                ribbonView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
+                ribbonView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS)
             ])
         }
 
@@ -149,16 +156,7 @@ public class PromotedRealestateCellView: UIView {
     }
 
     public func configure(isFavorited: Bool) {
-        primaryFavoriteButton.isToggled = isFavorited
-        secondaryFavoriteButton.isToggled = isFavorited
-
-        if isFavorited {
-            primaryFavoriteButton.tintColor = .textAction
-            secondaryFavoriteButton.tintColor = .white
-        } else {
-            primaryFavoriteButton.tintColor = .textSecondary
-            secondaryFavoriteButton.tintColor = .white
-        }
+        favoriteButton.isToggled = isFavorited
     }
 
     // MARK: - Private methods
@@ -168,21 +166,6 @@ public class PromotedRealestateCellView: UIView {
         label.numberOfLines = 0
         label.textColor = textColor
         return label
-    }
-
-    private func createFavoriteButton(includeShadow: Bool = false) -> IconButton {
-        let button = IconButton(style: .favorite)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleFavoriteButtonTap), for: .touchUpInside)
-
-        if includeShadow {
-            button.imageView?.layer.shadowColor = UIColor.black.cgColor
-            button.imageView?.layer.shadowOpacity = 0.7
-            button.imageView?.layer.shadowRadius = 2
-            button.imageView?.layer.shadowOffset = .zero
-        }
-
-        return button
     }
 
     // MARK: - Actions

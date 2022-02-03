@@ -10,11 +10,20 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         .init(title: "Default - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModel, isExpanded: false)
         },
+        .init(title: "With several phone numbers - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithSeveralPhoneNumbers, isExpanded: false)
+        },
         .init(title: "Without contact information - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModelWithoutContactInfo, isExpanded: false)
         },
         .init(title: "Without agent phone number - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModelWithoutAgentPhoneNumber, isExpanded: false)
+        },
+        .init(title: "Without agent image - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithoutAgentImage, isExpanded: false)
+        },
+        .init(title: "Without phone number or agent image - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithoutPhoneNumberOrAgentImage, isExpanded: false)
         },
         .init(title: "Form submitted") { [weak self] in
             self?.setupDemoView(with: .demoModel, isExpanded: false, isFormSubmitted: true)
@@ -148,8 +157,8 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
         print("📏 Did resize itself")
     }
 
-    func realestateSoldStateViewDidSelectPhoneButton(_ view: RealestateSoldStateView) {
-        print("📲 Did tap phone number")
+    func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int) {
+        print("📲 Did tap phone number with index: \(phoneNumberIndex)")
     }
 }
 
@@ -162,6 +171,19 @@ private extension RealestateSoldStateModel {
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
             agentProfile: .demoModel,
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            styling: .demoStyle
+        )
+    }
+
+    static var demoModelWithSeveralPhoneNumbers: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
+            agentProfile: .demoModelWithSeveralPhoneNumbers,
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
@@ -194,6 +216,32 @@ private extension RealestateSoldStateModel {
             styling: .demoStyle
         )
     }
+
+    static var demoModelWithoutAgentImage: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
+            agentProfile: .demoModel.copyWithoutImage(),
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            styling: .demoStyle
+        )
+    }
+
+    static var demoModelWithoutPhoneNumberOrAgentImage: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
+            agentProfile: .demoModel.copyWithoutPhoneNumberOrImage(),
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            styling: .demoStyle
+        )
+    }
 }
 
 private extension AgentProfileModel {
@@ -203,7 +251,17 @@ private extension AgentProfileModel {
             agentName: "Navn Navnesen",
             agentJobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            phoneNumber: "123 45 678"
+            phoneNumbers: ["123 45 678"]
+        )
+    }
+
+    static var demoModelWithSeveralPhoneNumbers: AgentProfileModel {
+        AgentProfileModel(
+            title: "Ansvarlig megler for dette salget",
+            agentName: "Navn Navnesen",
+            agentJobTitle: "Eiendomsmegler / Partner",
+            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            phoneNumbers: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"]
         )
     }
 
@@ -212,8 +270,28 @@ private extension AgentProfileModel {
             title: title,
             agentName: agentName,
             agentJobTitle: agentJobTitle,
-            imageUrl: imageUrl,
-            phoneNumber: nil
+            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            phoneNumbers: []
+        )
+    }
+
+    func copyWithoutImage() -> AgentProfileModel {
+        AgentProfileModel(
+            title: title,
+            agentName: agentName,
+            agentJobTitle: agentJobTitle,
+            imageUrl: nil,
+            phoneNumbers: ["123 45 678"]
+        )
+    }
+
+    func copyWithoutPhoneNumberOrImage() -> AgentProfileModel {
+        AgentProfileModel(
+            title: title,
+            agentName: agentName,
+            agentJobTitle: agentJobTitle,
+            imageUrl: nil,
+            phoneNumbers: []
         )
     }
 }

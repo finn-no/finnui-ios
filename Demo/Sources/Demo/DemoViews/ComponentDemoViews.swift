@@ -21,6 +21,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case adTipsCollapsibleView
     case numberedAdTipsCollapsibleView
     case helthjemView
+    case shippingAlternativesView
     case realestateSoldState
     case realestateAgencyContent
     case fadedExpandableView
@@ -59,6 +60,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<NumberedAdTipsCollapsibleDemoView>()
         case .helthjemView:
             return DemoViewController<HelthjemDemoView>()
+        case .shippingAlternativesView:
+            return DemoViewController<ShippingAlternativesDemoView>()
         case .realestateSoldState:
             return DemoViewController<RealestateSoldStateDemoView>(dismissType: .dismissButton)
         case .realestateAgencyContent:
