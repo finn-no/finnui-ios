@@ -52,7 +52,6 @@
 		ADC5C001F9CB596AAA8A6766 /* AdTipsCollapsibleDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5C5356934C46CBC60D68A /* AdTipsCollapsibleDemoView.swift */; };
 		ADC5CBBC2AE659F8B588F876 /* NumberedAdTipsCollapsibleDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5C7228914271986E032E4 /* NumberedAdTipsCollapsibleDemoView.swift */; };
 		D61E2C3825C0157600FA8F16 /* FinnUI in Frameworks */ = {isa = PBXBuildFile; productRef = D61E2C3725C0157600FA8F16 /* FinnUI */; };
-		D6D43CD625BF239E00234AC2 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 46E77597242D6890008A5E93 /* SnapshotTesting */; };
 		D6D43CE325BF2F4D00234AC2 /* SearchDisplayMenuDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD45AB250FA7E1007DBDD5 /* SearchDisplayMenuDemoView.swift */; };
 		D6D43CE425BF2F4D00234AC2 /* SaveSearchViewDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E772EB242CEF09008A5E93 /* SaveSearchViewDemoView.swift */; };
 		D6D43CE525BF2F4D00234AC2 /* IconLinkListViewDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6800F29F72B6957F2BE564 /* IconLinkListViewDemo.swift */; };
@@ -77,6 +76,7 @@
 		DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */; };
 		DAE9CA8724602CB000C7552F /* SwiftUIViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */; };
 		E4DBDD972762335200BE21D8 /* ShippingAlternativesDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DBDD962762335200BE21D8 /* ShippingAlternativesDemoView.swift */; };
+		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -210,7 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6D43CD625BF239E00234AC2 /* SnapshotTesting in Frameworks */,
+				F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,7 +715,7 @@
 			);
 			name = SnapshotTests;
 			packageProductDependencies = (
-				46E77597242D6890008A5E93 /* SnapshotTesting */,
+				F023EAED27B69AAE00F6286B /* SnapshotTesting */,
 			);
 			productName = SnapshotTests;
 			productReference = 46E7756C242D4736008A5E93 /* SnapshotTests.xctest */;
@@ -771,7 +771,7 @@
 			);
 			mainGroup = 46AE6FB7242BADC9007BB005;
 			packageReferences = (
-				46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing.git" */,
+				F023EAEC27B69AAE00F6286B /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = 46AE6FC1242BADC9007BB005 /* Products */;
 			projectDirPath = "";
@@ -1242,25 +1242,25 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing.git" */ = {
+		F023EAEC27B69AAE00F6286B /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
+			repositoryURL = "https://github.com/pimms/swift-snapshot-testing.git";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.9.0;
+				kind = revision;
+				revision = 0efeef44df913fe60ea868f037f271ac927a8e8c;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		46E77597242D6890008A5E93 /* SnapshotTesting */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing.git" */;
-			productName = SnapshotTesting;
-		};
 		D61E2C3725C0157600FA8F16 /* FinnUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FinnUI;
+		};
+		F023EAED27B69AAE00F6286B /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F023EAEC27B69AAE00F6286B /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
