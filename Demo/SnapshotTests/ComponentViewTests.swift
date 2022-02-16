@@ -90,4 +90,8 @@ class ComponentViewTests: XCTestCase {
     func testRealestateAgencyContent() {
         snapshot(.realestateAgencyContent, includeIPad: true)
     }
+
+    func testFadedExpandableView() {
+        snapshot(.fadedExpandableView)
+    }
 }
