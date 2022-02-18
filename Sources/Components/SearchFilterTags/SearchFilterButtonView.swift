@@ -117,7 +117,7 @@ final class SearchFilterButtonView: UIView {
 
 private extension CGColor {
     class var borderColor: CGColor {
-        UIColor.dynamicColorIfAvailable(defaultColor: .sardine, darkModeColor: .darkSardine).cgColor
+        UIColor.dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine).cgColor
     }
 }
 

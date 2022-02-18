@@ -93,5 +93,5 @@ public class IconLinkView: UIView {
 // MARK: - Private extension
 
 private extension UIColor {
-    static var linkTintColor = dynamicColorIfAvailable(defaultColor: .primaryBlue, darkModeColor: UIColor(hex: "#006DFB"))
+    static var linkTintColor = dynamicColor(defaultColor: .primaryBlue, darkModeColor: UIColor(hex: "#006DFB"))
 }

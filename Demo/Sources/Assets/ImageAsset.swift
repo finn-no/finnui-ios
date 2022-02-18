@@ -49,12 +49,10 @@ enum ImageAsset: String {
     case displayTypeList
     case dissatisfiedFace
     case distance
-    case emptyMoon
     case emptyStateSaveSearch
     case favoriteActive
     case favorites
     case favouriteAdded
-    case filledMoon
     case filter
     case finnLogoLarge
     case finnLogoSimple
@@ -126,12 +124,10 @@ enum ImageAsset: String {
             .displayTypeList,
             .dissatisfiedFace,
             .distance,
-            .emptyMoon,
             .emptyStateSaveSearch,
             .favoriteActive,
             .favorites,
             .favouriteAdded,
-            .filledMoon,
             .filter,
             .finnLogoLarge,
             .finnLogoSimple,
