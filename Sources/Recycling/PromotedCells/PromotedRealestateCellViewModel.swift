@@ -8,6 +8,8 @@ public struct PromotedRealestateCellViewModel {
     public let secondaryAttributes: [String]?
     public let totalPriceText: String?
     public let viewingText: String?
+    public let viewingTextColor: UIColor
+    public let viewingBackgroundColor: UIColor
     public let primaryImageUrl: String
     public let secondaryImageUrl: String?
     public let realtorName: String?
@@ -15,6 +17,7 @@ public struct PromotedRealestateCellViewModel {
     public let highlightColor: UIColor?
     public let mapCoordinates: CLLocationCoordinate2D?
     public let zoomLevel: Int?
+    public let ribbonText: String?
 
     public init(
         title: String?,
@@ -23,13 +26,16 @@ public struct PromotedRealestateCellViewModel {
         secondaryAttributes: [String]?,
         totalPriceText: String?,
         viewingText: String?,
+        viewingTextColor: UIColor,
+        viewingBackgroundColor: UIColor,
         primaryImageUrl: String,
         secondaryImageUrl: String?,
         realtorName: String?,
         realtorImageUrl: String?,
         highlightColor: UIColor?,
         mapCoordinates: CLLocationCoordinate2D?,
-        zoomLevel: Int?
+        zoomLevel: Int?,
+        ribbonText: String? = nil
     ) {
         self.title = title
         self.address = address
@@ -37,6 +43,8 @@ public struct PromotedRealestateCellViewModel {
         self.secondaryAttributes = secondaryAttributes
         self.totalPriceText = totalPriceText
         self.viewingText = viewingText
+        self.viewingTextColor = viewingTextColor
+        self.viewingBackgroundColor = viewingBackgroundColor
         self.primaryImageUrl = primaryImageUrl
         self.secondaryImageUrl = secondaryImageUrl
         self.realtorName = realtorName
@@ -44,5 +52,6 @@ public struct PromotedRealestateCellViewModel {
         self.highlightColor = highlightColor
         self.mapCoordinates = mapCoordinates
         self.zoomLevel = zoomLevel
+        self.ribbonText = ribbonText
     }
 }

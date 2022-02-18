@@ -16,11 +16,17 @@ class AgentProfileView: UIView {
     private let numberOfPhoneNumbersPerRow = 2
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
     private lazy var contactStackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
-    private lazy var phoneNumberButtonsStackView = UIStackView(axis: .vertical, spacing: 0, withAutoLayout: true)
     private lazy var titleLabel = Label.create(style: .title3Strong)
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
     private lazy var imageSize = CGSize(width: 88, height: 88)
+
+    private lazy var phoneNumbersCollectionView = OverflowCollectionView(
+        cellType: AgentPhoneNumberCollectionViewCell.self,
+        cellSpacing: .init(horizontal: 24, vertical: .spacingXS),
+        delegate: self,
+        withAutoLayout: true
+    )
 
     private lazy var remoteImageView: RemoteImageView = {
         let view = RemoteImageView(withAutoLayout: true)
@@ -46,7 +52,7 @@ class AgentProfileView: UIView {
 
     private func setup() {
         contactStackView.alignment = .top
-        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, phoneNumberButtonsStackView])
+        textStackView.addArrangedSubviews([nameLabel, jobTitleLabel, phoneNumbersCollectionView])
         textStackView.setCustomSpacing(.spacingXS, after: jobTitleLabel)
 
         addSubview(titleLabel)
@@ -74,22 +80,7 @@ class AgentProfileView: UIView {
         titleLabel.text = model.title
         nameLabel.text = model.agentName
         jobTitleLabel.text = model.agentJobTitle
-
-        let phoneNumbersGrouped = model.phoneNumbers.chunked(by: numberOfPhoneNumbersPerRow)
-        let phoneNumberStackViews = phoneNumbersGrouped.map { phoneNumbers -> UIStackView in
-            let stackView = UIStackView(axis: .horizontal, spacing: .spacingL, withAutoLayout: true)
-            stackView.distribution = .fillEqually
-            stackView.alignment = .center
-            let phoneNumberButtons = phoneNumbers.map(createPhoneNumberButton(phoneNumber:))
-            stackView.addArrangedSubviews(phoneNumberButtons)
-
-            if phoneNumberButtons.count == 1 {
-                stackView.addArrangedSubview(UIView(withAutoLayout: true))
-            }
-            return stackView
-        }
-        phoneNumberButtonsStackView.addArrangedSubviews(phoneNumberStackViews)
-
+        phoneNumbersCollectionView.configure(with: model.phoneNumbers)
         remoteImageView.dataSource = remoteImageViewDataSource
 
         if let imageUrl = model.imageUrl {
@@ -106,31 +97,16 @@ class AgentProfileView: UIView {
         super.layoutSubviews()
         remoteImageView.layer.cornerRadius = min(imageSize.height, imageSize.width) / 2
     }
+}
 
-    // MARK: - Actions
+// MARK: - OverflowCollectionViewDelegate
 
-    @objc private func phoneButtonTapped(button: Button) {
-        guard let arrangedStackViews = phoneNumberButtonsStackView.arrangedSubviews as? [UIStackView] else { return }
-
-        var buttonIndex: Int?
-        arrangedStackViews.enumerated().forEach {
-            guard let index = $0.element.arrangedSubviews.firstIndex(of: button) else { return }
-            buttonIndex = ($0.offset * numberOfPhoneNumbersPerRow) + index
-        }
-
-        guard let buttonIndex = buttonIndex else { return }
-        delegate?.agentProfileView(self, didSelectPhoneButtonWithIndex: buttonIndex)
-    }
-
-    // MARK: - Private methods
-
-    private func createPhoneNumberButton(phoneNumber: String) -> Button {
-        let button = Button(style: .link, withAutoLayout: true)
-        button.contentHorizontalAlignment = .left
-        button.setTitle(phoneNumber, for: .normal)
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
-        return button
+extension AgentProfileView: OverflowCollectionViewDelegate {
+    func overflowCollectionView<Cell>(
+        _ view: OverflowCollectionView<Cell>,
+        didSelectItemAtIndex index: Int
+    ) where Cell: OverflowCollectionViewCell {
+        delegate?.agentProfileView(self, didSelectPhoneButtonWithIndex: index)
     }
 }
 

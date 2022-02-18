@@ -34,13 +34,19 @@ extension UIImage {
 //swiftlint:disable type_body_length
 enum ImageAsset: String {
     case alphabeticalSortingAscending
+    case arrowUp
+    case backgroundFigureLeft
+    case backgroundFigureRight
+    case backgroundFigureTop
     case balloon0
     case balloon2
     case balloon2Red
     case blinkRocket
+    case checkMark
     case chevronDown
     case chevronUp
     case clockSmall
+    case close
     case emptyPersonalNotificationsIcon
     case emptySavedSearchNotificationsIcon
     case externalLink
@@ -61,6 +67,7 @@ enum ImageAsset: String {
     case remove
     case republish
     case schibstedFooter
+    case share
     case shipWithHelthjem
     case shipWithHelthjemDarkmode
     case snowflake
@@ -71,6 +78,7 @@ enum ImageAsset: String {
     case splashLetters3
     case splashLetters4
     case splashLogo
+    case storyPlaceholder
     case tagMini
     case trashcan
     case verified
@@ -80,13 +88,19 @@ enum ImageAsset: String {
     static var imageNames: [ImageAsset] {
         return [
             .alphabeticalSortingAscending,
+            .arrowUp,
+            .backgroundFigureLeft,
+            .backgroundFigureRight,
+            .backgroundFigureTop,
             .balloon0,
             .balloon2,
             .balloon2Red,
             .blinkRocket,
+            .checkMark,
             .chevronDown,
             .chevronUp,
             .clockSmall,
+            .close,
             .emptyPersonalNotificationsIcon,
             .emptySavedSearchNotificationsIcon,
             .externalLink,
@@ -107,6 +121,7 @@ enum ImageAsset: String {
             .remove,
             .republish,
             .schibstedFooter,
+            .share,
             .shipWithHelthjem,
             .shipWithHelthjemDarkmode,
             .snowflake,
@@ -117,6 +132,7 @@ enum ImageAsset: String {
             .splashLetters3,
             .splashLetters4,
             .splashLogo,
+            .storyPlaceholder,
             .tagMini,
             .trashcan,
             .verified,

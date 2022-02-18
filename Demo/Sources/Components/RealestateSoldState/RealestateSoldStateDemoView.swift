@@ -22,6 +22,9 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         .init(title: "Without agent image - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModelWithoutAgentImage, isExpanded: false)
         },
+        .init(title: "Without agent image and several phone numbers - collapsed") { [weak self] in
+            self?.setupDemoView(with: .demoModelWithoutAgentImageAndSeveralPhoneNumbers, isExpanded: false)
+        },
         .init(title: "Without phone number or agent image - collapsed") { [weak self] in
             self?.setupDemoView(with: .demoModelWithoutPhoneNumberOrAgentImage, isExpanded: false)
         },
@@ -230,6 +233,19 @@ private extension RealestateSoldStateModel {
         )
     }
 
+    static var demoModelWithoutAgentImageAndSeveralPhoneNumbers: RealestateSoldStateModel {
+        RealestateSoldStateModel(
+            title: "Har du noen spørsmål rundt salget av denne boligen?",
+            logoUrl: "FINN-LOGO",
+            presentFormButtonTitle: "Still spørsmål til megler",
+            agentProfile: .demoModelWithoutImageWithSeveralPhoneNumbers,
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            styling: .demoStyle
+        )
+    }
+
     static var demoModelWithoutPhoneNumberOrAgentImage: RealestateSoldStateModel {
         RealestateSoldStateModel(
             title: "Har du noen spørsmål rundt salget av denne boligen?",
@@ -261,6 +277,16 @@ private extension AgentProfileModel {
             agentName: "Navn Navnesen",
             agentJobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            phoneNumbers: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"]
+        )
+    }
+
+    static var demoModelWithoutImageWithSeveralPhoneNumbers: AgentProfileModel {
+        AgentProfileModel(
+            title: "Ansvarlig megler for dette salget",
+            agentName: "Navn Navnesen",
+            agentJobTitle: "Eiendomsmegler / Partner",
+            imageUrl: nil,
             phoneNumbers: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"]
         )
     }

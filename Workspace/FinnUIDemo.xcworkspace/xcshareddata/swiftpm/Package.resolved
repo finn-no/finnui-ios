@@ -6,17 +6,17 @@
         "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
         "state": {
           "branch": "remove/dark-mode-override",
-          "revision": "62a60474aa66b1c55534b6b88c53fd35783c9cc1",
+          "revision": "d1122455dd44a7ac0fd75aae515606e9e0052541",
           "version": null
         }
       },
       {
-        "package": "SnapshotTesting",
-        "repositoryURL": "https://github.com/pointfreeco/swift-snapshot-testing.git",
+        "package": "swift-snapshot-testing",
+        "repositoryURL": "https://github.com/pimms/swift-snapshot-testing.git",
         "state": {
           "branch": null,
-          "revision": "c466812aa2e22898f27557e2e780d3aad7a27203",
-          "version": "1.8.2"
+          "revision": "0efeef44df913fe60ea868f037f271ac927a8e8c",
+          "version": null
         }
       }
     ]

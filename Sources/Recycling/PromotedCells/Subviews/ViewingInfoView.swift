@@ -10,7 +10,6 @@ class ViewingInfoView: UIView {
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.image = UIImage(named: .clockSmall)
-        imageView.tintColor = .textPrimary
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -27,7 +26,6 @@ class ViewingInfoView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        backgroundColor = .bgSecondary
         addSubview(iconImageView)
         addSubview(titleLabel)
 
@@ -54,7 +52,10 @@ class ViewingInfoView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(with title: String) {
+    func configure(with title: String, textColor: UIColor, backgroundColor: UIColor) {
+        self.backgroundColor = backgroundColor
+        titleLabel.textColor = textColor
+        iconImageView.tintColor = textColor
         titleLabel.text = title
     }
 }

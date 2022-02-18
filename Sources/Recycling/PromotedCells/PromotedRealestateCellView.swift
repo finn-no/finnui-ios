@@ -130,9 +130,20 @@ public class PromotedRealestateCellView: UIView {
         ])
 
         if let viewingText = viewModel.viewingText {
-            viewingInfoView.configure(with: viewingText)
+            viewingInfoView.configure(with: viewingText, textColor: viewModel.viewingTextColor, backgroundColor: viewModel.viewingBackgroundColor)
         } else {
             viewingInfoView.isHidden = true
+        }
+
+        if let ribbonText = viewModel.ribbonText {
+            let ribbonView = RibbonView(viewModel: RibbonViewModel(style: .warning, title: ribbonText))
+            ribbonView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(ribbonView)
+
+            NSLayoutConstraint.activate([
+                ribbonView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
+                ribbonView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS)
+            ])
         }
 
         configure(isFavorited: isFavorited)

@@ -34,11 +34,13 @@
 		46E77580242D476B008A5E93 /* RecyclingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77579242D476B008A5E93 /* RecyclingViewTests.swift */; };
 		46E77581242D476B008A5E93 /* FullscreenViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7757B242D476B008A5E93 /* FullscreenViewTests.swift */; };
 		46E77583242D478D008A5E93 /* XCTestCastExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77582242D478D008A5E93 /* XCTestCastExtensions.swift */; };
+		4D2A37FE2730245600D09D73 /* StoryDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2A37FD2730245600D09D73 /* StoryDemoView.swift */; };
 		4D529E13258357D0007AE5B6 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D529E12258357D0007AE5B6 /* Icons.xcassets */; };
 		4D529E2125837087007AE5B6 /* ImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D529E2025837087007AE5B6 /* ImageAsset.swift */; };
-		5B959FA1E7529B5DF3EE7315 /* RealestateSoldStateDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9591016C346EF4BB044C96 /* RealestateSoldStateDemoView.swift */; };
 		5B95900E89AE9E9723E71E21 /* IPadSnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B95919B9CFD316597FE1169 /* IPadSnapshotWrapperViewController.swift */; };
 		5B9599DAB9A28758FA2708DF /* RealestateAgencyContentDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9599E888EE6D82C0CCC391 /* RealestateAgencyContentDemoView.swift */; };
+		5B959FA1E7529B5DF3EE7315 /* RealestateSoldStateDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9591016C346EF4BB044C96 /* RealestateSoldStateDemoView.swift */; };
+		5B959FB12D2D88BA79394529 /* FadedExpandableDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B959C33C8E418F6ACF89F17 /* FadedExpandableDemoView.swift */; };
 		5D62FD7025B03B4800EB882D /* DemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D62FD6F25B03B4800EB882D /* DemoViews.swift */; };
 		710C33F326EB5A4E002BAF1A /* HelthjemDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710C33F226EB5A4D002BAF1A /* HelthjemDemoView.swift */; };
 		8D68046EF3BCAE82CA1D838A /* PromotedRealestateCellDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D680064FF2F8E2DD2C33B1D /* PromotedRealestateCellDemoView.swift */; };
@@ -50,7 +52,6 @@
 		ADC5C001F9CB596AAA8A6766 /* AdTipsCollapsibleDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5C5356934C46CBC60D68A /* AdTipsCollapsibleDemoView.swift */; };
 		ADC5CBBC2AE659F8B588F876 /* NumberedAdTipsCollapsibleDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5C7228914271986E032E4 /* NumberedAdTipsCollapsibleDemoView.swift */; };
 		D61E2C3825C0157600FA8F16 /* FinnUI in Frameworks */ = {isa = PBXBuildFile; productRef = D61E2C3725C0157600FA8F16 /* FinnUI */; };
-		D6D43CD625BF239E00234AC2 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 46E77597242D6890008A5E93 /* SnapshotTesting */; };
 		D6D43CE325BF2F4D00234AC2 /* SearchDisplayMenuDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD45AB250FA7E1007DBDD5 /* SearchDisplayMenuDemoView.swift */; };
 		D6D43CE425BF2F4D00234AC2 /* SaveSearchViewDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E772EB242CEF09008A5E93 /* SaveSearchViewDemoView.swift */; };
 		D6D43CE525BF2F4D00234AC2 /* IconLinkListViewDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6800F29F72B6957F2BE564 /* IconLinkListViewDemo.swift */; };
@@ -75,6 +76,8 @@
 		DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */; };
 		DAE9CA8724602CB000C7552F /* SwiftUIViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */; };
 		E4DBDD972762335200BE21D8 /* ShippingAlternativesDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DBDD962762335200BE21D8 /* ShippingAlternativesDemoView.swift */; };
+		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
+		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +158,7 @@
 		46E77579242D476B008A5E93 /* RecyclingViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecyclingViewTests.swift; sourceTree = "<group>"; };
 		46E7757B242D476B008A5E93 /* FullscreenViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenViewTests.swift; sourceTree = "<group>"; };
 		46E77582242D478D008A5E93 /* XCTestCastExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCastExtensions.swift; sourceTree = "<group>"; };
+		4D2A37FD2730245600D09D73 /* StoryDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDemoView.swift; sourceTree = "<group>"; };
 		4D529E12258357D0007AE5B6 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		4D529E2025837087007AE5B6 /* ImageAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAsset.swift; sourceTree = "<group>"; };
 		4DBC039A250A4A38004E8044 /* ExpandCollapseButtonDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandCollapseButtonDemoView.swift; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 		5B9591016C346EF4BB044C96 /* RealestateSoldStateDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealestateSoldStateDemoView.swift; sourceTree = "<group>"; };
 		5B95919B9CFD316597FE1169 /* IPadSnapshotWrapperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPadSnapshotWrapperViewController.swift; sourceTree = "<group>"; };
 		5B9599E888EE6D82C0CCC391 /* RealestateAgencyContentDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealestateAgencyContentDemoView.swift; sourceTree = "<group>"; };
+		5B959C33C8E418F6ACF89F17 /* FadedExpandableDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadedExpandableDemoView.swift; sourceTree = "<group>"; };
 		5D62FD6F25B03B4800EB882D /* DemoViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViews.swift; sourceTree = "<group>"; };
 		710C33F226EB5A4D002BAF1A /* HelthjemDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelthjemDemoView.swift; sourceTree = "<group>"; };
 		8D68001FA0046522DC369E44 /* SavedSearchSortingDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedSearchSortingDemoView.swift; sourceTree = "<group>"; };
@@ -189,6 +194,7 @@
 		DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExploreDetailViewModel+Demo.swift"; sourceTree = "<group>"; };
 		DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIViewTests.swift; sourceTree = "<group>"; };
 		E4DBDD962762335200BE21D8 /* ShippingAlternativesDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingAlternativesDemoView.swift; sourceTree = "<group>"; };
+		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,7 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6D43CD625BF239E00234AC2 /* SnapshotTesting in Frameworks */,
+				F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +312,7 @@
 		46E7726A242CEF09008A5E93 /* Fullscreen */ = {
 			isa = PBXGroup;
 			children = (
+				4D2A37FC2730244100D09D73 /* Stories */,
 				DA3E1B0D2673B4DF001B7730 /* ExploreDetail */,
 				DA7B29F02670CAEA0018B11C /* Explore */,
 				8D6808BAF6E309D495F118C1 /* SavedSearchSorting */,
@@ -368,6 +375,7 @@
 				ADC5C709E0338FF2B7D08358 /* AdTipsCollapsibleView */,
 				5B9596DA9EC0E8F60BDF82E9 /* RealestateSoldState */,
 				5B9599023D2EDC40DD573783 /* RealestateAgencyContent */,
+				5B959973A0305C31A0B99FFE /* FadedExpandableView */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -423,15 +431,23 @@
 		46E7756D242D4736008A5E93 /* SnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
-				46E77570242D4736008A5E93 /* Info.plist */,
 				46E77578242D476B008A5E93 /* ComponentViewTests.swift */,
 				46E7757B242D476B008A5E93 /* FullscreenViewTests.swift */,
 				46E77579242D476B008A5E93 /* RecyclingViewTests.swift */,
 				DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */,
+				46E77570242D4736008A5E93 /* Info.plist */,
+				F05770EF2799AB4100C8DD85 /* Wrappers */,
 				46E77582242D478D008A5E93 /* XCTestCastExtensions.swift */,
-				5B95919B9CFD316597FE1169 /* IPadSnapshotWrapperViewController.swift */,
 			);
 			path = SnapshotTests;
+			sourceTree = "<group>";
+		};
+		4D2A37FC2730244100D09D73 /* Stories */ = {
+			isa = PBXGroup;
+			children = (
+				4D2A37FD2730245600D09D73 /* StoryDemoView.swift */,
+			);
+			path = Stories;
 			sourceTree = "<group>";
 		};
 		4D529E1625835A23007AE5B6 /* Assets */ = {
@@ -499,6 +515,14 @@
 				5B9599E888EE6D82C0CCC391 /* RealestateAgencyContentDemoView.swift */,
 			);
 			path = RealestateAgencyContent;
+			sourceTree = "<group>";
+		};
+		5B959973A0305C31A0B99FFE /* FadedExpandableView */ = {
+			isa = PBXGroup;
+			children = (
+				5B959C33C8E418F6ACF89F17 /* FadedExpandableDemoView.swift */,
+			);
+			path = FadedExpandableView;
 			sourceTree = "<group>";
 		};
 		710C33F126EB5A4D002BAF1A /* HelthjemView */ = {
@@ -640,6 +664,15 @@
 			path = ShippingAlternativesView;
 			sourceTree = "<group>";
 		};
+		F05770EF2799AB4100C8DD85 /* Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				5B95919B9CFD316597FE1169 /* IPadSnapshotWrapperViewController.swift */,
+				F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */,
+			);
+			path = Wrappers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -682,7 +715,7 @@
 			);
 			name = SnapshotTests;
 			packageProductDependencies = (
-				46E77597242D6890008A5E93 /* SnapshotTesting */,
+				F023EAED27B69AAE00F6286B /* SnapshotTesting */,
 			);
 			productName = SnapshotTests;
 			productReference = 46E7756C242D4736008A5E93 /* SnapshotTests.xctest */;
@@ -738,7 +771,7 @@
 			);
 			mainGroup = 46AE6FB7242BADC9007BB005;
 			packageReferences = (
-				46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				F023EAEC27B69AAE00F6286B /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = 46AE6FC1242BADC9007BB005 /* Products */;
 			projectDirPath = "";
@@ -848,6 +881,7 @@
 				46E773AD242CEF0A008A5E93 /* BaseDemoViewController.swift in Sources */,
 				D6D43CEA25BF2F4D00234AC2 /* ObjectPageBlinkDemoView.swift in Sources */,
 				46E773B0242CEF0A008A5E93 /* NavigationController.swift in Sources */,
+				4D2A37FE2730245600D09D73 /* StoryDemoView.swift in Sources */,
 				5D62FD7025B03B4800EB882D /* DemoViews.swift in Sources */,
 				46E773A8242CEF0A008A5E93 /* ComponentDemoViews.swift in Sources */,
 				D6D43CE425BF2F4D00234AC2 /* SaveSearchViewDemoView.swift in Sources */,
@@ -891,6 +925,7 @@
 				ADC5CBBC2AE659F8B588F876 /* NumberedAdTipsCollapsibleDemoView.swift in Sources */,
 				5B959FA1E7529B5DF3EE7315 /* RealestateSoldStateDemoView.swift in Sources */,
 				5B9599DAB9A28758FA2708DF /* RealestateAgencyContentDemoView.swift in Sources */,
+				5B959FB12D2D88BA79394529 /* FadedExpandableDemoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -903,6 +938,7 @@
 				DAE9CA8724602CB000C7552F /* SwiftUIViewTests.swift in Sources */,
 				46E77581242D476B008A5E93 /* FullscreenViewTests.swift in Sources */,
 				46E77583242D478D008A5E93 /* XCTestCastExtensions.swift in Sources */,
+				F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */,
 				5B95900E89AE9E9723E71E21 /* IPadSnapshotWrapperViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1206,25 +1242,25 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+		F023EAEC27B69AAE00F6286B /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
+			repositoryURL = "https://github.com/pimms/swift-snapshot-testing.git";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.9.0;
+				kind = revision;
+				revision = 0efeef44df913fe60ea868f037f271ac927a8e8c;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		46E77597242D6890008A5E93 /* SnapshotTesting */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 46E77596242D6890008A5E93 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
-			productName = SnapshotTesting;
-		};
 		D61E2C3725C0157600FA8F16 /* FinnUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FinnUI;
+		};
+		F023EAED27B69AAE00F6286B /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F023EAEC27B69AAE00F6286B /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
