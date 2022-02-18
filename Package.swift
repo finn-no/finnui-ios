@@ -12,7 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", .branch("remove/dark-mode-override"))
+        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", .exact("91.0.0"))
     ],
     targets: [
     	.target(

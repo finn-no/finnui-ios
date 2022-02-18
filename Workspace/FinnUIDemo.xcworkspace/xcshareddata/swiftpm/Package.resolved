@@ -5,9 +5,9 @@
         "package": "FinniversKit",
         "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
         "state": {
-          "branch": "remove/dark-mode-override",
-          "revision": "d1122455dd44a7ac0fd75aae515606e9e0052541",
-          "version": null
+          "branch": null,
+          "revision": "684282ecb65add378705f3a7cf7f520d5634ea11",
+          "version": "91.0.0"
         }
       },
       {
