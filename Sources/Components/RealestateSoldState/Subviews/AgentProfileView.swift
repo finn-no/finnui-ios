@@ -116,6 +116,7 @@ private extension Label {
     static func create(style: Label.Style) -> Label {
         let label = Label(style: style, withAutoLayout: true)
         label.numberOfLines = 0
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         return label
     }
 }
