@@ -95,6 +95,10 @@ class ComponentViewTests: XCTestCase {
         snapshot(.recommendationConsentView)
     }
 
+    func testRecommendationEmptyView() {
+        snapshot(.recommendationEmptyView)
+    }
+
     func testFadedExpandableView() {
         snapshot(.fadedExpandableView)
     }
