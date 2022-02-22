@@ -31,6 +31,8 @@ public class RecommendationEmptyView: UIView {
     }
 
     private func setup() {
+        backgroundColor = .bgPrimary
+        
         addSubview(iconImageView)
         addSubview(titleLabel)
         addSubview(detailLabel)

@@ -43,6 +43,8 @@ public class RecommendationConsentView: UIView {
     }
 
     private func setup() {
+        backgroundColor = .bgPrimary
+
         addSubview(iconImageView)
         addSubview(titleLabel)
         addSubview(detailLabel)
