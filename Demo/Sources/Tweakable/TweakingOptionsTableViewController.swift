@@ -2,12 +2,17 @@ import FinniversKit
 
 protocol TweakingOptionsTableViewControllerDelegate: AnyObject {
     func tweakingOptionsTableViewControllerDidDismiss(_ tweakingOptionsTableViewController: TweakingOptionsTableViewController)
-
     func tweakingOptionsTableViewController(_ tweakingOptionsTableViewController: TweakingOptionsTableViewController, didSelectDevice device: Device)
 }
 
 class TweakingOptionsTableViewController: ScrollViewController {
+
+    // MARK: - Internal properties
+
     weak var delegate: TweakingOptionsTableViewControllerDelegate?
+
+    // MARK: - Private properties
+
     private let options: [TweakingOption]
 
     private lazy var tableView: BasicTableView = {
@@ -36,19 +41,17 @@ class TweakingOptionsTableViewController: ScrollViewController {
         return titleView
     }()
 
+    // MARK: - Init
+
     init(options: [TweakingOption]) {
         self.options = options
         super.init(nibName: nil, bundle: nil)
         setup()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(userInterfaceStyleDidChange(_:)), name: .didChangeUserInterfaceStyle, object: nil)
-    }
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        fatalError()
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
+
+    // MARK: - Setup
 
     private func setup() {
         view.insertSubview(tableView, belowSubview: topShadowView)
@@ -60,7 +63,10 @@ class TweakingOptionsTableViewController: ScrollViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
-        updateColors()
+
+        view.backgroundColor = .bgPrimary
+        tableView.backgroundColor = .bgPrimary
+        devicesTableView.backgroundColor = .bgPrimary
         navigationItem.titleView = selectorTitleView
 
         if let deviceIndex = State.lastSelectedDevice, deviceIndex < Device.all.count {
@@ -70,17 +76,7 @@ class TweakingOptionsTableViewController: ScrollViewController {
         }
     }
 
-    @objc private func userInterfaceStyleDidChange(_ userInterfaceStyle: UserInterfaceStyle) {
-        updateColors()
-        tableView.reloadData()
-    }
-
-    private func updateColors() {
-        let interfaceBackgroundColor: UIColor = .bgPrimary
-        view.backgroundColor = interfaceBackgroundColor
-        tableView.backgroundColor = interfaceBackgroundColor
-        devicesTableView.backgroundColor = interfaceBackgroundColor
-    }
+    // MARK: - Private properties
 
     private func showDevicesViewController() {
         selectorTitleView.arrowDirection = .up
@@ -128,6 +124,8 @@ class TweakingOptionsTableViewController: ScrollViewController {
     }
 }
 
+// MARK: - SelectorTitleViewDelegate
+
 extension TweakingOptionsTableViewController: SelectorTitleViewDelegate {
     func selectorTitleViewDidSelectButton(_ view: SelectorTitleView) {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -140,6 +138,8 @@ extension TweakingOptionsTableViewController: SelectorTitleViewDelegate {
     }
 }
 
+// MARK: - BasicTableViewDelegate
+
 extension TweakingOptionsTableViewController: BasicTableViewDelegate {
     func basicTableView(_ basicTableView: BasicTableView, didSelectItemAtIndex index: Int) {
         if basicTableView == devicesTableView {
@@ -147,7 +147,7 @@ extension TweakingOptionsTableViewController: BasicTableViewDelegate {
             selectorTitleView.title = device.title
             hideDevicesViewController()
             State.lastSelectedDevice = index
-            self.delegate?.tweakingOptionsTableViewController(self, didSelectDevice: device)
+            delegate?.tweakingOptionsTableViewController(self, didSelectDevice: device)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.delegate?.tweakingOptionsTableViewControllerDidDismiss(self)
             }

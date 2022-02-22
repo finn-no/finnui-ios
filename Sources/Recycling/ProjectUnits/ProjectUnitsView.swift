@@ -265,6 +265,6 @@ private final class PagingCollectionViewLayout: UICollectionViewFlowLayout {
 
 private extension UIColor {
     static var pagingColor: UIColor {
-        .dynamicColorIfAvailable(defaultColor: .stone, darkModeColor: UIColor(hex: "#828699"))
+        .dynamicColor(defaultColor: .stone, darkModeColor: UIColor(hex: "#828699"))
     }
 }

@@ -12,7 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", .exact("90.4.0")),
+        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", .exact("91.0.0"))
     ],
     targets: [
     	.target(
@@ -20,14 +20,7 @@ let package = Package(
             dependencies: [
                 "FinniversKit",
             ],
-            path: "Sources",
-            exclude: [
-                "Demo",
-            ],
-            resources: [
-                .process("Assets/Fonts"),
-                .process("Assets/Sounds"),
-            ]
+            path: "Sources"
         ),
     ]
 )
