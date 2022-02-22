@@ -54,13 +54,15 @@ public class RecommendationConsentView: UIView {
         addLayoutGuide(bottomSpacer)
 
         iconImageView.setContentCompressionResistancePriority(.defaultHigh - 1, for: .vertical)
+        let imageViewHeightConstraint = iconImageView.heightAnchor.constraint(equalToConstant: 250)
+        imageViewHeightConstraint.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
             topSpacer.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
 
             iconImageView.topAnchor.constraint(equalTo: topSpacer.bottomAnchor),
             iconImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            iconImageView.heightAnchor.constraint(equalToConstant: 250),
+            imageViewHeightConstraint,
 
             titleLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: .spacingXL),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
