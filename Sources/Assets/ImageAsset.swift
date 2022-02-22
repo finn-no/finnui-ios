@@ -66,6 +66,7 @@ enum ImageAsset: String {
     case plus
     case profile
     case remove
+    case repair
     case republish
     case schibstedFooter
     case share
@@ -121,6 +122,7 @@ enum ImageAsset: String {
             .plus,
             .profile,
             .remove,
+            .repair,
             .republish,
             .schibstedFooter,
             .share,
