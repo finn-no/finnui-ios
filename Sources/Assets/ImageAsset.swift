@@ -58,6 +58,7 @@ enum ImageAsset: String {
     case favoritesSortLastAdded
     case finnLogoSimple
     case heartMini
+    case lock
     case mapPin
     case noImage
     case notFavorited
@@ -65,6 +66,7 @@ enum ImageAsset: String {
     case plus
     case profile
     case remove
+    case repair
     case republish
     case schibstedFooter
     case share
@@ -112,6 +114,7 @@ enum ImageAsset: String {
             .favoritesSortLastAdded,
             .finnLogoSimple,
             .heartMini,
+            .lock,
             .mapPin,
             .noImage,
             .notFavorited,
@@ -119,6 +122,7 @@ enum ImageAsset: String {
             .plus,
             .profile,
             .remove,
+            .repair,
             .republish,
             .schibstedFooter,
             .share,
