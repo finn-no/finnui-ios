@@ -36,7 +36,7 @@ public struct PromotedRealestateCellViewModel {
         highlightColor: UIColor?,
         mapCoordinates: CLLocationCoordinate2D?,
         zoomLevel: Int?,
-        ribbonViewModel: RibbonViewModel?
+        ribbonViewModel: RibbonViewModel? = nil
     ) {
         self.title = title
         self.address = address
