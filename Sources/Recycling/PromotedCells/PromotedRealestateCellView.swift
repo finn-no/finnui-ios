@@ -179,7 +179,7 @@ public class PromotedRealestateCellView: UIView {
 
 private extension UILabel {
     func setTextOrHideIfEmpty(_ text: String?) {
-        if let text = text {
+        if let text = text, !text.isEmpty {
             self.text = text
         } else {
             isHidden = true
