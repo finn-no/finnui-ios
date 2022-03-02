@@ -1,5 +1,6 @@
 import UIKit
 import MapKit
+import FinniversKit
 
 public struct PromotedRealestateCellViewModel {
     public let title: String?
@@ -17,7 +18,7 @@ public struct PromotedRealestateCellViewModel {
     public let highlightColor: UIColor?
     public let mapCoordinates: CLLocationCoordinate2D?
     public let zoomLevel: Int?
-    public let ribbonText: String?
+    public let ribbonViewModel: RibbonViewModel?
 
     public init(
         title: String?,
@@ -35,7 +36,7 @@ public struct PromotedRealestateCellViewModel {
         highlightColor: UIColor?,
         mapCoordinates: CLLocationCoordinate2D?,
         zoomLevel: Int?,
-        ribbonText: String? = nil
+        ribbonViewModel: RibbonViewModel? = nil
     ) {
         self.title = title
         self.address = address
@@ -52,6 +53,6 @@ public struct PromotedRealestateCellViewModel {
         self.highlightColor = highlightColor
         self.mapCoordinates = mapCoordinates
         self.zoomLevel = zoomLevel
-        self.ribbonText = ribbonText
+        self.ribbonViewModel = ribbonViewModel
     }
 }

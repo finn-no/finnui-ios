@@ -135,8 +135,8 @@ public class PromotedRealestateCellView: UIView {
             viewingInfoView.isHidden = true
         }
 
-        if let ribbonText = viewModel.ribbonText {
-            let ribbonView = RibbonView(viewModel: RibbonViewModel(style: .warning, title: ribbonText))
+        if let ribbonViewModel = viewModel.ribbonViewModel {
+            let ribbonView = RibbonView(viewModel: ribbonViewModel)
             ribbonView.translatesAutoresizingMaskIntoConstraints = false
             addSubview(ribbonView)
 
@@ -179,7 +179,7 @@ public class PromotedRealestateCellView: UIView {
 
 private extension UILabel {
     func setTextOrHideIfEmpty(_ text: String?) {
-        if let text = text {
+        if let text = text, !text.isEmpty {
             self.text = text
         } else {
             isHidden = true
