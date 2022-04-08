@@ -173,11 +173,11 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
-            agentProfile: .demoModel,
+            contactPerson: .demoModel,
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
-            styling: .demoStyle
+            style: .demoStyle
         )
     }
 
@@ -186,11 +186,11 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
-            agentProfile: .demoModelWithSeveralPhoneNumbers,
+            contactPerson: .demoModelWithSeveralPhoneNumbers,
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
-            styling: .demoStyle
+            style: .demoStyle
         )
     }
 
@@ -199,11 +199,11 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
-            agentProfile: .demoModel,
+            contactPerson: .demoModel,
             questionForm: .demoModel.copyWithoutContactInfo(),
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
-            styling: .demoStyle
+            style: .demoStyle
         )
     }
 
@@ -212,11 +212,11 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
-            agentProfile: .demoModel.copyWithoutPhoneNumber(),
+            contactPerson: .demoModel.copyWithoutPhoneNumber(),
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
-            styling: .demoStyle
+            style: .demoStyle
         )
     }
 
@@ -225,11 +225,11 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
-            agentProfile: .demoModel.copyWithoutImage(),
+            contactPerson: .demoModel.copyWithoutImage(),
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
-            styling: .demoStyle
+            style: .demoStyle
         )
     }
 
@@ -238,11 +238,11 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
-            agentProfile: .demoModelWithoutImageWithSeveralPhoneNumbers,
+            contactPerson: .demoModelWithoutImageWithSeveralPhoneNumbers,
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
-            styling: .demoStyle
+            style: .demoStyle
         )
     }
 
@@ -251,71 +251,71 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
-            agentProfile: .demoModel.copyWithoutPhoneNumberOrImage(),
+            contactPerson: .demoModel.copyWithoutPhoneNumberOrImage(),
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
-            styling: .demoStyle
+            style: .demoStyle
         )
     }
 }
 
-private extension AgentProfileModel {
-    static var demoModel: AgentProfileModel {
-        AgentProfileModel(
+private extension CompanyProfile.ContactPerson {
+    static var demoModel: CompanyProfile.ContactPerson {
+        .init(
             title: "Ansvarlig megler for dette salget",
-            agentName: "Navn Navnesen",
-            agentJobTitle: "Eiendomsmegler / Partner",
+            name: "Navn Navnesen",
+            jobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
             phoneNumbers: ["123 45 678"]
         )
     }
 
-    static var demoModelWithSeveralPhoneNumbers: AgentProfileModel {
-        AgentProfileModel(
+    static var demoModelWithSeveralPhoneNumbers: CompanyProfile.ContactPerson {
+        .init(
             title: "Ansvarlig megler for dette salget",
-            agentName: "Navn Navnesen",
-            agentJobTitle: "Eiendomsmegler / Partner",
+            name: "Navn Navnesen",
+            jobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
             phoneNumbers: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"]
         )
     }
 
-    static var demoModelWithoutImageWithSeveralPhoneNumbers: AgentProfileModel {
-        AgentProfileModel(
+    static var demoModelWithoutImageWithSeveralPhoneNumbers: CompanyProfile.ContactPerson {
+        .init(
             title: "Ansvarlig megler for dette salget",
-            agentName: "Navn Navnesen",
-            agentJobTitle: "Eiendomsmegler / Partner",
+            name: "Navn Navnesen",
+            jobTitle: "Eiendomsmegler / Partner",
             imageUrl: nil,
             phoneNumbers: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"]
         )
     }
 
-    func copyWithoutPhoneNumber() -> AgentProfileModel {
-        AgentProfileModel(
+    func copyWithoutPhoneNumber() -> CompanyProfile.ContactPerson {
+        .init(
             title: title,
-            agentName: agentName,
-            agentJobTitle: agentJobTitle,
+            name: name,
+            jobTitle: jobTitle,
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
             phoneNumbers: []
         )
     }
 
-    func copyWithoutImage() -> AgentProfileModel {
-        AgentProfileModel(
+    func copyWithoutImage() -> CompanyProfile.ContactPerson {
+        .init(
             title: title,
-            agentName: agentName,
-            agentJobTitle: agentJobTitle,
+            name: name,
+            jobTitle: jobTitle,
             imageUrl: nil,
             phoneNumbers: ["123 45 678"]
         )
     }
 
-    func copyWithoutPhoneNumberOrImage() -> AgentProfileModel {
-        AgentProfileModel(
+    func copyWithoutPhoneNumberOrImage() -> CompanyProfile.ContactPerson {
+        .init(
             title: title,
-            agentName: agentName,
-            agentJobTitle: agentJobTitle,
+            name: name,
+            jobTitle: jobTitle,
             imageUrl: nil,
             phoneNumbers: []
         )
@@ -401,25 +401,25 @@ private extension LinkButtonViewModel {
     }
 }
 
-private extension RealestateSoldStateModel.Styling {
-    static var demoStyle: RealestateSoldStateModel.Styling {
+private extension RealestateSoldStateModel.Style {
+    static var demoStyle: RealestateSoldStateModel.Style {
         .init(
-            heading: .init(
+            headingStyle: .init(
                 backgroundColor: UIColor(hex: "#0063FB"),
                 logoBackgroundColor: UIColor(hex: "#FFFFFF")
             ),
-            profileBox: .init(
-                actionButton: .init(
+            profileStyle: .init(
+                textColor: UIColor(hex: "#FFFFFF"),
+                backgroundColor: UIColor(hex: "#0063FB"),
+                logoBackgroundColor: UIColor(hex: "#FFFFFF"),
+                actionButtonStyle: .init(
                     textColor: UIColor(hex: "#464646"),
                     backgroundColor: UIColor(hex: "#FFFFFF"),
                     backgroundActiveColor: UIColor(hex: "#CCDEED"),
                     borderColor: UIColor(hex: "#FFFFFF")
-                ),
-                textColor: UIColor(hex: "#FFFFFF"),
-                backgroundColor: UIColor(hex: "#0063FB"),
-                logoBackgroundColor: UIColor(hex: "#FFFFFF")
+                )
             ),
-            ctaButton: .init(
+            actionButtonStyle: .init(
                 textColor: UIColor(hex: "#FFFFFF"),
                 backgroundColor: UIColor(hex: "#0063FB"),
                 backgroundActiveColor: UIColor(hex: "#1E78C2"),
