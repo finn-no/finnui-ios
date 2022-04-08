@@ -40,7 +40,7 @@ class RealestateAgencyContentItemView: UIView {
 
     init(
         article: RealestateAgencyContentViewModel.ArticleItem,
-        styling: RealestateAgencyContentViewModel.Styling,
+        style: CompanyProfile.ProfileStyle,
         imageHeight: ImageHeight,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         delegate: RealestateAgencyContentItemDelegate?
@@ -50,7 +50,7 @@ class RealestateAgencyContentItemView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         setup(imageHeight: imageHeight)
-        configure(with: article, styling: styling, remoteImageViewDataSource: remoteImageViewDataSource)
+        configure(with: article, style: style, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -74,11 +74,11 @@ class RealestateAgencyContentItemView: UIView {
 
     private func configure(
         with article: RealestateAgencyContentViewModel.ArticleItem,
-        styling: RealestateAgencyContentViewModel.Styling,
+        style: CompanyProfile.ProfileStyle,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
-        titleLabel.textColor = styling.textColor
-        bodyLabel.textColor = styling.textColor
+        titleLabel.textColor = style.textColor
+        bodyLabel.textColor = style.textColor
 
         titleLabel.text = article.title
         bodyLabel.text = article.body
@@ -86,7 +86,7 @@ class RealestateAgencyContentItemView: UIView {
         imageView.dataSource = remoteImageViewDataSource
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
-        let actionButton = Button.create(for: article, styling: styling)
+        let actionButton = Button.create(for: article, profileStyle: style)
         buttonStackView.addArrangedSubview(actionButton)
 
         if article.buttonKind == .normal {
