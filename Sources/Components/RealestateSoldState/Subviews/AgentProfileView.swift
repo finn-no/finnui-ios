@@ -22,7 +22,7 @@ class AgentProfileView: UIView {
     private lazy var imageSize = CGSize(width: 88, height: 88)
 
     private lazy var phoneNumbersCollectionView = OverflowCollectionView(
-        cellType: AgentPhoneNumberCollectionViewCell.self,
+        cellType: ContactPersonLinkCollectionViewCell.self,
         cellSpacing: .init(horizontal: 24, vertical: .spacingXS),
         delegate: self,
         withAutoLayout: true
