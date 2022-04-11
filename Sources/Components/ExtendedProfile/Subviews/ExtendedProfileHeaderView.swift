@@ -41,14 +41,14 @@ class ExtendedProfileHeaderView: UIView {
         addSubview(expandToggleImageView)
 
         NSLayoutConstraint.activate([
-            sloganLabel.topAnchor.constraint(equalTo: topAnchor),
-            sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            sloganLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            sloganLabel.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+            sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            sloganLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
 
-            expandToggleImageView.topAnchor.constraint(equalTo: topAnchor),
+            expandToggleImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
             expandToggleImageView.leadingAnchor.constraint(equalTo: sloganLabel.trailingAnchor, constant: .spacingM),
-            expandToggleImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            expandToggleImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            expandToggleImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            expandToggleImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
         ])
     }
 

@@ -30,7 +30,6 @@ public class ExtendedProfileView: UIView {
 
     private lazy var headerView: ExtendedProfileHeaderView = {
         let view = ExtendedProfileHeaderView(viewModel: viewModel, withAutoLayout: true)
-        view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleExpandStateTap)))
         return view
     }()
@@ -83,11 +82,11 @@ public class ExtendedProfileView: UIView {
             logoView.leadingAnchor.constraint(equalTo: leadingAnchor),
             logoView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            headerView.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: .spacingM),
-            headerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            headerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            headerView.topAnchor.constraint(equalTo: logoView.bottomAnchor),
+            headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            contentStackView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: .spacingM),
+            contentStackView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
             contentStackViewBottomAnchor
