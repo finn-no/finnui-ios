@@ -121,7 +121,7 @@ public class ExtendedProfileView: UIView {
         }
 
         headerView.configure(isExpanded: isExpanded)
-        contentStackViewBottomAnchor.constant = isExpanded ? .spacingM : .zero
+        contentStackViewBottomAnchor.constant = isExpanded ? -.spacingM : .zero
     }
 
     private func createActionButtonIfPossible() -> Button? {
