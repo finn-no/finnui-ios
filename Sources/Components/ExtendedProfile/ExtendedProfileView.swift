@@ -3,6 +3,7 @@ import FinniversKit
 
 public protocol ExtendedProfileViewDelegate: AnyObject {
     func extendedProfileView(_ view: ExtendedProfileView, didSelectLinkAtIndex linkIndex: Int, forContactPersonAtIndex contactPersonIndex: Int)
+    func extendedProfileView(_ view: ExtendedProfileView, didSelectButtonWithIdentifier identifier: String?, url: URL)
 }
 
 public class ExtendedProfileView: UIView {
@@ -24,6 +25,12 @@ public class ExtendedProfileView: UIView {
         label.numberOfLines = 0
         label.textColor = viewModel.style.textColor
         return label
+    }()
+
+    private lazy var buttonListView: LinkButtonListView = {
+        let view = LinkButtonListView(withAutoLayout: true)
+        view.delegate = self
+        return view
     }()
 
     // MARK: - Init
@@ -58,6 +65,7 @@ public class ExtendedProfileView: UIView {
         addSubview(logoView)
         addSubview(sloganLabel)
         addSubview(contactPersonsStackView)
+        addSubview(buttonListView)
 
         NSLayoutConstraint.activate([
             logoView.topAnchor.constraint(equalTo: topAnchor),
@@ -71,10 +79,15 @@ public class ExtendedProfileView: UIView {
             contactPersonsStackView.topAnchor.constraint(equalTo: sloganLabel.bottomAnchor, constant: .spacingM),
             contactPersonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             contactPersonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            contactPersonsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+
+            buttonListView.topAnchor.constraint(equalTo: contactPersonsStackView.bottomAnchor, constant: .spacingM),
+            buttonListView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            buttonListView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            buttonListView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
         ])
 
         logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.style.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
+        buttonListView.configure(with: viewModel.buttonLinks)
 
         // TODO: This will be different based on the placement. Only 1 will be shown for top, while all will be shown for bottom.
         let contactPersonViews = viewModel.contactPersons.enumerated().map { index, contactPerson in
@@ -101,6 +114,14 @@ extension ExtendedProfileView: ExtendedProfileContactPersonViewDelegate {
         contactPersonIndex: Int
     ) {
         delegate?.extendedProfileView(self, didSelectLinkAtIndex: linkIndex, forContactPersonAtIndex: contactPersonIndex)
+    }
+}
+
+// MARK: - LinkButtonListViewDelegate
+
+extension ExtendedProfileView: LinkButtonListViewDelegate {
+    public func linksListView(_ view: LinkButtonListView, didTapButtonWithIdentifier identifier: String?, url: URL) {
+        delegate?.extendedProfileView(self, didSelectButtonWithIdentifier: identifier, url: url)
     }
 }
 
