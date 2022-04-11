@@ -273,7 +273,7 @@ private extension CompanyProfile.ContactPerson {
             name: "Navn Navnesen",
             jobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            links: [.phoneNumber(title: "123 45 678")]
+            links: [.phoneNumber(value: "123 45 678")]
         )
     }
 
@@ -283,7 +283,7 @@ private extension CompanyProfile.ContactPerson {
             name: "Navn Navnesen",
             jobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            links: [.phoneNumber(title: "(+47) 123 45 678"), .phoneNumber(title: "12 34 56 78"), .phoneNumber(title: "+47 99 88 77 66")]
+            links: [.phoneNumber(value: "(+47) 123 45 678"), .phoneNumber(value: "12 34 56 78"), .phoneNumber(value: "+47 99 88 77 66")]
         )
     }
 
@@ -293,7 +293,7 @@ private extension CompanyProfile.ContactPerson {
             name: "Navn Navnesen",
             jobTitle: "Eiendomsmegler / Partner",
             imageUrl: nil,
-            links: [.phoneNumber(title: "(+47) 123 45 678"), .phoneNumber(title: "12 34 56 78"), .phoneNumber(title: "+47 99 88 77 66")]
+            links: [.phoneNumber(value: "(+47) 123 45 678"), .phoneNumber(value: "12 34 56 78"), .phoneNumber(value: "+47 99 88 77 66")]
         )
     }
 
@@ -313,7 +313,7 @@ private extension CompanyProfile.ContactPerson {
             name: name,
             jobTitle: jobTitle,
             imageUrl: nil,
-            links: [.phoneNumber(title: "123 45 678")]
+            links: [.phoneNumber(value: "123 45 678")]
         )
     }
 
@@ -441,19 +441,5 @@ private extension RealestateSoldStateFormSubmittedModel {
             title: "Skjemaet er sendt!",
             description: "Megler svarer på din henvendelse så raskt som mulig. Forventet responstid er 1-2 dager."
         )
-    }
-}
-
-extension CompanyProfile.ContactPerson.LinkItem {
-    static func phoneNumber(title: String) -> Self {
-        Self.init(kind: .phoneNumber, value: title)
-    }
-
-    static func homepage(title: String) -> Self {
-        Self.init(kind: .homepage, value: title)
-    }
-
-    static func sendMail(title: String) -> Self {
-        Self.init(kind: .sendMail, value: title)
     }
 }

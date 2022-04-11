@@ -20,6 +20,12 @@ extension CompanyProfile {
 
 extension CompanyProfile.ContactPerson {
     public struct LinkItem {
+        public enum Kind {
+            case phoneNumber
+            case homepage
+            case sendMail
+        }
+
         public let kind: Kind
         public let value: String
 
@@ -28,10 +34,18 @@ extension CompanyProfile.ContactPerson {
             self.value = value
         }
 
-        public enum Kind {
-            case phoneNumber
-            case homepage
-            case sendMail
+        // MARK: - Helper methods
+
+        public static func phoneNumber(value: String) -> Self {
+            Self.init(kind: .phoneNumber, value: value)
+        }
+
+        public static func homepage(value: String) -> Self {
+            Self.init(kind: .homepage, value: value)
+        }
+
+        public static func sendMail(value: String) -> Self {
+            Self.init(kind: .sendMail, value: value)
         }
     }
 }
