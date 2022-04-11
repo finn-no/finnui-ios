@@ -5,6 +5,7 @@ public protocol ExtendedProfileViewDelegate: AnyObject {
     func extendedProfileView(_ view: ExtendedProfileView, didSelectLinkAtIndex linkIndex: Int, forContactPersonAtIndex contactPersonIndex: Int)
     func extendedProfileView(_ view: ExtendedProfileView, didSelectButtonWithIdentifier identifier: String?, url: URL)
     func extendedProfileViewDidSelectActionButton(_ view: ExtendedProfileView)
+    func extendedProfileViewDidToggleExpandedState(_ view: ExtendedProfileView)
 }
 
 public class ExtendedProfileView: UIView {
@@ -27,11 +28,11 @@ public class ExtendedProfileView: UIView {
     private lazy var logoView = ExtendedProfileLogoView(withAutoLayout: true)
     private lazy var contentStackViewBottomAnchor = contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
 
-    private lazy var sloganLabel: Label = {
-        let label = Label(style: .bodyStrong, withAutoLayout: true)
-        label.numberOfLines = 0
-        label.textColor = viewModel.style.textColor
-        return label
+    private lazy var headerView: ExtendedProfileHeaderView = {
+        let view = ExtendedProfileHeaderView(viewModel: viewModel, withAutoLayout: true)
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleExpandStateTap)))
+        return view
     }()
 
     private lazy var buttonListView: LinkButtonListView = {
@@ -67,10 +68,8 @@ public class ExtendedProfileView: UIView {
         layer.borderColor = .sardine // TODO: Is this correct?
         backgroundColor = viewModel.style.backgroundColor
 
-        sloganLabel.text = viewModel.slogan ?? viewModel.companyName
-
         addSubview(logoView)
-        addSubview(sloganLabel)
+        addSubview(headerView)
         addSubview(contentStackView)
 
         contentStackView.addArrangedSubviews([contactPersonsStackView, buttonListView])
@@ -84,11 +83,11 @@ public class ExtendedProfileView: UIView {
             logoView.leadingAnchor.constraint(equalTo: leadingAnchor),
             logoView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            sloganLabel.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: .spacingM),
-            sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            sloganLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            headerView.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: .spacingM),
+            headerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            headerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
 
-            contentStackView.topAnchor.constraint(equalTo: sloganLabel.bottomAnchor, constant: .spacingM),
+            contentStackView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: .spacingM),
             contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
             contentStackViewBottomAnchor
@@ -121,6 +120,7 @@ public class ExtendedProfileView: UIView {
             $0.isHidden = !isExpanded
         }
 
+        headerView.configure(isExpanded: isExpanded)
         contentStackViewBottomAnchor.constant = isExpanded ? .spacingM : .zero
     }
 
@@ -142,6 +142,10 @@ public class ExtendedProfileView: UIView {
 
     @objc private func handleActionButtonTap() {
         delegate?.extendedProfileViewDidSelectActionButton(self)
+    }
+
+    @objc private func handleExpandStateTap() {
+        delegate?.extendedProfileViewDidToggleExpandedState(self)
     }
 }
 
