@@ -4,6 +4,7 @@ import FinniversKit
 public protocol ExtendedProfileViewDelegate: AnyObject {
     func extendedProfileView(_ view: ExtendedProfileView, didSelectLinkAtIndex linkIndex: Int, forContactPersonAtIndex contactPersonIndex: Int)
     func extendedProfileView(_ view: ExtendedProfileView, didSelectButtonWithIdentifier identifier: String?, url: URL)
+    func extendedProfileViewDidSelectActionButton(_ view: ExtendedProfileView)
 }
 
 public class ExtendedProfileView: UIView {
@@ -69,6 +70,10 @@ public class ExtendedProfileView: UIView {
 
         contentStackView.addArrangedSubviews([contactPersonsStackView, buttonListView])
 
+        if let actionButton = createActionButtonIfPossible() {
+            contentStackView.addArrangedSubview(actionButton)
+        }
+
         NSLayoutConstraint.activate([
             logoView.topAnchor.constraint(equalTo: topAnchor),
             logoView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -100,6 +105,28 @@ public class ExtendedProfileView: UIView {
         }
 
         contactPersonsStackView.addArrangedSubviews(contactPersonViews)
+    }
+
+    // MARK: - Private methods
+
+    private func createActionButtonIfPossible() -> Button? {
+        guard
+            let actionButtonStyle = viewModel.style.actionButtonStyle,
+            let buttonTitle = viewModel.actionButtonTitle
+        else {
+            return nil
+        }
+
+        let button = Button(style: .callToAction.override(using: actionButtonStyle), size: .normal, withAutoLayout: true)
+        button.setTitle(buttonTitle, for: .normal)
+        button.addTarget(self, action: #selector(handleActionButtonTap), for: .touchUpInside)
+        return button
+    }
+
+    // MARK: - Actions
+
+    @objc private func handleActionButtonTap() {
+        delegate?.extendedProfileViewDidSelectActionButton(self)
     }
 }
 
