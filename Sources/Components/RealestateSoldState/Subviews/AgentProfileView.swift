@@ -2,7 +2,7 @@ import UIKit
 import FinniversKit
 
 protocol AgentProfileViewDelegate: AnyObject {
-    func agentProfileView(_ view: AgentProfileView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int)
+    func agentProfileView(_ view: AgentProfileView, didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem)
 }
 
 class AgentProfileView: UIView {
@@ -14,6 +14,7 @@ class AgentProfileView: UIView {
     // MARK: - Private properties
 
     private let numberOfPhoneNumbersPerRow = 2
+    private var contactPerson: CompanyProfile.ContactPerson?
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
     private lazy var contactStackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
     private lazy var titleLabel = Label.create(style: .title3Strong)
@@ -76,14 +77,15 @@ class AgentProfileView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(with model: CompanyProfile.ContactPerson, remoteImageViewDataSource: RemoteImageViewDataSource?) {
-        titleLabel.text = model.title
-        nameLabel.text = model.name
-        jobTitleLabel.text = model.jobTitle
+    func configure(with contactPerson: CompanyProfile.ContactPerson, remoteImageViewDataSource: RemoteImageViewDataSource?) {
+        self.contactPerson = contactPerson
+        titleLabel.text = contactPerson.title
+        nameLabel.text = contactPerson.name
+        jobTitleLabel.text = contactPerson.jobTitle
         phoneNumbersCollectionView.configure(withLinks: contactPerson.links)
         remoteImageView.dataSource = remoteImageViewDataSource
 
-        if let imageUrl = model.imageUrl {
+        if let imageUrl = contactPerson.imageUrl {
             remoteImageView.loadImage(for: imageUrl, imageWidth: imageSize.width)
             contactStackView.insertArrangedSubview(remoteImageView, at: 0)
         } else {
@@ -106,7 +108,8 @@ extension AgentProfileView: OverflowCollectionViewDelegate {
         _ view: OverflowCollectionView<Cell>,
         didSelectItemAtIndex index: Int
     ) where Cell: OverflowCollectionViewCell {
-        delegate?.agentProfileView(self, didSelectPhoneButtonWithIndex: index)
+        guard let linkItem = contactPerson?.links[safe: index] else { return }
+        delegate?.agentProfileView(self, didSelectLinkItem: linkItem)
     }
 }
 

@@ -11,7 +11,7 @@ public protocol RealestateSoldStateViewDelegate: AnyObject {
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL)
     func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView)
     func realestateSoldStateViewDidResize(_ view: RealestateSoldStateView)
-    func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int)
+    func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem)
 }
 
 public class RealestateSoldStateView: UIView {
@@ -264,7 +264,7 @@ extension RealestateSoldStateView: CompanyProfileViewDelegate {
 // MARK: - AgentProfileViewDelegate
 
 extension RealestateSoldStateView: AgentProfileViewDelegate {
-    func agentProfileView(_ view: AgentProfileView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int) {
-        delegate?.realestateSoldStateView(self, didSelectPhoneButtonWithIndex: phoneNumberIndex)
+    func agentProfileView(_ view: AgentProfileView, didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem) {
+        delegate?.realestateSoldStateView(self, didSelectLinkItem: linkItem)
     }
 }
