@@ -19,6 +19,13 @@ public class ExtendedProfileView: UIView {
     private lazy var contactPersonsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var logoView = ExtendedProfileLogoView(withAutoLayout: true)
 
+    private lazy var sloganLabel: Label = {
+        let label = Label(style: .bodyStrong, withAutoLayout: true)
+        label.numberOfLines = 0
+        label.textColor = viewModel.style.textColor
+        return label
+    }()
+
     // MARK: - Init
 
     public init(
@@ -46,7 +53,10 @@ public class ExtendedProfileView: UIView {
         layer.borderColor = .sardine // TODO: Is this correct?
         backgroundColor = viewModel.style.backgroundColor
 
+        sloganLabel.text = viewModel.slogan ?? viewModel.companyName
+
         addSubview(logoView)
+        addSubview(sloganLabel)
         addSubview(contactPersonsStackView)
 
         NSLayoutConstraint.activate([
@@ -54,10 +64,14 @@ public class ExtendedProfileView: UIView {
             logoView.leadingAnchor.constraint(equalTo: leadingAnchor),
             logoView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            contactPersonsStackView.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: .spacingS),
-            contactPersonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
-            contactPersonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
-            contactPersonsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingS),
+            sloganLabel.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: .spacingM),
+            sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            sloganLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+
+            contactPersonsStackView.topAnchor.constraint(equalTo: sloganLabel.bottomAnchor, constant: .spacingM),
+            contactPersonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            contactPersonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            contactPersonsStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
         ])
 
         logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.style.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
