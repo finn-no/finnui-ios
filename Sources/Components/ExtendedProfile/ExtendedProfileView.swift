@@ -11,7 +11,11 @@ public class ExtendedProfileView: UIView {
 
     // MARK: - Public properties
 
-
+    public var isExpanded: Bool = false {
+        didSet {
+            configurePresentation()
+        }
+    }
 
     // MARK: - Private properties
 
@@ -21,6 +25,7 @@ public class ExtendedProfileView: UIView {
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var contactPersonsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var logoView = ExtendedProfileLogoView(withAutoLayout: true)
+    private lazy var contentStackViewBottomAnchor = contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
 
     private lazy var sloganLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
@@ -86,8 +91,10 @@ public class ExtendedProfileView: UIView {
             contentStackView.topAnchor.constraint(equalTo: sloganLabel.bottomAnchor, constant: .spacingM),
             contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+            contentStackViewBottomAnchor
         ])
+
+        configurePresentation()
 
         logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.style.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
         buttonListView.configure(with: viewModel.buttonLinks)
@@ -108,6 +115,14 @@ public class ExtendedProfileView: UIView {
     }
 
     // MARK: - Private methods
+
+    private func configurePresentation() {
+        contentStackView.arrangedSubviews.forEach {
+            $0.isHidden = !isExpanded
+        }
+
+        contentStackViewBottomAnchor.constant = isExpanded ? .spacingM : .zero
+    }
 
     private func createActionButtonIfPossible() -> Button? {
         guard
