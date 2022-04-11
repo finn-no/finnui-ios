@@ -88,7 +88,7 @@ class ExtendedProfileContactPersonView: UIView {
             linkCollectionView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
         ])
 
-        linkCollectionView.configure(with: contactPerson.phoneNumbers)
+        linkCollectionView.configure(withLinks: contactPerson.links)
     }
 
     // MARK: - Overrides

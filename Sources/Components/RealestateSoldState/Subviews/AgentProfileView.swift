@@ -80,7 +80,7 @@ class AgentProfileView: UIView {
         titleLabel.text = model.title
         nameLabel.text = model.name
         jobTitleLabel.text = model.jobTitle
-        phoneNumbersCollectionView.configure(with: model.phoneNumbers)
+        phoneNumbersCollectionView.configure(withLinks: contactPerson.links)
         remoteImageView.dataSource = remoteImageViewDataSource
 
         if let imageUrl = model.imageUrl {
