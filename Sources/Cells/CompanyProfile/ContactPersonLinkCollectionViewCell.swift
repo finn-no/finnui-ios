@@ -9,11 +9,7 @@ class ContactPersonLinkCollectionViewCell: UICollectionViewCell, OverflowCollect
     private static let labelStyle = Label.Style.body
     private static let margins = UIEdgeInsets(vertical: .spacingS, horizontal: 0)
 
-    private lazy var titleLabel: Label = {
-        let label = Label(style: .body, withAutoLayout: true)
-        label.textColor = .textAction
-        return label
-    }()
+    private lazy var titleLabel = Label(style: .body, withAutoLayout: true)
 
     // MARK: - Init
 
@@ -35,6 +31,12 @@ class ContactPersonLinkCollectionViewCell: UICollectionViewCell, OverflowCollect
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Self.margins.trailing),
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Self.margins.bottom)
         ])
+    }
+
+    // MARK: - Internal methods
+
+    func configure(textColor: UIColor) {
+        titleLabel.textColor = textColor
     }
 
     // MARK: - OverflowCollectionViewCell
