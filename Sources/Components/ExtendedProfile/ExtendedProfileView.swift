@@ -17,6 +17,7 @@ public class ExtendedProfileView: UIView {
     private let viewModel: ExtendedProfileViewModel
     private weak var delegate: ExtendedProfileViewDelegate?
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
+    private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var contactPersonsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var logoView = ExtendedProfileLogoView(withAutoLayout: true)
 
@@ -64,8 +65,9 @@ public class ExtendedProfileView: UIView {
 
         addSubview(logoView)
         addSubview(sloganLabel)
-        addSubview(contactPersonsStackView)
-        addSubview(buttonListView)
+        addSubview(contentStackView)
+
+        contentStackView.addArrangedSubviews([contactPersonsStackView, buttonListView])
 
         NSLayoutConstraint.activate([
             logoView.topAnchor.constraint(equalTo: topAnchor),
@@ -76,14 +78,10 @@ public class ExtendedProfileView: UIView {
             sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             sloganLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
 
-            contactPersonsStackView.topAnchor.constraint(equalTo: sloganLabel.bottomAnchor, constant: .spacingM),
-            contactPersonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            contactPersonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-
-            buttonListView.topAnchor.constraint(equalTo: contactPersonsStackView.bottomAnchor, constant: .spacingM),
-            buttonListView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            buttonListView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            buttonListView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+            contentStackView.topAnchor.constraint(equalTo: sloganLabel.bottomAnchor, constant: .spacingM),
+            contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
         ])
 
         logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.style.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
