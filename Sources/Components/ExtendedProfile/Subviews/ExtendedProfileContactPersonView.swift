@@ -2,7 +2,11 @@ import UIKit
 import FinniversKit
 
 protocol ExtendedProfileContactPersonViewDelegate: AnyObject {
-    func extendedProfileContactPersonView(_ view: ExtendedProfileContactPersonView, didSelectLinkAtIndex linkIndex: Int, contactPersonIndex: Int)
+    func extendedProfileContactPersonView(
+        _ view: ExtendedProfileContactPersonView,
+        didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem,
+        contactPersonIndex: Int
+    )
 }
 
 class ExtendedProfileContactPersonView: UIView {
@@ -118,7 +122,8 @@ extension ExtendedProfileContactPersonView: OverflowCollectionViewDelegate {
         _ view: OverflowCollectionView<Cell>,
         didSelectItemAtIndex index: Int
     ) where Cell: OverflowCollectionViewCell {
-        delegate?.extendedProfileContactPersonView(self, didSelectLinkAtIndex: index, contactPersonIndex: contactPersonIndex)
+        guard let linkItem = contactPerson.links[safe: index] else { return }
+        delegate?.extendedProfileContactPersonView(self, didSelectLinkItem: linkItem, contactPersonIndex: contactPersonIndex)
     }
 
     public func overflowCollectionView<Cell>(

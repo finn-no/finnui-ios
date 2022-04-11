@@ -2,7 +2,11 @@ import UIKit
 import FinniversKit
 
 public protocol ExtendedProfileViewDelegate: AnyObject {
-    func extendedProfileView(_ view: ExtendedProfileView, didSelectLinkAtIndex linkIndex: Int, forContactPersonAtIndex contactPersonIndex: Int)
+    func extendedProfileView(
+        _ view: ExtendedProfileView,
+        didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem,
+        contactPersonIndex: Int
+    )
     func extendedProfileView(_ view: ExtendedProfileView, didSelectButtonWithIdentifier identifier: String?, url: URL)
     func extendedProfileViewDidSelectActionButton(_ view: ExtendedProfileView)
     func extendedProfileViewDidToggleExpandedState(_ view: ExtendedProfileView)
@@ -153,10 +157,10 @@ public class ExtendedProfileView: UIView {
 extension ExtendedProfileView: ExtendedProfileContactPersonViewDelegate {
     func extendedProfileContactPersonView(
         _ view: ExtendedProfileContactPersonView,
-        didSelectLinkAtIndex linkIndex: Int,
+        didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem,
         contactPersonIndex: Int
     ) {
-        delegate?.extendedProfileView(self, didSelectLinkAtIndex: linkIndex, forContactPersonAtIndex: contactPersonIndex)
+        delegate?.extendedProfileView(self, didSelectLinkItem: linkItem, contactPersonIndex: contactPersonIndex)
     }
 }
 
