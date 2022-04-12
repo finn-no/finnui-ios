@@ -6,6 +6,7 @@ class ExtendedProfileHeaderView: UIView {
     // MARK: - Private properties
 
     private let viewModel: ExtendedProfileViewModel
+    private let showExpandButton: Bool
 
     private lazy var sloganLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
@@ -23,8 +24,9 @@ class ExtendedProfileHeaderView: UIView {
 
     // MARK: - Init
 
-    init(viewModel: ExtendedProfileViewModel, withAutoLayout: Bool) {
+    init(viewModel: ExtendedProfileViewModel, showExpandButton: Bool, withAutoLayout: Bool) {
         self.viewModel = viewModel
+        self.showExpandButton = showExpandButton
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
@@ -38,18 +40,23 @@ class ExtendedProfileHeaderView: UIView {
         sloganLabel.text = viewModel.slogan ?? viewModel.companyName
 
         addSubview(sloganLabel)
-        addSubview(expandToggleImageView)
 
-        NSLayoutConstraint.activate([
-            sloganLabel.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
-            sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            sloganLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+        if showExpandButton {
+            addSubview(expandToggleImageView)
 
-            expandToggleImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
-            expandToggleImageView.leadingAnchor.constraint(equalTo: sloganLabel.trailingAnchor, constant: .spacingM),
-            expandToggleImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            expandToggleImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
-        ])
+            NSLayoutConstraint.activate([
+                sloganLabel.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+                sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+                sloganLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+
+                expandToggleImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+                expandToggleImageView.leadingAnchor.constraint(equalTo: sloganLabel.trailingAnchor, constant: .spacingM),
+                expandToggleImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+                expandToggleImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+            ])
+        } else {
+            sloganLabel.fillInSuperview(margin: .spacingM)
+        }
     }
 
     // MARK: - Internal methods
