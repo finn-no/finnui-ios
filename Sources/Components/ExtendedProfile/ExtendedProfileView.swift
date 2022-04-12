@@ -18,12 +18,14 @@ public class ExtendedProfileView: UIView {
 
     public var isExpanded: Bool = false {
         didSet {
+            guard isExpandable else { return }
             configurePresentation()
         }
     }
 
     // MARK: - Private properties
 
+    private let isExpandable: Bool
     private let viewModel: ExtendedProfileViewModel
     private weak var delegate: ExtendedProfileViewDelegate?
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
@@ -48,11 +50,15 @@ public class ExtendedProfileView: UIView {
 
     public init(
         viewModel: ExtendedProfileViewModel,
+        isExpanded: Bool,
+        isExpandable: Bool,
         delegate: ExtendedProfileViewDelegate,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         withAutoLayout: Bool = false
     ) {
         self.viewModel = viewModel
+        self.isExpanded = isExpanded
+        self.isExpandable = isExpandable
         self.delegate = delegate
         self.remoteImageViewDataSource = remoteImageViewDataSource
         super.init(frame: .zero)
@@ -148,6 +154,7 @@ public class ExtendedProfileView: UIView {
     }
 
     @objc private func handleExpandStateTap() {
+        guard isExpandable else { return }
         delegate?.extendedProfileViewDidToggleExpandedState(self)
     }
 }
