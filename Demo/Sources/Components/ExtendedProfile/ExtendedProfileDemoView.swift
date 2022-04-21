@@ -156,7 +156,7 @@ private extension Array {
                 links: .contactLinks
             )
 
-        return [person, person, person]
+        return [person, person]
     }
 
     static var buttonLinks: [LinkButtonViewModel] {
