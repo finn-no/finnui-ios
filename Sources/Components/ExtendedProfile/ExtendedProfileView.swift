@@ -53,7 +53,7 @@ public class ExtendedProfileView: UIView {
         isExpanded: Bool,
         isExpandable: Bool,
         delegate: ExtendedProfileViewDelegate,
-        remoteImageViewDataSource: RemoteImageViewDataSource,
+        remoteImageViewDataSource: RemoteImageViewDataSource?,
         withAutoLayout: Bool = false
     ) {
         self.viewModel = viewModel
@@ -107,7 +107,6 @@ public class ExtendedProfileView: UIView {
         logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.style.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
         buttonListView.configure(with: viewModel.buttonLinks)
 
-        // TODO: This will be different based on the placement. Only 1 will be shown for top, while all will be shown for bottom.
         let contactPersonViews = viewModel.contactPersons.enumerated().map { index, contactPerson in
             ExtendedProfileContactPersonView(
                 contactPersonIndex: index,
