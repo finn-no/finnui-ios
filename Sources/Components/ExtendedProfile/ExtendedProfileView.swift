@@ -34,6 +34,12 @@ public class ExtendedProfileView: UIView {
     private lazy var logoView = ExtendedProfileLogoView(withAutoLayout: true)
     private lazy var contentStackViewBottomAnchor = contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
 
+    private lazy var hairlineDivider: UIView = {
+        let view = UIView(withAutoLayout: true)
+        view.backgroundColor = .sardine
+        return view
+    }()
+
     private lazy var headerView: ExtendedProfileHeaderView = {
         let view = ExtendedProfileHeaderView(viewModel: viewModel, showExpandButton: isExpandable, withAutoLayout: true)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleExpandStateTap)))
@@ -78,6 +84,7 @@ public class ExtendedProfileView: UIView {
         backgroundColor = viewModel.style.backgroundColor
 
         addSubview(logoView)
+        addSubview(hairlineDivider)
         addSubview(headerView)
         addSubview(contentStackView)
 
@@ -92,7 +99,12 @@ public class ExtendedProfileView: UIView {
             logoView.leadingAnchor.constraint(equalTo: leadingAnchor),
             logoView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            headerView.topAnchor.constraint(equalTo: logoView.bottomAnchor),
+            hairlineDivider.topAnchor.constraint(equalTo: logoView.bottomAnchor),
+            hairlineDivider.leadingAnchor.constraint(equalTo: leadingAnchor),
+            hairlineDivider.trailingAnchor.constraint(equalTo: trailingAnchor),
+            hairlineDivider.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale),
+
+            headerView.topAnchor.constraint(equalTo: hairlineDivider.bottomAnchor),
             headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
