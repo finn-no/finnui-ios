@@ -78,7 +78,7 @@ extension ExtendedProfileDemoView: ExtendedProfileViewDelegate {
         didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem,
         contactPersonIndex: Int
     ) {
-        print("👉 Did select link item for contact person at index \(contactPersonIndex). Kind: \(linkItem.kind) – Value: '\(linkItem.value)'")
+        print("👉 Did select link item for contact person at index \(contactPersonIndex). Kind: \(linkItem.kind) – Title: '\(linkItem.title)'")
     }
 
     public func extendedProfileView(_ view: ExtendedProfileView, didSelectButtonWithIdentifier identifier: String?, url: URL) {
@@ -169,9 +169,9 @@ private extension Array {
 
     static var contactLinks: [CompanyProfile.ContactPerson.LinkItem] {
         [
-            .phoneNumber(value: "(+47) 123 45 678"),
-            .sendMail(value: "Send melding"),
-            .homepage(value: "Hjemmeside"),
+            .phoneNumber(title: "(+47) 123 45 678"),
+            .sendMail(title: "Send melding"),
+            .homepage(title: "Hjemmeside"),
         ]
     }
 }

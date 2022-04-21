@@ -164,7 +164,7 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
         _ view: RealestateSoldStateView,
         didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem
     ) {
-        print("📲 Did select link item. Kind: \(linkItem.kind) – Value: '\(linkItem.value)'")
+        print("📲 Did select link item. Kind: \(linkItem.kind) – Title: '\(linkItem.title)'")
     }
 
     func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int) {
@@ -273,7 +273,7 @@ private extension CompanyProfile.ContactPerson {
             name: "Navn Navnesen",
             jobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            links: [.phoneNumber(value: "123 45 678")]
+            links: [.phoneNumber(title: "123 45 678")]
         )
     }
 
@@ -283,7 +283,7 @@ private extension CompanyProfile.ContactPerson {
             name: "Navn Navnesen",
             jobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            links: [.phoneNumber(value: "(+47) 123 45 678"), .phoneNumber(value: "12 34 56 78"), .phoneNumber(value: "+47 99 88 77 66")]
+            links: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"].map { .phoneNumber(title: $0) }
         )
     }
 
@@ -293,7 +293,7 @@ private extension CompanyProfile.ContactPerson {
             name: "Navn Navnesen",
             jobTitle: "Eiendomsmegler / Partner",
             imageUrl: nil,
-            links: [.phoneNumber(value: "(+47) 123 45 678"), .phoneNumber(value: "12 34 56 78"), .phoneNumber(value: "+47 99 88 77 66")]
+            links: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"].map { .phoneNumber(title: $0) }
         )
     }
 
@@ -313,7 +313,7 @@ private extension CompanyProfile.ContactPerson {
             name: name,
             jobTitle: jobTitle,
             imageUrl: nil,
-            links: [.phoneNumber(value: "123 45 678")]
+            links: [.phoneNumber(title: "123 45 678")]
         )
     }
 

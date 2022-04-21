@@ -27,25 +27,25 @@ extension CompanyProfile.ContactPerson {
         }
 
         public let kind: Kind
-        public let value: String
+        public let title: String
 
-        public init(kind: Kind, value: String) {
+        public init(kind: Kind, title: String) {
             self.kind = kind
-            self.value = value
+            self.title = title
         }
 
         // MARK: - Helper methods
 
-        public static func phoneNumber(value: String) -> Self {
-            Self.init(kind: .phoneNumber, value: value)
+        public static func phoneNumber(title: String) -> Self {
+            Self.init(kind: .phoneNumber, title: title)
         }
 
-        public static func homepage(value: String) -> Self {
-            Self.init(kind: .homepage, value: value)
+        public static func homepage(title: String) -> Self {
+            Self.init(kind: .homepage, title: title)
         }
 
-        public static func sendMail(value: String) -> Self {
-            Self.init(kind: .sendMail, value: value)
+        public static func sendMail(title: String) -> Self {
+            Self.init(kind: .sendMail, title: title)
         }
     }
 }
