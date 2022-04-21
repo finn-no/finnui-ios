@@ -79,8 +79,6 @@ public class ExtendedProfileView: UIView {
     private func setup() {
         layer.cornerRadius = 8
         clipsToBounds = true
-        layer.borderWidth = 1
-        layer.borderColor = .sardine // TODO: Is this correct?
         backgroundColor = viewModel.style.backgroundColor
 
         addSubview(logoView)
