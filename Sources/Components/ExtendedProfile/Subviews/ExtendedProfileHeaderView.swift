@@ -7,11 +7,20 @@ class ExtendedProfileHeaderView: UIView {
 
     private let viewModel: ExtendedProfileViewModel
     private let showExpandButton: Bool
+    private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
 
-    private lazy var sloganLabel: Label = {
+    private lazy var topLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
         label.numberOfLines = 0
         label.textColor = viewModel.style.textColor
+        return label
+    }()
+
+    private lazy var bottomLabel: Label = {
+        let label = Label(style: .body, withAutoLayout: true)
+        label.numberOfLines = 0
+        label.textColor = viewModel.style.textColor
+        label.isHidden = true
         return label
     }()
 
@@ -37,25 +46,37 @@ class ExtendedProfileHeaderView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        sloganLabel.text = viewModel.slogan ?? viewModel.companyName
+        if let slogan = viewModel.slogan {
+            topLabel.text = slogan
+            if !showExpandButton {
+                bottomLabel.text = viewModel.companyName
+                bottomLabel.isHidden = false
+            }
+        } else {
+            topLabel.text = viewModel.companyName
+        }
 
-        addSubview(sloganLabel)
+        textStackView.addArrangedSubviews([topLabel, bottomLabel])
+        addSubview(textStackView)
 
         if showExpandButton {
             addSubview(expandToggleImageView)
 
             NSLayoutConstraint.activate([
-                sloganLabel.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
-                sloganLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-                sloganLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+                textStackView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+                textStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+                textStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
 
-                expandToggleImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
-                expandToggleImageView.leadingAnchor.constraint(equalTo: sloganLabel.trailingAnchor, constant: .spacingM),
+                expandToggleImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: .spacingM),
+                expandToggleImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                expandToggleImageView.leadingAnchor.constraint(equalTo: textStackView.trailingAnchor, constant: .spacingM),
                 expandToggleImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-                expandToggleImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+                expandToggleImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.spacingM),
+                expandToggleImageView.widthAnchor.constraint(equalToConstant: .spacingM),
+                expandToggleImageView.heightAnchor.constraint(equalToConstant: .spacingM),
             ])
         } else {
-            sloganLabel.fillInSuperview(margin: .spacingM)
+            textStackView.fillInSuperview(margin: .spacingM)
         }
     }
 
