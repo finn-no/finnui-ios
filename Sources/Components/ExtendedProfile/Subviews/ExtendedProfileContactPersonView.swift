@@ -74,7 +74,7 @@ class ExtendedProfileContactPersonView: UIView {
 
     private func setup() {
         if let portraitImageUrl = contactPerson.imageUrl {
-            portraitImageView.loadImage(for: portraitImageUrl, imageWidth: .zero)
+            portraitImageView.loadImage(for: portraitImageUrl, imageWidth: portraitImageSize)
         } else {
             portraitImageView.isHidden = true
         }
