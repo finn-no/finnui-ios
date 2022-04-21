@@ -111,6 +111,11 @@ extension AgentProfileView: OverflowCollectionViewDelegate {
         guard let linkItem = contactPerson?.links[safe: index] else { return }
         delegate?.agentProfileView(self, didSelectLinkItem: linkItem)
     }
+
+    public func overflowCollectionView<Cell>(_ view: OverflowCollectionView<Cell>, didConfigureCell cell: Cell, atIndex index: Int) {
+        guard let cell = cell as? ContactPersonLinkCollectionViewCell else { return }
+        cell.configure(textColor: .textAction)
+    }
 }
 
 // MARK: - Private extensions
