@@ -46,7 +46,7 @@ class ExtendedProfileHeaderView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        if let slogan = viewModel.slogan {
+        if let slogan = viewModel.slogan, !slogan.isEmpty {
             topLabel.text = slogan
             if !showExpandButton {
                 bottomLabel.text = viewModel.companyName
