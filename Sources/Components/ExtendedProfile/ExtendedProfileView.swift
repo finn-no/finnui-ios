@@ -36,7 +36,7 @@ public class ExtendedProfileView: UIView {
 
     private lazy var hairlineDivider: UIView = {
         let view = UIView(withAutoLayout: true)
-        view.backgroundColor = .sardine
+        view.backgroundColor = viewModel.style.textColor.withAlphaComponent(0.7)
         return view
     }()
 
