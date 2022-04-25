@@ -41,7 +41,7 @@ public class ExtendedProfileView: UIView {
     }()
 
     private lazy var headerView: ExtendedProfileHeaderView = {
-        let view = ExtendedProfileHeaderView(viewModel: viewModel, showExpandButton: isExpandable, withAutoLayout: true)
+        let view = ExtendedProfileHeaderView(viewModel: viewModel, showExpandButton: isExpandable, isExpanded: isExpanded, withAutoLayout: true)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleExpandStateTap)))
         return view
     }()

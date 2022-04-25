@@ -40,12 +40,13 @@ class ExtendedProfileHeaderView: UIView {
 
     // MARK: - Init
 
-    init(viewModel: ExtendedProfileViewModel, showExpandButton: Bool, withAutoLayout: Bool) {
+    init(viewModel: ExtendedProfileViewModel, showExpandButton: Bool, isExpanded: Bool, withAutoLayout: Bool) {
         self.viewModel = viewModel
         self.showExpandButton = showExpandButton
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
+        configure(isExpanded: isExpanded)
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -62,6 +63,8 @@ class ExtendedProfileHeaderView: UIView {
         } else {
             topLabel.text = viewModel.companyName
         }
+
+        expandToggleImageView.isHidden = !showExpandButton
 
         textStackView.addArrangedSubviews([topLabel, bottomLabel])
         contentStackView.addArrangedSubviews([textStackView, expandToggleImageView])
