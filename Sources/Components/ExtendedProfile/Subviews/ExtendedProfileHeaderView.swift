@@ -9,6 +9,13 @@ class ExtendedProfileHeaderView: UIView {
     private let showExpandButton: Bool
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
 
+    private lazy var contentStackView: UIStackView = {
+        let stackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
+        stackView.alignment = .top
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+
     private lazy var topLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
         label.numberOfLines = 0
@@ -57,27 +64,14 @@ class ExtendedProfileHeaderView: UIView {
         }
 
         textStackView.addArrangedSubviews([topLabel, bottomLabel])
-        addSubview(textStackView)
+        contentStackView.addArrangedSubviews([textStackView, expandToggleImageView])
+        addSubview(contentStackView)
+        contentStackView.fillInSuperview(margin: .spacingM)
 
-        if showExpandButton {
-            addSubview(expandToggleImageView)
-
-            NSLayoutConstraint.activate([
-                textStackView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
-                textStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-                textStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
-
-                expandToggleImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: .spacingM),
-                expandToggleImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-                expandToggleImageView.leadingAnchor.constraint(equalTo: textStackView.trailingAnchor, constant: .spacingM),
-                expandToggleImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-                expandToggleImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.spacingM),
-                expandToggleImageView.widthAnchor.constraint(equalToConstant: .spacingM),
-                expandToggleImageView.heightAnchor.constraint(equalToConstant: .spacingM),
-            ])
-        } else {
-            textStackView.fillInSuperview(margin: .spacingM)
-        }
+        NSLayoutConstraint.activate([
+            expandToggleImageView.widthAnchor.constraint(equalToConstant: .spacingM),
+            expandToggleImageView.heightAnchor.constraint(equalToConstant: .spacingM),
+        ])
     }
 
     // MARK: - Internal methods
