@@ -82,7 +82,9 @@ class AgentProfileView: UIView {
         titleLabel.text = contactPerson.title
         nameLabel.text = contactPerson.name
         jobTitleLabel.text = contactPerson.jobTitle
-        phoneNumbersCollectionView.configure(withLinks: contactPerson.links)
+
+        let linkCellModels = contactPerson.links.map { ContactPersonLinkViewModel(title: $0.title, textColor: .textAction) }
+        phoneNumbersCollectionView.configure(with: linkCellModels)
         remoteImageView.dataSource = remoteImageViewDataSource
 
         if let imageUrl = contactPerson.imageUrl {
@@ -110,11 +112,6 @@ extension AgentProfileView: OverflowCollectionViewDelegate {
     ) where Cell: OverflowCollectionViewCell {
         guard let linkItem = contactPerson?.links[safe: index] else { return }
         delegate?.agentProfileView(self, didSelectLinkItem: linkItem)
-    }
-
-    public func overflowCollectionView<Cell>(_ view: OverflowCollectionView<Cell>, didConfigureCell cell: Cell, atIndex index: Int) {
-        guard let cell = cell as? ContactPersonLinkCollectionViewCell else { return }
-        cell.configure(textColor: .textAction)
     }
 }
 

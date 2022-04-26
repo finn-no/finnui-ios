@@ -92,7 +92,8 @@ class ExtendedProfileContactPersonView: UIView {
             linkCollectionView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
         ])
 
-        linkCollectionView.configure(withLinks: contactPerson.links)
+        let linkCellModels = contactPerson.links.map { ContactPersonLinkViewModel(title: $0.title, textColor: style.textColor) }
+        linkCollectionView.configure(with: linkCellModels)
     }
 
     // MARK: - Overrides
@@ -124,14 +125,5 @@ extension ExtendedProfileContactPersonView: OverflowCollectionViewDelegate {
     ) where Cell: OverflowCollectionViewCell {
         guard let linkItem = contactPerson.links[safe: index] else { return }
         delegate?.extendedProfileContactPersonView(self, didSelectLinkItem: linkItem, contactPersonIndex: contactPersonIndex)
-    }
-
-    public func overflowCollectionView<Cell>(
-        _ view: OverflowCollectionView<Cell>,
-        didConfigureCell cell: Cell,
-        atIndex index: Int
-    ) where Cell: OverflowCollectionViewCell {
-        guard let cell = cell as? ContactPersonLinkCollectionViewCell else { return }
-        cell.configure(textColor: style.textColor)
     }
 }
