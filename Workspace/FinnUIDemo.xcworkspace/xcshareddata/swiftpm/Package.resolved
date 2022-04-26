@@ -5,9 +5,9 @@
         "package": "FinniversKit",
         "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
         "state": {
-          "branch": "fix/overflowcollectionview-cell-configuration",
-          "revision": "1755e754c0a41b8e66626fce6db49057bdd3962e",
-          "version": null
+          "branch": null,
+          "revision": "26b0ebf22b1469593da6aa33ee1c5e873aa259fc",
+          "version": "92.2.0"
         }
       },
       {
