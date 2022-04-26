@@ -12,7 +12,6 @@ The main purpose of this library is for internal use and to be used as reference
 Open the `Workspace/FinnUIDemo.xcworkspace` file to do development, that will enable you to edit the code in the package, edit the code in the demo, and run the Demo project (the reason for not having the workspace file in root is because then Xcode will select the Package.swift for it's list of recents despite that you used the workspace before).
 
 ## Installation
-
 ### CocoaPods
 
 ```

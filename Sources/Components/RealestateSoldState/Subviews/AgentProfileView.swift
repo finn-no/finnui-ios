@@ -85,6 +85,7 @@ class AgentProfileView: UIView {
 
         let linkCellModels = contactPerson.links.map { ContactPersonLinkViewModel(title: $0.title, textColor: .textAction) }
         phoneNumbersCollectionView.configure(with: linkCellModels)
+
         remoteImageView.dataSource = remoteImageViewDataSource
 
         if let imageUrl = contactPerson.imageUrl {
