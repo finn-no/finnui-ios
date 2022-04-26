@@ -1,8 +1,13 @@
 import UIKit
 import FinniversKit
 
+struct ContactPersonLinkViewModel {
+    let title: String
+    let textColor: UIColor
+}
+
 class ContactPersonLinkCollectionViewCell: UICollectionViewCell, OverflowCollectionViewCell {
-    typealias Model = String
+    typealias Model = ContactPersonLinkViewModel
 
     // MARK: - Private properties
 
@@ -33,25 +38,20 @@ class ContactPersonLinkCollectionViewCell: UICollectionViewCell, OverflowCollect
         ])
     }
 
-    // MARK: - Internal methods
-
-    func configure(textColor: UIColor) {
-        titleLabel.textColor = textColor
-    }
-
     // MARK: - OverflowCollectionViewCell
 
-    static func size(using title: String) -> CGSize {
+    static func size(using viewModel: ContactPersonLinkViewModel) -> CGSize {
         let font = Self.labelStyle.font
         let margins = Self.margins
 
-        let width = title.width(withConstrainedHeight: .infinity, font: font) + (margins.leading + margins.trailing)
-        let height = title.height(withConstrainedWidth: .infinity, font: font) + (margins.top + margins.bottom)
+        let width = viewModel.title.width(withConstrainedHeight: .infinity, font: font) + (margins.leading + margins.trailing)
+        let height = viewModel.title.height(withConstrainedWidth: .infinity, font: font) + (margins.top + margins.bottom)
 
         return CGSize(width: width, height: height)
     }
 
-    func configure(using title: String) {
-        titleLabel.text = title
+    func configure(using viewModel: ContactPersonLinkViewModel) {
+        titleLabel.text = viewModel.title
+        titleLabel.textColor = viewModel.textColor
     }
 }
