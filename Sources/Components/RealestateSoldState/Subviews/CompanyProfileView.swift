@@ -11,14 +11,14 @@ class CompanyProfileView: UIView {
     // MARK: - Private properties
 
     private let viewModel: CompanyProfileModel
-    private let styling: RealestateSoldStateModel.Styling.ProfileBoxStyle
+    private let style: CompanyProfile.ProfileStyle
     private weak var delegate: CompanyProfileViewDelegate?
     private lazy var logoHeaderView = CompanyProfileHeaderView(withAutoLayout: true)
 
     private lazy var sloganLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
         label.numberOfLines = 0
-        label.textColor = styling.textColor
+        label.textColor = style.textColor
         return label
     }()
 
@@ -29,7 +29,7 @@ class CompanyProfileView: UIView {
     }()
 
     private lazy var ctaButton: Button = {
-        let button = Button(style: .callToAction.override(using: styling.actionButton), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: style.actionButtonStyle), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(handleCtaButtonTap), for: .touchUpInside)
         return button
     }()
@@ -38,13 +38,13 @@ class CompanyProfileView: UIView {
 
     init(
         viewModel: CompanyProfileModel,
-        styling: RealestateSoldStateModel.Styling.ProfileBoxStyle,
+        style: CompanyProfile.ProfileStyle,
         remoteImageViewDataSource: RemoteImageViewDataSource?,
         delegate: CompanyProfileViewDelegate,
         withAutoLayout: Bool
     ) {
         self.viewModel = viewModel
-        self.styling = styling
+        self.style = style
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
@@ -57,7 +57,7 @@ class CompanyProfileView: UIView {
 
     private func setup(remoteImageViewDataSource: RemoteImageViewDataSource?) {
         clipsToBounds = true
-        backgroundColor = styling.backgroundColor
+        backgroundColor = style.backgroundColor
         layer.borderColor = UIColor.companyProfileBorder.cgColor
 
         addSubview(logoHeaderView)
@@ -84,10 +84,10 @@ class CompanyProfileView: UIView {
             ctaButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
         ])
 
-        logoHeaderView.configure(backgroundColor: styling.logoBackgroundColor, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
+        logoHeaderView.configure(backgroundColor: style.logoBackgroundColor, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
 
         sloganLabel.text = viewModel.slogan
-        buttonListView.configure(with: viewModel.buttonLinks.map { $0.overrideStyle(using: styling) })
+        buttonListView.configure(with: viewModel.buttonLinks.map { $0.overrideStyle(using: style) })
         ctaButton.setTitle(viewModel.ctaButtonTitle, for: .normal)
     }
 
@@ -122,12 +122,12 @@ private extension UIColor {
 }
 
 private extension LinkButtonViewModel {
-    func overrideStyle(using styling: RealestateSoldStateModel.Styling.ProfileBoxStyle) -> LinkButtonViewModel {
+    func overrideStyle(using profileStyle: CompanyProfile.ProfileStyle) -> LinkButtonViewModel {
         guard let buttonStyle = buttonStyle else { return self }
 
         let newButtonStyle = buttonStyle.overrideStyle(
-            textColor: styling.textColor,
-            highlightedTextColor: styling.textColor.withAlphaComponent(0.6)
+            textColor: profileStyle.textColor,
+            highlightedTextColor: profileStyle.textColor.withAlphaComponent(0.6)
         )
 
         return LinkButtonViewModel(
@@ -136,7 +136,7 @@ private extension LinkButtonViewModel {
             subtitle: subtitle,
             linkUrl: linkUrl,
             isExternal: isExternal,
-            externalIconColor: styling.textColor,
+            externalIconColor: profileStyle.textColor,
             buttonStyle: newButtonStyle,
             buttonSize: buttonSize
         )

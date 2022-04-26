@@ -76,10 +76,10 @@ class AgentProfileView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(with model: AgentProfileModel, remoteImageViewDataSource: RemoteImageViewDataSource?) {
+    func configure(with model: CompanyProfile.ContactPerson, remoteImageViewDataSource: RemoteImageViewDataSource?) {
         titleLabel.text = model.title
-        nameLabel.text = model.agentName
-        jobTitleLabel.text = model.agentJobTitle
+        nameLabel.text = model.name
+        jobTitleLabel.text = model.jobTitle
         phoneNumbersCollectionView.configure(with: model.phoneNumbers)
         remoteImageView.dataSource = remoteImageViewDataSource
 
