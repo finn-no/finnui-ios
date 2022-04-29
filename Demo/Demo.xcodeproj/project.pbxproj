@@ -80,6 +80,7 @@
 		E4DBDD972762335200BE21D8 /* ShippingAlternativesDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DBDD962762335200BE21D8 /* ShippingAlternativesDemoView.swift */; };
 		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
+		F0ACB1BE281C30C800CFFC2C /* ShippingPackageSizeDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0ACB1BD281C30C800CFFC2C /* ShippingPackageSizeDemoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +200,7 @@
 		DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIViewTests.swift; sourceTree = "<group>"; };
 		E4DBDD962762335200BE21D8 /* ShippingAlternativesDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingAlternativesDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
+		F0ACB1BD281C30C800CFFC2C /* ShippingPackageSizeDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingPackageSizeDemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -364,6 +366,7 @@
 		46E772CB242CEF09008A5E93 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				F0ACB1BC281C309500CFFC2C /* ShippingPackageSizeView */,
 				E4DBDD952762332300BE21D8 /* ShippingAlternativesView */,
 				710C33F126EB5A4D002BAF1A /* HelthjemView */,
 				8D680B67DAB7BFCB028C94EE /* ChatAvailability */,
@@ -695,6 +698,14 @@
 			path = Wrappers;
 			sourceTree = "<group>";
 		};
+		F0ACB1BC281C309500CFFC2C /* ShippingPackageSizeView */ = {
+			isa = PBXGroup;
+			children = (
+				F0ACB1BD281C30C800CFFC2C /* ShippingPackageSizeDemoView.swift */,
+			);
+			path = ShippingPackageSizeView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -908,6 +919,7 @@
 				46E773A8242CEF0A008A5E93 /* ComponentDemoViews.swift in Sources */,
 				D6D43CE425BF2F4D00234AC2 /* SaveSearchViewDemoView.swift in Sources */,
 				D6D43CF025BF2FA900234AC2 /* SnowGlobeDemoView.swift in Sources */,
+				F0ACB1BE281C30C800CFFC2C /* ShippingPackageSizeDemoView.swift in Sources */,
 				46E773AF242CEF0A008A5E93 /* DemoViewController.swift in Sources */,
 				E4DBDD972762335200BE21D8 /* ShippingAlternativesDemoView.swift in Sources */,
 				46E77453242CEF0A008A5E93 /* CornerAnchoringViewController.swift in Sources */,
