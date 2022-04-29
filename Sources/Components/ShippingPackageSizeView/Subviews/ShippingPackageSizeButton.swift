@@ -76,7 +76,7 @@ class ShippingPackageSizeButton: UIView {
             imageView.widthAnchor.constraint(equalToConstant: 31)
         ])
 
-        configurePresentation(updateStackViews: true)
+        configurePresentation()
     }
 
     // MARK: - Overrides
@@ -91,42 +91,37 @@ class ShippingPackageSizeButton: UIView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        let didChangeHorizontalSizeClass = previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass
-        let didChangeInterfaceStyle = previousTraitCollection?.userInterfaceStyle != traitCollection.userInterfaceStyle
-
-        if didChangeHorizontalSizeClass || didChangeInterfaceStyle {
-            configurePresentation(updateStackViews: didChangeHorizontalSizeClass)
+        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            configurePresentation()
         }
     }
 
     // MARK: - Private methods
 
-    private func configurePresentation(updateStackViews: Bool) {
-        if updateStackViews {
-            contentStackView.removeArrangedSubviews()
+    private func configurePresentation() {
+        contentStackView.removeArrangedSubviews()
 
-            switch traitCollection.horizontalSizeClass {
-            case .regular:
-                contentStackView.addArrangedSubviews([textStackView, imageView])
-                contentStackView.axis = .horizontal
-                contentStackView.spacing = .spacingM
-                contentStackView.distribution = .equalSpacing
-                contentStackView.alignment = .center
+        switch traitCollection.horizontalSizeClass {
+        case .regular:
+            contentStackView.addArrangedSubviews([textStackView, imageView])
+            contentStackView.axis = .horizontal
+            contentStackView.spacing = .spacingM
+            contentStackView.distribution = .equalSpacing
+            contentStackView.alignment = .center
 
-                titleLabel.textAlignment = .natural
-                bodyLabel.textAlignment = .natural
-            default:
-                contentStackView.addArrangedSubviews([imageView, textStackView])
-                contentStackView.axis = .vertical
-                contentStackView.spacing = .spacingM
-                contentStackView.distribution = .equalSpacing
-                contentStackView.alignment = .center
+            titleLabel.textAlignment = .natural
+            bodyLabel.textAlignment = .natural
+        default:
+            contentStackView.addArrangedSubviews([imageView, textStackView])
+            contentStackView.axis = .vertical
+            contentStackView.spacing = .spacingM
+            contentStackView.distribution = .equalSpacing
+            contentStackView.alignment = .center
 
-                titleLabel.textAlignment = .center
-                bodyLabel.textAlignment = .center
-            }
-            layoutIfNeeded()
+            titleLabel.textAlignment = .center
+            bodyLabel.textAlignment = .center
         }
+        layoutIfNeeded()
     }
 }
 
