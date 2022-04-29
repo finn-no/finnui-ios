@@ -16,6 +16,7 @@ class ShippingPackageSizeButton: UIView {
 
     // MARK: - Private properties
 
+    private var contentStackViewConstraints = [NSLayoutConstraint]()
     private lazy var contentStackView = UIStackView(withAutoLayout: true)
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXXS, withAutoLayout: true)
 
@@ -67,11 +68,6 @@ class ShippingPackageSizeButton: UIView {
         NSLayoutConstraint.activate([
             contentStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             contentStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            contentStackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: .spacingL),
-            contentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: .spacingL),
-            contentStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -.spacingL),
-            contentStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -.spacingL),
-
             imageView.heightAnchor.constraint(equalToConstant: 31),
             imageView.widthAnchor.constraint(equalToConstant: 31)
         ])
@@ -101,8 +97,11 @@ class ShippingPackageSizeButton: UIView {
     private func configurePresentation() {
         contentStackView.removeArrangedSubviews()
 
+        let stackViewMargin: CGFloat
+
         switch traitCollection.horizontalSizeClass {
         case .regular:
+            stackViewMargin = .spacingL
             contentStackView.addArrangedSubviews([textStackView, imageView])
             contentStackView.axis = .horizontal
             contentStackView.spacing = .spacingM
@@ -112,6 +111,7 @@ class ShippingPackageSizeButton: UIView {
             titleLabel.textAlignment = .natural
             bodyLabel.textAlignment = .natural
         default:
+            stackViewMargin = .spacingM
             contentStackView.addArrangedSubviews([imageView, textStackView])
             contentStackView.axis = .vertical
             contentStackView.spacing = .spacingM
@@ -121,6 +121,16 @@ class ShippingPackageSizeButton: UIView {
             titleLabel.textAlignment = .center
             bodyLabel.textAlignment = .center
         }
+
+        NSLayoutConstraint.deactivate(contentStackViewConstraints)
+        contentStackViewConstraints = [
+            contentStackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: stackViewMargin),
+            contentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: stackViewMargin),
+            contentStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -stackViewMargin),
+            contentStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -stackViewMargin),
+        ]
+        NSLayoutConstraint.activate(contentStackViewConstraints)
+
         layoutIfNeeded()
     }
 }
