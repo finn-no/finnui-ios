@@ -9,18 +9,22 @@ class DemoViewController<View: UIView>: UIViewController {
     private let constrainToBottomSafeArea: Bool
     private let constrainToTopSafeArea: Bool
     private var bottomSheet: BottomSheet?
-    var backgroundColor: UIColor = .bgPrimary
+    private var backgroundColor: UIColor
 
-    public init(dismissType: DismissType = .doubleTap,
-                containmentOptions: ContainmentOptions = .none,
-                supportedInterfaceOrientations: UIInterfaceOrientationMask = .all,
-                constrainToTopSafeArea: Bool = true,
-                constrainToBottomSafeArea: Bool = true) {
+    public init(
+        dismissType: DismissType = .doubleTap,
+        containmentOptions: ContainmentOptions = .none,
+        supportedInterfaceOrientations: UIInterfaceOrientationMask = .all,
+        constrainToTopSafeArea: Bool = true,
+        constrainToBottomSafeArea: Bool = true,
+        backgroundColor: UIColor = .bgPrimary
+    ) {
         self.dismissType = dismissType
         self.containmentOptions = containmentOptions
         self.preferredInterfaceOrientation = supportedInterfaceOrientations
         self.constrainToBottomSafeArea = constrainToBottomSafeArea
         self.constrainToTopSafeArea = constrainToTopSafeArea
+        self.backgroundColor = backgroundColor
         super.init(nibName: nil, bundle: nil)
     }
 

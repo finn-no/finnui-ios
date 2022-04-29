@@ -36,9 +36,7 @@ public enum FullscreenDemoViews: String, DemoViews {
         case .exploreDetailView:
             return DemoViewController<ExploreDetailDemoView>(constrainToTopSafeArea: true, constrainToBottomSafeArea: false)
         case .stories:
-            let storyDemoViewController = DemoViewController<StoryDemoView>()
-            storyDemoViewController.backgroundColor = .black
-            return storyDemoViewController
+            return DemoViewController<StoryDemoView>(backgroundColor: .black)
         }
     }
 }

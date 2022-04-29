@@ -76,7 +76,10 @@ public enum ComponentDemoViews: String, DemoViews {
         case .fadedExpandableView:
             return DemoViewController<FadedExpandableDemoView>()
         case .shippingPackageSizeView:
-            return DemoViewController<ShippingPackageSizeDemoView>(dismissType: .dismissButton)
+            return DemoViewController<ShippingPackageSizeDemoView>(
+                dismissType: .dismissButton,
+                backgroundColor: .bgTertiary
+            )
         }
     }
 }
