@@ -98,11 +98,13 @@ class ShippingPackageSizeButton: UIView {
     private func configurePresentation() {
         contentStackView.removeArrangedSubviews()
 
-        let stackViewMargin: CGFloat
+        let stackViewHorizontalMargin: CGFloat
+        let stackViewVerticalMargin: CGFloat
 
         switch traitCollection.horizontalSizeClass {
         case .regular:
-            stackViewMargin = .spacingL
+            stackViewHorizontalMargin = .spacingL
+            stackViewVerticalMargin = .spacingL
             contentStackView.addArrangedSubviews([textStackView, imageView])
             contentStackView.axis = .horizontal
             contentStackView.spacing = .spacingM
@@ -112,7 +114,8 @@ class ShippingPackageSizeButton: UIView {
             titleLabel.textAlignment = .natural
             bodyLabel.textAlignment = .natural
         default:
-            stackViewMargin = .spacingM
+            stackViewHorizontalMargin = .spacingS
+            stackViewVerticalMargin = .spacingM
             contentStackView.addArrangedSubviews([imageView, textStackView])
             contentStackView.axis = .vertical
             contentStackView.spacing = .spacingM
@@ -125,14 +128,13 @@ class ShippingPackageSizeButton: UIView {
 
         NSLayoutConstraint.deactivate(contentStackViewConstraints)
         contentStackViewConstraints = [
-            contentStackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: stackViewMargin),
-            contentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: stackViewMargin),
-            contentStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -stackViewMargin),
-            contentStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -stackViewMargin),
+            contentStackView.topAnchor.constraint(equalTo: topAnchor, constant: stackViewVerticalMargin),
+            contentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: stackViewHorizontalMargin),
+            contentStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -stackViewHorizontalMargin),
+            contentStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -stackViewVerticalMargin),
         ]
         NSLayoutConstraint.activate(contentStackViewConstraints)
 
         layoutIfNeeded()
     }
 }
-
