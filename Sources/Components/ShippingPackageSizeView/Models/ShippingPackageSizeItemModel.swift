@@ -10,6 +10,19 @@ public struct ShippingPackageSizeItemModel {
     public let helpText: String?
     public let isInitiallySelected: Bool
 
+    // MARK: - Internal properties
+
+    var image: UIImage {
+        switch size {
+        case .small:
+            return UIImage(named: .headset)
+        case .large:
+            return UIImage(named: .mixer)
+        case .extraLarge:
+            return UIImage(named: .lamp)
+        }
+    }
+
     // MARK: - Init
 
     public init(size: Size, title: String, body: String, helpText: String?, isInitiallySelected: Bool) {
