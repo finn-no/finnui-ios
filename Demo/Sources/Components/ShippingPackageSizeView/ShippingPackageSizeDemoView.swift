@@ -57,7 +57,7 @@ private extension Array where Element == ShippingPackageSizeItemModel {
             title: "Liten",
             body: "Opptil 5 kg",
             helpText: "Opptil 5 kg / H 25cm / L 35cm / D 12cm",
-            isInitiallySelected: false
+            isInitiallySelected: true
         ),
         ShippingPackageSizeItemModel(
             size: .large,

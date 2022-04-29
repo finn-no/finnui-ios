@@ -58,6 +58,7 @@ public class ShippingPackageSizeView: UIView {
         }
 
         buttonsStackView.addArrangedSubviews(buttonViews)
+        updateHelpTextLabel(with: itemModels.first(where: { $0.isInitiallySelected })?.helpText)
     }
 
     // MARK: - Overrides
