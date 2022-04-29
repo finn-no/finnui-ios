@@ -35,7 +35,6 @@ class ShippingPackageSizeButton: UIView {
     private var imageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFit
-        imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
         imageView.tintColor = .textPrimary
         return imageView
     }()
