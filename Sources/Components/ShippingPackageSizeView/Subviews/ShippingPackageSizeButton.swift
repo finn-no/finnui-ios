@@ -56,6 +56,7 @@ class ShippingPackageSizeButton: UIView {
     // MARK: - Setup
 
     private func setup() {
+        backgroundColor = .bgPrimary
         layer.cornerRadius = 4
 
         imageView.image = viewModel.image
