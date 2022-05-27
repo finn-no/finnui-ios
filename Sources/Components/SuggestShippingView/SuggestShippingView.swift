@@ -7,29 +7,35 @@ public final class SuggestShippingView: UIView {
 
     private let imageHorizontalInset: CGFloat = .spacingS
 
-    let containerView: UIStackView = {
+    private let horizontalContainer: UIStackView = {
+        let stackView = UIStackView(axis: .horizontal)
+        stackView.alignment = .center
+        return stackView
+    }()
+
+    private let containerView: UIStackView = {
         let stackView = UIStackView(axis: .vertical)
         stackView.spacing = 24
         return stackView
     }()
 
-    let textContainer: UIStackView = UIStackView(axis: .vertical)
+    private let textContainer: UIStackView = UIStackView(axis: .vertical)
 
-    lazy var title: Label = {
+    private lazy var title: Label = {
         let label = Label(style: .captionStrong)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
     }()
 
-    lazy var message: Label = {
+    private lazy var message: Label = {
         let label = Label(style: .caption)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
     }()
 
-    lazy var button: Button = {
+    private lazy var button: Button = {
         let button = Button(style: .flat.overrideStyle(
             bodyColor: .primaryButtonBackgroundColor,
             borderWidth: 2,
@@ -55,15 +61,15 @@ public final class SuggestShippingView: UIView {
         return button
     }()
 
-    lazy var loadingIndicator = LoadingIndicatorView(withAutoLayout: true)
+    private lazy var loadingIndicator = LoadingIndicatorView(withAutoLayout: true)
 
     private func setup() {
         layer.borderWidth = 1
         layer.borderColor = UIColor.sardine.cgColor
         layer.cornerRadius = 3
 
-        addSubview(containerView)
-        containerView.fillInSuperview(margin: 16)
+        addSubview(horizontalContainer)
+        horizontalContainer.fillInSuperview(margin: 16)
         textContainer.addArrangedSubviews([
             title,
             message
@@ -72,6 +78,7 @@ public final class SuggestShippingView: UIView {
             textContainer,
             button
         ])
+        horizontalContainer.addArrangedSubview(containerView)
 
         NSLayoutConstraint.activate([
             loadingIndicator.heightAnchor.constraint(equalToConstant: 30),
