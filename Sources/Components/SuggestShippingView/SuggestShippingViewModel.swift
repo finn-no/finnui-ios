@@ -53,7 +53,7 @@ public extension SuggestShippingViewModel {
     }
 }
 
-public protocol ErrorViewModelButtonHandler {
+public protocol SuggestShippingErrorViewModelButtonHandler {
     func didTapButton()
 }
 
@@ -75,9 +75,9 @@ public extension SuggestShippingViewModel {
         let message: String
         let buttonTitle: String
 
-        private let buttonHandler: ErrorViewModelButtonHandler
+        private let buttonHandler: SuggestShippingErrorViewModelButtonHandler
 
-        public init(title: String, message: String, buttonTitle: String, buttonHandler: ErrorViewModelButtonHandler) {
+        public init(title: String, message: String, buttonTitle: String, buttonHandler: SuggestShippingErrorViewModelButtonHandler) {
             self.title = title
             self.message = message
             self.buttonTitle = buttonTitle
