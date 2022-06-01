@@ -1,33 +1,35 @@
 import Combine
 
 public protocol SuggestShippingService {
-    func suggestShipping() async -> SuggestShippingViewModel.SuggestShippingResult
+    func suggestShipping(forAdId adId: String) async -> SuggestShippingViewModel.SuggestShippingResult
 }
 
 @MainActor
 public class SuggestShippingViewModel: ObservableObject {
     @Published var state: State
 
+    private let adId: String
     private let service: SuggestShippingService
-    private let onSuccessfulSuggesting: () -> Void
 
     public init(
+        adId: String,
         suggestViewModel: SuggestViewModel,
-        suggestShippingService: SuggestShippingService,
-        onSuccessfulSuggesting: @escaping () -> Void
+        suggestShippingService: SuggestShippingService
     ) {
+        self.adId = adId
         self.state = .suggestShipping(suggestViewModel)
         self.service = suggestShippingService
-        self.onSuccessfulSuggesting = onSuccessfulSuggesting
     }
 
     public func suggestShipping() {
         state = .processing
         Task {
-            let result = await service.suggestShipping()
+            let result = await service.suggestShipping(forAdId: adId)
             switch result {
             case .success:
-                onSuccessfulSuggesting()
+                // We don't need to do anything in this case, the caller site
+                // will handle the rest.
+                break
 
             case .failure(let errorViewModel):
                 state = .error(errorViewModel)
@@ -51,6 +53,10 @@ public extension SuggestShippingViewModel {
     }
 }
 
+public protocol ErrorViewModelButtonHandler {
+    func didTapButton()
+}
+
 public extension SuggestShippingViewModel {
     struct SuggestViewModel {
         let title: String
@@ -67,12 +73,19 @@ public extension SuggestShippingViewModel {
     struct ErrorViewModel {
         let title: String
         let message: String
-//        let infoURL: URL?
+        let buttonTitle: String
 
-        public init(title: String, message: String) {
+        private let buttonHandler: ErrorViewModelButtonHandler
+
+        public init(title: String, message: String, buttonTitle: String, buttonHandler: ErrorViewModelButtonHandler) {
             self.title = title
             self.message = message
-//            self.infoURL = infoURL
+            self.buttonTitle = buttonTitle
+            self.buttonHandler = buttonHandler
+        }
+
+        public func openInfoURL() {
+            buttonHandler.didTapButton()
         }
     }
 }

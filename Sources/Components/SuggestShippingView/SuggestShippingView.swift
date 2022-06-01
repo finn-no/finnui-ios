@@ -4,6 +4,7 @@ import FinniversKit
 public final class SuggestShippingView: UIView {
     private var viewModel: SuggestShippingViewModel!
     private var cancellables = Set<AnyCancellable>()
+    private var buttonCancellable: AnyCancellable?
 
     private let imageHorizontalInset: CGFloat = .spacingS
 
@@ -35,14 +36,8 @@ public final class SuggestShippingView: UIView {
         return label
     }()
 
-    private lazy var button: Button = {
-        let button = Button(style: .flat.overrideStyle(
-            bodyColor: .primaryButtonBackgroundColor,
-            borderWidth: 2,
-            borderColor: .primaryButtonBorderColor,
-            highlightedBodyColor: .primaryButtonBackgroundColor,
-            highlightedBorderColor: .primaryButtonBorderColor
-        ))
+    private lazy var suggestShippingbutton: Button = {
+        let button = Button(style: .suggestShippingStyle)
         button.contentEdgeInsets = UIEdgeInsets(
             top: .spacingS + .spacingXS,
             leading: .spacingXL,
@@ -56,11 +51,14 @@ public final class SuggestShippingView: UIView {
             trailing: -imageHorizontalInset
         )
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: .shippingTruck), for: .normal)
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        let shippingTruck = UIImage(named: .shippingTruck)
+        let darkShippingTruck = shippingTruck.withTintColor(.textAction)
+        shippingTruck.imageAsset?.register(darkShippingTruck, with: .init(userInterfaceStyle: .dark))
+        button.setImage(shippingTruck, for: .normal)
         return button
     }()
 
+    private lazy var showInfoButton = Button(style: .callToAction)
     private lazy var loadingIndicator = LoadingIndicatorView(withAutoLayout: true)
 
     private func setup() {
@@ -76,7 +74,7 @@ public final class SuggestShippingView: UIView {
         ])
         containerView.addArrangedSubviews([
             textContainer,
-            button
+            suggestShippingbutton
         ])
         horizontalContainer.addArrangedSubview(containerView)
 
@@ -103,7 +101,12 @@ public final class SuggestShippingView: UIView {
         case .suggestShipping(let suggestShippingViewModel):
             title.text = suggestShippingViewModel.title
             message.text = suggestShippingViewModel.message
-            button.setTitle(suggestShippingViewModel.buttonTitle, for: .normal)
+            suggestShippingbutton.setTitle(suggestShippingViewModel.buttonTitle, for: .normal)
+            buttonCancellable = suggestShippingbutton
+                .publisher(for: .touchUpInside)
+                .sink { [weak self] _ in
+                    self?.viewModel.suggestShipping()
+                }
 
         case .processing:
             containerView.alpha = 0
@@ -117,7 +120,15 @@ public final class SuggestShippingView: UIView {
             containerView.alpha = 1
             title.text = errorViewModel.title
             message.text = errorViewModel.message
-            button.removeFromSuperview()
+            suggestShippingbutton.removeFromSuperview()
+
+            showInfoButton.setTitle(errorViewModel.buttonTitle, for: .normal)
+            containerView.addArrangedSubview(showInfoButton)
+            buttonCancellable = showInfoButton
+                .publisher(for: .touchUpInside)
+                .sink { _ in
+                    errorViewModel.openInfoURL()
+                }
         }
     }
 
@@ -130,12 +141,14 @@ public final class SuggestShippingView: UIView {
     }
 }
 
-private extension UIColor {
-    class var primaryButtonBackgroundColor: UIColor {
-        dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgTertiary)
-    }
-
-    class var primaryButtonBorderColor: UIColor {
-        dynamicColor(defaultColor: .sardine, darkModeColor: .sardine)
+private extension Button.Style {
+    static var suggestShippingStyle: Button.Style {
+        .flat.overrideStyle(
+            bodyColor: .dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgTertiary),
+            borderWidth: 2,
+            borderColor: .dynamicColor(defaultColor: .sardine, darkModeColor: .sardine),
+            highlightedBodyColor: .dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgTertiary),
+            highlightedBorderColor: .dynamicColor(defaultColor: .sardine, darkModeColor: .sardine)
+        )
     }
 }
