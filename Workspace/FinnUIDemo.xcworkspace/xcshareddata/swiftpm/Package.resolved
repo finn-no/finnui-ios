@@ -5,9 +5,9 @@
         "package": "FinniversKit",
         "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
         "state": {
-          "branch": null,
-          "revision": "684282ecb65add378705f3a7cf7f520d5634ea11",
-          "version": "91.0.0"
+          "branch": "combine-extension",
+          "revision": "bdffa2e3a959e55679ebbc0e30ddfcf01ef5f893",
+          "version": null
         }
       },
       {
