@@ -2,15 +2,28 @@ import UIKit
 import FinnUI
 import FinniversKit
 
+@MainActor
 class DemoSuggestShippingEndpoint: SuggestShippingService {
     var mockResult: SuggestShippingViewModel.SuggestShippingResult
-    func suggestShipping() async -> SuggestShippingViewModel.SuggestShippingResult {
+    var onSuccess: () -> Void
+
+    func suggestShipping(forAdId adId: String) async -> SuggestShippingViewModel.SuggestShippingResult {
         try? await Task.sleep(nanoseconds: 2_000_000_000)
+        if case .success = mockResult {
+            onSuccess()
+        }
         return mockResult
     }
 
-    init(mockResult: SuggestShippingViewModel.SuggestShippingResult) {
+    init(mockResult: SuggestShippingViewModel.SuggestShippingResult, onSuccess: @escaping () -> Void) {
         self.mockResult = mockResult
+        self.onSuccess = onSuccess
+    }
+}
+
+extension DemoSuggestShippingEndpoint: ErrorViewModelButtonHandler {
+    func didTapButton() {
+
     }
 }
 
@@ -20,15 +33,19 @@ final class SuggestShippingDemoView: UIView, Tweakable {
             self?.endpoint.mockResult = .success
         }),
         TweakingOption(title: "Suggest shipping error", action: { [weak self] in
+            guard let strongSelf = self else { return }
+
             let errorViewModel = SuggestShippingViewModel.ErrorViewModel(
                 title: "Hm... Vi klarte ikke å spørre selger",
-                message: "Men kanskje du kan spørre for oss? Send en melding til selger og spør om å få bruke Fiks ferdig."
+                message: "Men kanskje du kan spørre for oss? Send en melding til selger og spør om å få bruke Fiks ferdig.",
+                buttonTitle: "Lære mer om fiks Ferdig",
+                buttonHandler: strongSelf.endpoint
             )
-            self?.endpoint.mockResult = .failure(errorViewModel)
+            strongSelf.endpoint.mockResult = .failure(errorViewModel)
         })
     ]
 
-    let endpoint = DemoSuggestShippingEndpoint(mockResult: .success)
+    var endpoint: DemoSuggestShippingEndpoint!
 
     private lazy var successLabel: Label = {
         let label = Label(style: .body)
@@ -43,18 +60,23 @@ final class SuggestShippingDemoView: UIView, Tweakable {
             message: "Vi sier i fra til selger at du vil kjøpe og sende via FINN. Vi varsler deg når du kan legge inn et bud.",
             buttonTitle: "Be om fiks ferdig")
         let suggestShippingViewModel = SuggestShippingViewModel(
+            adId: "dummy",
             suggestViewModel: suggestViewModel,
-            suggestShippingService: endpoint,
-            onSuccessfulSuggesting: { [unowned self] in
-                self.successLabel.alpha = 1
-                self.suggestShippingView.removeFromSuperview()
-            }
+            suggestShippingService: endpoint
         )
         return SuggestShippingView.create(with: suggestShippingViewModel)
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        endpoint = DemoSuggestShippingEndpoint(
+            mockResult: .success,
+            onSuccess: { [unowned self] in
+                self.successLabel.alpha = 1
+                self.suggestShippingView.removeFromSuperview()
+            }
+        )
+
         setup()
     }
 
