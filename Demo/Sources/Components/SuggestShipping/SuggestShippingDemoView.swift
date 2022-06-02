@@ -21,7 +21,7 @@ class DemoSuggestShippingEndpoint: SuggestShippingService {
     }
 }
 
-extension DemoSuggestShippingEndpoint: ErrorViewModelButtonHandler {
+extension DemoSuggestShippingEndpoint: SuggestShippingErrorViewModelButtonHandler {
     func didTapButton() {
 
     }
