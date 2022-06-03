@@ -16,7 +16,7 @@ public final class SuggestShippingView: UIView {
 
     private let containerView: UIStackView = {
         let stackView = UIStackView(axis: .vertical)
-        stackView.spacing = 24
+        stackView.spacing = .spacingM
         return stackView
     }()
 
@@ -58,7 +58,7 @@ public final class SuggestShippingView: UIView {
         return button
     }()
 
-    private lazy var showInfoButton = Button(style: .callToAction)
+    private lazy var showInfoButton = Button(style: .flat)
     private lazy var loadingIndicator = LoadingIndicatorView(withAutoLayout: true)
 
     private func setup() {
@@ -67,7 +67,7 @@ public final class SuggestShippingView: UIView {
         layer.cornerRadius = 3
 
         addSubview(horizontalContainer)
-        horizontalContainer.fillInSuperview(margin: 16)
+        horizontalContainer.fillInSuperview(margin: .spacingM)
         textContainer.addArrangedSubviews([
             title,
             message
@@ -124,6 +124,7 @@ public final class SuggestShippingView: UIView {
 
             showInfoButton.setTitle(errorViewModel.buttonTitle, for: .normal)
             containerView.addArrangedSubview(showInfoButton)
+
             buttonCancellable = showInfoButton
                 .publisher(for: .touchUpInside)
                 .sink { _ in
