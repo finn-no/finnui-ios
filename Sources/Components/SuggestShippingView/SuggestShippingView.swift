@@ -98,10 +98,10 @@ public final class SuggestShippingView: UIView {
 
     private func applyState(_ newState: SuggestShippingViewModel.State) {
         switch newState {
-        case .suggestShipping(let suggestShippingViewModel):
-            title.text = suggestShippingViewModel.title
-            message.text = suggestShippingViewModel.message
-            suggestShippingbutton.setTitle(suggestShippingViewModel.buttonTitle, for: .normal)
+        case .suggestShipping:
+            title.text = viewModel.title
+            message.text = viewModel.message
+            suggestShippingbutton.setTitle(viewModel.buttonTitle, for: .normal)
             buttonCancellable = suggestShippingbutton
                 .publisher(for: .touchUpInside)
                 .sink { [weak self] _ in
@@ -114,22 +114,6 @@ public final class SuggestShippingView: UIView {
             loadingIndicator.centerInSuperview()
             loadingIndicator.startAnimating()
             layoutIfNeeded()
-
-        case .error(let errorViewModel):
-            loadingIndicator.removeFromSuperview()
-            containerView.alpha = 1
-            title.text = errorViewModel.title
-            message.text = errorViewModel.message
-            suggestShippingbutton.removeFromSuperview()
-
-            showInfoButton.setTitle(errorViewModel.buttonTitle, for: .normal)
-            containerView.addArrangedSubview(showInfoButton)
-
-            buttonCancellable = showInfoButton
-                .publisher(for: .touchUpInside)
-                .sink { _ in
-                    errorViewModel.openInfoURL()
-                }
         }
     }
 
