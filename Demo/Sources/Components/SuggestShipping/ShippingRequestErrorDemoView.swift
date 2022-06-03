@@ -3,12 +3,14 @@ import FinnUI
 import FinniversKit
 
 final class ShippingRequestErrorDemoView: UIView {
+    private let viewModelDelegate = ErrorButtonHandler()
+
     private lazy var shippingRequestErrorView: ShippingRequestErrorView = {
         let errorViewModel = ShippingRequestErrorViewModel(
             title: "Fiks ferdig frakt og betaling",
             message: "Vi sier i fra til selger at du vil kjøpe og sende via FINN. Vi varsler deg når du kan legge inn et bud.",
             buttonTitle: "Les mer om Fiks ferdig",
-            buttonHandler: ErrorButtonHandler()
+            delegate: viewModelDelegate
         )
         return ShippingRequestErrorView.create(with: errorViewModel)
     }()
@@ -32,7 +34,7 @@ final class ShippingRequestErrorDemoView: UIView {
     }
 }
 
-private final class ErrorButtonHandler: SuggestShippingErrorViewModelButtonHandler {
-    func didTapButton() {
+private final class ErrorButtonHandler: SuggestShippingErrorViewModelDelegate {
+    func suggestShippingErrorViewModelDidTapOpenInfoButton() {
     }
 }

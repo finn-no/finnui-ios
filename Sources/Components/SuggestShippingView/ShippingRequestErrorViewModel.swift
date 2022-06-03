@@ -1,5 +1,5 @@
-public protocol SuggestShippingErrorViewModelButtonHandler {
-    func didTapButton()
+public protocol SuggestShippingErrorViewModelDelegate: AnyObject {
+    func suggestShippingErrorViewModelDidTapOpenInfoButton()
 }
 
 public struct ShippingRequestErrorViewModel {
@@ -7,16 +7,21 @@ public struct ShippingRequestErrorViewModel {
     let message: String
     let buttonTitle: String
 
-    private let buttonHandler: SuggestShippingErrorViewModelButtonHandler
+    private weak var delegate: SuggestShippingErrorViewModelDelegate?
 
-    public init(title: String, message: String, buttonTitle: String, buttonHandler: SuggestShippingErrorViewModelButtonHandler) {
+    public init(
+        title: String,
+        message: String,
+        buttonTitle: String,
+        delegate: SuggestShippingErrorViewModelDelegate)
+    {
         self.title = title
         self.message = message
         self.buttonTitle = buttonTitle
-        self.buttonHandler = buttonHandler
+        self.delegate = delegate
     }
 
     public func openInfoURL() {
-        buttonHandler.didTapButton()
+        delegate?.suggestShippingErrorViewModelDidTapOpenInfoButton()
     }
 }
