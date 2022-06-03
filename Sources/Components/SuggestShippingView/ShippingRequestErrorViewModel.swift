@@ -13,7 +13,8 @@ public struct ShippingRequestErrorViewModel {
         title: String,
         message: String,
         buttonTitle: String,
-        delegate: SuggestShippingErrorViewModelDelegate) {
+        delegate: SuggestShippingErrorViewModelDelegate
+    ) {
         self.title = title
         self.message = message
         self.buttonTitle = buttonTitle
