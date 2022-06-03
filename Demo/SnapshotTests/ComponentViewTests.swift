@@ -110,4 +110,8 @@ class ComponentViewTests: XCTestCase {
     func testShippingRequestedView() {
         snapshot(.shippingRequestedView)
     }
+
+    func testShippingRequestErrorView() {
+        snapshot(.shippingRequestErrorView)
+    }
 }

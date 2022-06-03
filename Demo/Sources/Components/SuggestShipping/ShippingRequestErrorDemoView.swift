@@ -7,7 +7,7 @@ final class ShippingRequestErrorDemoView: UIView {
         let errorViewModel = ShippingRequestErrorViewModel(
             title: "Fiks ferdig frakt og betaling",
             message: "Vi sier i fra til selger at du vil kjøpe og sende via FINN. Vi varsler deg når du kan legge inn et bud.",
-            buttonTitle: "Be om fiks ferdig",
+            buttonTitle: "Les mer om Fiks ferdig",
             buttonHandler: ErrorButtonHandler()
         )
         return ShippingRequestErrorView.create(with: errorViewModel)
