@@ -38,7 +38,7 @@ final class SuggestShippingDemoView: UIView, Tweakable {
             let errorViewModel = SuggestShippingViewModel.ErrorViewModel(
                 title: "Hm... Vi klarte ikke å spørre selger",
                 message: "Men kanskje du kan spørre for oss? Send en melding til selger og spør om å få bruke Fiks ferdig.",
-                buttonTitle: "Lære mer om fiks Ferdig",
+                buttonTitle: "Les mer om Fiks ferdig",
                 buttonHandler: strongSelf.endpoint
             )
             strongSelf.endpoint.mockResult = .failure(errorViewModel)
