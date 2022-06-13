@@ -12,7 +12,7 @@ final class ShippingRequestErrorDemoView: UIView {
             buttonTitle: "Les mer om Fiks ferdig",
             delegate: viewModelDelegate
         )
-        return ShippingRequestErrorView.create(with: errorViewModel)
+        return ShippingRequestErrorView(viewModel: errorViewModel, withAutoLayout: true)
     }()
 
     override init(frame: CGRect) {

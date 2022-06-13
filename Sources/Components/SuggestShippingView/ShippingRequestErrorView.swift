@@ -2,7 +2,7 @@ import Combine
 import FinniversKit
 
 public final class ShippingRequestErrorView: UIView {
-    private var viewModel: ShippingRequestErrorViewModel!
+    private var viewModel: ShippingRequestErrorViewModel
     private var cancellables = Set<AnyCancellable>()
     private let containerView = UIStackView(axis: .vertical)
 
@@ -22,13 +22,18 @@ public final class ShippingRequestErrorView: UIView {
 
     private lazy var readMoreButton = Button(style: .flat)
 
-    public static func create(with viewModel: ShippingRequestErrorViewModel) -> ShippingRequestErrorView {
-        let view = ShippingRequestErrorView(withAutoLayout: true)
-        view.setup()
-        view.decorate(with: viewModel)
-        return view
+    public init(viewModel: ShippingRequestErrorViewModel, withAutoLayout: Bool = false) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
+        setup()
+        decorateWithViewModel()
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func setup() {
         layer.borderWidth = 1
         layer.borderColor = UIColor.sardine.cgColor
@@ -50,8 +55,7 @@ public final class ShippingRequestErrorView: UIView {
         containerView.addArrangedSubview(readMoreButton)
     }
 
-    private func decorate(with viewModel: ShippingRequestErrorViewModel) {
-        self.viewModel = viewModel
+    private func decorateWithViewModel() {
         titleLabel.text = viewModel.title
         messageLabel.text = viewModel.message
         readMoreButton.setTitle(viewModel.buttonTitle, for: .normal)
