@@ -119,7 +119,6 @@ public final class SuggestShippingView: UIView {
 
     public static func create(with viewModel: SuggestShippingViewModel) -> SuggestShippingView {
         let view = SuggestShippingView(withAutoLayout: true)
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.viewModel = viewModel
         view.setup()
         return view
