@@ -8,7 +8,7 @@ final class ShippingRequestedDemoView: UIView {
             title: "Snart kan du gi bud!",
             message: "Selger må registrere fraktadresse først, så sier vi i fra når du kan bruke Fiks ferdig."
         )
-        return ShippingRequestedView.create(with: viewModel)
+        return ShippingRequestedView(viewModel: viewModel, withAutoLayout: true)
     }()
 
     override init(frame: CGRect) {

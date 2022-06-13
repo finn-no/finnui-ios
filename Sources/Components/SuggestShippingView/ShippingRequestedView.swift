@@ -23,11 +23,15 @@ public final class ShippingRequestedView: UIView {
         return label
     }()
 
-    public static func create(with viewModel: ShippingRequestedViewModel) -> ShippingRequestedView {
-        let view = ShippingRequestedView(withAutoLayout: true)
-        view.setup()
-        view.decorate(with: viewModel)
-        return view
+    public init(viewModel: ShippingRequestedViewModel, withAutoLayout: Bool = false) {
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
+        setup()
+        decorate(with: viewModel)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func setup() {
