@@ -37,7 +37,7 @@ public final class SuggestShippingView: UIView {
     }()
 
     private lazy var suggestShippingbutton: Button = {
-        let button = Button(style: .suggestShippingStyle)
+        let button = Button(style: .suggestShippingStyle, withAutoLayout: true)
         button.contentEdgeInsets = UIEdgeInsets(
             top: .spacingS + .spacingXS,
             leading: .spacingXL,
