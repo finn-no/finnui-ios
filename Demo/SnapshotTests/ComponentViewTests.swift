@@ -102,4 +102,16 @@ class ComponentViewTests: XCTestCase {
     func testFadedExpandableView() {
         snapshot(.fadedExpandableView)
     }
+
+    func testSuggestShippingView() {
+        snapshot(.suggestShippingView)
+    }
+
+    func testShippingRequestedView() {
+        snapshot(.shippingRequestedView)
+    }
+
+    func testShippingRequestErrorView() {
+        snapshot(.shippingRequestErrorView)
+    }
 }
