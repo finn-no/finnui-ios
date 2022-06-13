@@ -24,8 +24,7 @@ public final class ShippingRequestedView: UIView {
     }()
 
     public static func create(with viewModel: ShippingRequestedViewModel) -> ShippingRequestedView {
-        let view = ShippingRequestedView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let view = ShippingRequestedView(withAutoLayout: true)
         view.setup()
         view.decorate(with: viewModel)
         return view
