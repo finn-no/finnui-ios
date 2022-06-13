@@ -28,6 +28,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case recommendationEmptyView
     case fadedExpandableView
     case extendedProfileView
+    case basicProfileView
 
     public var viewController: UIViewController {
         switch self {
@@ -77,6 +78,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<FadedExpandableDemoView>()
         case .extendedProfileView:
             return DemoViewController<ExtendedProfileDemoView>()
+        case .basicProfileView:
+            return DemoViewController<BasicProfileDemoView>()
         }
     }
 }
