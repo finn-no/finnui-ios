@@ -2,7 +2,7 @@ import Combine
 import FinniversKit
 
 public final class SuggestShippingView: UIView {
-    private var viewModel: SuggestShippingViewModel!
+    private var viewModel: SuggestShippingViewModel
     private var cancellables = Set<AnyCancellable>()
     private var buttonCancellable: AnyCancellable?
 
@@ -15,7 +15,7 @@ public final class SuggestShippingView: UIView {
     }()
 
     private let containerView: UIStackView = {
-        let stackView = UIStackView(axis: .vertical, withAutoLayout: true)
+        let stackView = UIStackView(axis: .vertical)
         stackView.spacing = .spacingM
         return stackView
     }()
@@ -37,7 +37,7 @@ public final class SuggestShippingView: UIView {
     }()
 
     private lazy var suggestShippingbutton: Button = {
-        let button = Button(style: .suggestShippingStyle, withAutoLayout: true)
+        let button = Button(style: .suggestShippingStyle)
         button.contentEdgeInsets = UIEdgeInsets(
             top: .spacingS + .spacingXS,
             leading: .spacingXL,
@@ -60,6 +60,17 @@ public final class SuggestShippingView: UIView {
 
     private lazy var showInfoButton = Button(style: .flat)
     private lazy var loadingIndicator = LoadingIndicatorView(withAutoLayout: true)
+
+    public init(viewModel: SuggestShippingViewModel, withAutoLayout: Bool = false) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
+        setup()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     private func setup() {
         layer.borderWidth = 1
@@ -115,13 +126,6 @@ public final class SuggestShippingView: UIView {
             loadingIndicator.startAnimating()
             layoutIfNeeded()
         }
-    }
-
-    public static func create(with viewModel: SuggestShippingViewModel) -> SuggestShippingView {
-        let view = SuggestShippingView(withAutoLayout: true)
-        view.viewModel = viewModel
-        view.setup()
-        return view
     }
 }
 
