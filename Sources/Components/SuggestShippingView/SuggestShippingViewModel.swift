@@ -1,6 +1,6 @@
 import Combine
 
-public protocol SuggestShippingService {
+public protocol SuggestShippingService: AnyObject {
     func suggestShipping(forAdId adId: String) async
 }
 
@@ -13,7 +13,7 @@ public class SuggestShippingViewModel: ObservableObject {
     private(set) var buttonTitle: String
 
     private let adId: String
-    private let service: SuggestShippingService
+    private weak var service: SuggestShippingService?
 
     public init(
         title: String,
@@ -33,7 +33,7 @@ public class SuggestShippingViewModel: ObservableObject {
     public func suggestShipping() {
         state = .processing
         Task {
-            await service.suggestShipping(forAdId: adId)
+            await service?.suggestShipping(forAdId: adId)
         }
     }
 }
