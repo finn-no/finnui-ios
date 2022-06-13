@@ -15,7 +15,7 @@ public final class SuggestShippingView: UIView {
     }()
 
     private let containerView: UIStackView = {
-        let stackView = UIStackView(axis: .vertical)
+        let stackView = UIStackView(axis: .vertical, withAutoLayout: true)
         stackView.spacing = .spacingM
         return stackView
     }()
