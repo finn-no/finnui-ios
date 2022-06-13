@@ -18,7 +18,7 @@ final class SuggestShippingDemoView: UIView {
             buttonTitle: "Be om fiks ferdig",
             adId: "dummy",
             suggestShippingService: endpoint)
-        return SuggestShippingView.create(with: suggestViewModel)
+        return SuggestShippingView(viewModel: suggestViewModel, withAutoLayout: true)
     }()
 
     override init(frame: CGRect) {
