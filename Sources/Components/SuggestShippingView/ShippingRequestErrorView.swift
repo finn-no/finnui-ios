@@ -23,8 +23,7 @@ public final class ShippingRequestErrorView: UIView {
     private lazy var readMoreButton = Button(style: .flat)
 
     public static func create(with viewModel: ShippingRequestErrorViewModel) -> ShippingRequestErrorView {
-        let view = ShippingRequestErrorView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let view = ShippingRequestErrorView(withAutoLayout: true)
         view.setup()
         view.decorate(with: viewModel)
         return view
