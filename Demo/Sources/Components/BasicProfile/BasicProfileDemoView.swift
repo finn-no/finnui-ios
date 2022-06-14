@@ -117,7 +117,6 @@ private extension BasicProfileViewModel {
     static var demoModel: BasicProfileViewModel {
         BasicProfileViewModel(
             companyName: "FINN eiendom",
-            slogan: "Vi er best – ingen protest",
             logoUrl: "FINN-LOGO",
             contactPersons: .contactPersons,
             buttonLinks: .buttonLinks
