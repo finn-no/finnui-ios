@@ -21,7 +21,7 @@ public final class BasicProfileView: UIView {
     private let viewModel: BasicProfileViewModel
     private weak var delegate: BasicProfileViewDelegate?
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
-    private lazy var logoView = CompanyProfileLogoView(withAutoLayout: true)
+    private lazy var logoView = CompanyProfileLogoView(logoHeight: 80, verticalSpacing: .spacingM, withAutoLayout: true)
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var contactPersonsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
 
