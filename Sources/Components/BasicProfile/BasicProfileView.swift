@@ -79,6 +79,7 @@ public final class BasicProfileView: UIView {
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
         ])
 
+        companyNameLabel.text = viewModel.companyName
         logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: .white, remoteImageViewDataSource: remoteImageViewDataSource)
         buttonListView.configure(with: viewModel.buttonLinks)
 
