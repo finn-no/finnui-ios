@@ -58,9 +58,9 @@ public final class TJTAccordionView: UIStackView {
 
     private func setup() {
         axis = .vertical
-        
+
         headerIcon.image = UIImage(systemName: "shippingbox")
-        
+
         headerIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
         headerIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
         chevron.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -69,7 +69,7 @@ public final class TJTAccordionView: UIStackView {
             headerTitle,
             chevron
         ])
-        
+
         let separatorStackView = UIStackView(axis: .horizontal)
         separatorStackView.directionalLayoutMargins = .init(
             top: .zero,
@@ -82,13 +82,12 @@ public final class TJTAccordionView: UIStackView {
         view.backgroundColor = .blueGray400
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         separatorStackView.addArrangedSubview(view)
-        
-        
+
         addArrangedSubview(headerStackView)
         headerTitle.text = "dasdadsa"
         addArrangedSubview(separatorStackView)
         addArrangedSubview(contentView)
-        
+
         let label = Label(style: .body)
         label.numberOfLines = 0
         label.text = "askjdhjaso dias doias iohud ahsdadas dhdiasu uhdais duias diuas dad"
