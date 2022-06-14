@@ -12,10 +12,6 @@ public protocol BasicProfileViewDelegate: AnyObject {
 
 public final class BasicProfileView: UIView {
 
-    // MARK: - Public properties
-
-
-
     // MARK: - Private properties
 
     private let viewModel: BasicProfileViewModel
