@@ -5,6 +5,9 @@ class CompanyProfileLogoView: UIView {
 
     // MARK: - Private properties
 
+    private let logoHeight: CGFloat
+    private let verticalSpacing: CGFloat
+
     private lazy var logoImageView: RemoteImageView = {
         let imageView = RemoteImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFit
@@ -13,8 +16,11 @@ class CompanyProfileLogoView: UIView {
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(logoHeight: CGFloat = 40, verticalSpacing: CGFloat = .spacingS, withAutoLayout: Bool) {
+        self.logoHeight = logoHeight
+        self.verticalSpacing = verticalSpacing
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
@@ -26,12 +32,12 @@ class CompanyProfileLogoView: UIView {
         addSubview(logoImageView)
 
         NSLayoutConstraint.activate([
-            logoImageView.heightAnchor.constraint(equalToConstant: 40),
+            logoImageView.heightAnchor.constraint(equalToConstant: logoHeight),
 
-            logoImageView.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
+            logoImageView.topAnchor.constraint(equalTo: topAnchor, constant: verticalSpacing),
             logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
             logoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            logoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingS)
+            logoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalSpacing)
         ])
     }
 
