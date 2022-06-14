@@ -89,7 +89,7 @@ class BasicProfileContactPersonView: UIView {
             linkCollectionView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
         ])
 
-        let linkCellModels = linkItems.map { ContactPersonLinkViewModel(title: $0.title, textColor: .btnPrimary) }
+        let linkCellModels = linkItems.map { ContactPersonLinkViewModel(title: $0.title, textColor: .btnAction) }
         linkCollectionView.configure(with: linkCellModels)
     }
 

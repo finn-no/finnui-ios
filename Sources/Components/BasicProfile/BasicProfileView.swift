@@ -62,7 +62,6 @@ public final class BasicProfileView: UIView {
         clipsToBounds = true
         backgroundColor = .bgTertiary
         layer.borderWidth = 1
-        layer.borderColor = .sardine
 
         addSubview(logoView)
         addSubview(contentStackView)
@@ -80,7 +79,7 @@ public final class BasicProfileView: UIView {
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
         ])
 
-        logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: .bgPrimary, remoteImageViewDataSource: remoteImageViewDataSource)
+        logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: .white, remoteImageViewDataSource: remoteImageViewDataSource)
         buttonListView.configure(with: viewModel.buttonLinks)
 
         let contactPersonViews = viewModel.contactPersons.enumerated().map { index, contactPerson in
@@ -93,6 +92,14 @@ public final class BasicProfileView: UIView {
         }
 
         contactPersonsStackView.addArrangedSubviews(contactPersonViews)
+    }
+
+    // MARK: - Overrides
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        layer.borderColor = UIColor.borderColor.cgColor
     }
 }
 
@@ -113,5 +120,13 @@ extension BasicProfileView: BasicProfileContactPersonViewDelegate {
 extension BasicProfileView: LinkButtonListViewDelegate {
     public func linksListView(_ view: LinkButtonListView, didTapButtonWithIdentifier identifier: String?, url: URL) {
         delegate?.basicProfileView(self, didSelectButtonWithIdentifier: identifier, url: url)
+    }
+}
+
+// MARK: - Private extensions
+
+private extension UIColor {
+    static var borderColor: UIColor {
+        .dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
     }
 }
