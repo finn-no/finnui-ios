@@ -1,7 +1,23 @@
-import UIKit
+import Combine
 import FinniversKit
+import UIKit
+
+public final class TJTAccordionViewModel: ObservableObject {
+    let title: String
+    let icon: UIImage
+    @Published var isExpanded: Bool
+
+    public init(title: String, icon: UIImage, isExpanded: Bool) {
+        self.title = title
+        self.icon = icon
+        self.isExpanded = isExpanded
+    }
+}
 
 public final class TJTAccordionView: UIStackView {
+    private let viewModel: TJTAccordionViewModel
+    private var cancellables: Set<AnyCancellable> = []
+
     private lazy var headerStackView: UIStackView = {
         let header = UIStackView(axis: .horizontal)
         header.spacing = .spacingM
@@ -35,7 +51,25 @@ public final class TJTAccordionView: UIStackView {
         return chevron
     }()
 
-    private(set) lazy var contentView: UIStackView = {
+    private lazy var separatorView: UIView = {
+        let view = UIView(withAutoLayout: true)
+        view.backgroundColor = .blueGray400
+        return view
+    }()
+
+    private lazy var separatorStackView: UIStackView = {
+        let separatorStackView = UIStackView(axis: .horizontal)
+        separatorStackView.directionalLayoutMargins = .init(
+            top: .zero,
+            leading: .spacingM + 24 + .spacingM,
+            bottom: .zero,
+            trailing: .zero
+        )
+        separatorStackView.isLayoutMarginsRelativeArrangement = true
+        return separatorStackView
+    }()
+
+    private lazy var contentContainerView: UIStackView = {
         let stackView = UIStackView(axis: .vertical)
         stackView.directionalLayoutMargins = .init(
             top: .spacingM,
@@ -46,21 +80,27 @@ public final class TJTAccordionView: UIStackView {
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+
+    public init(viewModel: TJTAccordionViewModel, withAutolayout: Bool = false) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutolayout
         setup()
+        decorate()
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public func addViewToContentView(_ view: UIView) {
+        contentContainerView.addArrangedSubview(view)
+    }
+
     private func setup() {
         axis = .vertical
 
-        headerIcon.image = UIImage(systemName: "shippingbox")
-
+        backgroundColor = .yellow
         headerIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
         headerIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
         chevron.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -69,28 +109,42 @@ public final class TJTAccordionView: UIStackView {
             headerTitle,
             chevron
         ])
-
-        let separatorStackView = UIStackView(axis: .horizontal)
-        separatorStackView.directionalLayoutMargins = .init(
-            top: .zero,
-            leading: .spacingM + 24 + .spacingM,
-            bottom: .zero,
-            trailing: .zero
-        )
-        separatorStackView.isLayoutMarginsRelativeArrangement = true
-        let view = UIView(withAutoLayout: true)
-        view.backgroundColor = .blueGray400
-        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        separatorStackView.addArrangedSubview(view)
-
         addArrangedSubview(headerStackView)
-        headerTitle.text = "dasdadsa"
-        addArrangedSubview(separatorStackView)
-        addArrangedSubview(contentView)
 
-        let label = Label(style: .body)
-        label.numberOfLines = 0
-        label.text = "askjdhjaso dias doias iohud ahsdadas dhdiasu uhdais duias diuas dad"
-        contentView.addArrangedSubview(label)
+        separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        separatorStackView.addArrangedSubview(separatorView)
+        addArrangedSubview(separatorStackView)
+
+        addArrangedSubview(contentContainerView)
+
+        headerStackView.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapHeader))
+        headerStackView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    private func decorate() {
+        headerTitle.text = viewModel.title
+        headerIcon.image = viewModel.icon
+        viewModel
+            .$isExpanded
+            .sink { [weak self] isExpanded in
+                UIView.animate(
+                    withDuration: 0.2,
+                    delay: 0,
+                    options: .curveEaseOut,
+                    animations: {
+                        self?.contentContainerView.alpha = isExpanded ? 1 : 0
+                        self?.separatorStackView.alpha = isExpanded ? 1 : 0
+                        self?.contentContainerView.isHidden = !isExpanded
+                        self?.separatorStackView.isHidden = !isExpanded
+                    }
+                )
+            }
+            .store(in: &cancellables)
+    }
+
+    @objc
+    private func didTapHeader() {
+        viewModel.isExpanded = !viewModel.isExpanded
     }
 }
