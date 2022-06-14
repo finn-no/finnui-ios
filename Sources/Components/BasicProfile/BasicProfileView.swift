@@ -19,7 +19,7 @@ public final class BasicProfileView: UIView {
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
     private lazy var logoView = CompanyProfileLogoView(logoHeight: 80, verticalSpacing: .spacingM, withAutoLayout: true)
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
-    private lazy var contactPersonsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
+    private lazy var contactPersonsStackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
 
     private lazy var companyNameLabel: Label = {
         let label = Label(style: .body, withAutoLayout: true)
@@ -63,6 +63,7 @@ public final class BasicProfileView: UIView {
         addSubview(contentStackView)
 
         contentStackView.addArrangedSubviews([companyNameLabel, contactPersonsStackView, buttonListView])
+        contentStackView.setCustomSpacing(.spacingL, after: contactPersonsStackView)
 
         NSLayoutConstraint.activate([
             logoView.topAnchor.constraint(equalTo: topAnchor),

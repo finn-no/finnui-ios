@@ -78,6 +78,9 @@ class BasicProfileContactPersonView: UIView {
             sendMailButton.isHidden = true
         }
 
+        stackView.setCustomSpacing(.spacingXS, after: nameLabel)
+        stackView.setCustomSpacing(.spacingM, after: linkCollectionView)
+
         nameLabel.text = contactPerson.name
         jobTitleLabel.text = contactPerson.jobTitle
 
