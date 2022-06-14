@@ -1,7 +1,7 @@
 import UIKit
 import FinniversKit
 
-class ExtendedProfileLogoView: UIView {
+class CompanyProfileLogoView: UIView {
 
     // MARK: - Private properties
 
