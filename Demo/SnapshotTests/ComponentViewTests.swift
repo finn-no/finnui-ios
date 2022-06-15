@@ -106,4 +106,8 @@ class ComponentViewTests: XCTestCase {
     func testExtendedProfileView() {
         snapshot(.extendedProfileView)
     }
+
+    func testBasicProfileView() {
+        snapshot(.basicProfileView)
+    }
 }
