@@ -81,6 +81,8 @@ public final class TJTAccordionView: UIStackView {
         return stackView
     }()
 
+    private lazy var containerEnclosingView = UIStackView(axis: .vertical)
+
     public init(viewModel: TJTAccordionViewModel, withAutolayout: Bool = false) {
         self.viewModel = viewModel
         super.init(frame: .zero)
@@ -99,6 +101,7 @@ public final class TJTAccordionView: UIStackView {
 
     private func setup() {
         axis = .vertical
+        layer.masksToBounds = true
 
         backgroundColor = .yellow
         headerIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
@@ -115,7 +118,11 @@ public final class TJTAccordionView: UIStackView {
         separatorStackView.addArrangedSubview(separatorView)
         addArrangedSubview(separatorStackView)
 
-        addArrangedSubview(contentContainerView)
+        containerEnclosingView.addArrangedSubviews([
+            separatorStackView,
+            contentContainerView
+        ])
+        addArrangedSubview(containerEnclosingView)
 
         headerStackView.isUserInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapHeader))
@@ -128,15 +135,25 @@ public final class TJTAccordionView: UIStackView {
         viewModel
             .$isExpanded
             .sink { [weak self] isExpanded in
+                guard let strongSelf = self else { return }
+                let transform = CGAffineTransform.identity
+
                 UIView.animate(
                     withDuration: 0.2,
                     delay: 0,
                     options: .curveEaseOut,
                     animations: {
-                        self?.contentContainerView.alpha = isExpanded ? 1 : 0
-                        self?.separatorStackView.alpha = isExpanded ? 1 : 0
-                        self?.contentContainerView.isHidden = !isExpanded
-                        self?.separatorStackView.isHidden = !isExpanded
+                        if isExpanded {
+                            strongSelf.chevron.transform = transform.rotated(by: 180 * CGFloat(Double.pi))
+                            strongSelf.chevron.transform = transform.rotated(by: -1 * CGFloat(Double.pi))
+                        } else {
+                            strongSelf.chevron.transform = transform
+                        }
+
+                        strongSelf.contentContainerView.alpha = isExpanded ? 1 : 0
+                        strongSelf.separatorStackView.alpha = isExpanded ? 1 : 0
+                        strongSelf.contentContainerView.isHidden = !isExpanded
+                        strongSelf.separatorStackView.isHidden = !isExpanded
                     }
                 )
             }
