@@ -4,8 +4,17 @@ import FinnUI
 
 class BasicProfileDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
-        .init(title: "One contactPerson") { [weak self] in
-            self?.setupDemoView(with: .demoModel)
+        .init(title: "One contactPerson with mail button") { [weak self] in
+            self?.setupDemoView(with: .demoModel(contactPersonCount: 1, includeSendMail: true))
+        },
+        .init(title: "One contactPerson without mail button") { [weak self] in
+            self?.setupDemoView(with: .demoModel(contactPersonCount: 1, includeSendMail: false))
+        },
+        .init(title: "Two contactPersons with mail button") { [weak self] in
+            self?.setupDemoView(with: .demoModel(contactPersonCount: 2, includeSendMail: true))
+        },
+        .init(title: "Two contactPersons without mail button") { [weak self] in
+            self?.setupDemoView(with: .demoModel(contactPersonCount: 2, includeSendMail: false))
         }
     ]
 
@@ -114,29 +123,17 @@ extension BasicProfileDemoView: RemoteImageViewDataSource {
 // MARK: - Private extensions
 
 private extension BasicProfileViewModel {
-    static var demoModel: BasicProfileViewModel {
+    static func demoModel(contactPersonCount: Int, includeSendMail: Bool) -> BasicProfileViewModel {
         BasicProfileViewModel(
             companyName: "FINN eiendom",
             logoUrl: "FINN-LOGO",
-            contactPersons: .contactPersons,
+            contactPersons: .contactPersons(count: contactPersonCount, includeSendMail: includeSendMail),
             buttonLinks: .buttonLinks
         )
     }
 }
 
 private extension Array {
-    static var contactPersons: [CompanyProfile.ContactPerson] {
-        let person = CompanyProfile.ContactPerson(
-            title: "Unused for extended profile",
-            name: "Navn Navnesen",
-            jobTitle: "Eiendomsmegler",
-            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            links: .contactLinks
-        )
-
-        return [person, person]
-    }
-
     static var buttonLinks: [LinkButtonViewModel] {
         [
             .init(identifier: "1", title: "Hjemmeside", isExternal: true),
@@ -145,12 +142,30 @@ private extension Array {
         ]
     }
 
-    static var contactLinks: [CompanyProfile.ContactPerson.LinkItem] {
-        [
-            .phoneNumber(title: "(+47) 123 45 678"),
-            .sendMail(title: "Send melding"),
-            .homepage(title: "Hjemmeside"),
-        ]
+    static func contactPersons(count: Int, includeSendMail: Bool) -> [CompanyProfile.ContactPerson] {
+        let person = CompanyProfile.ContactPerson(
+            title: "Unused for extended profile",
+            name: "Navn Navnesen",
+            jobTitle: "Eiendomsmegler",
+            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            links: .contactLinks(includeSendMail: includeSendMail)
+        )
+
+        return Array<CompanyProfile.ContactPerson>(repeating: person, count: count)
+    }
+
+    static func contactLinks(includeSendMail: Bool) -> [CompanyProfile.ContactPerson.LinkItem] {
+        var links = [CompanyProfile.ContactPerson.LinkItem]()
+
+        links.append(.phoneNumber(title: "(+47) 123 45 678"))
+
+        if includeSendMail {
+            links.append(.sendMail(title: "Send melding"))
+        }
+
+        links.append(.homepage(title: "Hjemmeside"))
+
+        return links
     }
 }
 
