@@ -77,7 +77,7 @@ public final class BasicProfileView: UIView {
         ])
 
         companyNameLabel.text = viewModel.companyName
-        logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: .bgTertiary, remoteImageViewDataSource: remoteImageViewDataSource)
+        logoView.configure(imageUrl: viewModel.logoUrl, backgroundColor: .bgPrimary, remoteImageViewDataSource: remoteImageViewDataSource)
         buttonListView.configure(with: viewModel.buttonLinks)
 
         let contactPersonViews = viewModel.contactPersons.enumerated().map { index, contactPerson in
