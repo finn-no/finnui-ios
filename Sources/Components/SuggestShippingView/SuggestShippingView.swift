@@ -52,8 +52,7 @@ public final class SuggestShippingView: UIView {
         )
         button.translatesAutoresizingMaskIntoConstraints = false
         let shippingTruck = UIImage(named: .shippingTruck)
-        let darkShippingTruck = shippingTruck.withTintColor(.textAction)
-        shippingTruck.imageAsset?.register(darkShippingTruck, with: .init(userInterfaceStyle: .dark))
+        button.tintColor = .textAction
         button.setImage(shippingTruck, for: .normal)
         return button
     }()
