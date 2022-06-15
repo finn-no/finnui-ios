@@ -35,6 +35,7 @@ extension UIImage {
 enum ImageAsset: String {
     case adsenseDemo
     case avatar
+    case bapShippable
     case betaImageSearch
     case blinkRocketMini
     case boat
@@ -110,6 +111,7 @@ enum ImageAsset: String {
         return [
             .adsenseDemo,
             .avatar,
+            .bapShippable,
             .betaImageSearch,
             .blinkRocketMini,
             .boat,
