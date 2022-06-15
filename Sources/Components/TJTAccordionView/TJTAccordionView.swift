@@ -144,8 +144,8 @@ public final class TJTAccordionView: UIStackView {
                     options: .curveEaseOut,
                     animations: {
                         if isExpanded {
-                            strongSelf.chevron.transform = transform.rotated(by: 180 * CGFloat(Double.pi))
-                            strongSelf.chevron.transform = transform.rotated(by: -1 * CGFloat(Double.pi))
+                            strongSelf.chevron.transform = transform.rotated(by: .pi * 180)
+                            strongSelf.chevron.transform = transform.rotated(by: .pi * -1)
                         } else {
                             strongSelf.chevron.transform = transform
                         }
