@@ -9,21 +9,22 @@ public struct TimeLineItem {
     }
 }
 
-final class TimeLineItemView: UIStackView {
+final class TimeLineItemView: UIView {
     private let title: String
     private let type: ItemType
-
+    private let positionView: PositionView
     private let titleLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
-        label.textColor = .licorice
+        label.textColor = .textPrimary
         label.numberOfLines = 0
         return label
     }()
 
-    private let positionView: PositionView
     private let textVerticalMargin: CGFloat = .spacingXS
     private let positionLeftInset: CGFloat = .spacingXS
     private let positionAndLabelSpacing: CGFloat = .spacingXS + .spacingS
+    private var fontHeight: CGFloat = "I".height(withConstrainedWidth: .greatestFiniteMagnitude, font: .caption)
+    private var titleTopConstraint: NSLayoutConstraint!
 
     static let font = UIFont.caption
 
@@ -41,28 +42,28 @@ final class TimeLineItemView: UIStackView {
     }
 
     private func setup() {
-        axis = .horizontal
-        spacing = .spacingM
+        addSubview(positionView)
 
-        directionalLayoutMargins = .init(
-            top: 0,
-            leading: .spacingXS,
-            bottom: 0,
-            trailing: 0
-        )
-        isLayoutMarginsRelativeArrangement = true
+        NSLayoutConstraint.activate([
+            positionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: positionLeftInset),
+            positionView.topAnchor.constraint(equalTo: topAnchor),
+            positionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
 
         positionView.setContentCompressionResistancePriority(.required, for: .horizontal)
         positionView.setContentHuggingPriority(.required, for: .horizontal)
 
-        addArrangedSubviews([
-            positionView,
-            titleLabel
+        addSubview(titleLabel)
+
+        titleTopConstraint = titleLabel.topAnchor.constraint(equalTo: topAnchor)
+
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: positionView.trailingAnchor, constant: positionAndLabelSpacing),
+            titleTopConstraint,
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
 
-        positionView.widthAnchor.constraint(equalToConstant: PositionView.indicatorDotSize).isActive = true
         titleLabel.text = title
-        invalidateIntrinsicContentSize()
     }
 
     func requiredHeight(forWidth width: CGFloat) -> CGFloat {
@@ -82,20 +83,43 @@ final class TimeLineItemView: UIStackView {
             attributes: [.font: TimeLineItemView.font],
             context: nil
         )
-        let neededTextHeight = ceil(textBoundingBox.height + textVerticalMargin * 2)
-        return calculateHeight(for: neededTextHeight)
+        let currentTextHeight = ceil(textBoundingBox.height)
+        let (height, dotOffset) = calculateHeight(for: currentTextHeight)
+        titleTopConstraint.constant = dotOffset - textVerticalMargin
+        positionView.dotOffset = dotOffset
+        return height
     }
 
-    private func calculateHeight(for textHeight: CGFloat) -> CGFloat {
-        var currentHeight
-        = PositionView.indicatorDotSize
-        + PositionView.dotSpacing * 2
-        + PositionView.fillingDotSize
+    private func calculateHeight(for textHeight: CGFloat) -> (height: CGFloat, dotOffset: CGFloat) {
+        var newTextHeight = textHeight
+        let half = fontHeight / 2 + textVerticalMargin
+        var dotMidY = PositionView.indicatorDotSize / 2
+        + PositionView.dotSpacing
+        + PositionView.fillingDotSize / 2
 
-        while currentHeight < textHeight {
-            currentHeight += PositionView.dotSpacing * 2 + PositionView.fillingDotSize * 2
+        let offset = PositionView.dotSpacing + PositionView.fillingDotSize
+
+        while dotMidY <= half {
+            dotMidY += offset
         }
-        return currentHeight
+
+        newTextHeight += dotMidY - half
+
+        var bottomY = dotMidY
+            + PositionView.indicatorDotSize / 2
+            + PositionView.dotSpacing
+            + PositionView.fillingDotSize / 2
+
+        while bottomY <= newTextHeight + 2 * textVerticalMargin {
+            bottomY += offset
+        }
+
+        newTextHeight += bottomY - (newTextHeight + 2 * textVerticalMargin)
+
+        return (
+            height: newTextHeight + 2 * textVerticalMargin,
+            dotOffset: dotMidY - textVerticalMargin
+        )
     }
 
     override var intrinsicContentSize: CGSize {
@@ -128,6 +152,16 @@ extension TimeLineItemView {
         private var dotLayers: [CAShapeLayer] = []
         private let style: TimeLineItemView.ItemType
 
+        var dotOffset: CGFloat = 0 {
+            didSet {
+                guard dotOffset != oldValue else {
+                    return
+                }
+
+                layoutIfNeeded()
+            }
+        }
+
         init(style: TimeLineItemView.ItemType, withAutoLayout: Bool = false) {
             self.style = style
             super.init(frame: .zero)
@@ -143,10 +177,11 @@ extension TimeLineItemView {
         override func layoutSubviews() {
             dotLayers.forEach { $0.removeFromSuperlayer() }
 
+            let indicatorDotY = dotOffset + PositionView.indicatorDotSize / 2
             addDot(
                 at: CGPoint(
                     x: bounds.midX,
-                    y: bounds.midY
+                    y: indicatorDotY
                 ),
                 radius: PositionView.indicatorDotSize / 2
             )
@@ -156,27 +191,31 @@ extension TimeLineItemView {
             + PositionView.dotSpacing
             + PositionView.fillingDotSize / 2
 
-            while center.y - currentOffset >= 0 {
-                if style != .final {
+            var upwardsOffset = indicatorDotY - currentOffset
+            var downwardsOffset = indicatorDotY + currentOffset
+            while upwardsOffset >= 0 || downwardsOffset <= bounds.maxY {
+                if style != .starting, upwardsOffset >= 0 {
                     addDot(
                         at: CGPoint(
                             x: bounds.midX,
-                            y: bounds.midY + currentOffset
+                            y: upwardsOffset
                         ),
                         radius: PositionView.fillingDotSize / 2
                     )
                 }
 
-                if style != .starting {
+                if style != .final, downwardsOffset <= bounds.maxY {
                     addDot(
                         at: CGPoint(
                             x: bounds.midX,
-                            y: bounds.midY - currentOffset
+                            y: downwardsOffset
                         ),
                         radius: PositionView.fillingDotSize / 2
                     )
                 }
-                currentOffset += PositionView.fillingDotSize + PositionView.dotSpacing
+                currentOffset = PositionView.fillingDotSize + PositionView.dotSpacing
+                upwardsOffset -= currentOffset
+                downwardsOffset += currentOffset
             }
         }
 
