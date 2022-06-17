@@ -27,11 +27,12 @@ public enum ComponentDemoViews: String, DemoViews {
     case recommendationConsentView
     case recommendationEmptyView
     case fadedExpandableView
-    case tjtAccordionView
-    case timeLineView
     case suggestShippingView
     case shippingRequestedView
     case shippingRequestErrorView
+    case tjtAccordionView
+    case timeLineView
+    case fiksFerdigAccordionView
 
     public var viewController: UIViewController {
         switch self {
@@ -89,6 +90,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<ShippingRequestErrorDemoView>()
         case .timeLineView:
             return DemoViewController<TimeLineDemoView>()
+        case .fiksFerdigAccordionView:
+            return DemoViewController<FiksFerdigAccordionDemoView>()
         }
     }
 }
