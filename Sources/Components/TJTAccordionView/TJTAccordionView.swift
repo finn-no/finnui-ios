@@ -14,7 +14,7 @@ public final class TJTAccordionViewModel: ObservableObject {
     }
 }
 
-public final class TJTAccordionView: UIStackView {
+public class TJTAccordionView: UIStackView {
     private let viewModel: TJTAccordionViewModel
     private var cancellables: Set<AnyCancellable> = []
 
@@ -39,7 +39,7 @@ public final class TJTAccordionView: UIStackView {
 
     private lazy var headerTitle: Label = {
         let label = Label(style: .bodyStrong)
-        label.textColor = .licorice
+        label.textColor = .textPrimary
         return label
     }()
 
@@ -53,7 +53,7 @@ public final class TJTAccordionView: UIStackView {
 
     private lazy var separatorView: UIView = {
         let view = UIView(withAutoLayout: true)
-        view.backgroundColor = .blueGray400
+        view.backgroundColor = UIColor(hex: "#E1E6EE")
         return view
     }()
 
@@ -95,15 +95,16 @@ public final class TJTAccordionView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func addViewToContentView(_ view: UIView) {
+    public func addViewToContentView(_ view: UIView, withSpacing spacing: CGFloat = 0) {
+        view.setContentCompressionResistancePriority(.required, for: .horizontal)
         contentContainerView.addArrangedSubview(view)
+        contentContainerView.setCustomSpacing(spacing, after: view)
     }
 
     private func setup() {
         axis = .vertical
         layer.masksToBounds = true
 
-        backgroundColor = .yellow
         headerIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
         headerIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
         chevron.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -123,6 +124,11 @@ public final class TJTAccordionView: UIStackView {
             contentContainerView
         ])
         addArrangedSubview(containerEnclosingView)
+
+        NSLayoutConstraint.activate([
+            contentContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor)
+        ])
 
         headerStackView.isUserInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapHeader))
@@ -154,6 +160,7 @@ public final class TJTAccordionView: UIStackView {
                         strongSelf.separatorStackView.alpha = isExpanded ? 1 : 0
                         strongSelf.contentContainerView.isHidden = !isExpanded
                         strongSelf.separatorStackView.isHidden = !isExpanded
+                        strongSelf.containerEnclosingView.layoutIfNeeded()
                     }
                 )
             }
