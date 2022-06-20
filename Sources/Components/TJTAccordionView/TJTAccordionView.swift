@@ -138,37 +138,42 @@ public class TJTAccordionView: UIStackView {
     private func decorate() {
         headerTitle.text = viewModel.title
         headerIcon.image = viewModel.icon
+        updateState(isExpanded: viewModel.isExpanded)
+
         viewModel
             .$isExpanded
+            .dropFirst(1)
             .sink { [weak self] isExpanded in
-                guard let strongSelf = self else { return }
-                let transform = CGAffineTransform.identity
-
                 UIView.animate(
                     withDuration: 0.2,
                     delay: 0,
                     options: .curveEaseOut,
                     animations: {
-                        if isExpanded {
-                            strongSelf.chevron.transform = transform.rotated(by: .pi * 180)
-                            strongSelf.chevron.transform = transform.rotated(by: .pi * -1)
-                        } else {
-                            strongSelf.chevron.transform = transform
-                        }
-
-                        strongSelf.contentContainerView.alpha = isExpanded ? 1 : 0
-                        strongSelf.separatorStackView.alpha = isExpanded ? 1 : 0
-                        strongSelf.contentContainerView.isHidden = !isExpanded
-                        strongSelf.separatorStackView.isHidden = !isExpanded
-                        strongSelf.containerEnclosingView.layoutIfNeeded()
+                        self?.updateState(isExpanded: isExpanded)
                     }
                 )
             }
             .store(in: &cancellables)
     }
 
+    private func updateState(isExpanded: Bool) {
+        let transform = CGAffineTransform.identity
+        if isExpanded {
+            chevron.transform = transform.rotated(by: .pi * 180)
+            chevron.transform = transform.rotated(by: .pi * -1)
+        } else {
+            chevron.transform = transform
+        }
+
+        contentContainerView.alpha = isExpanded ? 1 : 0
+        separatorStackView.alpha = isExpanded ? 1 : 0
+        contentContainerView.isHidden = !isExpanded
+        separatorStackView.isHidden = !isExpanded
+        containerEnclosingView.layoutIfNeeded()
+    }
+
     @objc
     private func didTapHeader() {
-        viewModel.isExpanded = !viewModel.isExpanded
+        viewModel.isExpanded.toggle()
     }
 }
