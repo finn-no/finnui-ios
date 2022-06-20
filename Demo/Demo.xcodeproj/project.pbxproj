@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17FD58442860693300C72845 /* TJTPriceDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FD58432860693300C72845 /* TJTPriceDemoView.swift */; };
 		46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AE6FC3242BADC9007BB005 /* AppDelegate.swift */; };
 		46E773A4242CEF0A008A5E93 /* DemoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77258242CEF09008A5E93 /* DemoHelpers.swift */; };
 		46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725B242CEF09008A5E93 /* FullscreenDemoViews.swift */; };
@@ -125,6 +126,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		17FD58432860693300C72845 /* TJTPriceDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TJTPriceDemoView.swift; sourceTree = "<group>"; };
 		46AE6FC0242BADC9007BB005 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46AE6FC3242BADC9007BB005 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46AE6FD1242BADCD007BB005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -234,6 +236,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17FD5842286068E000C72845 /* TJTPriceDemoView */ = {
+			isa = PBXGroup;
+			children = (
+				17FD58432860693300C72845 /* TJTPriceDemoView.swift */,
+			);
+			path = TJTPriceDemoView;
+			sourceTree = "<group>";
+		};
 		46AE6FB7242BADC9007BB005 = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +384,7 @@
 				8D680B67DAB7BFCB028C94EE /* ChatAvailability */,
 				4DBC0399250A495D004E8044 /* ExpandCollapseButton */,
 				5B959973A0305C31A0B99FFE /* FadedExpandableView */,
+				E640A7C9285C8877002CA903 /* FiksFerdigAccordionDemoView */,
 				710C33F126EB5A4D002BAF1A /* HelthjemView */,
 				8D680186E91B4FA9052BF60C /* IconLinkListView */,
 				8D680BBD858E71F3F90C6A1C /* ObjectPageBlinkView */,
@@ -931,6 +942,7 @@
 				DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */,
 				46E77451242CEF0A008A5E93 /* TweakingOptionsTableViewController.swift in Sources */,
 				DA2F2715266E28B000E6F17C /* TagCloudGridDemoView.swift in Sources */,
+				17FD58442860693300C72845 /* TJTPriceDemoView.swift in Sources */,
 				46E77455242CEF0A008A5E93 /* TweakingOption.swift in Sources */,
 				E6ADDE6C2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift in Sources */,
 				46E77457242CEF0A008A5E93 /* Device.swift in Sources */,
