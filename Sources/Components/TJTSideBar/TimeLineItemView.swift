@@ -91,7 +91,7 @@ final class TimeLineItemView: UIView {
     }
 
     private func calculateHeight(for textHeight: CGFloat) -> (height: CGFloat, dotOffset: CGFloat) {
-        var newTextHeight = textHeight
+        var newTextHeight = textHeight + 2 * textVerticalMargin
         let half = fontHeight / 2 + textVerticalMargin
         var dotMidY = PositionView.indicatorDotSize / 2
         + PositionView.dotSpacing
@@ -110,14 +110,14 @@ final class TimeLineItemView: UIView {
             + PositionView.dotSpacing
             + PositionView.fillingDotSize / 2
 
-        while bottomY <= newTextHeight + 2 * textVerticalMargin {
+        while bottomY <= newTextHeight {
             bottomY += offset
         }
 
-        newTextHeight += bottomY - (newTextHeight + 2 * textVerticalMargin)
+        newTextHeight += bottomY - (newTextHeight)
 
         return (
-            height: newTextHeight + 2 * textVerticalMargin,
+            height: newTextHeight,
             dotOffset: dotMidY - textVerticalMargin
         )
     }
