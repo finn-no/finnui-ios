@@ -26,20 +26,24 @@ public final class FiksFerdigAccordionViewModel {
 
 public final class FiksFerdigAccordionView: TJTAccordionView {
     private let viewModel: FiksFerdigAccordionViewModel
-
-    private lazy var messageLabel: Label = {
+    private let dottedIndicatorProvider = DottedTimeLineIndicatorProvider(font: .caption)
+    private let messageLabel: Label = {
         let label = Label(style: .body, withAutoLayout: true)
         label.textColor = .textPrimary
         return label
     }()
 
     private lazy var timeLineView: TimeLineView = {
-        let timeLineView = TimeLineView(items: viewModel.timeLineItems, withAutoLayout: true)
+        let timeLineView = TimeLineView(
+            items: viewModel.timeLineItems,
+            itemIndicatorProvider: dottedIndicatorProvider,
+            withAutoLayout: true
+        )
         timeLineView.layoutIfNeeded()
         return timeLineView
     }()
 
-    private lazy var readMoreButton: Button = {
+    private let readMoreButton: Button = {
         let button = Button(style: .fiksFerdigAccordionButtonStyle)
         button.contentHorizontalAlignment = .left
         button.contentEdgeInsets = .zero

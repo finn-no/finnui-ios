@@ -4,9 +4,11 @@ import UIKit
 public final class TimeLineView: UIStackView {
     private var processedSubViews = false
     private let items: [TimeLineItem]
+    private let itemIndicatorProvider: TimeLineIndicatorProvider
 
-    public init(items: [TimeLineItem], withAutoLayout: Bool = false) {
+    public init(items: [TimeLineItem], itemIndicatorProvider: TimeLineIndicatorProvider, withAutoLayout: Bool = false) {
         self.items = items
+        self.itemIndicatorProvider = itemIndicatorProvider
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
@@ -20,8 +22,10 @@ public final class TimeLineView: UIStackView {
         axis = .vertical
 
         for (index, item) in items.enumerated() {
-            var itemType: TimeLineItemView.ItemType {
-                if index == 0 {
+            var itemStyle: TimeLineItemStyle {
+                if items.count == 1 {
+                    return .single
+                } else if index == 0 {
                     return .starting
                 } else if index == items.count - 1 {
                     return .final
@@ -29,7 +33,8 @@ public final class TimeLineView: UIStackView {
             }
             let itemView = TimeLineItemView(
                 withTitle: item.title,
-                type: itemType,
+                itemStyle: itemStyle,
+                timeLineIndicatorProvider: itemIndicatorProvider,
                 withAutoLayout: true
             )
             addArrangedSubview(itemView)
@@ -37,6 +42,16 @@ public final class TimeLineView: UIStackView {
     }
 
     public override func layoutSubviews() {
-        arrangedSubviews.forEach { $0.invalidateIntrinsicContentSize() }
+        arrangedSubviews.forEach {
+            $0.layoutIfNeeded()
+            $0.invalidateIntrinsicContentSize()
+        }
+    }
+}
+
+extension TimeLineView {
+    public enum IndicatorStyle {
+        case largeDots
+        case largeDotsWithDottedLine
     }
 }
