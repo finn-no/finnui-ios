@@ -1,27 +1,37 @@
 import FinniversKit
 import FinnUI
 
-final class TJTPriceDemoView: UIView {
-    var viewModel: TJTPriceViewModel
+final class TJTPriceDemoView: UIView, Tweakable {
     let priceView: TJTPriceView
 
+    lazy var tweakingOptions: [TweakingOption] = [
+        .init(title: "Normal shipping", description: nil, action: { [weak self] in
+            self?.priceView.viewModel = TJTPriceViewModelBuilder().build()
+        }),
+        .init(title: "Discounted shipping", description: nil, action: { [weak self] in
+            var builder = TJTPriceViewModelBuilder()
+            builder.shippingOriginalPrice = 80
+            self?.priceView.viewModel = builder.build()
+        }),
+        .init(title: "Long shipping text", description: nil, action: { [weak self] in
+            var builder = TJTPriceViewModelBuilder()
+            builder.shippingText = [String](repeating: builder.shippingText, count: 4)
+                .joined(separator: " ")
+            self?.priceView.viewModel = builder.build()
+        }),
+        .init(title: "Long payment info", description: nil, action: { [weak self] in
+            var builder = TJTPriceViewModelBuilder()
+            builder.paymentText = [String](repeating: builder.paymentText, count: 4)
+                .joined(separator: " ")
+            self?.priceView.viewModel = builder.build()
+        }),
+    ]
+
     override init(frame: CGRect) {
-        self.viewModel = TJTPriceViewModel(
-            tradeType: "Til salgs",
-            price: "999 kr",
-            shipping: .init(text: "+ frakt", price: 40, originalPrice: 80),
-            payment: "Betal med kort eller",
-            priceFormatter: {
-                let formatter = NumberFormatter()
-                formatter.numberStyle = .decimal
-                formatter.maximumFractionDigits = 0
-                formatter.allowsFloats = false
-                formatter.groupingSize = 3
-                formatter.groupingSeparator = " "
-                return formatter
-            }()
+        self.priceView = TJTPriceView(
+            viewModel: TJTPriceViewModelBuilder().build(),
+            withAutoLayout: true
         )
-        self.priceView = TJTPriceView(viewModel: viewModel, withAutoLayout: true)
         super.init(frame: frame)
         setup()
     }
@@ -38,5 +48,38 @@ final class TJTPriceDemoView: UIView {
             priceView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: .spacingM),
             priceView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -.spacingM)
         ])
+    }
+}
+
+struct TJTPriceViewModelBuilder {
+    let priceFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.allowsFloats = false
+        formatter.groupingSize = 3
+        formatter.groupingSeparator = " "
+        return formatter
+    }()
+
+    var tradeType: String = "Til salgs"
+    var price: String = "999 kr"
+    var shippingText: String = "+ frakt"
+    var shippingPrice: Double = 40
+    var shippingOriginalPrice: Double?
+    var paymentText: String = "Betal med kort eller"
+
+    func build() -> TJTPriceViewModel {
+        return TJTPriceViewModel(
+            tradeType: tradeType,
+            price: price,
+            shipping: .init(
+                text: shippingText,
+                price: shippingPrice,
+                originalPrice: shippingOriginalPrice
+            ),
+            payment: paymentText,
+            priceFormatter: priceFormatter
+        )
     }
 }

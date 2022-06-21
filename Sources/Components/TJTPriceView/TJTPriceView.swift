@@ -70,10 +70,11 @@ public struct TJTPriceViewModel {
         let logoAttachment = NSTextAttachment(image: logo)
         let lineAscentAndDescent = font.ascender + font.descender
         // Since we don't have a baseline for the logo we must calculate the correct alignment and
-        // size based on the font the text in front of the logo uses. The ascent and the descent added
-        // together is the maximum character height available. The logo y position is set to the
-        // descender to align with the baseline. The descender offset is necessary since the font in the
-        // logo is different so the alignment is slightly off, and was found using 12 pt font as reference.
+        // size based on the font the text in front of the logo. The ascent and the descent added
+        // together is the maximum logo height. The logo y position is set to the descender to align
+        // with the baseline. The descender offset is necessary since the font in the logo is
+        // different so the alignment is slightly off, and was found with measurement using 12 pt
+        // font as reference.
         let descenderOffset = font.pointSize / 12
         var logoBounds = logoAttachment.bounds
         logoBounds.origin.y = font.descender + descenderOffset
@@ -154,9 +155,7 @@ public final class TJTPriceView: UIView {
         update()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { fatalError() }
 
     private func update() {
         tradeTypeLabel.text = viewModel.tradeType
