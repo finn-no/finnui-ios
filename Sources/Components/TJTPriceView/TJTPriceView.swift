@@ -21,21 +21,24 @@ public struct TJTPriceViewModel {
     public let tradeType: String
     public let price: String
     public let shipping: Shipping
-    public let payment: String
+    public let paymentInfo: String
     public let priceFormatter: NumberFormatter
+    public let priceAccessibilityFormatter: NumberFormatter
 
     public init(
         tradeType: String,
         price: String,
         shipping: Shipping,
-        payment: String,
-        priceFormatter: NumberFormatter
+        paymentInfo: String,
+        priceFormatter: NumberFormatter,
+        priceAccessibilityFormatter: NumberFormatter
     ) {
         self.tradeType = tradeType
         self.price = price
         self.shipping = shipping
-        self.payment = payment
+        self.paymentInfo = paymentInfo
         self.priceFormatter = priceFormatter
+        self.priceAccessibilityFormatter = priceAccessibilityFormatter
     }
 
     public var shippingText: NSAttributedString {
@@ -63,14 +66,28 @@ public struct TJTPriceViewModel {
         return text
     }
 
+    public var shippingAccessibilityText: String {
+        let shippingPrice = formatCurrency(shipping.price, accessible: true)
+        var text = "\(shipping.text) \(shippingPrice)"
+        if let originalPrice = shipping.originalPrice {
+            let originalPriceText = formatCurrency(originalPrice, accessible: true)
+            text += ", original fraktpris \(originalPriceText)"
+        }
+        return text
+    }
+
+    public var paymentInfoAccessibilityText: String {
+        return paymentInfo + " Vipps"
+    }
+
     public func paymentInfoText(logoAlignedWithFont font: UIFont) -> NSAttributedString {
-        let text = NSMutableAttributedString(string: payment + " ")
+        let text = NSMutableAttributedString(string: paymentInfo + " ")
         let logo = UIImage(named: .vippsLogo)
         let logoAspect = logo.size.width / logo.size.height
         let logoAttachment = NSTextAttachment(image: logo)
         let lineAscentAndDescent = font.ascender + font.descender
         // Since we don't have a baseline for the logo we must calculate the correct alignment and
-        // size based on the font the text in front of the logo. The ascent and the descent added
+        // size based on the font of the text in front of the logo. The ascent and the descent added
         // together is the maximum logo height. The logo y position is set to the descender to align
         // with the baseline. The descender offset is necessary since the font in the logo is
         // different so the alignment is slightly off, and was found with measurement using 12 pt
@@ -84,11 +101,12 @@ public struct TJTPriceViewModel {
         return text
     }
 
-    private func formatCurrency(_ value: Double) -> String {
-        guard let formattedValue = priceFormatter.string(from: NSNumber(value: value)) else {
+    private func formatCurrency(_ value: Double, accessible: Bool = false) -> String {
+        let formatter = accessible ? priceAccessibilityFormatter : priceFormatter
+        guard let formattedValue = formatter.string(from: NSNumber(value: value)) else {
             return ""
         }
-        return "\(formattedValue) kr"
+        return "\(formattedValue) \(accessible ? "kroner" : "kr")"
     }
 }
 
@@ -110,6 +128,7 @@ public final class TJTPriceView: UIView {
 
     private lazy var shippingLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
+        label.isAccessibilityElement = false
         label.numberOfLines = 0
         label.textColor = .licorice
         return label
@@ -160,7 +179,9 @@ public final class TJTPriceView: UIView {
     private func update() {
         tradeTypeLabel.text = viewModel.tradeType
         priceLabel.text = viewModel.price
+        priceLabel.accessibilityLabel = "\(viewModel.price) \(viewModel.shippingAccessibilityText)"
         shippingLabel.attributedText = viewModel.shippingText
         paymentLabel.attributedText = viewModel.paymentInfoText(logoAlignedWithFont: paymentLabel.font)
+        paymentLabel.accessibilityLabel = viewModel.paymentInfoAccessibilityText
     }
 }

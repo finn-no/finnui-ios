@@ -15,7 +15,7 @@ final class TJTPriceDemoView: UIView, Tweakable {
         }),
         .init(title: "Long shipping text", description: nil, action: { [weak self] in
             var builder = TJTPriceViewModelBuilder()
-            builder.shippingText = [String](repeating: builder.shippingText, count: 4)
+            builder.shippingText = [String](repeating: builder.shippingText, count: 10)
                 .joined(separator: " ")
             self?.priceView.viewModel = builder.build()
         }),
@@ -62,6 +62,16 @@ struct TJTPriceViewModelBuilder {
         return formatter
     }()
 
+    let priceAccessibilityFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.allowsFloats = false
+        formatter.groupingSize = 0
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
+
     var tradeType: String = "Til salgs"
     var price: String = "999 kr"
     var shippingText: String = "+ frakt"
@@ -78,8 +88,9 @@ struct TJTPriceViewModelBuilder {
                 price: shippingPrice,
                 originalPrice: shippingOriginalPrice
             ),
-            payment: paymentText,
-            priceFormatter: priceFormatter
+            paymentInfo: paymentText,
+            priceFormatter: priceFormatter,
+            priceAccessibilityFormatter: priceAccessibilityFormatter
         )
     }
 }
