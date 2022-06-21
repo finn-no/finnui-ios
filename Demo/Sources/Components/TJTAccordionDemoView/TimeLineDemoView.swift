@@ -52,8 +52,6 @@ final class TimeLineDemoView: UIView, Tweakable {
             timeLineView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -.spacingM)
         ])
 
-        layoutIfNeeded()
-
         self.timeLineView = timeLineView
     }
 }
