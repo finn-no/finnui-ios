@@ -2,21 +2,72 @@ import FinniversKit
 import UIKit
 
 public struct TJTPriceViewModel {
+    public struct Shipping {
+        public let text: String
+        public let price: Double
+        public let originalPrice: Double?
+
+        public init(
+            text: String,
+            price: Double,
+            originalPrice: Double?
+        ) {
+            self.text = text
+            self.price = price
+            self.originalPrice = originalPrice
+        }
+    }
+
     public let tradeType: String
     public let price: String
-    public let shipping: String
+    public let shipping: Shipping
     public let payment: String
+    public let priceFormatter: NumberFormatter
 
     public init(
         tradeType: String,
         price: String,
-        shipping: String,
-        payment: String
+        shipping: Shipping,
+        payment: String,
+        priceFormatter: NumberFormatter
     ) {
         self.tradeType = tradeType
         self.price = price
         self.shipping = shipping
         self.payment = payment
+        self.priceFormatter = priceFormatter
+    }
+
+    public var shippingText: NSAttributedString {
+        let text = NSMutableAttributedString(string: shipping.text + " ")
+        if let originalPrice = shipping.originalPrice {
+            let shippingPriceText = formatCurrency(shipping.price)
+            let coloredShippingPrice = NSAttributedString(string: shippingPriceText, attributes: [
+                .foregroundColor: UIColor.cherry
+            ])
+            text.append(coloredShippingPrice)
+
+            text.append(NSAttributedString(string: " "))
+            let originalPriceText = formatCurrency(originalPrice)
+            let coloredOriginalPrice = NSAttributedString(string: originalPriceText, attributes: [
+                .foregroundColor: UIColor.stone,
+                .strikethroughColor: UIColor.stone,
+                .strikethroughStyle: NSUnderlineStyle.single.rawValue
+            ])
+            text.append(coloredOriginalPrice)
+        } else {
+            let shippingPriceText = formatCurrency(shipping.price)
+            text.append(NSAttributedString(string: shippingPriceText))
+        }
+
+        return text
+    }
+
+    private func formatCurrency(_ value: Double) -> String {
+        guard let formattedValue = priceFormatter.string(from: NSNumber(value: value)) else {
+            return ""
+        }
+        return "\(formattedValue) kr"
     }
 }
 
@@ -57,7 +108,7 @@ public final class TJTPriceView: UIView {
 
     public var viewModel: TJTPriceViewModel {
         didSet {
-            configure(with: viewModel)
+            update()
         }
     }
 
@@ -76,17 +127,17 @@ public final class TJTPriceView: UIView {
 
         contentStackView.addArrangedSubview(paymentLabel)
 
-        configure(with: viewModel)
+        update()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configure(with viewModel: TJTPriceViewModel) {
+    private func update() {
         tradeTypeLabel.text = viewModel.tradeType
         priceLabel.text = viewModel.price
-        shippingLabel.text = viewModel.shipping
+        shippingLabel.attributedText = viewModel.shippingText
         paymentLabel.text = viewModel.payment
     }
 }

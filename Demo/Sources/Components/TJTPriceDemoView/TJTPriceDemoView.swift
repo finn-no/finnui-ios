@@ -9,8 +9,17 @@ final class TJTPriceDemoView: UIView {
         self.viewModel = TJTPriceViewModel(
             tradeType: "Til salgs",
             price: "999 kr",
-            shipping: "+ frakt",
-            payment: "Betal med kort eller"
+            shipping: .init(text: "+ frakt", price: 40, originalPrice: 80),
+            payment: "Betal med kort eller",
+            priceFormatter: {
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .decimal
+                formatter.maximumFractionDigits = 0
+                formatter.allowsFloats = false
+                formatter.groupingSize = 3
+                formatter.groupingSeparator = " "
+                return formatter
+            }()
         )
         self.priceView = TJTPriceView(viewModel: viewModel, withAutoLayout: true)
         super.init(frame: frame)
