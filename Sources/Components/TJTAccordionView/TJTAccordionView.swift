@@ -34,6 +34,7 @@ public class TJTAccordionView: UIStackView {
     private lazy var headerIcon: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .textPrimary
         return imageView
     }()
 
