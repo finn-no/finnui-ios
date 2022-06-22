@@ -49,6 +49,7 @@ public class TJTAccordionView: UIStackView {
         let image = UIImage(systemName: "chevron.down")
         let chevron = UIImageView(image: image)
         chevron.contentMode = .scaleAspectFit
+        chevron.tintColor = .textPrimary
         return chevron
     }()
 
