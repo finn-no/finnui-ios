@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17FD58442860693300C72845 /* TJTPriceDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17FD58432860693300C72845 /* TJTPriceDemoView.swift */; };
+		171E41C1286302D400A4FE2C /* TJTPriceDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171E41C0286302D400A4FE2C /* TJTPriceDemoView.swift */; };
 		46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AE6FC3242BADC9007BB005 /* AppDelegate.swift */; };
 		46E773A4242CEF0A008A5E93 /* DemoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77258242CEF09008A5E93 /* DemoHelpers.swift */; };
 		46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725B242CEF09008A5E93 /* FullscreenDemoViews.swift */; };
@@ -126,7 +126,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		17FD58432860693300C72845 /* TJTPriceDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TJTPriceDemoView.swift; sourceTree = "<group>"; };
+		171E41C0286302D400A4FE2C /* TJTPriceDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TJTPriceDemoView.swift; sourceTree = "<group>"; };
 		46AE6FC0242BADC9007BB005 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46AE6FC3242BADC9007BB005 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46AE6FD1242BADCD007BB005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -236,12 +236,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		17FD5842286068E000C72845 /* TJTPriceDemoView */ = {
+		171E41BF2863028000A4FE2C /* TJTPriceView */ = {
 			isa = PBXGroup;
 			children = (
-				17FD58432860693300C72845 /* TJTPriceDemoView.swift */,
+				171E41C0286302D400A4FE2C /* TJTPriceDemoView.swift */,
 			);
-			path = TJTPriceDemoView;
+			path = TJTPriceView;
 			sourceTree = "<group>";
 		};
 		46AE6FB7242BADC9007BB005 = {
@@ -384,7 +384,6 @@
 				8D680B67DAB7BFCB028C94EE /* ChatAvailability */,
 				4DBC0399250A495D004E8044 /* ExpandCollapseButton */,
 				5B959973A0305C31A0B99FFE /* FadedExpandableView */,
-				E640A7C9285C8877002CA903 /* FiksFerdigAccordionDemoView */,
 				710C33F126EB5A4D002BAF1A /* HelthjemView */,
 				8D680186E91B4FA9052BF60C /* IconLinkListView */,
 				8D680BBD858E71F3F90C6A1C /* ObjectPageBlinkView */,
@@ -400,6 +399,7 @@
 				E4DBDD952762332300BE21D8 /* ShippingAlternativesView */,
 				E68E2D0B283E6B77009C5792 /* SuggestShipping */,
 				DA2F2713266E276D00E6F17C /* TagCloudGridView */,
+				171E41BF2863028000A4FE2C /* TJTPriceView */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -942,7 +942,6 @@
 				DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */,
 				46E77451242CEF0A008A5E93 /* TweakingOptionsTableViewController.swift in Sources */,
 				DA2F2715266E28B000E6F17C /* TagCloudGridDemoView.swift in Sources */,
-				17FD58442860693300C72845 /* TJTPriceDemoView.swift in Sources */,
 				46E77455242CEF0A008A5E93 /* TweakingOption.swift in Sources */,
 				E6ADDE6C2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift in Sources */,
 				46E77457242CEF0A008A5E93 /* Device.swift in Sources */,
@@ -977,6 +976,7 @@
 				8D6809D9F29B489936910F12 /* SearchDropdownDemoView.swift in Sources */,
 				8D68046EF3BCAE82CA1D838A /* PromotedRealestateCellDemoView.swift in Sources */,
 				5DE2A0AC27C4DB84002E2EDA /* RecommendationEmptyDemoView.swift in Sources */,
+				171E41C1286302D400A4FE2C /* TJTPriceDemoView.swift in Sources */,
 				ADC5C001F9CB596AAA8A6766 /* AdTipsCollapsibleDemoView.swift in Sources */,
 				ADC5CBBC2AE659F8B588F876 /* NumberedAdTipsCollapsibleDemoView.swift in Sources */,
 				5B959FA1E7529B5DF3EE7315 /* RealestateSoldStateDemoView.swift in Sources */,

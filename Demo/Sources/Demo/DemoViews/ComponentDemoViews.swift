@@ -78,14 +78,14 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<RecommendationEmptyDemoView>()
         case .fadedExpandableView:
             return DemoViewController<FadedExpandableDemoView>()
-        case .tjtPriceView:
-            return DemoViewController<TJTPriceDemoView>()
         case .suggestShippingView:
             return DemoViewController<SuggestShippingDemoView>()
         case .shippingRequestedView:
             return DemoViewController<ShippingRequestedDemoView>()
         case .shippingRequestErrorView:
             return DemoViewController<ShippingRequestErrorDemoView>()
+        case .tjtPriceView:
+            return DemoViewController<TJTPriceDemoView>()
         }
     }
 }
