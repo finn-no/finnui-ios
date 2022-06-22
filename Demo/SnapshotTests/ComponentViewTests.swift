@@ -114,4 +114,8 @@ class ComponentViewTests: XCTestCase {
     func testShippingRequestErrorView() {
         snapshot(.shippingRequestErrorView)
     }
+
+    func testTJTPriceView() {
+        snapshot(.tjtPriceView)
+    }
 }
