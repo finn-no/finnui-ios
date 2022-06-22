@@ -35,6 +35,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case fiksFerdigAccordionView
     case heltHjemAccordionView
     case safePaymentAccordionView
+    case tjtSideBarView
 
     public var viewController: UIViewController {
         switch self {
@@ -98,6 +99,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<HeltHjemAccordionDemoView>()
         case .safePaymentAccordionView:
             return DemoViewController<SafePaymentAccordionDemoView>()
+        case .tjtSideBarView:
+            return DemoViewController<TJTSideBarDemoView>()
         }
     }
 }
