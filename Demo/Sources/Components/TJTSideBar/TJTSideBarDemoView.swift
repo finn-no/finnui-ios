@@ -55,9 +55,9 @@ final class TJTSideBarDemoView: UIView {
         addSubview(sidebar)
 
         NSLayoutConstraint.activate([
-            sidebar.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: .spacingM),
+            sidebar.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             sidebar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: .spacingM),
-            sidebar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -.spacingM)
+            sidebar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 }
