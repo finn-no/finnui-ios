@@ -6,20 +6,17 @@ final class FiksFerdigAccordionDemoView: UIView {
     let accordionView: FiksFerdigAccordionView!
 
     override init(frame: CGRect) {
-        let headerViewModel = TJTAccordionViewModel(
-            title: "Fiks ferdig",
-            icon: UIImage(systemName: "shippingbox")!,
-            isExpanded: true)
         let timelineItems = [
             TimeLineItem(title: "Betal med Vipps eller kort"),
             TimeLineItem(title: "Varen leveres hjem til deg"),
             TimeLineItem(title: "Du har 24 timer til å sjekke varen"),
         ]
         self.viewModel = FiksFerdigAccordionViewModel(
-            headerViewModel: headerViewModel,
+            headerTitle: "Fiks ferdig",
             message: "Enkel betaling og frakt gjennom FINN",
             timeLineItems: timelineItems,
-            readMoreTitle: "Les mer om Fiks ferdig"
+            readMoreTitle: "Les mer om Fiks ferdig",
+            isExpanded: true
         )
         self.accordionView = FiksFerdigAccordionView(
             viewModel: viewModel,
@@ -52,5 +49,9 @@ final class FiksFerdigAccordionDemoView: UIView {
 extension FiksFerdigAccordionDemoView: FiksFerdigAccordionViewModelDelegate {
     func didTapReadMore() {
         print("🎉 read more")
+    }
+
+    func didChangeExpandedState(isExpanded: Bool) {
+        print("didChangeExpandedState: \(isExpanded)")
     }
 }
