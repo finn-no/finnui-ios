@@ -1,22 +1,36 @@
-import UIKit
+import Combine
 import FinniversKit
+import UIKit
 
 public protocol FiksFerdigAccordionViewModelDelegate: AnyObject {
+    func didChangeExpandedState(isExpanded: Bool)
     func didTapReadMore()
 }
 
 public final class FiksFerdigAccordionViewModel {
-    public let headerViewModel: TJTAccordionViewModel
     public let message: String
     public let timeLineItems: [TimeLineItem]
     public let readMoreTitle: String
+    public let headerViewModel: TJTAccordionViewModel
     public weak var delegate: FiksFerdigAccordionViewModelDelegate?
 
-    public init(headerViewModel: TJTAccordionViewModel, message: String, timeLineItems: [TimeLineItem], readMoreTitle: String) {
-        self.headerViewModel = headerViewModel
+    private var cancellable: AnyCancellable?
+
+    public init(headerTitle: String, message: String, timeLineItems: [TimeLineItem], readMoreTitle: String, isExpanded: Bool) {
         self.message = message
         self.timeLineItems = timeLineItems
         self.readMoreTitle = readMoreTitle
+        self.headerViewModel = TJTAccordionViewModel(
+            title: headerTitle,
+            icon: UIImage(named: .torgetShipping),
+            isExpanded: isExpanded
+        )
+
+        cancellable = headerViewModel
+            .$isExpanded
+            .sink { [weak self] isExpanded in
+                self?.delegate?.didChangeExpandedState(isExpanded: isExpanded)
+            }
     }
 
     func displayHelp() {
@@ -32,6 +46,8 @@ public final class FiksFerdigAccordionView: TJTAccordionView {
         label.textColor = .textPrimary
         return label
     }()
+
+    private var cancellable: AnyCancellable?
 
     private lazy var timeLineView: TimeLineView = {
         let timeLineView = TimeLineView(
@@ -67,6 +83,12 @@ public final class FiksFerdigAccordionView: TJTAccordionView {
         addViewToContentView(messageLabel, withSpacing: .spacingS)
         addViewToContentView(timeLineView)
         addViewToContentView(readMoreButton)
+
+        cancellable = readMoreButton
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.displayHelp()
+            }
     }
 }
 
