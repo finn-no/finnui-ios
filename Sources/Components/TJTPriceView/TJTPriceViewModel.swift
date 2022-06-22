@@ -80,17 +80,10 @@ public struct TJTPriceViewModel {
         let logo = UIImage(named: .vippsLogo)
         let logoAspect = logo.size.width / logo.size.height
         let logoAttachment = NSTextAttachment(image: logo)
-        let lineAscentAndDescent = font.ascender + font.descender
-        // Since we don't have a baseline for the logo we must calculate the correct alignment and
-        // size based on the font of the text in front of the logo. The ascent and the descent added
-        // together is the maximum logo height. The logo y position is set to the descender to align
-        // with the font baseline. The descender offset is necessary since the font in the logo is
-        // different so the alignment is slightly off, and was found with measurement using 12 pt
-        // font as reference.
-        let descenderOffset = font.pointSize / 12
+        let logoHeight = font.xHeight - font.descender // Descender is negative when below baseline
         var logoBounds = logoAttachment.bounds
-        logoBounds.origin.y = font.descender + descenderOffset
-        logoBounds.size = CGSize(width: lineAscentAndDescent * logoAspect, height: lineAscentAndDescent)
+        logoBounds.origin.y = font.descender + 0.5 // Logo baseline is slightly off due to different font
+        logoBounds.size = CGSize(width: logoHeight * logoAspect, height: logoHeight)
         logoAttachment.bounds = logoBounds
         text.append(NSAttributedString(attachment: logoAttachment))
         return text
