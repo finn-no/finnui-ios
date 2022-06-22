@@ -13,7 +13,7 @@ public final class SafePaymentAccordionViewModel {
 
     private var cancellable: AnyCancellable?
 
-    internal init(headerTitle: String, timeLineItems: [TimeLineItem], isExpanded: Bool = false) {
+    public init(headerTitle: String, timeLineItems: [TimeLineItem], isExpanded: Bool = false) {
         self.timeLineItems = timeLineItems
         self.headerViewModel = TJTAccordionViewModel(
             title: headerTitle,
