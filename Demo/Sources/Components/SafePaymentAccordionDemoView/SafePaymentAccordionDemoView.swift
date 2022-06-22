@@ -4,32 +4,26 @@ import FinniversKit
 final class SafePaymentAccordionDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Single lined text") { [unowned self] in
-            let headerViewModel = TJTAccordionViewModel(
-                title: "Trygg betaling",
-                icon: UIImage(systemName: "shippingbox")!,
-                isExpanded: true)
             let viewModel = SafePaymentAccordionViewModel(
-                headerViewModel: headerViewModel,
+                headerTitle: "Trygg betaling",
                 timeLineItems: [
                     TimeLineItem(title: "Betal med Vipps eller kort"),
                     TimeLineItem(title: "Varen leveres hjem til deg"),
-                    TimeLineItem(title: "Du har 24 timer til å sjekke varen"),
-                ]
+                    TimeLineItem(title: "Du har 24 timer til å sjekke varen")
+                ],
+                isExpanded: true
             )
             setup(with: viewModel)
         },
         TweakingOption(title: "Multilined text") { [unowned self] in
-            let headerViewModel = TJTAccordionViewModel(
-                title: "Trygg betaling",
-                icon: UIImage(systemName: "shippingbox")!,
-                isExpanded: true)
             let viewModel = SafePaymentAccordionViewModel(
-                headerViewModel: headerViewModel,
+                headerTitle: "Trygg betaling",
                 timeLineItems: [
                     TimeLineItem(title: "Betal med Vipps eller kort Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
                     TimeLineItem(title: "Varen leveres hjem til deg"),
-                    TimeLineItem(title: "Du har 24 timer til å sjekke varen Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"),
-                ]
+                    TimeLineItem(title: "Du har 24 timer til å sjekke varen Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor")
+                ],
+                isExpanded: true
             )
             setup(with: viewModel)
         }
@@ -65,5 +59,12 @@ final class SafePaymentAccordionDemoView: UIView, Tweakable {
         accordionView.layoutIfNeeded()
 
         self.accordionView = accordionView
+        viewModel.delegate = self
+    }
+}
+
+extension SafePaymentAccordionDemoView: SafePaymentAccordionViewModelDelegate {
+    func didChangeExpandedState(isExpanded: Bool) {
+        print("didChangeExpandedState: \(isExpanded)")
     }
 }

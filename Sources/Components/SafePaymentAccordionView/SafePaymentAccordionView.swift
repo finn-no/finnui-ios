@@ -1,13 +1,31 @@
-import UIKit
+import Combine
 import FinniversKit
+import UIKit
 
-public struct SafePaymentAccordionViewModel {
-    public let headerViewModel: TJTAccordionViewModel
+public protocol SafePaymentAccordionViewModelDelegate: AnyObject {
+    func didChangeExpandedState(isExpanded: Bool)
+}
+
+public final class SafePaymentAccordionViewModel {
     public let timeLineItems: [TimeLineItem]
+    public let headerViewModel: TJTAccordionViewModel
+    public weak var delegate: SafePaymentAccordionViewModelDelegate?
 
-    internal init(headerViewModel: TJTAccordionViewModel, timeLineItems: [TimeLineItem]) {
-        self.headerViewModel = headerViewModel
+    private var cancellable: AnyCancellable?
+
+    internal init(headerTitle: String, timeLineItems: [TimeLineItem], isExpanded: Bool = false) {
         self.timeLineItems = timeLineItems
+        self.headerViewModel = TJTAccordionViewModel(
+            title: headerTitle,
+            icon: UIImage(named: .lockShield),
+            isExpanded: isExpanded
+        )
+
+        cancellable = headerViewModel
+            .$isExpanded
+            .sink { [weak self] isExpanded in
+                self?.delegate?.didChangeExpandedState(isExpanded: isExpanded)
+            }
     }
 }
 
