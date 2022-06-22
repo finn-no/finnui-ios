@@ -4,26 +4,20 @@ import FinniversKit
 final class HeltHjemAccordionDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Single lined text") { [unowned self] in
-            let headerViewModel = TJTAccordionViewModel(
-                title: "Varen sendes med",
-                icon: UIImage(systemName: "shippingbox")!,
-                isExpanded: true)
             let viewModel = HeltHjemAccordionViewModel(
-                headerViewModel: headerViewModel,
-                title: "Helthjem",
-                message: "Du betaler 60 kr for frakten"
+                title: "Varen sendes med",
+                providerName: "Helthjem",
+                message: "Du betaler 60 kr for frakten",
+                isExpanded: true
             )
             setup(with: viewModel)
         },
         TweakingOption(title: "Multilined text") { [unowned self] in
-            let headerViewModel = TJTAccordionViewModel(
-                title: "Varen sendes med",
-                icon: UIImage(systemName: "shippingbox")!,
-                isExpanded: true)
              let viewModel = HeltHjemAccordionViewModel(
-                headerViewModel: headerViewModel,
-                title: "Helthjem idjaisj daj id aisdijasid as asduhsahdahsd daijsidj asja",
-                message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias"
+                title: "Varen sendes med",
+                providerName: "Helthjem idjaisj daj id aisdijasid as asduhsahdahsd daijsidj asja",
+                message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias",
+                isExpanded: true
             )
             setup(with: viewModel)
         }
@@ -61,5 +55,12 @@ final class HeltHjemAccordionDemoView: UIView, Tweakable {
 
         self.viewModel = viewModel
         self.accordionView = accordionView
+        viewModel.delegate = self
+    }
+}
+
+extension HeltHjemAccordionDemoView: HeltHjemAccordionViewModelDelegate {
+    func didChangeExpandedState(isExpanded: Bool) {
+        print("didChangeExpandedState: \(isExpanded)")
     }
 }
