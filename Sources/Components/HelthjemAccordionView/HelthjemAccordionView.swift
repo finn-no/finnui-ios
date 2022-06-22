@@ -7,7 +7,6 @@ public protocol HeltHjemAccordionViewModelDelegate: AnyObject {
 }
 
 public class HeltHjemAccordionViewModel {
-    public let title: String
     public let providerName: String
     public let message: String
     public let headerViewModel: TJTAccordionViewModel
@@ -16,10 +15,9 @@ public class HeltHjemAccordionViewModel {
 
     private var cancellable: AnyCancellable?
 
-    public init(title: String, providerName: String, message: String, isExpanded: Bool = false) {
-        self.title = title
+    public init(headerTitle: String, providerName: String, message: String, isExpanded: Bool = false) {
         self.headerViewModel = TJTAccordionViewModel(
-            title: title,
+            title: headerTitle,
             icon: UIImage(named: .shipmentInTransit),
             isExpanded: isExpanded
         )
@@ -37,7 +35,7 @@ public class HeltHjemAccordionViewModel {
 public final class HeltHjemAccordionView: TJTAccordionView {
     private let viewModel: HeltHjemAccordionViewModel
 
-    private let titleLabel: Label = {
+    private let providerLabel: Label = {
         let label = Label(style: .captionStrong, withAutoLayout: true)
         label.numberOfLines = 0
         label.textColor = .textPrimary
@@ -77,15 +75,15 @@ public final class HeltHjemAccordionView: TJTAccordionView {
     }
 
     private func setup() {
-        titleLabel.text = viewModel.title
+        providerLabel.text = viewModel.providerName
         messageLabel.text = viewModel.message
 
-        titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        providerLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         heltHjemIcon.setContentHuggingPriority(.required, for: .horizontal)
         heltHjemIcon.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         textContainerStackView.addArrangedSubviews([
-            titleLabel,
+            providerLabel,
             messageLabel
         ])
 

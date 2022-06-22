@@ -5,7 +5,7 @@ final class HeltHjemAccordionDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Single lined text") { [unowned self] in
             let viewModel = HeltHjemAccordionViewModel(
-                title: "Varen sendes med",
+                headerTitle: "Varen sendes med",
                 providerName: "Helthjem",
                 message: "Du betaler 60 kr for frakten",
                 isExpanded: true
@@ -14,7 +14,7 @@ final class HeltHjemAccordionDemoView: UIView, Tweakable {
         },
         TweakingOption(title: "Multilined text") { [unowned self] in
              let viewModel = HeltHjemAccordionViewModel(
-                title: "Varen sendes med",
+                headerTitle: "Varen sendes med",
                 providerName: "Helthjem idjaisj daj id aisdijasid as asduhsahdahsd daijsidj asja",
                 message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias",
                 isExpanded: true
