@@ -16,7 +16,13 @@ public final class FiksFerdigAccordionViewModel {
 
     private var cancellable: AnyCancellable?
 
-    public init(headerTitle: String, message: String, timeLineItems: [TimeLineItem], readMoreTitle: String, isExpanded: Bool) {
+    public init(
+        headerTitle: String,
+        message: String,
+        timeLineItems: [TimeLineItem],
+        readMoreTitle: String,
+        isExpanded: Bool = false
+    ) {
         self.message = message
         self.timeLineItems = timeLineItems
         self.readMoreTitle = readMoreTitle
