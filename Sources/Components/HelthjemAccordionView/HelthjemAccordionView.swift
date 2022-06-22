@@ -1,15 +1,36 @@
-import UIKit
+import Combine
 import FinniversKit
+import UIKit
 
-public struct HeltHjemAccordionViewModel {
-    public let headerViewModel: TJTAccordionViewModel
+public protocol HeltHjemAccordionViewModelDelegate: AnyObject {
+    func didChangeExpandedState(isExpanded: Bool)
+}
+
+public class HeltHjemAccordionViewModel {
     public let title: String
+    public let providerName: String
     public let message: String
+    public let headerViewModel: TJTAccordionViewModel
 
-    public init(headerViewModel: TJTAccordionViewModel, title: String, message: String) {
-        self.headerViewModel = headerViewModel
+    public weak var delegate: HeltHjemAccordionViewModelDelegate?
+
+    private var cancellable: AnyCancellable?
+
+    public init(title: String, providerName: String, message: String, isExpanded: Bool = false) {
         self.title = title
+        self.headerViewModel = TJTAccordionViewModel(
+            title: title,
+            icon: UIImage(named: .shipmentInTransit),
+            isExpanded: isExpanded
+        )
+        self.providerName = providerName
         self.message = message
+
+        cancellable = headerViewModel
+            .$isExpanded
+            .sink { [weak self] isExpanded in
+                self?.delegate?.didChangeExpandedState(isExpanded: isExpanded)
+            }
     }
 }
 
