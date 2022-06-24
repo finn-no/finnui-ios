@@ -55,7 +55,7 @@ public class TJTAccordionView: UIStackView {
 
     private lazy var separatorView: UIView = {
         let view = UIView(withAutoLayout: true)
-        view.backgroundColor = UIColor(hex: "#E1E6EE")
+        view.backgroundColor = .separator
         return view
     }()
 
@@ -178,4 +178,10 @@ public class TJTAccordionView: UIStackView {
     private func didTapHeader() {
         viewModel.isExpanded.toggle()
     }
+}
+
+// MARK: - Private extensions
+
+private extension UIColor {
+    static var separator = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }

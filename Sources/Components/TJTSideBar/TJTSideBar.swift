@@ -59,8 +59,14 @@ public final class TJTSideBar: UIView {
 
     private func createSeparatorView() -> UIView {
         let separatorView = UIView(withAutoLayout: true)
-        separatorView.backgroundColor = UIColor(hex: "#E1E6EE")
+        separatorView.backgroundColor = .separator
         separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return separatorView
     }
+}
+
+// MARK: - Private extensions
+
+private extension UIColor {
+    static var separator = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }

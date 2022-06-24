@@ -3,7 +3,7 @@ import FinniversKit
 public struct SimpleTimeLineIndicatorProvider: TimeLineIndicatorProvider {
     private static let textVerticalMargin: CGFloat = .spacingXS
 
-    public let width: CGFloat = DottedTimeLineIndicatorView.indicatorDotSize
+    public let width: CGFloat = SimpleTimeLineIndicatorView.indicatorDotSize
 
     private let font: UIFont
     private var dotOffset: CGFloat = 0
@@ -49,7 +49,7 @@ final class SimpleTimeLineIndicatorView: UIView {
                 y: indicatorDotY
             ),
             radius: DottedTimeLineIndicatorView.indicatorDotSize / 2,
-            color: .sardine
+            color: .timelineIndicator
         )
     }
 
@@ -78,4 +78,10 @@ extension CALayer {
         addSublayer(shapeLayer)
         return shapeLayer
     }
+}
+
+// MARK: - Private extensions
+
+private extension UIColor {
+    static var timelineIndicator = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }
