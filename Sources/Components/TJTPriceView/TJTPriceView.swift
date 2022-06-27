@@ -70,9 +70,10 @@ public final class TJTPriceView: UIView {
     private func update() {
         tradeTypeLabel.text = viewModel.tradeType
         priceLabel.text = viewModel.price
-        priceLabel.accessibilityLabel = "\(viewModel.price) \(viewModel.shippingAccessibilityText)"
         shippingLabel.attributedText = viewModel.shippingText
-        paymentLabel.attributedText = viewModel.paymentInfoText(logoAlignedWithFont: paymentLabel.font)
-        paymentLabel.accessibilityLabel = viewModel.paymentInfoAccessibilityText
+        paymentLabel.attributedText = viewModel.payment.text
+
+        priceLabel.accessibilityLabel = "\(viewModel.price) \(viewModel.shippingAccessibilityText)"
+        paymentLabel.accessibilityLabel = viewModel.payment.accessibilityText
     }
 }

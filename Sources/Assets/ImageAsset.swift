@@ -87,7 +87,6 @@ enum ImageAsset: String {
     case trashcan
     case verified
     case videoChat
-    case vippsLogo
     case webview
 
     static var imageNames: [ImageAsset] {
@@ -146,7 +145,6 @@ enum ImageAsset: String {
             .trashcan,
             .verified,
             .videoChat,
-            .vippsLogo,
             .webview,
     ]
   }

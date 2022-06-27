@@ -81,6 +81,8 @@ struct TJTPriceViewModelBuilder {
     var shippingOriginalPrice: Double?
     var shippingOriginalPriceColor: UIColor = .stone
     var paymentText: String = "Betal med kort eller"
+    var paymentLogo: UIImage = UIImage(systemName: "creditcard.fill")!
+    var paymentLogoText: String = "Vipps"
 
     func build() -> TJTPriceViewModel {
         let coloredShippingPrice = NSAttributedString(
@@ -101,8 +103,12 @@ struct TJTPriceViewModelBuilder {
                     .strikethroughStyle: NSUnderlineStyle.single.rawValue
                 ]
             )
-            originalShippingPriceAccessibilityText = "original frakt \(formatCurrency(shippingOriginalPrice, accessible: true))"
+            originalShippingPriceAccessibilityText = "tidligere pris \(formatCurrency(shippingOriginalPrice, accessible: true))"
         }
+
+        let paymentAttributedText = NSMutableAttributedString(string: "\(paymentText) ")
+        let logoAttachment = NSTextAttachment(image: paymentLogo)
+        paymentAttributedText.append(NSAttributedString(attachment: logoAttachment))
 
         return TJTPriceViewModel(
             tradeType: tradeType,
@@ -114,7 +120,10 @@ struct TJTPriceViewModelBuilder {
                 originalPrice: coloredOriginalShippingPrice,
                 originalPriceAccessibilityText: originalShippingPriceAccessibilityText
             ),
-            paymentInfo: paymentText
+            payment: .init(
+                text: paymentAttributedText,
+                accessibilityText: "\(paymentText) \(paymentLogoText)"
+            )
         )
     }
 
