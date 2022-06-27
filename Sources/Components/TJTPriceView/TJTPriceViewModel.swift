@@ -1,19 +1,26 @@
 import FinniversKit
+import Foundation
 
 public struct TJTPriceViewModel {
     public struct Shipping {
         public let text: String
-        public let price: Double
-        public let originalPrice: Double?
+        public let price: NSAttributedString
+        public let priceAccessibilityText: String
+        public let originalPrice: NSAttributedString?
+        public let originalPriceAccessibilityText: String?
 
         public init(
             text: String,
-            price: Double,
-            originalPrice: Double?
+            price: NSAttributedString,
+            priceAccessibilityText: String,
+            originalPrice: NSAttributedString?,
+            originalPriceAccessibilityText: String?
         ) {
             self.text = text
             self.price = price
+            self.priceAccessibilityText = priceAccessibilityText
             self.originalPrice = originalPrice
+            self.originalPriceAccessibilityText = originalPriceAccessibilityText
         }
     }
 
@@ -21,56 +28,33 @@ public struct TJTPriceViewModel {
     public let price: String
     public let shipping: Shipping
     public let paymentInfo: String
-    public let priceFormatter: NumberFormatter
-    public let priceAccessibilityFormatter: NumberFormatter
 
     public init(
         tradeType: String,
         price: String,
         shipping: Shipping,
-        paymentInfo: String,
-        priceFormatter: NumberFormatter,
-        priceAccessibilityFormatter: NumberFormatter
+        paymentInfo: String
     ) {
         self.tradeType = tradeType
         self.price = price
         self.shipping = shipping
         self.paymentInfo = paymentInfo
-        self.priceFormatter = priceFormatter
-        self.priceAccessibilityFormatter = priceAccessibilityFormatter
     }
 
     public var shippingText: NSAttributedString {
-        let text = NSMutableAttributedString(string: shipping.text + " ")
+        let text = NSMutableAttributedString(string: "\(shipping.text) ")
+        text.append(shipping.price)
         if let originalPrice = shipping.originalPrice {
-            let shippingPriceText = formatCurrency(shipping.price)
-            let coloredShippingPrice = NSAttributedString(string: shippingPriceText, attributes: [
-                .foregroundColor: UIColor.cherry
-            ])
-            text.append(coloredShippingPrice)
-
             text.append(NSAttributedString(string: " "))
-            let originalPriceText = formatCurrency(originalPrice)
-            let coloredOriginalPrice = NSAttributedString(string: originalPriceText, attributes: [
-                .foregroundColor: UIColor.stone,
-                .strikethroughColor: UIColor.stone,
-                .strikethroughStyle: NSUnderlineStyle.single.rawValue
-            ])
-            text.append(coloredOriginalPrice)
-        } else {
-            let shippingPriceText = formatCurrency(shipping.price)
-            text.append(NSAttributedString(string: shippingPriceText))
+            text.append(originalPrice)
         }
-
         return text
     }
 
     public var shippingAccessibilityText: String {
-        let shippingPrice = formatCurrency(shipping.price, accessible: true)
-        var text = "\(shipping.text) \(shippingPrice)"
-        if let originalPrice = shipping.originalPrice {
-            let originalPriceText = formatCurrency(originalPrice, accessible: true)
-            text += ", original fraktpris \(originalPriceText)"
+        var text = "\(shipping.text) \(shipping.priceAccessibilityText)"
+        if let originalPrice = shipping.originalPriceAccessibilityText {
+            text += " \(originalPrice)"
         }
         return text
     }
@@ -91,13 +75,5 @@ public struct TJTPriceViewModel {
 
     public var paymentInfoAccessibilityText: String {
         return paymentInfo + " Vipps"
-    }
-
-    private func formatCurrency(_ value: Double, accessible: Bool = false) -> String {
-        let formatter = accessible ? priceAccessibilityFormatter : priceFormatter
-        guard let formattedValue = formatter.string(from: NSNumber(value: value)) else {
-            return ""
-        }
-        return "\(formattedValue) \(accessible ? "kroner" : "kr")"
     }
 }

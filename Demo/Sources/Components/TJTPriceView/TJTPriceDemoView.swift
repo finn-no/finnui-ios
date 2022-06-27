@@ -11,6 +11,7 @@ final class TJTPriceDemoView: UIView, Tweakable {
         .init(title: "Discounted shipping", description: nil, action: { [weak self] in
             var builder = TJTPriceViewModelBuilder()
             builder.shippingOriginalPrice = 80
+            builder.shippingPriceColor = .cherry
             self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Long shipping text", description: nil, action: { [weak self] in
@@ -76,21 +77,52 @@ struct TJTPriceViewModelBuilder {
     var price: String = "999 kr"
     var shippingText: String = "+ frakt"
     var shippingPrice: Double = 40
+    var shippingPriceColor: UIColor = .licorice
     var shippingOriginalPrice: Double?
+    var shippingOriginalPriceColor: UIColor = .stone
     var paymentText: String = "Betal med kort eller"
 
     func build() -> TJTPriceViewModel {
+        let coloredShippingPrice = NSAttributedString(
+            string: formatCurrency(shippingPrice),
+            attributes: [
+                .foregroundColor: shippingPriceColor
+            ]
+        )
+
+        var coloredOriginalShippingPrice: NSAttributedString?
+        var originalShippingPriceAccessibilityText: String?
+        if let shippingOriginalPrice = shippingOriginalPrice {
+            coloredOriginalShippingPrice = NSAttributedString(
+                string: formatCurrency(shippingOriginalPrice),
+                attributes: [
+                    .foregroundColor: shippingOriginalPriceColor,
+                    .strikethroughColor: shippingOriginalPriceColor,
+                    .strikethroughStyle: NSUnderlineStyle.single.rawValue
+                ]
+            )
+            originalShippingPriceAccessibilityText = "original frakt \(formatCurrency(shippingOriginalPrice, accessible: true))"
+        }
+
         return TJTPriceViewModel(
             tradeType: tradeType,
             price: price,
             shipping: .init(
                 text: shippingText,
-                price: shippingPrice,
-                originalPrice: shippingOriginalPrice
+                price: coloredShippingPrice,
+                priceAccessibilityText: formatCurrency(shippingPrice, accessible: true),
+                originalPrice: coloredOriginalShippingPrice,
+                originalPriceAccessibilityText: originalShippingPriceAccessibilityText
             ),
-            paymentInfo: paymentText,
-            priceFormatter: priceFormatter,
-            priceAccessibilityFormatter: priceAccessibilityFormatter
+            paymentInfo: paymentText
         )
+    }
+
+    private func formatCurrency(_ value: Double, accessible: Bool = false) -> String {
+        let formatter = accessible ? priceAccessibilityFormatter : priceFormatter
+        guard let formattedValue = formatter.string(from: NSNumber(value: value)) else {
+            return ""
+        }
+        return "\(formattedValue) \(accessible ? "kroner" : "kr")"
     }
 }
