@@ -5,7 +5,7 @@ public final class TJTPriceView: UIView {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
         label.accessibilityTraits.insert(.header)
         label.numberOfLines = 0
-        label.textColor = .licorice
+        label.textColor = .textPrimary
         return label
     }()
 
@@ -13,7 +13,7 @@ public final class TJTPriceView: UIView {
         let label = Label(style: .title1, withAutoLayout: true)
         label.numberOfLines = 0
         label.setContentHuggingPriority(.required, for: .horizontal)
-        label.textColor = .licorice
+        label.textColor = .textPrimary
         return label
     }()
 
@@ -21,14 +21,14 @@ public final class TJTPriceView: UIView {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
         label.isAccessibilityElement = false
         label.numberOfLines = 0
-        label.textColor = .licorice
+        label.textColor = .textPrimary
         return label
     }()
 
     private lazy var paymentLabel: Label = {
         let label = Label(style: .detail, withAutoLayout: true)
         label.numberOfLines = 0
-        label.textColor = .licorice
+        label.textColor = .textPrimary
         return label
     }()
 

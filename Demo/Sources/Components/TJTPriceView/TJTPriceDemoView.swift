@@ -11,7 +11,7 @@ final class TJTPriceDemoView: UIView, Tweakable {
         .init(title: "Discounted shipping", description: nil, action: { [weak self] in
             var builder = TJTPriceViewModelBuilder()
             builder.shippingOriginalPrice = 80
-            builder.shippingPriceColor = .cherry
+            builder.shippingPriceColor = .textCritical
             self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Long shipping text", description: nil, action: { [weak self] in
@@ -77,9 +77,9 @@ struct TJTPriceViewModelBuilder {
     var price: String = "999 kr"
     var shippingText: String = "+ frakt"
     var shippingPrice: Double = 40
-    var shippingPriceColor: UIColor = .licorice
+    var shippingPriceColor: UIColor = .textPrimary
     var shippingOriginalPrice: Double?
-    var shippingOriginalPriceColor: UIColor = .stone
+    var shippingOriginalPriceColor: UIColor = .textSecondary
     var paymentText: String = "Betal med kort eller"
     var paymentLogo: UIImage = UIImage(systemName: "creditcard.fill")!
     var paymentLogoText: String = "Vipps"
