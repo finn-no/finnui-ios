@@ -18,6 +18,7 @@ class AgentProfileView: UIView {
     private var contactPerson: CompanyProfile.ContactPerson?
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
     private lazy var contactStackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
+    private lazy var portraitImageView = ContactPersonImageView(withAutoLayout: true)
     private lazy var titleLabel = Label.create(style: .title3Strong)
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
@@ -28,15 +29,6 @@ class AgentProfileView: UIView {
         delegate: self,
         withAutoLayout: true
     )
-
-    private lazy var portraitImageView: RemoteImageView = {
-        let view = RemoteImageView(withAutoLayout: true)
-        view.contentMode = .scaleAspectFit
-        view.clipsToBounds = true
-        view.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        view.setContentHuggingPriority(.defaultLow, for: .vertical)
-        return view
-    }()
 
     // MARK: - Init
 
