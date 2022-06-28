@@ -23,6 +23,7 @@ class ExtendedProfileContactPersonView: UIView {
     private let portraitImageSize: CGFloat = 72
     private lazy var nameLabel = createLabel(style: .bodyStrong, textColor: style.textColor)
     private lazy var jobTitleLabel = createLabel(style: .detail, textColor: style.textColor)
+    private lazy var portraitImageView = ContactPersonImageView(withAutoLayout: true)
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
@@ -30,13 +31,6 @@ class ExtendedProfileContactPersonView: UIView {
         stackView.setCustomSpacing(.spacingXS, after: nameLabel)
         stackView.alignment = .leading
         return stackView
-    }()
-
-    private lazy var portraitImageView: RemoteImageView = {
-        let view = RemoteImageView(withAutoLayout: true)
-        view.clipsToBounds = true
-        view.contentMode = .scaleAspectFill
-        return view
     }()
 
     private lazy var linkCollectionView = OverflowCollectionView(
