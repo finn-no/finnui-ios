@@ -1,6 +1,12 @@
 import FinniversKit
 
 public final class TJTPriceView: UIView {
+    public var viewModel: TJTPriceViewModel {
+        didSet {
+            update()
+        }
+    }
+
     private lazy var tradeTypeLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
         label.accessibilityTraits.insert(.header)
@@ -40,12 +46,6 @@ public final class TJTPriceView: UIView {
         stackView.alignment = .lastBaseline
         return stackView
     }()
-
-    public var viewModel: TJTPriceViewModel {
-        didSet {
-            update()
-        }
-    }
 
     public init(viewModel: TJTPriceViewModel, withAutoLayout: Bool = false) {
         self.viewModel = viewModel

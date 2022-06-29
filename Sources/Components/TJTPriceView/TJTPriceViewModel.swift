@@ -1,42 +1,6 @@
 import FinniversKit
-import Foundation
 
 public struct TJTPriceViewModel {
-    public struct Shipping {
-        public let text: String
-        public let price: NSAttributedString
-        public let priceAccessibilityText: String
-        public let originalPrice: NSAttributedString?
-        public let originalPriceAccessibilityText: String?
-
-        public init(
-            text: String,
-            price: NSAttributedString,
-            priceAccessibilityText: String,
-            originalPrice: NSAttributedString?,
-            originalPriceAccessibilityText: String?
-        ) {
-            self.text = text
-            self.price = price
-            self.priceAccessibilityText = priceAccessibilityText
-            self.originalPrice = originalPrice
-            self.originalPriceAccessibilityText = originalPriceAccessibilityText
-        }
-    }
-
-    public struct Payment {
-        public let text: NSAttributedString
-        public let accessibilityText: String
-
-        public init(
-            text: NSAttributedString,
-            accessibilityText: String
-        ) {
-            self.text = text
-            self.accessibilityText = accessibilityText
-        }
-    }
-
     public let tradeType: String
     public let price: String
     public let shipping: Shipping
@@ -70,5 +34,42 @@ public struct TJTPriceViewModel {
             text += " \(originalPriceText)"
         }
         return text
+    }
+}
+
+extension TJTPriceViewModel {
+    public struct Shipping {
+        public let text: String
+        public let price: NSAttributedString
+        public let priceAccessibilityText: String
+        public let originalPrice: NSAttributedString?
+        public let originalPriceAccessibilityText: String?
+
+        public init(
+            text: String,
+            price: NSAttributedString,
+            priceAccessibilityText: String,
+            originalPrice: NSAttributedString?,
+            originalPriceAccessibilityText: String?
+        ) {
+            self.text = text
+            self.price = price
+            self.priceAccessibilityText = priceAccessibilityText
+            self.originalPrice = originalPrice
+            self.originalPriceAccessibilityText = originalPriceAccessibilityText
+        }
+    }
+
+    public struct Payment {
+        public let text: NSAttributedString
+        public let accessibilityText: String
+
+        public init(
+            text: NSAttributedString,
+            accessibilityText: String
+        ) {
+            self.text = text
+            self.accessibilityText = accessibilityText
+        }
     }
 }
