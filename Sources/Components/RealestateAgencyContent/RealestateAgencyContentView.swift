@@ -41,6 +41,7 @@ public class RealestateAgencyContentView: UIView {
     // MARK: - Setup
 
     private func setup() {
+        layer.cornerRadius = 8
         backgroundColor = viewModel.styling.backgroundColor
         logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
 
