@@ -123,6 +123,8 @@ final class ExploreAdCell: UICollectionViewCell {
         return view
     }()
 
+    private var badgeView: BadgeView?
+
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -144,6 +146,8 @@ final class ExploreAdCell: UICollectionViewCell {
         locationLabel.text = nil
         timeLabel.text = nil
         priceLabel.text = nil
+        badgeView?.removeFromSuperview()
+        badgeView = nil
     }
 
     override func layoutSubviews() {
@@ -174,6 +178,13 @@ final class ExploreAdCell: UICollectionViewCell {
         [titleLabel, locationLabel, timeLabel].forEach {
             $0.sizeToFit()
             $0.isHidden = $0.text == nil
+        }
+
+        if let badgeViewModel = viewModel.badgeViewModel {
+            badgeView?.removeFromSuperview()
+            badgeView = BadgeView()
+            badgeView?.configure(with: badgeViewModel)
+            badgeView?.attachToTopLeadingAnchor(in: imageView)
         }
 
         layoutIfNeeded()

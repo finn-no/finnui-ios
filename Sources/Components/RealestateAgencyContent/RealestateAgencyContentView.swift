@@ -41,6 +41,8 @@ public class RealestateAgencyContentView: UIView {
     // MARK: - Setup
 
     private func setup() {
+        clipsToBounds = true
+        layer.cornerRadius = 8
         backgroundColor = viewModel.style.backgroundColor
         logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.style.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
 
