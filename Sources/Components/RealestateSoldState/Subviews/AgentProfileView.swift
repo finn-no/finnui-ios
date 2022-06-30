@@ -31,7 +31,7 @@ class AgentProfileView: UIView {
 
     private lazy var remoteImageView: RemoteImageView = {
         let view = RemoteImageView(withAutoLayout: true)
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.setContentHuggingPriority(.defaultLow, for: .horizontal)
         view.setContentHuggingPriority(.defaultLow, for: .vertical)

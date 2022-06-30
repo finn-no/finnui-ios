@@ -43,6 +43,7 @@ enum ImageAsset: String {
     case balloon2Red
     case blinkRocket
     case checkMark
+    case checkMarkCircle
     case chevronDown
     case chevronUp
     case clockSmall
@@ -72,6 +73,7 @@ enum ImageAsset: String {
     case share
     case shipWithHelthjem
     case shipWithHelthjemDarkmode
+    case shippingTruck
     case snowflake
     case sort
     case spark
@@ -99,6 +101,7 @@ enum ImageAsset: String {
             .balloon2Red,
             .blinkRocket,
             .checkMark,
+            .checkMarkCircle,
             .chevronDown,
             .chevronUp,
             .clockSmall,
@@ -128,6 +131,7 @@ enum ImageAsset: String {
             .share,
             .shipWithHelthjem,
             .shipWithHelthjemDarkmode,
+            .shippingTruck,
             .snowflake,
             .sort,
             .spark,
