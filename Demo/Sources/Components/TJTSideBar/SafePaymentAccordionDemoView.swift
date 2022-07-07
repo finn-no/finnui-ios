@@ -59,11 +59,11 @@ final class SafePaymentAccordionDemoView: UIView, Tweakable {
         accordionView.layoutIfNeeded()
 
         self.accordionView = accordionView
-        viewModel.delegate = self
+        viewModel.headerViewModel.delegate = self
     }
 }
 
-extension SafePaymentAccordionDemoView: SafePaymentAccordionViewModelDelegate {
+extension SafePaymentAccordionDemoView: TJTAccordionViewModelDelegate {
     func didChangeExpandedState(isExpanded: Bool) {
         print("didChangeExpandedState: \(isExpanded)")
     }

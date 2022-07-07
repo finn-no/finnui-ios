@@ -51,7 +51,7 @@ extension FiksFerdigAccordionDemoView: FiksFerdigAccordionViewModelDelegate {
         print("🎉 read more")
     }
 
-    func didChangeExpandedState(isExpanded: Bool) {
+    func didChangeFiskFerdigAccordionExpandedState(isExpanded: Bool) {
         print("didChangeExpandedState: \(isExpanded)")
     }
 }

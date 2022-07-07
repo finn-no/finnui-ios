@@ -55,11 +55,11 @@ final class HeltHjemAccordionDemoView: UIView, Tweakable {
 
         self.viewModel = viewModel
         self.accordionView = accordionView
-        viewModel.delegate = self
+        viewModel.headerViewModel.delegate = self
     }
 }
 
-extension HeltHjemAccordionDemoView: HeltHjemAccordionViewModelDelegate {
+extension HeltHjemAccordionDemoView: TJTAccordionViewModelDelegate {
     func didChangeExpandedState(isExpanded: Bool) {
         print("didChangeExpandedState: \(isExpanded)")
     }
