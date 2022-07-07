@@ -1,11 +1,20 @@
-import Combine
 import FinniversKit
 import UIKit
 
+public protocol TJTAccordionViewModelDelegate: AnyObject {
+    func didChangeExpandedState(isExpanded: Bool)
+}
+
 public final class TJTAccordionViewModel: ObservableObject {
-    let title: String
-    let icon: UIImage
-    @Published var isExpanded: Bool
+    public let title: String
+    public let icon: UIImage
+    public var isExpanded: Bool {
+        didSet {
+            delegate?.didChangeExpandedState(isExpanded: isExpanded)
+        }
+    }
+
+    public weak var delegate: TJTAccordionViewModelDelegate?
 
     public init(title: String, icon: UIImage, isExpanded: Bool) {
         self.title = title
@@ -16,7 +25,6 @@ public final class TJTAccordionViewModel: ObservableObject {
 
 public class TJTAccordionView: UIStackView {
     private let viewModel: TJTAccordionViewModel
-    private var cancellables: Set<AnyCancellable> = []
 
     private lazy var headerStackView: UIStackView = {
         let header = UIStackView(axis: .horizontal)
@@ -141,21 +149,6 @@ public class TJTAccordionView: UIStackView {
         headerTitle.text = viewModel.title
         headerIcon.image = viewModel.icon
         updateState(isExpanded: viewModel.isExpanded)
-
-        viewModel
-            .$isExpanded
-            .dropFirst(1)
-            .sink { [weak self] isExpanded in
-                UIView.animate(
-                    withDuration: 0.2,
-                    delay: 0,
-                    options: .curveEaseOut,
-                    animations: {
-                        self?.updateState(isExpanded: isExpanded)
-                    }
-                )
-            }
-            .store(in: &cancellables)
     }
 
     private func updateState(isExpanded: Bool) {

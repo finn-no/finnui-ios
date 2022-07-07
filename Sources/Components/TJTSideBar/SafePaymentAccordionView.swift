@@ -2,16 +2,9 @@ import Combine
 import FinniversKit
 import UIKit
 
-public protocol SafePaymentAccordionViewModelDelegate: AnyObject {
-    func didChangeExpandedState(isExpanded: Bool)
-}
-
 public final class SafePaymentAccordionViewModel {
     public let timeLineItems: [TimeLineItem]
     public let headerViewModel: TJTAccordionViewModel
-    public weak var delegate: SafePaymentAccordionViewModelDelegate?
-
-    private var cancellable: AnyCancellable?
 
     public init(headerTitle: String, timeLineItems: [TimeLineItem], isExpanded: Bool = false) {
         self.timeLineItems = timeLineItems
@@ -20,12 +13,6 @@ public final class SafePaymentAccordionViewModel {
             icon: UIImage(named: .lockShield),
             isExpanded: isExpanded
         )
-
-        cancellable = headerViewModel
-            .$isExpanded
-            .sink { [weak self] isExpanded in
-                self?.delegate?.didChangeExpandedState(isExpanded: isExpanded)
-            }
     }
 }
 

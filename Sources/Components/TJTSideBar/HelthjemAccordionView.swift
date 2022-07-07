@@ -2,18 +2,10 @@ import Combine
 import FinniversKit
 import UIKit
 
-public protocol HeltHjemAccordionViewModelDelegate: AnyObject {
-    func didChangeExpandedState(isExpanded: Bool)
-}
-
 public class HeltHjemAccordionViewModel {
     public let providerName: String
     public let message: String
     public let headerViewModel: TJTAccordionViewModel
-
-    public weak var delegate: HeltHjemAccordionViewModelDelegate?
-
-    private var cancellable: AnyCancellable?
 
     public init(headerTitle: String, providerName: String, message: String, isExpanded: Bool = false) {
         self.headerViewModel = TJTAccordionViewModel(
@@ -23,12 +15,6 @@ public class HeltHjemAccordionViewModel {
         )
         self.providerName = providerName
         self.message = message
-
-        cancellable = headerViewModel
-            .$isExpanded
-            .sink { [weak self] isExpanded in
-                self?.delegate?.didChangeExpandedState(isExpanded: isExpanded)
-            }
     }
 }
 

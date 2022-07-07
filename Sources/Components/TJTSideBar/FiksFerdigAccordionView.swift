@@ -3,7 +3,6 @@ import FinniversKit
 import UIKit
 
 public protocol FiksFerdigAccordionViewModelDelegate: AnyObject {
-    func didChangeExpandedState(isExpanded: Bool)
     func didTapReadMore()
 }
 
@@ -13,8 +12,6 @@ public final class FiksFerdigAccordionViewModel {
     public let readMoreTitle: String
     public let headerViewModel: TJTAccordionViewModel
     public weak var delegate: FiksFerdigAccordionViewModelDelegate?
-
-    private var cancellable: AnyCancellable?
 
     public init(
         headerTitle: String,
@@ -31,12 +28,6 @@ public final class FiksFerdigAccordionViewModel {
             icon: UIImage(named: .torgetShipping),
             isExpanded: isExpanded
         )
-
-        cancellable = headerViewModel
-            .$isExpanded
-            .sink { [weak self] isExpanded in
-                self?.delegate?.didChangeExpandedState(isExpanded: isExpanded)
-            }
     }
 
     func displayHelp() {
