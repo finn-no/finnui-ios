@@ -65,6 +65,7 @@ public final class SuggestShippingView: UIView {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
+        decorate()
     }
 
     required init?(coder: NSCoder) {
@@ -92,13 +93,6 @@ public final class SuggestShippingView: UIView {
             loadingIndicator.heightAnchor.constraint(equalToConstant: 30),
             loadingIndicator.widthAnchor.constraint(equalToConstant: 30),
         ])
-
-        viewModel
-            .$state
-            .sink { [weak self] newState in
-                self?.applyState(newState)
-            }
-            .store(in: &cancellables)
     }
 
     @objc
@@ -106,25 +100,32 @@ public final class SuggestShippingView: UIView {
         viewModel.suggestShipping()
     }
 
-    private func applyState(_ newState: SuggestShippingViewModel.State) {
-        switch newState {
-        case .suggestShipping:
-            title.text = viewModel.title
-            message.text = viewModel.message
-            suggestShippingbutton.setTitle(viewModel.buttonTitle, for: .normal)
-            buttonCancellable = suggestShippingbutton
-                .publisher(for: .touchUpInside)
-                .sink { [weak self] _ in
-                    self?.viewModel.suggestShipping()
-                }
+    private func decorate() {
+        title.text = viewModel.title
+        message.text = viewModel.message
+        suggestShippingbutton.setTitle(viewModel.buttonTitle, for: .normal)
+        buttonCancellable = suggestShippingbutton
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.suggestShipping()
+            }
 
-        case .processing:
-            containerView.alpha = 0
-            addSubview(loadingIndicator)
-            loadingIndicator.centerInSuperview()
-            loadingIndicator.startAnimating()
-            layoutIfNeeded()
-        }
+        viewModel
+            .$isProcessing
+            .sink { [weak self] isProcessing in
+                if isProcessing {
+                    self?.showLoadingState()
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    private func showLoadingState() {
+        containerView.alpha = 0
+        addSubview(loadingIndicator)
+        loadingIndicator.centerInSuperview()
+        loadingIndicator.startAnimating()
+        layoutIfNeeded()
     }
 }
 

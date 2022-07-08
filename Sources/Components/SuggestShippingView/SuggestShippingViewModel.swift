@@ -1,46 +1,33 @@
 import Combine
 
-public protocol SuggestShippingService: AnyObject {
-    func suggestShipping(forAdId adId: String) async
+public protocol SuggestShippingDelegate: AnyObject {
+    func didRequestShipping(forAdId adId: String)
 }
 
-@MainActor
-public class SuggestShippingViewModel: ObservableObject {
-    @Published var state: State
+public class SuggestShippingViewModel {
+    @Published private(set) public var isProcessing = false
 
-    private(set) var title: String
-    private(set) var message: String
-    private(set) var buttonTitle: String
+    private(set) public var title: String
+    private(set) public var message: String
+    private(set) public var buttonTitle: String
 
     private let adId: String
-    private weak var service: SuggestShippingService?
+    public weak var delegate: SuggestShippingDelegate?
 
     public init(
         title: String,
         message: String,
         buttonTitle: String,
-        adId: String,
-        suggestShippingService: SuggestShippingService
+        adId: String
     ) {
         self.adId = adId
         self.title = title
         self.message = message
         self.buttonTitle = buttonTitle
-        self.state = .suggestShipping
-        self.service = suggestShippingService
     }
 
     public func suggestShipping() {
-        state = .processing
-        Task {
-            await service?.suggestShipping(forAdId: adId)
-        }
-    }
-}
-
-public extension SuggestShippingViewModel {
-    enum State {
-        case suggestShipping
-        case processing
+        isProcessing = true
+        delegate?.didRequestShipping(forAdId: adId)
     }
 }
