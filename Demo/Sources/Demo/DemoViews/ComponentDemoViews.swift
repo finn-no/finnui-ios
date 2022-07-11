@@ -20,6 +20,17 @@ public enum ComponentDemoViews: String, DemoViews {
     case tagCloudGridView
     case adTipsCollapsibleView
     case numberedAdTipsCollapsibleView
+    case helthjemView
+    case shippingAlternativesView
+    case realestateSoldState
+    case realestateAgencyContent
+    case recommendationConsentView
+    case recommendationEmptyView
+    case fadedExpandableView
+    case suggestShippingView
+    case shippingRequestedView
+    case shippingRequestErrorView
+    case tjtPriceView
 
     public var viewController: UIViewController {
         switch self {
@@ -53,6 +64,28 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<AdTipsCollapsibleDemoView>()
         case .numberedAdTipsCollapsibleView:
             return DemoViewController<NumberedAdTipsCollapsibleDemoView>()
+        case .helthjemView:
+            return DemoViewController<HelthjemDemoView>()
+        case .shippingAlternativesView:
+            return DemoViewController<ShippingAlternativesDemoView>()
+        case .realestateSoldState:
+            return DemoViewController<RealestateSoldStateDemoView>(dismissType: .dismissButton)
+        case .realestateAgencyContent:
+            return DemoViewController<RealestateAgencyContentDemoView>()
+        case .recommendationConsentView:
+            return DemoViewController<RecommendationConsentDemoView>()
+        case .recommendationEmptyView:
+            return DemoViewController<RecommendationEmptyDemoView>()
+        case .fadedExpandableView:
+            return DemoViewController<FadedExpandableDemoView>()
+        case .suggestShippingView:
+            return DemoViewController<SuggestShippingDemoView>()
+        case .shippingRequestedView:
+            return DemoViewController<ShippingRequestedDemoView>()
+        case .shippingRequestErrorView:
+            return DemoViewController<ShippingRequestErrorDemoView>()
+        case .tjtPriceView:
+            return DemoViewController<TJTPriceDemoView>()
         }
     }
 }

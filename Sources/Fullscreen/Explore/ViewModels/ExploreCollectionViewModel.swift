@@ -4,7 +4,7 @@
 
 import UIKit
 
-public struct ExploreCollectionViewModel: Hashable, TagCloudLayoutDataProvider {
+public class ExploreCollectionViewModel: UniqueHashableItem, TagCloudLayoutDataProvider {
     public let title: String
     public let imageUrl: String?
     public let iconUrl: String?

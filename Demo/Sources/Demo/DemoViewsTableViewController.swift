@@ -5,23 +5,27 @@
 import FinniversKit
 
 class DemoViewsTableViewController: UITableViewController {
+
+    // MARK: - Private properties
+
+    private var bottomSheet: BottomSheet?
+    private var indexAndValues = [String: [String]]()
+
     private lazy var selectorTitleView: SelectorTitleView = {
         let titleView = SelectorTitleView(withAutoLayout: true)
         titleView.delegate = self
         return titleView
     }()
 
-    private var bottomSheet: BottomSheet?
-
-    private var indexAndValues = [String: [String]]()
+    // MARK: - Init
 
     init() {
         super.init(style: .grouped)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(userInterfaceStyleDidChange), name: .didChangeUserInterfaceStyle, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError("") }
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,23 +47,7 @@ class DemoViewsTableViewController: UITableViewController {
         }
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if #available(iOS 13.0, *) {
-            #if swift(>=5.1)
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                userInterfaceStyleDidChange()
-            }
-            #endif
-        }
-    }
-
-    @objc private func userInterfaceStyleDidChange() {
-        updateColors(animated: true)
-        evaluateIndexAndValues()
-        tableView.reloadData()
-    }
+    // MARK: - Setup
 
     private func setup() {
         tableView.register(UITableViewCell.self)
@@ -67,44 +55,13 @@ class DemoViewsTableViewController: UITableViewController {
         tableView.separatorStyle = .none
         navigationItem.titleView = selectorTitleView
         selectorTitleView.title = Sections.title(for: State.lastSelectedSection).uppercased()
-        updateColors(animated: false)
+
+        tableView.sectionIndexColor = .primaryBlue
+        tableView.backgroundColor = .bgPrimary
+        setNeedsStatusBarAppearanceUpdate()
     }
 
-    private func updateMoonButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: State.currentUserInterfaceStyle(for: traitCollection).image, style: .done, target: self, action: #selector(moonTapped(sender:forEvent:)))
-        return
-    }
-
-    @objc private func moonTapped(sender: AnyObject, forEvent event: UIEvent) {
-        if event.allTouches?.first?.tapCount == 0 {
-            // Long press
-            State.setCurrentUserInterfaceStyle(nil, in: view.window)
-        } else {
-            State.setCurrentUserInterfaceStyle(State.currentUserInterfaceStyle(for: traitCollection) == .light ? .dark : .light, in: view.window)
-        }
-        NotificationCenter.default.post(name: .didChangeUserInterfaceStyle, object: nil)
-
-        if #available(iOS 13.0, *) {
-        } else {
-            //Need to shutdown the app to make this work before dynamic colors were available
-            let alertController = UIAlertController(title: "Restart", message: "This requires a restart of the app", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                exit(0)
-            }))
-            alertController.addAction(UIAlertAction(title: "Later", style: .cancel, handler: nil))
-            present(alertController, animated: true)
-        }
-    }
-
-    private func updateColors(animated: Bool) {
-        UIView.animate(withDuration: animated ? 0.3 : 0) {
-            let sectionIndexColor: UIColor = .primaryBlue //DARK
-            self.tableView.sectionIndexColor = sectionIndexColor
-            self.tableView.backgroundColor = .bgPrimary
-            self.updateMoonButton()
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-    }
+    // MARK: - Private methods
 
     private func evaluateIndexAndValues() {
         indexAndValues.removeAll()
@@ -143,6 +100,8 @@ class DemoViewsTableViewController: UITableViewController {
     private var sections: [String] {
         return Array(indexAndValues.keys.sorted(by: <))
     }
+
+    // MARK: - Overrides
 
     override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool = true, completion: (() -> Void)? = nil) {
         if viewControllerToPresent.modalPresentationStyle == .pageSheet {
@@ -210,9 +169,11 @@ extension DemoViewsTableViewController {
     }
 }
 
+// MARK: - SelectorTitleViewDelegate
+
 extension DemoViewsTableViewController: SelectorTitleViewDelegate {
     func selectorTitleViewDidSelectButton(_ selectorTitleView: SelectorTitleView) {
-        let items = Sections.items.map { BasicTableViewItem(title: $0.rawValue.uppercased()) }
+        let items = Sections.allCases.map { BasicTableViewItem(title: $0.rawValue.uppercased()) }
         let sectionsTableView = BasicTableView(items: items)
         sectionsTableView.selectedIndexPath = IndexPath(row: State.lastSelectedSection, section: 0)
         sectionsTableView.delegate = self
@@ -222,6 +183,8 @@ extension DemoViewsTableViewController: SelectorTitleViewDelegate {
         }
     }
 }
+
+// MARK: - BasicTableViewDelegate
 
 extension DemoViewsTableViewController: BasicTableViewDelegate {
     func basicTableView(_ basicTableView: BasicTableView, didSelectItemAtIndex index: Int) {

@@ -34,8 +34,8 @@ extension UIImage {
 //swiftlint:disable type_body_length
 enum ImageAsset: String {
     case adsenseDemo
-    case arrowCounterClockwise
     case avatar
+    case bapShippable
     case betaImageSearch
     case blinkRocketMini
     case boat
@@ -50,13 +50,12 @@ enum ImageAsset: String {
     case displayTypeList
     case dissatisfiedFace
     case distance
-    case emptyMoon
     case emptyStateSaveSearch
     case favoriteActive
     case favorites
     case favouriteAdded
-    case filledMoon
     case filter
+    case finnLogoLarge
     case finnLogoSimple
     case gift
     case heartEmpty
@@ -66,7 +65,6 @@ enum ImageAsset: String {
     case iconRealestateOwner
     case iconRealestatePrice
     case jobs
-    case magnifyingGlass
     case mc
     case messages
     case mittanbud
@@ -112,8 +110,8 @@ enum ImageAsset: String {
     static var imageNames: [ImageAsset] {
         return [
             .adsenseDemo,
-            .arrowCounterClockwise,
             .avatar,
+            .bapShippable,
             .betaImageSearch,
             .blinkRocketMini,
             .boat,
@@ -128,13 +126,12 @@ enum ImageAsset: String {
             .displayTypeList,
             .dissatisfiedFace,
             .distance,
-            .emptyMoon,
             .emptyStateSaveSearch,
             .favoriteActive,
             .favorites,
             .favouriteAdded,
-            .filledMoon,
             .filter,
+            .finnLogoLarge,
             .finnLogoSimple,
             .gift,
             .heartEmpty,
@@ -144,7 +141,6 @@ enum ImageAsset: String {
             .iconRealestateOwner,
             .iconRealestatePrice,
             .jobs,
-            .magnifyingGlass,
             .mc,
             .messages,
             .mittanbud,

@@ -5,7 +5,6 @@
 import SwiftUI
 import FinniversKit
 
-@available(iOS 13.0.0, *)
 public struct BasicListCell: View {
     var action: (() -> Void)?
     private let model: BasicTableViewCellViewModel
@@ -87,7 +86,6 @@ public struct BasicListCell: View {
     }
 }
 
-@available(iOS 13.0, *)
 private struct BasicButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -95,7 +93,7 @@ private struct BasicButtonStyle: ButtonStyle {
     }
 
     private var selectedColor: UIColor {
-        return UIColor.dynamicColorIfAvailable(
+        return UIColor.dynamicColor(
             defaultColor: UIColor(r: 230, g: 235, b: 242),
             darkModeColor: UIColor(hex: "2f3039")
         )
@@ -104,7 +102,6 @@ private struct BasicButtonStyle: ButtonStyle {
 
 // MARK: - Previews
 
-@available(iOS 13.0, *)
 // swiftlint:disable:next superfluous_disable_command type_name
 struct BasicListCell_Previews: PreviewProvider {
     private static let viewModels = [

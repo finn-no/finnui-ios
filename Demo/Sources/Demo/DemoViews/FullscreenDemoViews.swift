@@ -4,7 +4,6 @@
 import FinniversKit
 
 public enum FullscreenDemoViews: String, DemoViews {
-    case searchResultsView
     case snowGlobeView
     case newYearsView
     case splashView
@@ -15,11 +14,10 @@ public enum FullscreenDemoViews: String, DemoViews {
     case searchSuggestions
     case exploreView
     case exploreDetailView
+    case stories
 
     public var viewController: UIViewController {
         switch self {
-        case .searchResultsView:
-            return DemoViewController<SearchResultsDemoView>(dismissType: .dismissButton)
         case .snowGlobeView:
             return DemoViewController<SnowGlobeDemoView>()
         case .newYearsView:
@@ -40,6 +38,10 @@ public enum FullscreenDemoViews: String, DemoViews {
             return makeExploreView()
         case .exploreDetailView:
             return DemoViewController<ExploreDetailDemoView>(constrainToTopSafeArea: true, constrainToBottomSafeArea: false)
+        case .stories:
+            let storyDemoViewController = DemoViewController<StoryDemoView>()
+            storyDemoViewController.backgroundColor = .black
+            return storyDemoViewController
         }
     }
 }

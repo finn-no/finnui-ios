@@ -74,4 +74,48 @@ class ComponentViewTests: XCTestCase {
     func testNumberedAdTipsCollapsibleView() {
         snapshot(.numberedAdTipsCollapsibleView)
     }
+
+    func testHelthjemView() {
+        snapshot(.helthjemView)
+    }
+
+    func testShippingAlternativesView() {
+        snapshot(.shippingAlternativesView)
+    }
+
+    func testRealestateSoldState() {
+        snapshot(.realestateSoldState, includeIPad: true)
+    }
+
+    func testRealestateAgencyContent() {
+        snapshot(.realestateAgencyContent, includeIPad: true)
+    }
+
+    func testRecommendationConsentView() {
+        snapshot(.recommendationConsentView)
+    }
+
+    func testRecommendationEmptyView() {
+        snapshot(.recommendationEmptyView)
+    }
+
+    func testFadedExpandableView() {
+        snapshot(.fadedExpandableView)
+    }
+
+    func testSuggestShippingView() {
+        snapshot(.suggestShippingView)
+    }
+
+    func testShippingRequestedView() {
+        snapshot(.shippingRequestedView)
+    }
+
+    func testShippingRequestErrorView() {
+        snapshot(.shippingRequestErrorView)
+    }
+
+    func testTJTPriceView() {
+        snapshot(.tjtPriceView)
+    }
 }

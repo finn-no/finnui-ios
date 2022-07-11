@@ -34,14 +34,23 @@ extension UIImage {
 //swiftlint:disable type_body_length
 enum ImageAsset: String {
     case alphabeticalSortingAscending
+    case arrowUp
+    case backgroundFigureLeft
+    case backgroundFigureRight
+    case backgroundFigureTop
     case balloon0
-    case balloon1
     case balloon2
     case balloon2Red
     case blinkRocket
+    case checkMark
+    case checkMarkCircle
+    case chevronDown
+    case chevronUp
     case clockSmall
+    case close
     case emptyPersonalNotificationsIcon
     case emptySavedSearchNotificationsIcon
+    case externalLink
     case favoriteActive
     case favoriteDefault
     case favorited
@@ -50,6 +59,7 @@ enum ImageAsset: String {
     case favoritesSortLastAdded
     case finnLogoSimple
     case heartMini
+    case lock
     case mapPin
     case noImage
     case notFavorited
@@ -57,9 +67,14 @@ enum ImageAsset: String {
     case plus
     case profile
     case remove
+    case repair
     case republish
     case schibstedFooter
     case searchBig
+    case share
+    case shipWithHelthjem
+    case shipWithHelthjemDarkmode
+    case shippingTruck
     case snowflake
     case sort
     case spark
@@ -68,6 +83,7 @@ enum ImageAsset: String {
     case splashLetters3
     case splashLetters4
     case splashLogo
+    case storyPlaceholder
     case tagMini
     case trashcan
     case verified
@@ -77,14 +93,23 @@ enum ImageAsset: String {
     static var imageNames: [ImageAsset] {
         return [
             .alphabeticalSortingAscending,
+            .arrowUp,
+            .backgroundFigureLeft,
+            .backgroundFigureRight,
+            .backgroundFigureTop,
             .balloon0,
-            .balloon1,
             .balloon2,
             .balloon2Red,
             .blinkRocket,
+            .checkMark,
+            .checkMarkCircle,
+            .chevronDown,
+            .chevronUp,
             .clockSmall,
+            .close,
             .emptyPersonalNotificationsIcon,
             .emptySavedSearchNotificationsIcon,
+            .externalLink,
             .favoriteActive,
             .favoriteDefault,
             .favorited,
@@ -93,6 +118,7 @@ enum ImageAsset: String {
             .favoritesSortLastAdded,
             .finnLogoSimple,
             .heartMini,
+            .lock,
             .mapPin,
             .noImage,
             .notFavorited,
@@ -100,9 +126,14 @@ enum ImageAsset: String {
             .plus,
             .profile,
             .remove,
+            .repair,
             .republish,
             .schibstedFooter,
             .searchBig,
+            .share,
+            .shipWithHelthjem,
+            .shipWithHelthjemDarkmode,
+            .shippingTruck,
             .snowflake,
             .sort,
             .spark,
@@ -111,6 +142,7 @@ enum ImageAsset: String {
             .splashLetters3,
             .splashLetters4,
             .splashLogo,
+            .storyPlaceholder,
             .tagMini,
             .trashcan,
             .verified,

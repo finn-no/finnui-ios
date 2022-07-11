@@ -92,7 +92,7 @@ public final class ExploreView: UIView {
             })
 
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let section = self?.sections[indexPath.section], let title = section.title else { return nil }
+            guard let section = self?.sections[safe: indexPath.section], let title = section.title else { return nil }
             let view = collectionView.dequeue(
                 ExploreSectionHeaderView.self,
                 for: indexPath,
@@ -140,7 +140,16 @@ public final class ExploreView: UIView {
         }
 
         refreshControl.endRefreshing()
-        collectionViewDataSource.apply(snapshot, animatingDifferences: false)
+        // Support compiling on both Xcode 12 and Xcode 13 (and above)
+        #if swift(>=5.5)
+            if #available(iOS 15.0, *) {
+                collectionViewDataSource.applySnapshotUsingReloadData(snapshot)
+            } else {
+                collectionViewDataSource.apply(snapshot, animatingDifferences: false)
+            }
+        #else
+            collectionViewDataSource.apply(snapshot, animatingDifferences: false)
+        #endif
     }
 
     private func setup() {

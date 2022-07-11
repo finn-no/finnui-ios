@@ -1,4 +1,5 @@
 import FinniversKit
+import UIKit
 
 class DemoViewController<View: UIView>: UIViewController {
 
@@ -8,6 +9,7 @@ class DemoViewController<View: UIView>: UIViewController {
     private let constrainToBottomSafeArea: Bool
     private let constrainToTopSafeArea: Bool
     private var bottomSheet: BottomSheet?
+    var backgroundColor: UIColor = .bgPrimary
 
     public init(dismissType: DismissType = .doubleTap,
                 containmentOptions: ContainmentOptions = .none,
@@ -34,14 +36,31 @@ class DemoViewController<View: UIView>: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .black
+        setupChildViewController()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if TestCheck.isTesting, previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            setupChildViewController()
+        }
+    }
+
+    private func setupChildViewController() {
+        if let childViewController = childViewController {
+            childViewController.willMove(toParent: nil)
+            childViewController.view.removeFromSuperview()
+            childViewController.removeFromParent()
+        }
+
         let viewController = BaseDemoViewController<View>(
             dismissType: dismissType,
             containmentOptions: containmentOptions,
             supportedInterfaceOrientations: supportedInterfaceOrientations,
             constrainToTopSafeArea: constrainToTopSafeArea,
-            constrainToBottomSafeArea: constrainToBottomSafeArea)
+            constrainToBottomSafeArea: constrainToBottomSafeArea,
+            backgroundColor: backgroundColor
+        )
         addChild(viewController)
         view.addSubview(viewController.view)
         viewController.didMove(toParent: self)

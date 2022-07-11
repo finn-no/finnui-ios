@@ -17,14 +17,6 @@ struct State {
     private static let lastCornerForTweakingButtonKey = "lastCornerForTweakingButtonKey"
     private static let lastSelectedSectionKey = "lastSelectedSectionKey"
     private static let lastSelectedDeviceKey = "lastSelectedDeviceKey"
-    static let currentUserInterfaceStyleKey = "currentUserInterfaceStyleKey"
-
-    static let defaultUserInterfaceStyleSupport: UserInterfaceStyleSupport = {
-        if #available(iOS 13.0, *) {
-            return .dynamic
-        }
-        return .forceLight
-    }()
 
     static var lastSelectedIndexPath: IndexPath? {
         get {
@@ -92,44 +84,5 @@ struct State {
             UserDefaults.standard.set(newValue, forKey: lastSelectedDeviceKey)
             UserDefaults.standard.synchronize()
         }
-    }
-
-    /// Needs to be called from main thread on iOS 13
-    static func setCurrentUserInterfaceStyle(_ userInterfaceStyle: UserInterfaceStyle?, in window: UIWindow?) {
-        if #available(iOS 13.0, *) {
-            window?.setWindowUserInterfaceStyle(userInterfaceStyle)
-        }
-        if let userInterfaceStyle = userInterfaceStyle {
-            UserDefaults.standard.set(userInterfaceStyle.rawValue, forKey: currentUserInterfaceStyleKey)
-            Config.userInterfaceStyleSupport = userInterfaceStyle == .dark ? .forceDark : .forceLight
-        } else {
-            UserDefaults.standard.removeObject(forKey: currentUserInterfaceStyleKey)
-            Config.userInterfaceStyleSupport = defaultUserInterfaceStyleSupport
-        }
-        UserDefaults.standard.synchronize()
-    }
-
-    static func currentUserInterfaceStyle(for traitCollection: UITraitCollection) -> UserInterfaceStyle {
-        if #available(iOS 13.0, *) {
-            return traitCollection.userInterfaceStyle == .dark ? .dark : .light
-        } else {
-            let styleRawValue = UserDefaults.standard.integer(forKey: currentUserInterfaceStyleKey)
-            return UserInterfaceStyle(rawValue: styleRawValue) ?? .light
-        }
-    }
-}
-
-extension UIWindow {
-    @available(iOS 13.0, *)
-    func setWindowUserInterfaceStyle(_ userInterfaceStyle: UserInterfaceStyle?) {
-        #if swift(>=5.1)
-        let uiUserInterfaceStyle: UIUserInterfaceStyle
-        if let userInterfaceStyle = userInterfaceStyle {
-            uiUserInterfaceStyle = userInterfaceStyle == .dark ? .dark : .light
-        } else {
-            uiUserInterfaceStyle = .unspecified
-        }
-        overrideUserInterfaceStyle = uiUserInterfaceStyle
-        #endif
     }
 }

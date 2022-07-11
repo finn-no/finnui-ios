@@ -35,10 +35,6 @@ class FullscreenViewTests: XCTestCase {
         snapshot(.favoriteAdSortingView)
     }
 
-    func testSearchResultsView() {
-        snapshot(.searchResultsView)
-    }
-
     func testSavedSearchSortingView() {
         snapshot(.savedSearchSortingView)
     }
@@ -61,5 +57,9 @@ class FullscreenViewTests: XCTestCase {
 
     func testExploreDetailView() {
         snapshot(.exploreDetailView)
+    }
+
+    func testStories() {
+        snapshot(.stories)
     }
 }
