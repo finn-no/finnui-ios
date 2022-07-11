@@ -3,13 +3,14 @@ import FinniversKit
 import UIKit
 
 public protocol FiksFerdigAccordionViewModelDelegate: AnyObject {
-    func didTapReadMore()
+    func didTapReadMoreURL(_ url: URL)
 }
 
 public final class FiksFerdigAccordionViewModel {
     public let message: String
     public let timeLineItems: [TimeLineItem]
     public let readMoreTitle: String
+    public let readMoreURL: URL
     public let headerViewModel: TJTAccordionViewModel
     public weak var delegate: FiksFerdigAccordionViewModelDelegate?
 
@@ -18,11 +19,13 @@ public final class FiksFerdigAccordionViewModel {
         message: String,
         timeLineItems: [TimeLineItem],
         readMoreTitle: String,
+        readMoreURL: URL,
         isExpanded: Bool = false
     ) {
         self.message = message
         self.timeLineItems = timeLineItems
         self.readMoreTitle = readMoreTitle
+        self.readMoreURL = readMoreURL
         self.headerViewModel = TJTAccordionViewModel(
             title: headerTitle,
             icon: UIImage(named: .torgetShipping),
@@ -31,7 +34,7 @@ public final class FiksFerdigAccordionViewModel {
     }
 
     func displayHelp() {
-        delegate?.didTapReadMore()
+        delegate?.didTapReadMoreURL(readMoreURL)
     }
 }
 
