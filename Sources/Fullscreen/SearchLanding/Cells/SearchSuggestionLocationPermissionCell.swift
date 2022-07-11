@@ -12,6 +12,15 @@ class SearchSuggestionLocationPermissionCell: UITableViewCell {
         return label
     }()
 
+    public lazy var enableLocationButton: Button = {
+        let margins = UIEdgeInsets(top: .spacingXS, left: .spacingM, bottom: .spacingXS, right: .spacingM)
+        let style = Button.Style.default.overrideStyle(margins: margins)
+        let button = Button(style: style, size: .small, withAutoLayout: true)
+        button.setTitle("Skru på", for: .normal)
+        button.setContentCompressionResistancePriority(.required, for: .vertical)
+        return button
+    }()
+
     // MARK: - Init
 
     override init(style: CellStyle, reuseIdentifier: String?) {
@@ -26,8 +35,15 @@ class SearchSuggestionLocationPermissionCell: UITableViewCell {
     private func setup() {
         backgroundColor = .bgPrimary
 
+        contentView.addSubview(enableLocationButton)
         contentView.addSubview(titleLabel)
-        titleLabel.fillInSuperview(insets: UIEdgeInsets(top: .spacingS, leading: .spacingM, bottom: -.spacingS, trailing: -.spacingM))
+        titleLabel.fillInSuperview(insets: UIEdgeInsets(top: .spacingL, leading: .spacingM, bottom: -.spacingL, trailing: -.spacingXXL))
+
+        NSLayoutConstraint.activate([
+            enableLocationButton.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),
+            enableLocationButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
+            enableLocationButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
+        ])
     }
 
     // MARK: - Configure

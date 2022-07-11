@@ -31,7 +31,7 @@ public class SearchSuggestionsView: UIView {
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 48
-        tableView.backgroundColor = .bgPrimary
+        tableView.backgroundColor = .bgTertiary
         return tableView
     }()
 
@@ -58,6 +58,10 @@ public class SearchSuggestionsView: UIView {
 
         self.sections = sections
         tableView.reloadData()
+    }
+
+    @objc private func didTapLocationPermissionButton() {
+        delegate?.searchSuggestionsViewDidSelectLocationButton(self)
     }
 }
 
@@ -161,6 +165,7 @@ extension SearchSuggestionsView: UITableViewDataSource {
         case .locationPermission(let title):
             let cell = tableView.dequeue(SearchSuggestionLocationPermissionCell.self, for: indexPath)
             cell.configure(with: title)
+            cell.enableLocationButton.addTarget(self, action: #selector(didTapLocationPermissionButton), for: .touchUpInside)
             return cell
         }
     }

@@ -5,7 +5,7 @@ import FinnUI
 extension Array where Element == SearchSuggestionSection {
     static func suggestions(withLocationPermission: Bool = false) -> [SearchSuggestionSection] {
         [
-            withLocationPermission ? .locationPermission(title: "Vil du se forslag til annonser nærme deg?") : nil,
+            withLocationPermission ? .locationPermission(title: "Annonser nær meg") : nil,
             .group(.generateSuggestions(title: "Torget", count: 6)),
             .group(.generateSuggestions(title: "Bolig til salgs", count: 2)),
             .group(.generateSuggestions(title: "Alle stillinger", count: 4)),
@@ -15,7 +15,7 @@ extension Array where Element == SearchSuggestionSection {
 
     static func landingPage(withLocationPermission: Bool = false) -> [SearchSuggestionSection] {
         [
-            withLocationPermission ? .locationPermission(title: "Vil du se forslag til annonser nærme deg?") : nil,
+            withLocationPermission ? .locationPermission(title: "Annonser nær meg") : nil,
             .group(SearchSuggestionGroup(
                 title: "Torget",
                 items: [

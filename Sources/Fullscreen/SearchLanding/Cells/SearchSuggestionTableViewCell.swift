@@ -19,6 +19,14 @@ class SearchSuggestionTableViewCell: UITableViewCell {
         return label
     }()
 
+    private lazy var iconImageView: UIImageView = {
+        let imageView = UIImageView(withAutoLayout: true)
+        imageView.image = UIImage(named: .searchSmall)
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .textPrimary
+        return imageView
+    }()
+
     // MARK: - Init
 
     override init(style: CellStyle, reuseIdentifier: String?) {
@@ -36,6 +44,7 @@ class SearchSuggestionTableViewCell: UITableViewCell {
 
         contentView.addSubview(titleLabel)
         contentView.addSubview(detailLabel)
+        contentView.addSubview(iconImageView)
 
         let layoutGuide = UILayoutGuide()
         contentView.addLayoutGuide(layoutGuide)
@@ -46,8 +55,12 @@ class SearchSuggestionTableViewCell: UITableViewCell {
             layoutGuide.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacingM),
             layoutGuide.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacingS),
 
+            iconImageView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+            iconImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+            iconImageView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+
             titleLabel.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: .spacingS),
             titleLabel.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
 
             detailLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: .spacingXS),
