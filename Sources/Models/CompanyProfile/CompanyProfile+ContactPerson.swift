@@ -4,11 +4,11 @@ extension CompanyProfile {
     public struct ContactPerson {
         public let title: String?
         public let name: String
-        public let jobTitle: String
+        public let jobTitle: String?
         public let imageUrl: String?
         public let links: [LinkItem]
 
-        public init(title: String?, name: String, jobTitle: String, imageUrl: String?, links: [LinkItem]) {
+        public init(title: String?, name: String, jobTitle: String?, imageUrl: String?, links: [LinkItem]) {
             self.title = title
             self.name = name
             self.jobTitle = jobTitle
