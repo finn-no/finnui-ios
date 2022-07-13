@@ -79,9 +79,15 @@ class AgentProfileView: UIView {
     func configure(with model: CompanyProfile.ContactPerson, remoteImageViewDataSource: RemoteImageViewDataSource?) {
         titleLabel.text = model.title
         nameLabel.text = model.name
-        jobTitleLabel.text = model.jobTitle
         phoneNumbersCollectionView.configure(with: model.phoneNumbers)
         remoteImageView.dataSource = remoteImageViewDataSource
+
+        if let jobTitle = model.jobTitle {
+            jobTitleLabel.text = model.jobTitle
+            jobTitleLabel.isHidden = false
+        } else {
+            jobTitleLabel.isHidden = true
+        }
 
         if let imageUrl = model.imageUrl {
             remoteImageView.loadImage(for: imageUrl, imageWidth: imageSize.width)
