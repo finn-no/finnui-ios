@@ -4,7 +4,7 @@ extension CompanyProfile {
     public struct ContactPerson {
         public let title: String
         public let name: String
-        public let jobTitle: String
+        public let jobTitle: String?
         public let imageUrl: String?
         public let phoneNumbers: [String]
         public let homepageUrl: String?
@@ -12,7 +12,7 @@ extension CompanyProfile {
         public init(
             title: String,
             name: String,
-            jobTitle: String,
+            jobTitle: String?,
             imageUrl: String?,
             phoneNumbers: [String],
             homepageUrl: String? = nil
