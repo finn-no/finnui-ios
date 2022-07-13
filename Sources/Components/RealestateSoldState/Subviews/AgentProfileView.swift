@@ -88,6 +88,13 @@ class AgentProfileView: UIView {
 
         remoteImageView.dataSource = remoteImageViewDataSource
 
+        if let jobTitle = contactPerson.jobTitle {
+            jobTitleLabel.text = jobTitle
+            jobTitleLabel.isHidden = false
+        } else {
+            jobTitleLabel.isHidden = true
+        }
+
         if let imageUrl = contactPerson.imageUrl {
             remoteImageView.loadImage(for: imageUrl, imageWidth: imageSize.width)
             contactStackView.insertArrangedSubview(remoteImageView, at: 0)
