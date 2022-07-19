@@ -1,14 +1,30 @@
 import FinniversKit
 
+public protocol TJTSideBarViewModelDelegate: AnyObject {
+    func didChangeSidebarHeight()
+}
+
 public final class TJTSideBarViewModel {
     public let fiksFerdigViewModel: FiksFerdigAccordionViewModel
     public let shippingAlternativesViewModel: HeltHjemAccordionViewModel
     public let safePaymentViewModel: SafePaymentAccordionViewModel
 
+    public weak var delegate: TJTSideBarViewModelDelegate?
+
     public init(fiksFerdigViewModel: FiksFerdigAccordionViewModel, shippingAlternativesViewModel: HeltHjemAccordionViewModel, safePaymentViewModel: SafePaymentAccordionViewModel) {
         self.fiksFerdigViewModel = fiksFerdigViewModel
         self.shippingAlternativesViewModel = shippingAlternativesViewModel
         self.safePaymentViewModel = safePaymentViewModel
+
+        fiksFerdigViewModel.headerViewModel.delegate = self
+        shippingAlternativesViewModel.headerViewModel.delegate = self
+        safePaymentViewModel.headerViewModel.delegate = self
+    }
+}
+
+extension TJTSideBarViewModel: TJTAccordionViewModelDelegate {
+    public func didChangeExpandedState(isExpanded: Bool) {
+        delegate?.didChangeSidebarHeight()
     }
 }
 

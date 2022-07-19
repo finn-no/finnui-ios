@@ -14,6 +14,7 @@ final class TJTSideBarDemoView: UIView {
                 TimeLineItem(title: "Du har 24 timer til å sjekke varen"),
             ],
             readMoreTitle: "Les mer om Fiks ferdig",
+            readMoreURL: URL(string: "https://finn.no")!,
             isExpanded: true
         )
 
