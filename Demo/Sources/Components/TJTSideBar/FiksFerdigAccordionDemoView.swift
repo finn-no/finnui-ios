@@ -16,6 +16,7 @@ final class FiksFerdigAccordionDemoView: UIView {
             message: "Enkel betaling og frakt gjennom FINN",
             timeLineItems: timelineItems,
             readMoreTitle: "Les mer om Fiks ferdig",
+            readMoreURL: URL(string: "https://finn.no")!,
             isExpanded: true
         )
         self.accordionView = FiksFerdigAccordionView(
@@ -47,11 +48,7 @@ final class FiksFerdigAccordionDemoView: UIView {
 }
 
 extension FiksFerdigAccordionDemoView: FiksFerdigAccordionViewModelDelegate {
-    func didTapReadMore() {
-        print("🎉 read more")
-    }
-
-    func didChangeFiskFerdigAccordionExpandedState(isExpanded: Bool) {
-        print("didChangeExpandedState: \(isExpanded)")
+    func didTapReadMoreURL(_ url: URL) {
+        print("🎉 did tap read more URL")
     }
 }
