@@ -6,24 +6,23 @@ final class TJTPriceDemoView: UIView, Tweakable {
 
     lazy var tweakingOptions: [TweakingOption] = [
         .init(title: "Normal shipping", description: nil, action: { [weak self] in
-            self?.priceView.viewModel = TJTPriceViewModelBuilder().build()
+            var builder = TJTPriceViewModelBuilder()
+            builder.shippingText = "+ frakt 80 kr"
+            self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Discounted shipping", description: nil, action: { [weak self] in
             var builder = TJTPriceViewModelBuilder()
-            builder.shippingOriginalPrice = 80
-            builder.shippingPriceColor = .textCritical
+            builder.priceText = "80 Kr"
             self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Long shipping text", description: nil, action: { [weak self] in
             var builder = TJTPriceViewModelBuilder()
-            builder.shippingText = [String](repeating: builder.shippingText, count: 10)
-                .joined(separator: " ")
+            builder.shippingText = "+ frakt <del>80</del> <span style=\"color:tjt-price-highlight\">60 kr</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis."
             self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Long payment info", description: nil, action: { [weak self] in
             var builder = TJTPriceViewModelBuilder()
-            builder.paymentText = [String](repeating: builder.paymentText, count: 4)
-                .joined(separator: " ")
+            builder.paymentText = "Betal med kort eller Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis."
             self?.priceView.viewModel = builder.build()
         }),
     ]
@@ -74,51 +73,24 @@ struct TJTPriceViewModelBuilder {
     }()
 
     var tradeType: String = "Til salgs"
-    var price: String = "999 kr"
-    var shippingText: String = "+ frakt"
-    var shippingPrice: Double = 40
-    var shippingPriceColor: UIColor = .textPrimary
-    var shippingOriginalPrice: Double?
-    var shippingOriginalPriceColor: UIColor = .textSecondary
+    var priceText: String = "999 kr"
+    var shippingText: String = "+ frakt <del>80</del> <span style=\"color:tjt-price-highlight\">60 kr</span>"
+    var shippingAccessibilityText = "+ frakt"
     var paymentText: String = "Betal med kort eller"
     var paymentLogo: UIImage = UIImage(systemName: "creditcard.fill")!
     var paymentLogoText: String = "Vipps"
 
     func build() -> TJTPriceViewModel {
-        let coloredShippingPrice = NSAttributedString(
-            string: formatCurrency(shippingPrice),
-            attributes: [
-                .foregroundColor: shippingPriceColor
-            ]
-        )
-
-        var coloredOriginalShippingPrice: NSAttributedString?
-        var originalShippingPriceAccessibilityText: String?
-        if let shippingOriginalPrice = shippingOriginalPrice {
-            coloredOriginalShippingPrice = NSAttributedString(
-                string: formatCurrency(shippingOriginalPrice),
-                attributes: [
-                    .foregroundColor: shippingOriginalPriceColor,
-                    .strikethroughColor: shippingOriginalPriceColor,
-                    .strikethroughStyle: NSUnderlineStyle.single.rawValue
-                ]
-            )
-            originalShippingPriceAccessibilityText = "tidligere pris \(formatCurrency(shippingOriginalPrice, accessible: true))"
-        }
-
         let paymentAttributedText = NSMutableAttributedString(string: "\(paymentText) ")
         let logoAttachment = NSTextAttachment(image: paymentLogo)
         paymentAttributedText.append(NSAttributedString(attachment: logoAttachment))
 
         return TJTPriceViewModel(
             tradeType: tradeType,
-            price: price,
+            priceText: priceText,
             shipping: .init(
                 text: shippingText,
-                price: coloredShippingPrice,
-                priceAccessibilityText: formatCurrency(shippingPrice, accessible: true),
-                originalPrice: coloredOriginalShippingPrice,
-                originalPriceAccessibilityText: originalShippingPriceAccessibilityText
+                accessibilityText: shippingAccessibilityText
             ),
             payment: .init(
                 text: paymentAttributedText,
@@ -127,11 +99,11 @@ struct TJTPriceViewModelBuilder {
         )
     }
 
-    private func formatCurrency(_ value: Double, accessible: Bool = false) -> String {
-        let formatter = accessible ? priceAccessibilityFormatter : priceFormatter
-        guard let formattedValue = formatter.string(from: NSNumber(value: value)) else {
-            return ""
-        }
-        return "\(formattedValue) \(accessible ? "kroner" : "kr")"
-    }
+//    private func formatCurrency(_ value: Double, accessible: Bool = false) -> String {
+//        let formatter = accessible ? priceAccessibilityFormatter : priceFormatter
+//        guard let formattedValue = formatter.string(from: NSNumber(value: value)) else {
+//            return ""
+//        }
+//        return "\(formattedValue) \(accessible ? "kroner" : "kr")"
+//    }
 }
