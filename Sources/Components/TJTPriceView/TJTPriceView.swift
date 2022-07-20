@@ -43,7 +43,7 @@ public final class TJTPriceView: UIView {
     private lazy var priceStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, withAutoLayout: true)
         stackView.spacing = .spacingS
-        stackView.alignment = .lastBaseline
+        stackView.alignment = .firstBaseline
         return stackView
     }()
 
@@ -69,11 +69,18 @@ public final class TJTPriceView: UIView {
 
     private func update() {
         tradeTypeLabel.text = viewModel.tradeType
-        priceLabel.text = viewModel.price
-        shippingLabel.attributedText = viewModel.shippingText
+        priceLabel.text = viewModel.priceText
+        let style = ["tjt-price-highlight": UIColor.priceLabel.hexString]
+        shippingLabel.setText(
+            fromHTMLString: viewModel.shipping.text,
+            style: style
+        )
         paymentLabel.attributedText = viewModel.payment.text
-
-        priceLabel.accessibilityLabel = "\(viewModel.price) \(viewModel.shippingAccessibilityText)"
+        priceLabel.accessibilityLabel = "\(viewModel.priceText) \(viewModel.shipping.accessibilityText)"
         paymentLabel.accessibilityLabel = viewModel.payment.accessibilityText
     }
+}
+
+extension UIColor {
+    static let priceLabel = UIColor.dynamicColor(defaultColor: .green700, darkModeColor: .green500)
 }
