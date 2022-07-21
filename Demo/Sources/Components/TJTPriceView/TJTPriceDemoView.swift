@@ -12,7 +12,12 @@ final class TJTPriceDemoView: UIView, Tweakable {
         }),
         .init(title: "Discounted shipping", description: nil, action: { [weak self] in
             var builder = TJTPriceViewModelBuilder()
-            builder.priceText = "80 Kr"
+            builder.priceText = .setPrice("80 Kr")
+            self?.priceView.viewModel = builder.build()
+        }),
+        .init(title: "Price not set", description: nil, action: { [weak self] in
+            var builder = TJTPriceViewModelBuilder()
+            builder.priceText = .noPrice("Pris ikke satt")
             self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Long shipping text", description: nil, action: { [weak self] in
@@ -73,7 +78,7 @@ struct TJTPriceViewModelBuilder {
     }()
 
     var tradeType: String = "Til salgs"
-    var priceText: String = "999 kr"
+    var priceText: TJTPriceViewModel.PriceText = .setPrice("999 kr")
     var shippingText: String = "+ frakt <del>80</del> <span style=\"color:tjt-price-highlight\">60 kr</span>"
     var shippingAccessibilityText = "+ frakt"
     var paymentText: String = "Betal med kort eller"
