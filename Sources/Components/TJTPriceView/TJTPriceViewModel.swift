@@ -2,13 +2,13 @@ import FinniversKit
 
 public struct TJTPriceViewModel {
     public let tradeType: String
-    public let priceText: String
+    public let priceText: PriceText
     public let shipping: Shipping
     public let payment: Payment
 
     public init(
         tradeType: String,
-        priceText: String,
+        priceText: PriceText,
         shipping: Shipping,
         payment: Payment
     ) {
@@ -17,9 +17,26 @@ public struct TJTPriceViewModel {
         self.shipping = shipping
         self.payment = payment
     }
+
+    var priceString: String {
+        switch priceText {
+        case .setPrice(let price),
+             .noPrice(let price):
+            return price
+        }
+    }
+
+    var shippingAccessibilityLabel: String {
+        return shipping.accessibilityText ?? shipping.text
+    }
 }
 
 extension TJTPriceViewModel {
+    public enum PriceText {
+        case setPrice(String)
+        case noPrice(String)
+    }
+
     public struct Shipping {
         public let text: String
         public let accessibilityText: String?

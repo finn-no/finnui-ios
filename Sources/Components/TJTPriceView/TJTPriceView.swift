@@ -19,6 +19,7 @@ public final class TJTPriceView: UIView {
         let label = Label(style: .title1, withAutoLayout: true)
         label.numberOfLines = 0
         label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.textColor = .textPrimary
         return label
     }()
@@ -53,7 +54,7 @@ public final class TJTPriceView: UIView {
         self.translatesAutoresizingMaskIntoConstraints = !withAutoLayout
 
         addSubview(contentStackView)
-        contentStackView.fillInSuperview(margin: .spacingS)
+        contentStackView.fillInSuperview()
 
         contentStackView.addArrangedSubview(tradeTypeLabel)
 
@@ -69,14 +70,19 @@ public final class TJTPriceView: UIView {
 
     private func update() {
         tradeTypeLabel.text = viewModel.tradeType
-        priceLabel.text = viewModel.priceText
+        priceLabel.text = viewModel.priceString
         let style = ["tjt-price-highlight": UIColor.priceLabel.hexString]
         shippingLabel.setText(
             fromHTMLString: viewModel.shipping.text,
             style: style
         )
+        if case .noPrice = viewModel.priceText {
+            priceLabel.font = .title2Strong
+        } else {
+            priceLabel.font = .title1
+        }
         paymentLabel.attributedText = viewModel.payment.text
-        priceLabel.accessibilityLabel = "\(viewModel.priceText) \(viewModel.shipping.accessibilityText)"
+        priceLabel.accessibilityLabel = viewModel.shippingAccessibilityLabel
         paymentLabel.accessibilityLabel = viewModel.payment.accessibilityText
     }
 }
