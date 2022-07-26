@@ -1,12 +1,12 @@
 import Combine
+import UIKit
 
-public protocol SuggestShippingDelegate: AnyObject {
-    func didAskForConfirmation(with alertModel: AlertModel<Bool>) async -> Bool
-    func didRequestShipping(forAdId adId: String)
+public protocol SuggestShippingViewModelDelegate: AnyObject {
+    func didRequestShipping(suggestShippingViewModel: SuggestShippingViewModel)
 }
 
 public class SuggestShippingViewModel {
-    @Published private(set) public var isProcessing = false
+    @Published public var isProcessing = false
 
     private(set) public var title: String
     private(set) public var message: String
@@ -14,7 +14,7 @@ public class SuggestShippingViewModel {
     private(set) public var alertModel: AlertModel<Bool>
 
     private let adId: String
-    public weak var delegate: SuggestShippingDelegate?
+    public weak var delegate: SuggestShippingViewModelDelegate?
 
     public init(
         title: String,
@@ -31,16 +31,7 @@ public class SuggestShippingViewModel {
     }
 
     public func suggestShipping() {
-        Task {
-            guard
-                await delegate?.didAskForConfirmation(with: alertModel) ?? false
-            else {
-                return
-            }
-
-            isProcessing = true
-            delegate?.didRequestShipping(forAdId: adId)
-        }
+        delegate?.didRequestShipping(suggestShippingViewModel: self)
     }
 }
 
