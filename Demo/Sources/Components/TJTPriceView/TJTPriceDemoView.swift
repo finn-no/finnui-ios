@@ -82,11 +82,12 @@ struct TJTPriceViewModelBuilder {
     var shippingText: String = "+ frakt <del>80</del> <span style=\"color:tjt-price-highlight\">60 kr</span>"
     var shippingAccessibilityText = "+ frakt"
     var paymentText: String = "Betal med kort eller"
-    var paymentLogo: UIImage = UIImage(systemName: "creditcard.fill")!
+    var paymentLogo: UIImage = UIImage(named: "vippsLogo")!
     var paymentLogoText: String = "Vipps"
 
     func build() -> TJTPriceViewModel {
-        let paymentAttributedText = NSMutableAttributedString(string: "\(paymentText) ")
+        let paymentAttributedText = NSMutableAttributedString(string: "\(paymentText) ",
+                                                              attributes: [.baselineOffset: 4])
         let logoAttachment = NSTextAttachment(image: paymentLogo)
         paymentAttributedText.append(NSAttributedString(attachment: logoAttachment))
 
