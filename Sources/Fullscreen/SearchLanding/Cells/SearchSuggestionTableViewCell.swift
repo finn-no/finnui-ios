@@ -23,6 +23,8 @@ class SearchSuggestionTableViewCell: UITableViewCell {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.image = UIImage(named: .searchSmall)
         imageView.contentMode = .scaleAspectFit
+        imageView.setContentHuggingPriority(.required, for: .horizontal)
+        imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         imageView.tintColor = .textPrimary
         return imageView
     }()

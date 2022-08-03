@@ -26,7 +26,7 @@ public struct SearchListGroupItem {
 
 protocol searchListItemViewDelegate: AnyObject {
     func searchListItemViewWasSelected(_ view: SearchListGroupItemView)
-    func searchListItemViewDidSelectRemoveButton(_ view: SearchListGroupItemView)
+    //func searchListItemViewDidSelectRemoveButton(_ view: SearchListGroupItemView)
 }
 
 class SearchListGroupItemView: UIView {

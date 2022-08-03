@@ -22,7 +22,8 @@ extension Array where Element == SearchSuggestionSection {
                     SearchSuggestionGroupItem(title: "Torget til salgs", detail: "(6 073 treff)", useBoldPrefix: false),
                     SearchSuggestionGroupItem(title: "Torget gis bort", detail: "(6 treff)", useBoldPrefix: false),
                     SearchSuggestionGroupItem(title: "Torget ønskes kjøpt", detail: "(12 treff)", useBoldPrefix: false)
-                ]
+                ],
+                groupType: .regular
             )),
             .group(SearchSuggestionGroup(
                 title: "Båt",
@@ -32,7 +33,8 @@ extension Array where Element == SearchSuggestionSection {
                     SearchSuggestionGroupItem(title: "Båtmotorer til salgs", detail: "(12 treff)", useBoldPrefix: false),
                     SearchSuggestionGroupItem(title: "Båter ønskes kjøpt", detail: "(12 treff)", useBoldPrefix: false),
                     SearchSuggestionGroupItem(title: "Båter til leie", detail: "(12 treff)", useBoldPrefix: false)
-                ]
+                ],
+                groupType: .regular
             )),
             .group(SearchSuggestionGroup(
                 title: "Bil",
@@ -41,7 +43,8 @@ extension Array where Element == SearchSuggestionSection {
                     SearchSuggestionGroupItem(title: "Biler i Norge", detail: "(6 treff)", useBoldPrefix: false),
                     SearchSuggestionGroupItem(title: "Bobiler", detail: "(12 treff)", useBoldPrefix: false),
                     SearchSuggestionGroupItem(title: "Varebiler i Norge", detail: "(12 treff)", useBoldPrefix: false)
-                ]
+                ],
+                groupType: .image
             )),
             .group(SearchSuggestionGroup(
                 title: "Eiendom",
@@ -50,7 +53,8 @@ extension Array where Element == SearchSuggestionSection {
                     SearchSuggestionGroupItem(title: "Fritidstomter", detail: "(6 treff)", useBoldPrefix: false),
                     SearchSuggestionGroupItem(title: "Bolig til salgs", detail: "(12 treff)", useBoldPrefix: false),
                     SearchSuggestionGroupItem(title: "Bolig ønskes leid", detail: "(12 treff)", useBoldPrefix: false)
-                ]
+                ],
+                groupType: .regular
             )),
             .group(SearchSuggestionGroup(
                 title: "FINN foreslår",
@@ -59,7 +63,8 @@ extension Array where Element == SearchSuggestionSection {
                         title: "Leilighet med sjarm og klassisk bad og kjøkken fra 60-tallet. Må ses!",
                         useBoldPrefix: false
                     )
-                ]
+                ],
+                groupType: .regular
             ))
         ].compactMap { $0 }
     }
@@ -70,6 +75,7 @@ extension Array where Element == SearchSuggestionSection {
 private enum SuggestionStyle {
     case regular
     case highlighted
+    case image
 
     var foregroundColor: UIColor {
         switch self {
@@ -77,6 +83,8 @@ private enum SuggestionStyle {
             return .textPrimary
         case .highlighted:
             return .textAction
+        case .image:
+            return .textPrimary
         }
     }
 }
@@ -98,7 +106,7 @@ private extension SearchSuggestionGroup {
             items.append(item)
         }
 
-        return SearchSuggestionGroup(title: title, items: items)
+        return SearchSuggestionGroup(title: title, items: items, groupType: .regular)
     }
 }
 
