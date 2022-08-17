@@ -71,11 +71,7 @@ public final class TJTPriceView: UIView {
     private func update() {
         tradeTypeLabel.text = viewModel.tradeType
         priceLabel.text = viewModel.priceString
-        let style = ["tjt-price-highlight": UIColor.priceLabel.hexString]
-        shippingLabel.setText(
-            fromHTMLString: viewModel.shipping.text,
-            style: style
-        )
+        updateShippingLabel()
         if case .noPrice = viewModel.priceText {
             priceLabel.font = .title2Strong
         } else {
@@ -84,6 +80,19 @@ public final class TJTPriceView: UIView {
         paymentLabel.attributedText = viewModel.payment.text
         priceLabel.accessibilityLabel = viewModel.shippingAccessibilityLabel
         paymentLabel.accessibilityLabel = viewModel.payment.accessibilityText
+    }
+
+    private func updateShippingLabel() {
+        shippingLabel.textColor = .textPrimary
+        let style = ["tjt-price-highlight": UIColor.priceLabel.hexString]
+        shippingLabel.setText(
+            fromHTMLString: viewModel.shipping.text,
+            style: style
+        )
+    }
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateShippingLabel()
     }
 }
 
