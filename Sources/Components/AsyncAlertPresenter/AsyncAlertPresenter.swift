@@ -1,16 +1,16 @@
 import UIKit
 
 @MainActor
-class AsyncAlertPresenter<T> {
+public class AsyncAlertPresenter<T> {
     private let alertModel: AlertModel<T>
     private typealias AlertCheckedContinuation = CheckedContinuation<T, Never>
     private var alertCheckedThrowingContinuation: AlertCheckedContinuation?
 
-    init(alertModel: AlertModel<T>) {
+    public init(alertModel: AlertModel<T>) {
         self.alertModel = alertModel
     }
 
-    func presentAlert(from viewController: UIViewController) async -> T {
+    public func presentAlert(from viewController: UIViewController) async -> T {
         return await withCheckedContinuation { [weak self] (continuation: AlertCheckedContinuation) in
             guard let self = self else {
                 return
