@@ -83,20 +83,20 @@ public final class TJTPriceView: UIView {
     }
 
     private func updateShippingLabel() {
-        shippingLabel.textColor = .textPrimary
-        let style = ["tjt-price-highlight": UIColor.discountedPriceLabel.hexString]
-        shippingLabel.setText(
-            fromHTMLString: viewModel.shipping.text,
-            style: style
-        )
-    }
-
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         // This has to be dispatched to the main thread.
         // https://stackoverflow.com/questions/46881393/ios-crash-report-unexpected-start-state-exception
         DispatchQueue.main.async {
-            self.updateShippingLabel()
+            self.shippingLabel.textColor = .textPrimary
+            let style = ["tjt-price-highlight": UIColor.discountedPriceLabel.hexString]
+            self.shippingLabel.setText(
+                fromHTMLString: self.viewModel.shipping.text,
+                style: style
+            )
         }
+    }
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateShippingLabel()
     }
 }
 
