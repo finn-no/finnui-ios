@@ -118,4 +118,28 @@ class ComponentViewTests: XCTestCase {
     func testTJTPriceView() {
         snapshot(.tjtPriceView)
     }
+
+    func testTJTAccordionView() {
+        snapshot(.tjtAccordionView)
+    }
+
+    func testTimeLineView() {
+        snapshot(.timeLineView)
+    }
+
+    func testFiksFerdigAccordionView() {
+        snapshot(.fiksFerdigAccordionView)
+    }
+
+    func testHeltHjemAccordionView() {
+        snapshot(.heltHjemAccordionView)
+    }
+
+    func testSafePaymentAccordionView() {
+        snapshot(.safePaymentAccordionView)
+    }
+
+    func testTJTSideBarView() {
+        snapshot(.tjtSideBarView)
+    }
 }
