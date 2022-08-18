@@ -84,7 +84,7 @@ public final class TJTPriceView: UIView {
 
     private func updateShippingLabel() {
         shippingLabel.textColor = .textPrimary
-        let style = ["tjt-price-highlight": UIColor.priceLabel.hexString]
+        let style = ["tjt-price-highlight": UIColor.discountedPriceLabel.hexString]
         shippingLabel.setText(
             fromHTMLString: viewModel.shipping.text,
             style: style
@@ -97,5 +97,5 @@ public final class TJTPriceView: UIView {
 }
 
 extension UIColor {
-    static let priceLabel = UIColor.dynamicColor(defaultColor: .green700, darkModeColor: .green500)
+    static let discountedPriceLabel = UIColor.dynamicColor(defaultColor: .cherry, darkModeColor: UIColor(hex: "#D91F0A"))
 }
