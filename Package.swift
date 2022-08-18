@@ -12,7 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "FinniversKit", path: "../FinniversKit")
+        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", .branch("tjt-object-page"))
     ],
     targets: [
     	.target(
