@@ -92,7 +92,11 @@ public final class TJTPriceView: UIView {
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        updateShippingLabel()
+        // This has to be dispatched to the main thread.
+        // https://stackoverflow.com/questions/46881393/ios-crash-report-unexpected-start-state-exception
+        DispatchQueue.main.async {
+            self.updateShippingLabel()
+        }
     }
 }
 
