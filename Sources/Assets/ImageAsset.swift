@@ -59,9 +59,7 @@ enum ImageAsset: String {
     case favoritesSortLastAdded
     case finnLogoSimple
     case heartMini
-    case helthjemIcon
     case lock
-    case lockShield
     case mapPin
     case noImage
     case notFavorited
@@ -75,7 +73,6 @@ enum ImageAsset: String {
     case share
     case shipWithHelthjem
     case shipWithHelthjemDarkmode
-    case shipmentInTransit
     case shippingTruck
     case snowflake
     case sort
@@ -87,7 +84,10 @@ enum ImageAsset: String {
     case splashLogo
     case storyPlaceholder
     case tagMini
-    case torgetShipping
+    case tjtHelthjemIcon
+    case tjtLockShield
+    case tjtShipmentInTransit
+    case tjtTorgetShipping
     case trashcan
     case verified
     case videoChat
@@ -121,9 +121,7 @@ enum ImageAsset: String {
             .favoritesSortLastAdded,
             .finnLogoSimple,
             .heartMini,
-            .helthjemIcon,
             .lock,
-            .lockShield,
             .mapPin,
             .noImage,
             .notFavorited,
@@ -137,7 +135,6 @@ enum ImageAsset: String {
             .share,
             .shipWithHelthjem,
             .shipWithHelthjemDarkmode,
-            .shipmentInTransit,
             .shippingTruck,
             .snowflake,
             .sort,
@@ -149,7 +146,10 @@ enum ImageAsset: String {
             .splashLogo,
             .storyPlaceholder,
             .tagMini,
-            .torgetShipping,
+            .tjtHelthjemIcon,
+            .tjtLockShield,
+            .tjtShipmentInTransit,
+            .tjtTorgetShipping,
             .trashcan,
             .verified,
             .videoChat,

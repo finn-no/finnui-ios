@@ -10,7 +10,7 @@ public final class SafePaymentAccordionViewModel {
         self.timeLineItems = timeLineItems
         self.headerViewModel = TJTAccordionViewModel(
             title: headerTitle,
-            icon: UIImage(named: .lockShield),
+            icon: UIImage(named: .tjtLockShield),
             isExpanded: isExpanded
         )
     }

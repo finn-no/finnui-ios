@@ -28,7 +28,7 @@ public final class FiksFerdigAccordionViewModel {
         self.readMoreURL = readMoreURL
         self.headerViewModel = TJTAccordionViewModel(
             title: headerTitle,
-            icon: UIImage(named: .torgetShipping),
+            icon: UIImage(named: .tjtTorgetShipping),
             isExpanded: isExpanded
         )
     }

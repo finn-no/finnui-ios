@@ -10,7 +10,7 @@ public class HeltHjemAccordionViewModel {
     public init(headerTitle: String, providerName: String, message: String, isExpanded: Bool = false) {
         self.headerViewModel = TJTAccordionViewModel(
             title: headerTitle,
-            icon: UIImage(named: .shipmentInTransit),
+            icon: UIImage(named: .tjtShipmentInTransit),
             isExpanded: isExpanded
         )
         self.providerName = providerName
@@ -43,7 +43,7 @@ public final class HeltHjemAccordionView: TJTAccordionView {
     }()
 
     private let heltHjemIcon: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: .helthjemIcon))
+        let imageView = UIImageView(image: UIImage(named: .tjtHelthjemIcon))
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
