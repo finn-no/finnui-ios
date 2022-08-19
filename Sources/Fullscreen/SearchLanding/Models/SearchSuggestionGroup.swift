@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SearchSuggestionGroup {
+public struct SearchSuggestionGroup: Hashable {
     public let title: String
     public let items: [SearchSuggestionGroupItem]
     public let groupType: SearchSuggestionGroupType
@@ -18,3 +18,5 @@ public enum SearchSuggestionGroupType {
     case circularImage
     case regular
 }
+
+

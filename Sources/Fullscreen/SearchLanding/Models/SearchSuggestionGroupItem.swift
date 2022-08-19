@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SearchSuggestionGroupItem {
+public struct SearchSuggestionGroupItem: Hashable {
     public let title: NSAttributedString
     public let detail: String?
 

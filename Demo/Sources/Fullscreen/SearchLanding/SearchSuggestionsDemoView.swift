@@ -5,16 +5,16 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
 
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Search suggestions", description: "With location permission cell") { [weak self] in
-            self?.searchSuggestionsView.configure(with: .suggestions(withLocationPermission: true))
+            self?.searchLandingView.configure(with: .suggestions(withLocationPermission: true))
         },
         TweakingOption(title: "Search suggestions", description: "Without location permission cell") { [weak self] in
-            self?.searchSuggestionsView.configure(with: .suggestions())
+            self?.searchLandingView.configure(with: .suggestions())
         },
         TweakingOption(title: "Search landingpage", description: "With location permission cell") { [weak self] in
-            self?.searchSuggestionsView.configure(with: .landingPage(withLocationPermission: true))
+            self?.searchLandingView.configure(with: .landingPage(withLocationPermission: true))
         },
         TweakingOption(title: "Search landingpage", description: "Without location permission cell") { [weak self] in
-            self?.searchSuggestionsView.configure(with: .landingPage())
+            self?.searchLandingView.configure(with: .landingPage())
         }
     ]
 
@@ -23,6 +23,8 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
         view.delegate = self
         return view
     }()
+
+    private lazy var searchLandingView = SearchLandingView(withAutoLayout: true, delegate: self)
 
     // MARK: - Init
 
@@ -37,8 +39,8 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
     // MARK: - Setup
 
     private func setup() {
-        addSubview(searchSuggestionsView)
-        searchSuggestionsView.fillInSuperview()
+        addSubview(searchLandingView)
+        searchLandingView.fillInSuperview()
     }
 }
 
@@ -61,4 +63,14 @@ extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
     func searchSuggestionsViewDidScroll() {
         print("🔥🔥🔥🔥 \(#function)")
     }
+}
+
+// MARK: - Search Landing View Delegate
+extension SearchSuggestionsDemoView: SearchLandingViewDelegate {
+    func searchLandingView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String) {
+        print("🔥🔥🔥🔥 forAdWithId = \(adId)")
+        print("🔥🔥🔥🔥 \(#function)")
+    }
+
+
 }

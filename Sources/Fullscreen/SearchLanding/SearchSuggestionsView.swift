@@ -28,7 +28,7 @@ public class SearchSuggestionsView: UIView {
         tableView.register(SearchSuggestionMoreResultsTableViewCell.self)
         tableView.register(SearchSuggestionLocationPermissionCell.self)
         tableView.register(SearchSuggestionsSectionHeader.self)
-        tableView.register(SearchSuggestionImageResultTableViewCell.self)
+        //tableView.register(SearchSuggestionImageResultTableViewCell.self)
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 48
@@ -155,12 +155,13 @@ extension SearchSuggestionsView: UITableViewDataSource {
 
         switch section {
         case .group(let group):
+            /*
             if group.groupType == .image {
                 let item = group.items[indexPath.row]
                 let cell = tableView.dequeue(SearchSuggestionImageResultTableViewCell.self, for: indexPath)
                 cell.configure(with: item)
                 return cell
-            }
+            }*/
             let item = group.items[indexPath.row]
             let cell = tableView.dequeue(SearchSuggestionTableViewCell.self, for: indexPath)
             cell.configure(with: item)

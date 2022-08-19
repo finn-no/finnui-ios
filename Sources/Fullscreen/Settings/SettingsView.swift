@@ -29,7 +29,7 @@ public struct SettingsView<ViewModel: SettingsViewModel>: View {
         self.onToggle = onToggle
         self.onSelect = onSelect
     }
-
+ 
     public var body: some View {
         List {
             rows

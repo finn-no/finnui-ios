@@ -85,6 +85,7 @@ class SearchListGroupItemView: UIView {
         return button
     }()*/
 
+    /// we just need a button or icon here that is configured when the cell is made - either external link icon, remove icon or no icon
     /*
     //For the frontpage search results add this to where the button was
     private lazy var iconImageView: UIImageView = {

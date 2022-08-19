@@ -10,7 +10,7 @@ class SearchDropdownGroupItemView: UIView {
 
     // MARK: - Private properties
 
-    private let item: SearchDropdownGroupItem
+    private let item: SearchDropdownGroupItem?
     private weak var delegate: SearchDropdownGroupItemViewDelegate?
     private let imageAndButtonWidth: CGFloat = 40
     private lazy var titlesStackViewTrailingConstraint = titlesStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
@@ -80,13 +80,19 @@ class SearchDropdownGroupItemView: UIView {
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
 
+    override init(frame: CGRect) {
+        self.item = .init(title: "test", subtitle: nil, imageUrl: "https://images.finncdn.no/mmo/2022/7/vertical-0/14/0/265/322/740_158853377.jpg", showDeleteButton: false)
+        super.init(frame: frame)
+        setup()
+    }
+
     // MARK: - Setup
 
     private func setup() {
-        titleLabel.text = item.title
-        titleLabel.textColor = item.titleColor
-        subtitleLabel.text = item.subtitle
-        removeButton.isHidden = !item.showDeleteButton
+        titleLabel.text = item?.title
+        titleLabel.textColor = item?.titleColor
+        subtitleLabel.text = item?.subtitle
+        removeButton.isHidden = !(item?.showDeleteButton ?? false)
 
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
