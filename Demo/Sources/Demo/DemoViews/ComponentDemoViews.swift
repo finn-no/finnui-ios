@@ -33,7 +33,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case tjtAccordionView
     case timeLineView
     case fiksFerdigAccordionView
-    case heltHjemAccordionView
+    case shippingInfoAccordionView
     case safePaymentAccordionView
     case tjtSideBarView
     case tjtPriceView
@@ -96,8 +96,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<TimeLineDemoView>()
         case .fiksFerdigAccordionView:
             return DemoViewController<FiksFerdigAccordionDemoView>()
-        case .heltHjemAccordionView:
-            return DemoViewController<HeltHjemAccordionDemoView>()
+        case .shippingInfoAccordionView:
+            return DemoViewController<ShippingInfoAccordionDemoView>()
         case .safePaymentAccordionView:
             return DemoViewController<SafePaymentAccordionDemoView>()
         case .tjtSideBarView:

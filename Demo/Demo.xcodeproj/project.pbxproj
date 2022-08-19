@@ -85,7 +85,7 @@
 		E68E2D0D283E6BFF009C5792 /* SuggestShippingDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68E2D0C283E6BFF009C5792 /* SuggestShippingDemoView.swift */; };
 		E6AD7E61283FDD8E00C6D1CA /* ShippingRequestedDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD7E60283FDD8E00C6D1CA /* ShippingRequestedDemoView.swift */; };
 		E6ADDE6C2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */; };
-		E6ADF7F32860697700EBCA5F /* HeltHjemAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF7F22860697700EBCA5F /* HeltHjemAccordionDemoView.swift */; };
+		E6ADF7F32860697700EBCA5F /* ShippingInfoAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF7F22860697700EBCA5F /* ShippingInfoAccordionDemoView.swift */; };
 		E6ADF7F62862004F00EBCA5F /* SafePaymentAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */; };
 		E6ADF8EB28636EE700EBCA5F /* TJTSideBarDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF8EA28636EE700EBCA5F /* TJTSideBarDemoView.swift */; };
 		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
@@ -215,7 +215,7 @@
 		E68E2D0C283E6BFF009C5792 /* SuggestShippingDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestShippingDemoView.swift; sourceTree = "<group>"; };
 		E6AD7E60283FDD8E00C6D1CA /* ShippingRequestedDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingRequestedDemoView.swift; sourceTree = "<group>"; };
 		E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingRequestErrorDemoView.swift; sourceTree = "<group>"; };
-		E6ADF7F22860697700EBCA5F /* HeltHjemAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeltHjemAccordionDemoView.swift; sourceTree = "<group>"; };
+		E6ADF7F22860697700EBCA5F /* ShippingInfoAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingInfoAccordionDemoView.swift; sourceTree = "<group>"; };
 		E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafePaymentAccordionDemoView.swift; sourceTree = "<group>"; };
 		E6ADF8EA28636EE700EBCA5F /* TJTSideBarDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TJTSideBarDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
@@ -741,7 +741,7 @@
 			isa = PBXGroup;
 			children = (
 				E640A7CA285C889E002CA903 /* FiksFerdigAccordionDemoView.swift */,
-				E6ADF7F22860697700EBCA5F /* HeltHjemAccordionDemoView.swift */,
+				E6ADF7F22860697700EBCA5F /* ShippingInfoAccordionDemoView.swift */,
 				E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */,
 				E640A7C32858B0E1002CA903 /* TJTAccordionDemoView.swift */,
 				E6ADF8EA28636EE700EBCA5F /* TJTSideBarDemoView.swift */,
@@ -1015,7 +1015,7 @@
 				8D680A91CD2C95FDA6334007 /* PopularSearchesDemoView.swift in Sources */,
 				8D6809D9F29B489936910F12 /* SearchDropdownDemoView.swift in Sources */,
 				8D68046EF3BCAE82CA1D838A /* PromotedRealestateCellDemoView.swift in Sources */,
-				E6ADF7F32860697700EBCA5F /* HeltHjemAccordionDemoView.swift in Sources */,
+				E6ADF7F32860697700EBCA5F /* ShippingInfoAccordionDemoView.swift in Sources */,
 				5DE2A0AC27C4DB84002E2EDA /* RecommendationEmptyDemoView.swift in Sources */,
 				171E41C1286302D400A4FE2C /* TJTPriceDemoView.swift in Sources */,
 				ADC5C001F9CB596AAA8A6766 /* AdTipsCollapsibleDemoView.swift in Sources */,

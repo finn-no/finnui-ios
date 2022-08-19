@@ -6,12 +6,12 @@ public protocol TJTSideBarViewModelDelegate: AnyObject {
 
 public final class TJTSideBarViewModel {
     public let fiksFerdigViewModel: FiksFerdigAccordionViewModel
-    public let shippingAlternativesViewModel: HeltHjemAccordionViewModel
+    public let shippingAlternativesViewModel: ShippingInfoAccordionViewModel
     public let safePaymentViewModel: SafePaymentAccordionViewModel
 
     public weak var delegate: TJTSideBarViewModelDelegate?
 
-    public init(fiksFerdigViewModel: FiksFerdigAccordionViewModel, shippingAlternativesViewModel: HeltHjemAccordionViewModel, safePaymentViewModel: SafePaymentAccordionViewModel) {
+    public init(fiksFerdigViewModel: FiksFerdigAccordionViewModel, shippingAlternativesViewModel: ShippingInfoAccordionViewModel, safePaymentViewModel: SafePaymentAccordionViewModel) {
         self.fiksFerdigViewModel = fiksFerdigViewModel
         self.shippingAlternativesViewModel = shippingAlternativesViewModel
         self.safePaymentViewModel = safePaymentViewModel

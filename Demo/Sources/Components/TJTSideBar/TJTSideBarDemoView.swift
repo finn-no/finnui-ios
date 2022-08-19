@@ -18,8 +18,9 @@ final class TJTSideBarDemoView: UIView {
             isExpanded: true
         )
 
-        let helthjemViewModel = HeltHjemAccordionViewModel(
+        let helthjemViewModel = ShippingInfoAccordionViewModel(
             headerTitle: "Varen sendes med",
+            provider: .heltHjem,
             providerName: "Helthjem",
             message: "Du betaler 60 kr for frakten",
             isExpanded: true

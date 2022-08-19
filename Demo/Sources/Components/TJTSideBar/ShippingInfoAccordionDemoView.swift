@@ -1,11 +1,12 @@
 import FinniversKit
 @testable import FinnUI
 
-final class HeltHjemAccordionDemoView: UIView, Tweakable {
+final class ShippingInfoAccordionDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Single lined text") { [unowned self] in
-            let viewModel = HeltHjemAccordionViewModel(
+            let viewModel = ShippingInfoAccordionViewModel(
                 headerTitle: "Varen sendes med",
+                provider: .heltHjem,
                 providerName: "Helthjem",
                 message: "Du betaler 60 kr for frakten",
                 isExpanded: true
@@ -13,8 +14,9 @@ final class HeltHjemAccordionDemoView: UIView, Tweakable {
             setup(with: viewModel)
         },
         TweakingOption(title: "Multilined text") { [unowned self] in
-             let viewModel = HeltHjemAccordionViewModel(
+             let viewModel = ShippingInfoAccordionViewModel(
                 headerTitle: "Varen sendes med",
+                provider: .heltHjem,
                 providerName: "Helthjem idjaisj daj id aisdijasid as asduhsahdahsd daijsidj asja",
                 message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias",
                 isExpanded: true
@@ -23,7 +25,7 @@ final class HeltHjemAccordionDemoView: UIView, Tweakable {
         }
     ]
 
-    var viewModel: HeltHjemAccordionViewModel?
+    var viewModel: ShippingInfoAccordionViewModel?
     var accordionView: HeltHjemAccordionView?
 
     override init(frame: CGRect) {
@@ -35,7 +37,7 @@ final class HeltHjemAccordionDemoView: UIView, Tweakable {
 
     // MARK: - Setup
 
-    private func setup(with viewModel: HeltHjemAccordionViewModel) {
+    private func setup(with viewModel: ShippingInfoAccordionViewModel) {
         accordionView?.removeFromSuperview()
 
         let accordionView = HeltHjemAccordionView(
@@ -59,7 +61,7 @@ final class HeltHjemAccordionDemoView: UIView, Tweakable {
     }
 }
 
-extension HeltHjemAccordionDemoView: TJTAccordionViewModelDelegate {
+extension ShippingInfoAccordionDemoView: TJTAccordionViewModelDelegate {
     func didChangeExpandedState(isExpanded: Bool) {
         print("didChangeExpandedState: \(isExpanded)")
     }

@@ -131,8 +131,8 @@ class ComponentViewTests: XCTestCase {
         snapshot(.fiksFerdigAccordionView)
     }
 
-    func testHeltHjemAccordionView() {
-        snapshot(.heltHjemAccordionView)
+    func testShippingInfoAccordionView() {
+        snapshot(.shippingInfoAccordionView)
     }
 
     func testSafePaymentAccordionView() {

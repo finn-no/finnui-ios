@@ -2,24 +2,39 @@ import Combine
 import FinniversKit
 import UIKit
 
-public class HeltHjemAccordionViewModel {
+public class ShippingInfoAccordionViewModel {
+    public let provider: ShippingProvider
     public let providerName: String
     public let message: String
     public let headerViewModel: TJTAccordionViewModel
 
-    public init(headerTitle: String, providerName: String, message: String, isExpanded: Bool = false) {
+    public init(
+        headerTitle: String,
+        provider: ShippingProvider,
+        providerName: String,
+        message: String,
+        isExpanded: Bool = false
+    ) {
         self.headerViewModel = TJTAccordionViewModel(
             title: headerTitle,
             icon: UIImage(named: .tjtShipmentInTransit),
             isExpanded: isExpanded
         )
+        self.provider = provider
         self.providerName = providerName
         self.message = message
     }
 }
 
+extension ShippingInfoAccordionViewModel {
+    public enum ShippingProvider {
+        case heltHjem
+        case postnord
+    }
+}
+
 public final class HeltHjemAccordionView: TJTAccordionView {
-    private let viewModel: HeltHjemAccordionViewModel
+    private let viewModel: ShippingInfoAccordionViewModel
 
     private let providerLabel: Label = {
         let label = Label(style: .captionStrong, withAutoLayout: true)
@@ -42,15 +57,24 @@ public final class HeltHjemAccordionView: TJTAccordionView {
         return stackView
     }()
 
-    private let heltHjemIcon: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: .tjtHelthjemIcon))
+    private var providerIcon: UIImage {
+        switch viewModel.provider {
+        case .heltHjem:
+            return UIImage(named: .tjtHelthjemIcon)
+        case .postnord:
+            return UIImage(named: .tjtPostnordIcon)
+        }
+    }
+
+    private let providerIconView: UIImageView = {
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
     private let textContainerStackView = UIStackView(axis: .vertical)
 
-    public init(viewModel: HeltHjemAccordionViewModel, withAutoLayout: Bool = false) {
+    public init(viewModel: ShippingInfoAccordionViewModel, withAutoLayout: Bool = false) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel.headerViewModel, withAutolayout: withAutoLayout)
         setup()
@@ -61,12 +85,13 @@ public final class HeltHjemAccordionView: TJTAccordionView {
     }
 
     private func setup() {
+        providerIconView.image = providerIcon
         providerLabel.text = viewModel.providerName
         messageLabel.text = viewModel.message
 
         providerLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        heltHjemIcon.setContentHuggingPriority(.required, for: .horizontal)
-        heltHjemIcon.setContentCompressionResistancePriority(.required, for: .horizontal)
+        providerIconView.setContentHuggingPriority(.required, for: .horizontal)
+        providerIconView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         textContainerStackView.addArrangedSubviews([
             providerLabel,
@@ -74,7 +99,7 @@ public final class HeltHjemAccordionView: TJTAccordionView {
         ])
 
         containerStackView.addArrangedSubviews([
-            heltHjemIcon,
+            providerIconView,
             textContainerStackView
         ])
 
