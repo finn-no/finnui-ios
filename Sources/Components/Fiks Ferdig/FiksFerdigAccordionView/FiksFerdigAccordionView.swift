@@ -2,30 +2,8 @@ import Combine
 import FinniversKit
 import UIKit
 
-public protocol TJTAccordionViewModelDelegate: AnyObject {
-    func didChangeExpandedState(isExpanded: Bool)
-}
-
-public final class TJTAccordionViewModel: ObservableObject {
-    public let title: String
-    public let icon: UIImage
-    @Published public var isExpanded: Bool {
-        didSet {
-            delegate?.didChangeExpandedState(isExpanded: isExpanded)
-        }
-    }
-
-    public weak var delegate: TJTAccordionViewModelDelegate?
-
-    public init(title: String, icon: UIImage, isExpanded: Bool) {
-        self.title = title
-        self.icon = icon
-        self.isExpanded = isExpanded
-    }
-}
-
-public class TJTAccordionView: UIStackView {
-    private let viewModel: TJTAccordionViewModel
+public class FiksFerdigAccordionView: UIStackView {
+    private let viewModel: FiksFerdigAccordionViewModel
     private var cancellable: AnyCancellable?
 
     private lazy var headerStackView: UIStackView = {
@@ -95,7 +73,7 @@ public class TJTAccordionView: UIStackView {
 
     private lazy var containerEnclosingView = UIStackView(axis: .vertical)
 
-    public init(viewModel: TJTAccordionViewModel, withAutolayout: Bool = false) {
+    public init(viewModel: FiksFerdigAccordionViewModel, withAutolayout: Bool = false) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutolayout

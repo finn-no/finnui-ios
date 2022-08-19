@@ -30,13 +30,13 @@ public enum ComponentDemoViews: String, DemoViews {
     case suggestShippingView
     case shippingRequestedView
     case shippingRequestErrorView
-    case tjtAccordionView
-    case timeLineView
     case fiksFerdigAccordionView
-    case shippingInfoAccordionView
-    case safePaymentAccordionView
-    case tjtSideBarView
-    case tjtPriceView
+    case timeLineView
+    case fiksFerdigServiceInfoView
+    case fiksFerdigShippingInfoView
+    case fiksFerdigSafePaymentInfoView
+    case fiksFerdigInfoView
+    case fiksFerdigPriceView
 
     public var viewController: UIViewController {
         switch self {
@@ -84,8 +84,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<RecommendationEmptyDemoView>()
         case .fadedExpandableView:
             return DemoViewController<FadedExpandableDemoView>()
-        case .tjtAccordionView:
-            return DemoViewController<TJTAccordionDemoView>()
+        case .fiksFerdigAccordionView:
+            return DemoViewController<FiksFerdigAccordionDemoView>()
         case .suggestShippingView:
             return DemoViewController<SuggestShippingDemoView>()
         case .shippingRequestedView:
@@ -94,16 +94,16 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<ShippingRequestErrorDemoView>()
         case .timeLineView:
             return DemoViewController<TimeLineDemoView>()
-        case .fiksFerdigAccordionView:
-            return DemoViewController<FiksFerdigAccordionDemoView>()
-        case .shippingInfoAccordionView:
-            return DemoViewController<ShippingInfoAccordionDemoView>()
-        case .safePaymentAccordionView:
-            return DemoViewController<SafePaymentAccordionDemoView>()
-        case .tjtSideBarView:
-            return DemoViewController<TJTSideBarDemoView>()
-        case .tjtPriceView:
-            return DemoViewController<TJTPriceDemoView>()
+        case .fiksFerdigServiceInfoView:
+            return DemoViewController<FiksFerdigServiceInfoDemoView>()
+        case .fiksFerdigShippingInfoView:
+            return DemoViewController<FiksFerdigShippingInfoDemoView>()
+        case .fiksFerdigSafePaymentInfoView:
+            return DemoViewController<FiksFerdigShippingInfoDemoView>()
+        case .fiksFerdigInfoView:
+            return DemoViewController<FiksFerdigInfoDemoView>()
+        case .fiksFerdigPriceView:
+            return DemoViewController<FiksFerdigPriceDemoView>()
         }
     }
 }

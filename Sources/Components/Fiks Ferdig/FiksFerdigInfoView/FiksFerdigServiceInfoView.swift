@@ -2,17 +2,17 @@ import Combine
 import FinniversKit
 import UIKit
 
-public protocol FiksFerdigAccordionViewModelDelegate: AnyObject {
+public protocol FiksFerdigServiceInfoViewModelDelegate: AnyObject {
     func didTapReadMoreURL(_ url: URL)
 }
 
-public final class FiksFerdigAccordionViewModel {
+public final class FiksFerdigServiceInfoViewModel {
     public let message: String
     public let timeLineItems: [TimeLineItem]
     public let readMoreTitle: String
     public let readMoreURL: URL
-    public let headerViewModel: TJTAccordionViewModel
-    public weak var delegate: FiksFerdigAccordionViewModelDelegate?
+    public let headerViewModel: FiksFerdigAccordionViewModel
+    public weak var delegate: FiksFerdigServiceInfoViewModelDelegate?
 
     public init(
         headerTitle: String,
@@ -26,7 +26,7 @@ public final class FiksFerdigAccordionViewModel {
         self.timeLineItems = timeLineItems
         self.readMoreTitle = readMoreTitle
         self.readMoreURL = readMoreURL
-        self.headerViewModel = TJTAccordionViewModel(
+        self.headerViewModel = FiksFerdigAccordionViewModel(
             title: headerTitle,
             icon: UIImage(named: .tjtTorgetShipping),
             isExpanded: isExpanded
@@ -38,8 +38,8 @@ public final class FiksFerdigAccordionViewModel {
     }
 }
 
-public final class FiksFerdigAccordionView: TJTAccordionView {
-    private let viewModel: FiksFerdigAccordionViewModel
+public final class FiksFerdigServiceInfoView: FiksFerdigAccordionView {
+    private let viewModel: FiksFerdigServiceInfoViewModel
     private let dottedIndicatorProvider = DottedTimeLineIndicatorProvider(font: .caption)
     private let messageLabel: Label = {
         let label = Label(style: .body, withAutoLayout: true)
@@ -66,7 +66,7 @@ public final class FiksFerdigAccordionView: TJTAccordionView {
         return button
     }()
 
-    public init(viewModel: FiksFerdigAccordionViewModel, withAutoLayout: Bool = false) {
+    public init(viewModel: FiksFerdigServiceInfoViewModel, withAutoLayout: Bool = false) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel.headerViewModel, withAutolayout: withAutoLayout)
         setup()

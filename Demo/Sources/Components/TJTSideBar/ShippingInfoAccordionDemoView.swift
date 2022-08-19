@@ -1,10 +1,10 @@
 import FinniversKit
 @testable import FinnUI
 
-final class ShippingInfoAccordionDemoView: UIView, Tweakable {
+final class FiksFerdigShippingInfoDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Single lined text") { [unowned self] in
-            let viewModel = ShippingInfoAccordionViewModel(
+            let viewModel = FiksFerdigShippingInfoViewModel(
                 headerTitle: "Varen sendes med",
                 provider: .heltHjem,
                 providerName: "Helthjem",
@@ -14,7 +14,7 @@ final class ShippingInfoAccordionDemoView: UIView, Tweakable {
             setup(with: viewModel)
         },
         TweakingOption(title: "Multilined text") { [unowned self] in
-             let viewModel = ShippingInfoAccordionViewModel(
+             let viewModel = FiksFerdigShippingInfoViewModel(
                 headerTitle: "Varen sendes med",
                 provider: .heltHjem,
                 providerName: "Helthjem idjaisj daj id aisdijasid as asduhsahdahsd daijsidj asja",
@@ -25,8 +25,8 @@ final class ShippingInfoAccordionDemoView: UIView, Tweakable {
         }
     ]
 
-    var viewModel: ShippingInfoAccordionViewModel?
-    var accordionView: HeltHjemAccordionView?
+    var viewModel: FiksFerdigShippingInfoViewModel!
+    var accordionView: FiksFerdigShippingInfoView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,10 +37,10 @@ final class ShippingInfoAccordionDemoView: UIView, Tweakable {
 
     // MARK: - Setup
 
-    private func setup(with viewModel: ShippingInfoAccordionViewModel) {
+    private func setup(with viewModel: FiksFerdigShippingInfoViewModel) {
         accordionView?.removeFromSuperview()
 
-        let accordionView = HeltHjemAccordionView(
+        let accordionView = FiksFerdigShippingInfoView(
             viewModel: viewModel,
             withAutoLayout: true
         )
@@ -61,7 +61,7 @@ final class ShippingInfoAccordionDemoView: UIView, Tweakable {
     }
 }
 
-extension ShippingInfoAccordionDemoView: TJTAccordionViewModelDelegate {
+extension FiksFerdigShippingInfoDemoView: FiksFerdigAccordionViewModelDelegate {
     func didChangeExpandedState(isExpanded: Bool) {
         print("didChangeExpandedState: \(isExpanded)")
     }

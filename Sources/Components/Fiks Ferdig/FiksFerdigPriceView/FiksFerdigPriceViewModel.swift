@@ -1,6 +1,6 @@
 import FinniversKit
 
-public struct TJTPriceViewModel {
+public struct FiksFerdigPriceViewModel {
     public let tradeType: String
     public let priceText: PriceText
     public let shipping: Shipping
@@ -31,7 +31,7 @@ public struct TJTPriceViewModel {
     }
 }
 
-extension TJTPriceViewModel {
+extension FiksFerdigPriceViewModel {
     public enum PriceText {
         case setPrice(String)
         case noPrice(String)

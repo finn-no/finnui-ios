@@ -115,31 +115,31 @@ class ComponentViewTests: XCTestCase {
         snapshot(.shippingRequestErrorView)
     }
 
-    func testTJTPriceView() {
-        snapshot(.tjtPriceView)
-    }
-
-    func testTJTAccordionView() {
-        snapshot(.tjtAccordionView)
-    }
-
-    func testTimeLineView() {
-        snapshot(.timeLineView)
+    func testFiksFerdigPriceView() {
+        snapshot(.fiksFerdigPriceView)
     }
 
     func testFiksFerdigAccordionView() {
         snapshot(.fiksFerdigAccordionView)
     }
 
-    func testShippingInfoAccordionView() {
-        snapshot(.shippingInfoAccordionView)
+    func testTimeLineView() {
+        snapshot(.timeLineView)
     }
 
-    func testSafePaymentAccordionView() {
-        snapshot(.safePaymentAccordionView)
+    func testFiksFerdigServiceInfoView() {
+        snapshot(.fiksFerdigServiceInfoView)
     }
 
-    func testTJTSideBarView() {
-        snapshot(.tjtSideBarView)
+    func testFiksFerdigShippingInfoView() {
+        snapshot(.fiksFerdigShippingInfoView)
+    }
+
+    func testFiksFerdigSafePaymentInfoView() {
+        snapshot(.fiksFerdigSafePaymentInfoView)
+    }
+
+    func testFiksFerdigInfoView() {
+        snapshot(.fiksFerdigInfoView)
     }
 }

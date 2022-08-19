@@ -1,40 +1,40 @@
 import FinniversKit
 import FinnUI
 
-final class TJTPriceDemoView: UIView, Tweakable {
-    let priceView: TJTPriceView
+final class FiksFerdigPriceDemoView: UIView, Tweakable {
+    let priceView: FiksFerdigPriceView
 
     lazy var tweakingOptions: [TweakingOption] = [
         .init(title: "Normal shipping", description: nil, action: { [weak self] in
-            var builder = TJTPriceViewModelBuilder()
+            var builder = FiksFerdigPriceViewModelBuilder()
             builder.shippingText = "+ frakt 80 kr"
             self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Discounted shipping", description: nil, action: { [weak self] in
-            var builder = TJTPriceViewModelBuilder()
+            var builder = FiksFerdigPriceViewModelBuilder()
             builder.priceText = .setPrice("80 Kr")
             self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Price not set", description: nil, action: { [weak self] in
-            var builder = TJTPriceViewModelBuilder()
+            var builder = FiksFerdigPriceViewModelBuilder()
             builder.priceText = .noPrice("Pris ikke satt")
             self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Long shipping text", description: nil, action: { [weak self] in
-            var builder = TJTPriceViewModelBuilder()
+            var builder = FiksFerdigPriceViewModelBuilder()
             builder.shippingText = "+ frakt <del>80</del> <span style=\"color:tjt-price-highlight\">60 kr</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis."
             self?.priceView.viewModel = builder.build()
         }),
         .init(title: "Long payment info", description: nil, action: { [weak self] in
-            var builder = TJTPriceViewModelBuilder()
+            var builder = FiksFerdigPriceViewModelBuilder()
             builder.paymentText = "Betal med kort eller Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis."
             self?.priceView.viewModel = builder.build()
         }),
     ]
 
     override init(frame: CGRect) {
-        self.priceView = TJTPriceView(
-            viewModel: TJTPriceViewModelBuilder().build(),
+        self.priceView = FiksFerdigPriceView(
+            viewModel: FiksFerdigPriceViewModelBuilder().build(),
             withAutoLayout: true
         )
         super.init(frame: frame)
@@ -56,7 +56,7 @@ final class TJTPriceDemoView: UIView, Tweakable {
     }
 }
 
-struct TJTPriceViewModelBuilder {
+struct FiksFerdigPriceViewModelBuilder {
     let priceFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -78,20 +78,20 @@ struct TJTPriceViewModelBuilder {
     }()
 
     var tradeType: String = "Til salgs"
-    var priceText: TJTPriceViewModel.PriceText = .setPrice("999 kr")
+    var priceText: FiksFerdigPriceViewModel.PriceText = .setPrice("999 kr")
     var shippingText: String = "+ frakt <del>80</del> <span style=\"color:tjt-price-highlight\">60 kr</span>"
     var shippingAccessibilityText = "+ frakt"
     var paymentText: String = "Betal med kort eller"
     var paymentLogo: UIImage = UIImage(named: "vippsLogo")!
     var paymentLogoText: String = "Vipps"
 
-    func build() -> TJTPriceViewModel {
+    func build() -> FiksFerdigPriceViewModel {
         let paymentAttributedText = NSMutableAttributedString(string: "\(paymentText) ",
                                                               attributes: [.baselineOffset: 4])
         let logoAttachment = NSTextAttachment(image: paymentLogo)
         paymentAttributedText.append(NSAttributedString(attachment: logoAttachment))
 
-        return TJTPriceViewModel(
+        return FiksFerdigPriceViewModel(
             tradeType: tradeType,
             priceText: priceText,
             shipping: .init(
@@ -104,12 +104,4 @@ struct TJTPriceViewModelBuilder {
             )
         )
     }
-
-//    private func formatCurrency(_ value: Double, accessible: Bool = false) -> String {
-//        let formatter = accessible ? priceAccessibilityFormatter : priceFormatter
-//        guard let formattedValue = formatter.string(from: NSNumber(value: value)) else {
-//            return ""
-//        }
-//        return "\(formattedValue) \(accessible ? "kroner" : "kr")"
-//    }
 }

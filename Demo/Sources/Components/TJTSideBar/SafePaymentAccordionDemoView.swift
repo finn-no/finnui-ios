@@ -1,10 +1,10 @@
 import FinniversKit
 @testable import FinnUI
 
-final class SafePaymentAccordionDemoView: UIView, Tweakable {
+final class FiksFerdigSafePaymentInfoDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Single lined text") { [unowned self] in
-            let viewModel = SafePaymentAccordionViewModel(
+            let viewModel = FiksFerdigSafePaymentInfoViewModel(
                 headerTitle: "Trygg betaling",
                 timeLineItems: [
                     TimeLineItem(title: "Betal med Vipps eller kort"),
@@ -16,7 +16,7 @@ final class SafePaymentAccordionDemoView: UIView, Tweakable {
             setup(with: viewModel)
         },
         TweakingOption(title: "Multilined text") { [unowned self] in
-            let viewModel = SafePaymentAccordionViewModel(
+            let viewModel = FiksFerdigSafePaymentInfoViewModel(
                 headerTitle: "Trygg betaling",
                 timeLineItems: [
                     TimeLineItem(title: "Betal med Vipps eller kort Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
@@ -29,7 +29,7 @@ final class SafePaymentAccordionDemoView: UIView, Tweakable {
         }
     ]
 
-    var accordionView: SafePaymentAccordionView?
+    var accordionView: FiksFerdigSafePaymentInfoView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,10 +40,10 @@ final class SafePaymentAccordionDemoView: UIView, Tweakable {
 
     // MARK: - Setup
 
-    private func setup(with viewModel: SafePaymentAccordionViewModel) {
+    private func setup(with viewModel: FiksFerdigSafePaymentInfoViewModel) {
         accordionView?.removeFromSuperview()
 
-        let accordionView = SafePaymentAccordionView(
+        let accordionView = FiksFerdigSafePaymentInfoView(
             viewModel: viewModel,
             withAutoLayout: true
         )
@@ -63,7 +63,7 @@ final class SafePaymentAccordionDemoView: UIView, Tweakable {
     }
 }
 
-extension SafePaymentAccordionDemoView: TJTAccordionViewModelDelegate {
+extension FiksFerdigSafePaymentInfoDemoView: FiksFerdigAccordionViewModelDelegate {
     func didChangeExpandedState(isExpanded: Bool) {
         print("didChangeExpandedState: \(isExpanded)")
     }

@@ -1,17 +1,17 @@
 import FinniversKit
 import FinnUI
 
-final class TJTAccordionDemoView: UIView {
-    var viewModel: TJTAccordionViewModel
-    let accordionView: TJTAccordionView
+final class FiksFerdigAccordionDemoView: UIView {
+    var viewModel: FiksFerdigAccordionViewModel
+    let accordionView: FiksFerdigAccordionView
 
     override init(frame: CGRect) {
-        self.viewModel = TJTAccordionViewModel(
+        self.viewModel = FiksFerdigAccordionViewModel(
             title: "Fiks ferdig",
             icon: UIImage(systemName: "shippingbox")!,
             isExpanded: true
         )
-        self.accordionView = TJTAccordionView(
+        self.accordionView = FiksFerdigAccordionView(
             viewModel: viewModel,
             withAutolayout: true
         )

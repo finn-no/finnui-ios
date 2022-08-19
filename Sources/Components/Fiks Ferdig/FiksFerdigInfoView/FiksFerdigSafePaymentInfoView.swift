@@ -2,13 +2,13 @@ import Combine
 import FinniversKit
 import UIKit
 
-public final class SafePaymentAccordionViewModel {
+public final class FiksFerdigSafePaymentInfoViewModel {
     public let timeLineItems: [TimeLineItem]
-    public let headerViewModel: TJTAccordionViewModel
+    public let headerViewModel: FiksFerdigAccordionViewModel
 
     public init(headerTitle: String, timeLineItems: [TimeLineItem], isExpanded: Bool = false) {
         self.timeLineItems = timeLineItems
-        self.headerViewModel = TJTAccordionViewModel(
+        self.headerViewModel = FiksFerdigAccordionViewModel(
             title: headerTitle,
             icon: UIImage(named: .tjtLockShield),
             isExpanded: isExpanded
@@ -16,8 +16,8 @@ public final class SafePaymentAccordionViewModel {
     }
 }
 
-public final class SafePaymentAccordionView: TJTAccordionView {
-    private let viewModel: SafePaymentAccordionViewModel
+public final class FiksFerdigSafePaymentInfoView: FiksFerdigAccordionView {
+    private let viewModel: FiksFerdigSafePaymentInfoViewModel
     private let simpleIndicatorProvider = SimpleTimeLineIndicatorProvider(font: .caption)
 
     private lazy var timeLineView: TimeLineView = {
@@ -30,7 +30,7 @@ public final class SafePaymentAccordionView: TJTAccordionView {
         return timeLineView
     }()
 
-    public init(viewModel: SafePaymentAccordionViewModel, withAutoLayout: Bool = false) {
+    public init(viewModel: FiksFerdigSafePaymentInfoViewModel, withAutoLayout: Bool = false) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel.headerViewModel, withAutolayout: withAutoLayout)
         setup()

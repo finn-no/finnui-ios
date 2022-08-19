@@ -1,9 +1,9 @@
 import FinniversKit
 import FinnUI
 
-final class FiksFerdigAccordionDemoView: UIView {
-    var viewModel: FiksFerdigAccordionViewModel
-    let accordionView: FiksFerdigAccordionView!
+final class FiksFerdigServiceInfoDemoView: UIView {
+    var viewModel: FiksFerdigServiceInfoViewModel
+    let accordionView: FiksFerdigServiceInfoView!
 
     override init(frame: CGRect) {
         let timelineItems = [
@@ -11,7 +11,7 @@ final class FiksFerdigAccordionDemoView: UIView {
             TimeLineItem(title: "Varen leveres hjem til deg"),
             TimeLineItem(title: "Du har 24 timer til å sjekke varen"),
         ]
-        self.viewModel = FiksFerdigAccordionViewModel(
+        self.viewModel = FiksFerdigServiceInfoViewModel(
             headerTitle: "Fiks ferdig",
             message: "Enkel betaling og frakt gjennom FINN",
             timeLineItems: timelineItems,
@@ -19,7 +19,7 @@ final class FiksFerdigAccordionDemoView: UIView {
             readMoreURL: URL(string: "https://finn.no")!,
             isExpanded: true
         )
-        self.accordionView = FiksFerdigAccordionView(
+        self.accordionView = FiksFerdigServiceInfoView(
             viewModel: viewModel,
             withAutoLayout: true
         )
@@ -47,7 +47,7 @@ final class FiksFerdigAccordionDemoView: UIView {
     }
 }
 
-extension FiksFerdigAccordionDemoView: FiksFerdigAccordionViewModelDelegate {
+extension FiksFerdigServiceInfoDemoView: FiksFerdigServiceInfoViewModelDelegate {
     func didTapReadMoreURL(_ url: URL) {
         print("🎉 did tap read more URL")
     }

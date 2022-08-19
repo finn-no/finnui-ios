@@ -1,11 +1,11 @@
 import FinnUI
 import UIKit
 
-final class TJTSideBarDemoView: UIView {
-    var sidebar: TJTSideBar
+final class FiksFerdigInfoDemoView: UIView {
+    var sidebar: FiksFerdigInfoView
 
     override init(frame: CGRect) {
-        let fiksFerdigViewModel = FiksFerdigAccordionViewModel(
+        let serviceInfoViewModel = FiksFerdigServiceInfoViewModel(
             headerTitle: "Fiks ferdig",
             message: "Enkel betaling og frakt gjennom FINN",
             timeLineItems: [
@@ -18,7 +18,7 @@ final class TJTSideBarDemoView: UIView {
             isExpanded: true
         )
 
-        let helthjemViewModel = ShippingInfoAccordionViewModel(
+        let shippingInfoViewModel = FiksFerdigShippingInfoViewModel(
             headerTitle: "Varen sendes med",
             provider: .heltHjem,
             providerName: "Helthjem",
@@ -26,7 +26,7 @@ final class TJTSideBarDemoView: UIView {
             isExpanded: true
         )
 
-        let safePaymentViewModel = SafePaymentAccordionViewModel(
+        let safePaymentInfoViewModel = FiksFerdigSafePaymentInfoViewModel(
             headerTitle: "Trygg betaling",
             timeLineItems: [
                 TimeLineItem(title: "Betal med Vipps eller kort"),
@@ -36,13 +36,13 @@ final class TJTSideBarDemoView: UIView {
             isExpanded: true
         )
 
-        let viewModel = TJTSideBarViewModel(
-            fiksFerdigViewModel: fiksFerdigViewModel,
-            shippingAlternativesViewModel: helthjemViewModel,
-            safePaymentViewModel: safePaymentViewModel
+        let viewModel = FiksFerdigInfoViewModel(
+            serviceInfoViewModel: serviceInfoViewModel,
+            shippingInfoViewModel: shippingInfoViewModel,
+            safePaymentInfoViewModel: safePaymentInfoViewModel
         )
 
-        sidebar = TJTSideBar(viewModel: viewModel, withAutoLayout: true)
+        sidebar = FiksFerdigInfoView(viewModel: viewModel, withAutoLayout: true)
 
         super.init(frame: frame)
 

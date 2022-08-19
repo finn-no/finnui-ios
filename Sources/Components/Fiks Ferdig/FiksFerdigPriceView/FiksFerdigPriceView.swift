@@ -1,7 +1,7 @@
 import FinniversKit
 
-public final class TJTPriceView: UIView {
-    public var viewModel: TJTPriceViewModel {
+public final class FiksFerdigPriceView: UIView {
+    public var viewModel: FiksFerdigPriceViewModel {
         didSet {
             update()
         }
@@ -48,7 +48,7 @@ public final class TJTPriceView: UIView {
         return stackView
     }()
 
-    public init(viewModel: TJTPriceViewModel, withAutoLayout: Bool = false) {
+    public init(viewModel: FiksFerdigPriceViewModel, withAutoLayout: Bool = false) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = !withAutoLayout

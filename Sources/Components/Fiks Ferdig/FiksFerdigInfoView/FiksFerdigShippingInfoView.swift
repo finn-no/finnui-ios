@@ -2,11 +2,11 @@ import Combine
 import FinniversKit
 import UIKit
 
-public class ShippingInfoAccordionViewModel {
+public class FiksFerdigShippingInfoViewModel {
     public let provider: ShippingProvider
     public let providerName: String
     public let message: String
-    public let headerViewModel: TJTAccordionViewModel
+    public let headerViewModel: FiksFerdigAccordionViewModel
 
     public init(
         headerTitle: String,
@@ -15,7 +15,7 @@ public class ShippingInfoAccordionViewModel {
         message: String,
         isExpanded: Bool = false
     ) {
-        self.headerViewModel = TJTAccordionViewModel(
+        self.headerViewModel = FiksFerdigAccordionViewModel(
             title: headerTitle,
             icon: UIImage(named: .tjtShipmentInTransit),
             isExpanded: isExpanded
@@ -26,15 +26,15 @@ public class ShippingInfoAccordionViewModel {
     }
 }
 
-extension ShippingInfoAccordionViewModel {
+extension FiksFerdigShippingInfoViewModel {
     public enum ShippingProvider {
         case heltHjem
         case postnord
     }
 }
 
-public final class HeltHjemAccordionView: TJTAccordionView {
-    private let viewModel: ShippingInfoAccordionViewModel
+public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
+    private let viewModel: FiksFerdigShippingInfoViewModel
 
     private let providerLabel: Label = {
         let label = Label(style: .captionStrong, withAutoLayout: true)
@@ -74,7 +74,7 @@ public final class HeltHjemAccordionView: TJTAccordionView {
 
     private let textContainerStackView = UIStackView(axis: .vertical)
 
-    public init(viewModel: ShippingInfoAccordionViewModel, withAutoLayout: Bool = false) {
+    public init(viewModel: FiksFerdigShippingInfoViewModel, withAutoLayout: Bool = false) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel.headerViewModel, withAutolayout: withAutoLayout)
         setup()
