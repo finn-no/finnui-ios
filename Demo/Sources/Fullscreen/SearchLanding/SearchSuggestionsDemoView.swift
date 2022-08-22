@@ -24,14 +24,14 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
         return view
     }()
 
-    private lazy var searchLandingView = SearchLandingView(withAutoLayout: true, delegate: self)
+    private lazy var searchLandingView = SearchLandingView(withAutoLayout: true, delegate: self, remoteImageViewDataSource: self)
 
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        tweakingOptions.last?.action?()
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -73,4 +73,42 @@ extension SearchSuggestionsDemoView: SearchLandingViewDelegate {
     }
 
 
+}
+
+
+// MARK: - RemoteImageViewDataSource
+
+extension SearchSuggestionsDemoView: RemoteImageViewDataSource {
+    func remoteImageView(_ view: RemoteImageView, cachedImageWithPath imagePath: String, imageWidth: CGFloat) -> UIImage? {
+        nil
+    }
+
+    func remoteImageView(
+        _ view: RemoteImageView,
+        loadImageWithPath imagePath: String,
+        imageWidth: CGFloat,
+        completion: @escaping (UIImage?) -> Void
+    ) {
+        guard let url = URL(string: imagePath) else {
+            completion(nil)
+            return
+        }
+
+        // Demo code only.
+        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
+            usleep(50_000)
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                    completion(image)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    func remoteImageView(_ view: RemoteImageView, cancelLoadingImageWithPath imagePath: String, imageWidth: CGFloat) {
+    }
 }

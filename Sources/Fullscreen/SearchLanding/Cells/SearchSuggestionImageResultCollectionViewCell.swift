@@ -66,13 +66,13 @@ final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell 
         /*
         contentView.addSubview(searchListItemView)
         searchListItemView?.fillInSuperview()*/
-    }
+    }*/
 
     // MARK: - Configure
 
-    func configure(with item: SearchSuggestionGroupItem) {
-        
+    func configure(with item: SearchLandingGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
+        searchListItemView.configure(with: item, remoteImageViewDataSource: remoteImageViewDataSource)
     }
-     */
+
 }
 

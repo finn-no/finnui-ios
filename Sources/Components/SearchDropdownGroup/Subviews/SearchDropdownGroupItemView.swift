@@ -110,6 +110,18 @@ class SearchDropdownGroupItemView: UIView {
         layer.insertSublayer(highlightLayer, at: 0)
     }
 
+    public func configure(with item: SearchLandingGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
+        titleLabel.text = item.title
+        subtitleLabel.text = item.subtitle
+        guard let imageUrl = item.imageUrl else {
+            // configure without image - set different constraints
+            return
+        }
+        remoteImageView.dataSource = remoteImageViewDataSource
+        remoteImageView.loadImage(for: imageUrl, imageWidth: imageAndButtonWidth)
+        print("🕵️‍♀️", remoteImageView.delegate)
+    }
+
     // MARK: - Actions
 
     @objc private func handleViewSelection() {

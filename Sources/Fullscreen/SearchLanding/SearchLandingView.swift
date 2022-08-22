@@ -45,12 +45,14 @@ public final class SearchLandingView: UIView {
         return section
     }
 
-    private typealias DataSource = UICollectionViewDiffableDataSource<SearchSuggestionSection, SearchSuggestionGroupItem>
+    private typealias DataSource = UICollectionViewDiffableDataSource<SearchLandingSection, SearchLandingGroupItem>
     private var dataSource: DataSource!
 
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<SearchSuggestionSection, SearchSuggestionGroupItem>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<SearchLandingSection, SearchLandingGroupItem>
 
     private weak var delegate: SearchLandingViewDelegate?
+
+    private var remoteImageViewDataSource: RemoteImageViewDataSource
 
     // MARK: - Internal properties
 
@@ -60,10 +62,12 @@ public final class SearchLandingView: UIView {
 
     public init(
         withAutoLayout: Bool,
-        delegate: SearchLandingViewDelegate?
+        delegate: SearchLandingViewDelegate?,
+        remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
         print("🕵️‍♀️ init")
         self.delegate = delegate
+        self.remoteImageViewDataSource = remoteImageViewDataSource
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
@@ -89,7 +93,7 @@ public final class SearchLandingView: UIView {
             cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
                 print("🕵️‍♀️ item", item)
                 let cell = collectionView.dequeue(SearchSuggestionImageResultCollectionViewCell.self, for: indexPath)
-                cell.backgroundColor = .brown
+                cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
                 return cell
             }
         )
@@ -98,7 +102,7 @@ public final class SearchLandingView: UIView {
 
     // MARK: - Snapshot management
 
-    public func configure(with section: [SearchSuggestionSection]) {
+    public func configure(with section: [SearchLandingSection]) {
         print("🕵️‍♀️ configure", section.description)
         var snapshot = dataSource.snapshot()
         snapshot.appendSections([.viewMoreResults(title: "Test")])
@@ -130,8 +134,8 @@ extension SearchLandingView: UICollectionViewDelegate {
 
 // MARK: - Private extensions
 
-private extension NSDiffableDataSourceSnapshot where SectionIdentifierType == SearchSuggestionSection, ItemIdentifierType == SearchSuggestionGroupItem {
-    mutating func insertSections(_ sections: [SearchSuggestionSection]) {
+private extension NSDiffableDataSourceSnapshot where SectionIdentifierType == SearchLandingSection, ItemIdentifierType == SearchLandingGroupItem {
+    mutating func insertSections(_ sections: [SearchLandingSection]) {
         insertSections(sections, beforeSection: .viewMoreResults(title: "Test"))
         for section in sections {
             switch section {

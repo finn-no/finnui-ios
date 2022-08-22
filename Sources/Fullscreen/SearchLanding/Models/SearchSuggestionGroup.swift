@@ -20,3 +20,14 @@ public enum SearchSuggestionGroupType {
 }
 
 
+public struct SearchLandingGroup: Hashable {
+    public let title: String
+    public let items: [SearchLandingGroupItem]
+    public let groupType: SearchSuggestionGroupType
+
+    public init(title: String, items: [SearchLandingGroupItem], groupType: SearchSuggestionGroupType) {
+        self.title = title
+        self.items = items
+        self.groupType = groupType
+    }
+}
