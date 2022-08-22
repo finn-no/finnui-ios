@@ -3,11 +3,21 @@ import FinniversKit
 
 final class FiksFerdigShippingInfoDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Single lined text") { [unowned self] in
+        TweakingOption(title: "Single lined text with Helthjem") { [unowned self] in
             let viewModel = FiksFerdigShippingInfoViewModel(
                 headerTitle: "Varen sendes med",
                 provider: .heltHjem,
                 providerName: "Helthjem",
+                message: "Du betaler 60 kr for frakten",
+                isExpanded: true
+            )
+            setup(with: viewModel)
+        },
+        TweakingOption(title: "Single lined text with Postnord") { [unowned self] in
+            let viewModel = FiksFerdigShippingInfoViewModel(
+                headerTitle: "Varen sendes med",
+                provider: .postnord,
+                providerName: "Postnord",
                 message: "Du betaler 60 kr for frakten",
                 isExpanded: true
             )

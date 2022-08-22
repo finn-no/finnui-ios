@@ -70,15 +70,24 @@ public final class FiksFerdigInfoView: UIView {
         addSubview(containerView)
         containerView.fillInSuperview()
 
-        let subViews: [UIView] = [
+        var subViews: [UIView] = [
             createSeparatorView(),
             serviceInfoView,
-            createSeparatorView(),
-            shippingInfoView,
-            createSeparatorView(),
+            createSeparatorView()
+        ]
+
+        if let shippingInfoView = shippingInfoView {
+            subViews.append(contentsOf: [
+                shippingInfoView,
+                createSeparatorView(),
+            ])
+        }
+
+        subViews.append(contentsOf: [
             safePaymentInfoView,
             createSeparatorView()
-        ].compactMap { $0 }
+        ])
+
         containerView.addArrangedSubviews(subViews)
     }
 
