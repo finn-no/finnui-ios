@@ -30,6 +30,7 @@ extension FiksFerdigShippingInfoViewModel {
     public enum ShippingProvider {
         case heltHjem
         case postnord
+        case posten
     }
 }
 
@@ -63,6 +64,8 @@ public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
             return UIImage(named: .tjtHelthjemIcon)
         case .postnord:
             return UIImage(named: .tjtPostnordIcon)
+        case .posten:
+            return UIImage(named: .tjtPostenIcon)
         }
     }
 

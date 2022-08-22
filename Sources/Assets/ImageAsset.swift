@@ -86,6 +86,7 @@ enum ImageAsset: String {
     case tagMini
     case tjtHelthjemIcon
     case tjtLockShield
+    case tjtPostenIcon
     case tjtPostnordIcon
     case tjtShipmentInTransit
     case tjtTorgetShipping
@@ -149,6 +150,7 @@ enum ImageAsset: String {
             .tagMini,
             .tjtHelthjemIcon,
             .tjtLockShield,
+            .tjtPostenIcon,
             .tjtPostnordIcon,
             .tjtShipmentInTransit,
             .tjtTorgetShipping,
