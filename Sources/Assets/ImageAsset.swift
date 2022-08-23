@@ -57,6 +57,7 @@ enum ImageAsset: String {
     case favoritesSortAdStatus
     case favoritesSortDistance
     case favoritesSortLastAdded
+    case fiksFerdigContactSeller
     case finnLogoSimple
     case heartMini
     case lock
@@ -121,6 +122,7 @@ enum ImageAsset: String {
             .favoritesSortAdStatus,
             .favoritesSortDistance,
             .favoritesSortLastAdded,
+            .fiksFerdigContactSeller,
             .finnLogoSimple,
             .heartMini,
             .lock,

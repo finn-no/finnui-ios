@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		171E41C1286302D400A4FE2C /* TJTPriceDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171E41C0286302D400A4FE2C /* TJTPriceDemoView.swift */; };
+		171E41C1286302D400A4FE2C /* FiksFerdigPriceDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171E41C0286302D400A4FE2C /* FiksFerdigPriceDemoView.swift */; };
 		46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AE6FC3242BADC9007BB005 /* AppDelegate.swift */; };
 		46E773A4242CEF0A008A5E93 /* DemoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77258242CEF09008A5E93 /* DemoHelpers.swift */; };
 		46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725B242CEF09008A5E93 /* FullscreenDemoViews.swift */; };
@@ -79,7 +79,8 @@
 		DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */; };
 		DAE9CA8724602CB000C7552F /* SwiftUIViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */; };
 		E4DBDD972762335200BE21D8 /* ShippingAlternativesDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DBDD962762335200BE21D8 /* ShippingAlternativesDemoView.swift */; };
-		E640A7C42858B0E1002CA903 /* TJTAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640A7C32858B0E1002CA903 /* TJTAccordionDemoView.swift */; };
+		E640432428B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640432328B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift */; };
+		E640A7C42858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640A7C32858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift */; };
 		E640A7C8285B66C0002CA903 /* TimeLineDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640A7C7285B66C0002CA903 /* TimeLineDemoView.swift */; };
 		E640A7CB285C889E002CA903 /* FiksFerdigAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640A7CA285C889E002CA903 /* FiksFerdigAccordionDemoView.swift */; };
 		E68E2D0D283E6BFF009C5792 /* SuggestShippingDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68E2D0C283E6BFF009C5792 /* SuggestShippingDemoView.swift */; };
@@ -87,7 +88,7 @@
 		E6ADDE6C2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */; };
 		E6ADF7F32860697700EBCA5F /* ShippingInfoAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF7F22860697700EBCA5F /* ShippingInfoAccordionDemoView.swift */; };
 		E6ADF7F62862004F00EBCA5F /* SafePaymentAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */; };
-		E6ADF8EB28636EE700EBCA5F /* TJTSideBarDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF8EA28636EE700EBCA5F /* TJTSideBarDemoView.swift */; };
+		E6ADF8EB28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */; };
 		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
 /* End PBXBuildFile section */
@@ -132,7 +133,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		171E41C0286302D400A4FE2C /* TJTPriceDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TJTPriceDemoView.swift; sourceTree = "<group>"; };
+		171E41C0286302D400A4FE2C /* FiksFerdigPriceDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiksFerdigPriceDemoView.swift; sourceTree = "<group>"; };
 		46AE6FC0242BADC9007BB005 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46AE6FC3242BADC9007BB005 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46AE6FD1242BADCD007BB005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -209,7 +210,8 @@
 		DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExploreDetailViewModel+Demo.swift"; sourceTree = "<group>"; };
 		DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIViewTests.swift; sourceTree = "<group>"; };
 		E4DBDD962762335200BE21D8 /* ShippingAlternativesDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingAlternativesDemoView.swift; sourceTree = "<group>"; };
-		E640A7C32858B0E1002CA903 /* TJTAccordionDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TJTAccordionDemoView.swift; sourceTree = "<group>"; };
+		E640432328B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdigContactSellerDemoView.swift; sourceTree = "<group>"; };
+		E640A7C32858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiskFerdigAccordionDemoView.swift; sourceTree = "<group>"; };
 		E640A7C7285B66C0002CA903 /* TimeLineDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineDemoView.swift; sourceTree = "<group>"; };
 		E640A7CA285C889E002CA903 /* FiksFerdigAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdigAccordionDemoView.swift; sourceTree = "<group>"; };
 		E68E2D0C283E6BFF009C5792 /* SuggestShippingDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestShippingDemoView.swift; sourceTree = "<group>"; };
@@ -217,7 +219,7 @@
 		E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingRequestErrorDemoView.swift; sourceTree = "<group>"; };
 		E6ADF7F22860697700EBCA5F /* ShippingInfoAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingInfoAccordionDemoView.swift; sourceTree = "<group>"; };
 		E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafePaymentAccordionDemoView.swift; sourceTree = "<group>"; };
-		E6ADF8EA28636EE700EBCA5F /* TJTSideBarDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TJTSideBarDemoView.swift; sourceTree = "<group>"; };
+		E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdingInfoDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -248,12 +250,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		171E41BF2863028000A4FE2C /* TJTPriceView */ = {
+		171E41BF2863028000A4FE2C /* FiksFerdigPriceView */ = {
 			isa = PBXGroup;
 			children = (
-				171E41C0286302D400A4FE2C /* TJTPriceDemoView.swift */,
+				171E41C0286302D400A4FE2C /* FiksFerdigPriceDemoView.swift */,
 			);
-			path = TJTPriceView;
+			path = FiksFerdigPriceView;
 			sourceTree = "<group>";
 		};
 		46AE6FB7242BADC9007BB005 = {
@@ -392,6 +394,7 @@
 		46E772CB242CEF09008A5E93 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E640432128B4CF2D0061EB8D /* Fiks Ferdig */,
 				ADC5C709E0338FF2B7D08358 /* AdTipsCollapsibleView */,
 				8D680B67DAB7BFCB028C94EE /* ChatAvailability */,
 				4DBC0399250A495D004E8044 /* ExpandCollapseButton */,
@@ -412,8 +415,6 @@
 				E68E2D0B283E6B77009C5792 /* SuggestShipping */,
 				DA2F2713266E276D00E6F17C /* TagCloudGridView */,
 				E640A7C22858B0E1002CA903 /* TimeLineView */,
-				E6ADF8E928636EA700EBCA5F /* TJTSideBar */,
-				171E41BF2863028000A4FE2C /* TJTPriceView */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -718,6 +719,24 @@
 			path = ShippingAlternativesView;
 			sourceTree = "<group>";
 		};
+		E640432128B4CF2D0061EB8D /* Fiks Ferdig */ = {
+			isa = PBXGroup;
+			children = (
+				E640432228B4CF8B0061EB8D /* FiksFerdigContactSellerView */,
+				E6ADF8E928636EA700EBCA5F /* FiksFerdigInfoView */,
+				171E41BF2863028000A4FE2C /* FiksFerdigPriceView */,
+			);
+			path = "Fiks Ferdig";
+			sourceTree = "<group>";
+		};
+		E640432228B4CF8B0061EB8D /* FiksFerdigContactSellerView */ = {
+			isa = PBXGroup;
+			children = (
+				E640432328B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift */,
+			);
+			path = FiksFerdigContactSellerView;
+			sourceTree = "<group>";
+		};
 		E640A7C22858B0E1002CA903 /* TimeLineView */ = {
 			isa = PBXGroup;
 			children = (
@@ -737,16 +756,16 @@
 			path = SuggestShipping;
 			sourceTree = "<group>";
 		};
-		E6ADF8E928636EA700EBCA5F /* TJTSideBar */ = {
+		E6ADF8E928636EA700EBCA5F /* FiksFerdigInfoView */ = {
 			isa = PBXGroup;
 			children = (
 				E640A7CA285C889E002CA903 /* FiksFerdigAccordionDemoView.swift */,
 				E6ADF7F22860697700EBCA5F /* ShippingInfoAccordionDemoView.swift */,
 				E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */,
-				E640A7C32858B0E1002CA903 /* TJTAccordionDemoView.swift */,
-				E6ADF8EA28636EE700EBCA5F /* TJTSideBarDemoView.swift */,
+				E640A7C32858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift */,
+				E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */,
 			);
-			path = TJTSideBar;
+			path = FiksFerdigInfoView;
 			sourceTree = "<group>";
 		};
 		F05770EF2799AB4100C8DD85 /* Wrappers */ = {
@@ -961,11 +980,12 @@
 				46E77452242CEF0A008A5E93 /* ScrollViewController.swift in Sources */,
 				46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */,
 				D6D43CF125BF2FA900234AC2 /* SavedSearchSortingDemoView.swift in Sources */,
+				E640432428B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift in Sources */,
 				46E77456242CEF0A008A5E93 /* TweakableDemoView.swift in Sources */,
 				710C33F326EB5A4E002BAF1A /* HelthjemDemoView.swift in Sources */,
 				46E773AD242CEF0A008A5E93 /* BaseDemoViewController.swift in Sources */,
-				E640A7C42858B0E1002CA903 /* TJTAccordionDemoView.swift in Sources */,
-				E6ADF8EB28636EE700EBCA5F /* TJTSideBarDemoView.swift in Sources */,
+				E640A7C42858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift in Sources */,
+				E6ADF8EB28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift in Sources */,
 				D6D43CEA25BF2F4D00234AC2 /* ObjectPageBlinkDemoView.swift in Sources */,
 				46E773B0242CEF0A008A5E93 /* NavigationController.swift in Sources */,
 				4D2A37FE2730245600D09D73 /* StoryDemoView.swift in Sources */,
@@ -1017,7 +1037,7 @@
 				8D68046EF3BCAE82CA1D838A /* PromotedRealestateCellDemoView.swift in Sources */,
 				E6ADF7F32860697700EBCA5F /* ShippingInfoAccordionDemoView.swift in Sources */,
 				5DE2A0AC27C4DB84002E2EDA /* RecommendationEmptyDemoView.swift in Sources */,
-				171E41C1286302D400A4FE2C /* TJTPriceDemoView.swift in Sources */,
+				171E41C1286302D400A4FE2C /* FiksFerdigPriceDemoView.swift in Sources */,
 				ADC5C001F9CB596AAA8A6766 /* AdTipsCollapsibleDemoView.swift in Sources */,
 				ADC5CBBC2AE659F8B588F876 /* NumberedAdTipsCollapsibleDemoView.swift in Sources */,
 				5B959FA1E7529B5DF3EE7315 /* RealestateSoldStateDemoView.swift in Sources */,
