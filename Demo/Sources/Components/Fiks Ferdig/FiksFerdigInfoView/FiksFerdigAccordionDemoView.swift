@@ -48,7 +48,7 @@ final class FiksFerdigServiceInfoDemoView: UIView {
 }
 
 extension FiksFerdigServiceInfoDemoView: FiksFerdigServiceInfoViewModelDelegate {
-    func didTapReadMoreURL(_ url: URL) {
+    func fiksFerdigServiceInfoViewModelDidRequestReadMore(at url: URL) {
         print("🎉 did tap read more URL")
     }
 }
