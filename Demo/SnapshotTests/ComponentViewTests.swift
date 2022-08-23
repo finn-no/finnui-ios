@@ -142,4 +142,8 @@ class ComponentViewTests: XCTestCase {
     func testFiksFerdigInfoView() {
         snapshot(.fiksFerdigInfoView)
     }
+
+    func testFiksFerdigContactSellerView() {
+        snapshot(.fiksFerdigContactSellerView)
+    }
 }
