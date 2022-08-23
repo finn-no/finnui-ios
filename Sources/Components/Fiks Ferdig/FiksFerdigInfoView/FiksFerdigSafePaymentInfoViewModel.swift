@@ -1,3 +1,5 @@
+import UIKit
+
 public final class FiksFerdigSafePaymentInfoViewModel {
     public let timeLineItems: [TimeLineItem]
     public let headerViewModel: FiksFerdigAccordionViewModel

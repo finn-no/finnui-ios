@@ -1,3 +1,5 @@
+import UIKit
+
 public class FiksFerdigShippingInfoViewModel {
     public let provider: ShippingProvider
     public let providerName: String

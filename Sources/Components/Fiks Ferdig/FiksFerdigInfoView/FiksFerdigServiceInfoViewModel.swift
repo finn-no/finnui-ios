@@ -1,5 +1,7 @@
+import UIKit
+
 public protocol FiksFerdigServiceInfoViewModelDelegate: AnyObject {
-    func didTapReadMoreURL(_ url: URL)
+    func fiksFerdigServiceInfoViewModelDidRequestReadMore(at url: URL)
 }
 
 public final class FiksFerdigServiceInfoViewModel {
@@ -30,6 +32,6 @@ public final class FiksFerdigServiceInfoViewModel {
     }
 
     func displayHelp() {
-        delegate?.didTapReadMoreURL(readMoreURL)
+        delegate?.fiksFerdigServiceInfoViewModelDidRequestReadMore(at: readMoreURL)
     }
 }

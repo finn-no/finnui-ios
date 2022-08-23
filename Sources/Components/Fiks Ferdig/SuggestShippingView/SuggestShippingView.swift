@@ -74,7 +74,7 @@ public final class SuggestShippingView: UIView {
 
     private func setup() {
         layer.borderWidth = 1
-        layer.borderColor = UIColor.sardine.cgColor
+        layer.borderColor = UIColor.suggestShippingBorder.cgColor
         layer.cornerRadius = 3
 
         addSubview(horizontalContainer)
@@ -129,14 +129,18 @@ public final class SuggestShippingView: UIView {
     }
 }
 
+private extension UIColor {
+    static let suggestShippingBorder = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
+}
+
 private extension Button.Style {
     static var suggestShippingStyle: Button.Style {
         .flat.overrideStyle(
             bodyColor: .dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgTertiary),
             borderWidth: 2,
-            borderColor: .dynamicColor(defaultColor: .sardine, darkModeColor: .sardine),
+            borderColor: .suggestShippingBorder,
             highlightedBodyColor: .dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgTertiary),
-            highlightedBorderColor: .dynamicColor(defaultColor: .sardine, darkModeColor: .sardine)
+            highlightedBorderColor: .suggestShippingBorder
         )
     }
 }
