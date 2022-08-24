@@ -7,7 +7,7 @@ public final class FiksFerdigServiceInfoView: FiksFerdigAccordionView {
     private let dottedIndicatorProvider = DottedTimeLineIndicatorProvider(font: .caption)
     private let messageLabel: Label = {
         let label = Label(style: .body, withAutoLayout: true)
-        label.textColor = .textPrimary
+        label.numberOfLines = 0
         return label
     }()
 

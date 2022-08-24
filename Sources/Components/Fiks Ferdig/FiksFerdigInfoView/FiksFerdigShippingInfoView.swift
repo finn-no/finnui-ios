@@ -8,14 +8,12 @@ public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
     private let providerLabel: Label = {
         let label = Label(style: .captionStrong, withAutoLayout: true)
         label.numberOfLines = 0
-        label.textColor = .textPrimary
         return label
     }()
 
     private let messageLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
         label.numberOfLines = 0
-        label.textColor = .textPrimary
         return label
     }()
 

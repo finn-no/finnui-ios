@@ -20,7 +20,7 @@ final class SuggestShippingDemoView: UIView {
             actionModels: actionModels,
             title: "Confirm suggest shipping",
             message: "Do you really want to suggest shipping?",
-            prefferedStyle: .alert
+            preferredStyle: .alert
         )
         let suggestViewModel = SuggestShippingViewModel(
             title: "Fiks ferdig frakt og betaling",

@@ -4,7 +4,6 @@ import FinniversKit
 public final class SuggestShippingView: UIView {
     private var viewModel: SuggestShippingViewModel
     private var cancellables = Set<AnyCancellable>()
-    private var buttonCancellable: AnyCancellable?
 
     private let imageHorizontalInset: CGFloat = .spacingS
 
@@ -104,11 +103,12 @@ public final class SuggestShippingView: UIView {
         title.text = viewModel.title
         message.text = viewModel.message
         suggestShippingbutton.setTitle(viewModel.buttonTitle, for: .normal)
-        buttonCancellable = suggestShippingbutton
+        suggestShippingbutton
             .publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.suggestShipping()
             }
+            .store(in: &cancellables)
 
         viewModel
             .$isProcessing

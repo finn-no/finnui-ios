@@ -100,6 +100,8 @@ public final class FiksFerdigPriceView: UIView {
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
         updateShippingLabel()
     }
 }

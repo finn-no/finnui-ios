@@ -15,6 +15,7 @@ public class FiksFerdigAccordionView: UIStackView {
             bottom: .spacingM,
             trailing: .spacingM
         )
+        header.alignment = .center
         header.isLayoutMarginsRelativeArrangement = true
         return header
     }()
@@ -28,12 +29,11 @@ public class FiksFerdigAccordionView: UIStackView {
 
     private lazy var headerTitle: Label = {
         let label = Label(style: .bodyStrong)
-        label.textColor = .textPrimary
+        label.numberOfLines = 0
         return label
     }()
 
     private lazy var chevron: UIImageView = {
-        let bundle = Bundle(for: Label.self)
         let image = UIImage(systemName: "chevron.down")
         let chevron = UIImageView(image: image)
         chevron.contentMode = .scaleAspectFit
@@ -95,8 +95,6 @@ public class FiksFerdigAccordionView: UIStackView {
         axis = .vertical
         layer.masksToBounds = true
 
-        headerIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        headerIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
         chevron.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         headerStackView.addArrangedSubviews([
             headerIcon,
@@ -105,7 +103,6 @@ public class FiksFerdigAccordionView: UIStackView {
         ])
         addArrangedSubview(headerStackView)
 
-        separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         separatorStackView.addArrangedSubview(separatorView)
         addArrangedSubview(separatorStackView)
 
@@ -116,6 +113,9 @@ public class FiksFerdigAccordionView: UIStackView {
         addArrangedSubview(containerEnclosingView)
 
         NSLayoutConstraint.activate([
+            headerIcon.widthAnchor.constraint(equalToConstant: 24),
+            headerIcon.heightAnchor.constraint(equalToConstant: 24),
+            separatorView.heightAnchor.constraint(equalToConstant: 1),
             contentContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor)
         ])

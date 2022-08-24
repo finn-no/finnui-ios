@@ -3,7 +3,7 @@ import FinnUI
 
 final class FiksFerdigServiceInfoDemoView: UIView {
     var viewModel: FiksFerdigServiceInfoViewModel
-    let accordionView: FiksFerdigServiceInfoView!
+    let accordionView: FiksFerdigServiceInfoView
 
     override init(frame: CGRect) {
         let timelineItems = [

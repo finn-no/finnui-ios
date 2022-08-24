@@ -3,14 +3,9 @@ import FinnUI
 
 final class FiksFerdigContactSellerDemoView: UIView {
     var viewModel: FiksFerdigContactSellerViewModel
-    let accordionView: FiksFerdigContactSellerView!
+    let accordionView: FiksFerdigContactSellerView
 
     override init(frame: CGRect) {
-        let timelineItems = [
-            TimeLineItem(title: "Betal med Vipps eller kort"),
-            TimeLineItem(title: "Varen leveres hjem til deg"),
-            TimeLineItem(title: "Du har 24 timer til å sjekke varen"),
-        ]
         self.viewModel = FiksFerdigContactSellerViewModel(
             message: "Hvis du lurer på noe om varen, så send en melding til selger",
             buttonTitle: "Kontakt selger"

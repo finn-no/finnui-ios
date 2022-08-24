@@ -16,12 +16,17 @@ public struct AlertModel<T> {
     public var actionModels = [ActionModel<T>]()
     public var title: String?
     public var message: String?
-    public var prefferedStyle: UIAlertController.Style
+    public var preferredStyle: UIAlertController.Style
 
-    public init(actionModels: [AlertModel<T>.ActionModel<T>] = [ActionModel<T>](), title: String? = nil, message: String? = nil, prefferedStyle: UIAlertController.Style) {
+    public init(
+        actionModels: [AlertModel<T>.ActionModel<T>] = [ActionModel<T>](),
+        title: String? = nil,
+        message: String? = nil,
+        preferredStyle: UIAlertController.Style
+    ) {
         self.actionModels = actionModels
         self.title = title
         self.message = message
-        self.prefferedStyle = prefferedStyle
+        self.preferredStyle = preferredStyle
     }
 }

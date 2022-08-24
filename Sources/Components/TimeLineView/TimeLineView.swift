@@ -29,7 +29,9 @@ public final class TimeLineView: UIStackView {
                     return .starting
                 } else if index == items.count - 1 {
                     return .final
-                } else { return .middle }
+                } else {
+                    return .middle
+                }
             }
             let itemView = TimeLineItemView(
                 withTitle: item.title,
@@ -42,16 +44,11 @@ public final class TimeLineView: UIStackView {
     }
 
     public override func layoutSubviews() {
+        super.layoutSubviews()
+
         arrangedSubviews.forEach {
             $0.layoutIfNeeded()
             $0.invalidateIntrinsicContentSize()
         }
-    }
-}
-
-extension TimeLineView {
-    public enum IndicatorStyle {
-        case largeDots
-        case largeDotsWithDottedLine
     }
 }

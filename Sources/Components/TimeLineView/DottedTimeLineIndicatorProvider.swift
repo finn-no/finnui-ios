@@ -53,6 +53,8 @@ public struct DottedTimeLineIndicatorProvider: TimeLineIndicatorProvider {
     }
 
     private func calculateHeight(for textHeight: CGFloat) -> (height: CGFloat, dotOffset: CGFloat) {
+        // We have to calculate with the top and bottom margins so we're adding those
+        // to the text height.
         var newTextHeight = textHeight + 2 * DottedTimeLineIndicatorProvider.textVerticalMargin
         newTextHeight += dotOffset - upperHalf
         let offset = DottedTimeLineIndicatorView.dotSpacing + DottedTimeLineIndicatorView.fillingDotSize

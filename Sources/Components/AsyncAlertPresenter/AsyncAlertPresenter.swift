@@ -21,7 +21,7 @@ public class AsyncAlertPresenter<T> {
             let alertController = UIAlertController(
                 title: alertModel.title,
                 message: alertModel.message,
-                preferredStyle: alertModel.prefferedStyle
+                preferredStyle: alertModel.preferredStyle
             )
             alertModel.actionModels.forEach { action in
                 alertController.addAction(

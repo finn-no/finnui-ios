@@ -1,33 +1,5 @@
 import FinniversKit
 
-public protocol FiksFerdigInfoViewModelDelegate: AnyObject {
-    func didChangeSidebarHeight()
-}
-
-public final class FiksFerdigInfoViewModel {
-    public let serviceInfoViewModel: FiksFerdigServiceInfoViewModel
-    public let shippingInfoViewModel: FiksFerdigShippingInfoViewModel?
-    public let safePaymentInfoViewModel: FiksFerdigSafePaymentInfoViewModel
-
-    public weak var delegate: FiksFerdigInfoViewModelDelegate?
-
-    public init(serviceInfoViewModel: FiksFerdigServiceInfoViewModel, shippingInfoViewModel: FiksFerdigShippingInfoViewModel?, safePaymentInfoViewModel: FiksFerdigSafePaymentInfoViewModel) {
-        self.serviceInfoViewModel = serviceInfoViewModel
-        self.shippingInfoViewModel = shippingInfoViewModel
-        self.safePaymentInfoViewModel = safePaymentInfoViewModel
-
-        serviceInfoViewModel.headerViewModel.delegate = self
-        shippingInfoViewModel?.headerViewModel.delegate = self
-        safePaymentInfoViewModel.headerViewModel.delegate = self
-    }
-}
-
-extension FiksFerdigInfoViewModel: FiksFerdigAccordionViewModelDelegate {
-    public func didChangeExpandedState(isExpanded: Bool) {
-        delegate?.didChangeSidebarHeight()
-    }
-}
-
 public final class FiksFerdigInfoView: UIView {
     private let viewModel: FiksFerdigInfoViewModel
 

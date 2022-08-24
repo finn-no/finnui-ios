@@ -21,9 +21,11 @@ final class TimeLineItemView: UIView {
 
     private let positionLeftInset: CGFloat = .spacingXS
     private let positionAndLabelSpacing: CGFloat = .spacingXS + .spacingS
-    private var titleTopConstraint: NSLayoutConstraint!
+    private lazy var titleTopConstraint: NSLayoutConstraint = {
+        titleLabel.topAnchor.constraint(equalTo: topAnchor)
+    }()
+
     private let timeLineIndicatorProvider: TimeLineIndicatorProvider
-    static let font = UIFont.caption
 
     init(
         withTitle title: String,
@@ -58,8 +60,6 @@ final class TimeLineItemView: UIView {
 
         addSubview(titleLabel)
 
-        titleTopConstraint = titleLabel.topAnchor.constraint(equalTo: topAnchor)
-
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: indicatorView.trailingAnchor, constant: positionAndLabelSpacing),
             titleTopConstraint,
@@ -76,17 +76,7 @@ final class TimeLineItemView: UIView {
         - timeLineIndicatorProvider.width
         - positionAndLabelSpacing
 
-        let textConstraintRect = CGSize(
-            width: availableWidth,
-            height: .greatestFiniteMagnitude
-        )
-        let textBoundingBox = title.boundingRect(
-            with: textConstraintRect,
-            options: .usesLineFragmentOrigin,
-            attributes: [.font: TimeLineItemView.font],
-            context: nil
-        )
-        let currentTextHeight = ceil(textBoundingBox.height)
+        let currentTextHeight = title.height(withConstrainedWidth: availableWidth, font: titleLabel.font)
         let (updatedHeight, verticalOffset) = timeLineIndicatorProvider.updatedHeight(for: currentTextHeight)
         titleTopConstraint.constant = verticalOffset
 

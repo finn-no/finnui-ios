@@ -1,33 +1,27 @@
-import UIKit
+public protocol FiksFerdigInfoViewModelDelegate: AnyObject {
+    func didChangeSidebarHeight()
+}
 
-public class FiksFerdigShippingInfoViewModel {
-    public let provider: ShippingProvider
-    public let providerName: String
-    public let message: String
-    public let headerViewModel: FiksFerdigAccordionViewModel
+public final class FiksFerdigInfoViewModel {
+    public let serviceInfoViewModel: FiksFerdigServiceInfoViewModel
+    public let shippingInfoViewModel: FiksFerdigShippingInfoViewModel?
+    public let safePaymentInfoViewModel: FiksFerdigSafePaymentInfoViewModel
 
-    public init(
-        headerTitle: String,
-        provider: ShippingProvider,
-        providerName: String,
-        message: String,
-        isExpanded: Bool = false
-    ) {
-        self.headerViewModel = FiksFerdigAccordionViewModel(
-            title: headerTitle,
-            icon: UIImage(named: .tjtShipmentInTransit),
-            isExpanded: isExpanded
-        )
-        self.provider = provider
-        self.providerName = providerName
-        self.message = message
+    public weak var delegate: FiksFerdigInfoViewModelDelegate?
+
+    public init(serviceInfoViewModel: FiksFerdigServiceInfoViewModel, shippingInfoViewModel: FiksFerdigShippingInfoViewModel?, safePaymentInfoViewModel: FiksFerdigSafePaymentInfoViewModel) {
+        self.serviceInfoViewModel = serviceInfoViewModel
+        self.shippingInfoViewModel = shippingInfoViewModel
+        self.safePaymentInfoViewModel = safePaymentInfoViewModel
+
+        serviceInfoViewModel.headerViewModel.delegate = self
+        shippingInfoViewModel?.headerViewModel.delegate = self
+        safePaymentInfoViewModel.headerViewModel.delegate = self
     }
 }
 
-extension FiksFerdigShippingInfoViewModel {
-    public enum ShippingProvider {
-        case heltHjem
-        case postnord
-        case posten
+extension FiksFerdigInfoViewModel: FiksFerdigAccordionViewModelDelegate {
+    public func didChangeExpandedState(isExpanded: Bool) {
+        delegate?.didChangeSidebarHeight()
     }
 }

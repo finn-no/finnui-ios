@@ -82,7 +82,7 @@
 		E640432428B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640432328B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift */; };
 		E640A7C42858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640A7C32858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift */; };
 		E640A7C8285B66C0002CA903 /* TimeLineDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640A7C7285B66C0002CA903 /* TimeLineDemoView.swift */; };
-		E640A7CB285C889E002CA903 /* FiksFerdigAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640A7CA285C889E002CA903 /* FiksFerdigAccordionDemoView.swift */; };
+		E640A7CB285C889E002CA903 /* FiksFerdigServiceInfoDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640A7CA285C889E002CA903 /* FiksFerdigServiceInfoDemoView.swift */; };
 		E68E2D0D283E6BFF009C5792 /* SuggestShippingDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68E2D0C283E6BFF009C5792 /* SuggestShippingDemoView.swift */; };
 		E6AD7E61283FDD8E00C6D1CA /* ShippingRequestedDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD7E60283FDD8E00C6D1CA /* ShippingRequestedDemoView.swift */; };
 		E6ADDE6C2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */; };
@@ -213,7 +213,7 @@
 		E640432328B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdigContactSellerDemoView.swift; sourceTree = "<group>"; };
 		E640A7C32858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiskFerdigAccordionDemoView.swift; sourceTree = "<group>"; };
 		E640A7C7285B66C0002CA903 /* TimeLineDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineDemoView.swift; sourceTree = "<group>"; };
-		E640A7CA285C889E002CA903 /* FiksFerdigAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdigAccordionDemoView.swift; sourceTree = "<group>"; };
+		E640A7CA285C889E002CA903 /* FiksFerdigServiceInfoDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdigServiceInfoDemoView.swift; sourceTree = "<group>"; };
 		E68E2D0C283E6BFF009C5792 /* SuggestShippingDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestShippingDemoView.swift; sourceTree = "<group>"; };
 		E6AD7E60283FDD8E00C6D1CA /* ShippingRequestedDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingRequestedDemoView.swift; sourceTree = "<group>"; };
 		E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingRequestErrorDemoView.swift; sourceTree = "<group>"; };
@@ -759,7 +759,7 @@
 		E6ADF8E928636EA700EBCA5F /* FiksFerdigInfoView */ = {
 			isa = PBXGroup;
 			children = (
-				E640A7CA285C889E002CA903 /* FiksFerdigAccordionDemoView.swift */,
+				E640A7CA285C889E002CA903 /* FiksFerdigServiceInfoDemoView.swift */,
 				E6ADF7F22860697700EBCA5F /* ShippingInfoAccordionDemoView.swift */,
 				E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */,
 				E640A7C32858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift */,
@@ -1025,7 +1025,7 @@
 				E640A7C8285B66C0002CA903 /* TimeLineDemoView.swift in Sources */,
 				E6ADF7F62862004F00EBCA5F /* SafePaymentAccordionDemoView.swift in Sources */,
 				D6D43CFB25BF2FDD00234AC2 /* ProjectUnitsDemoView.swift in Sources */,
-				E640A7CB285C889E002CA903 /* FiksFerdigAccordionDemoView.swift in Sources */,
+				E640A7CB285C889E002CA903 /* FiksFerdigServiceInfoDemoView.swift in Sources */,
 				D6D43CE725BF2F4D00234AC2 /* SearchFilterTagsData.swift in Sources */,
 				DA3E1B0F2673B4ED001B7730 /* ExploreDetailDemoView.swift in Sources */,
 				D6D43CEF25BF2FA900234AC2 /* SearchDisplayTypeSelectionDemoView.swift in Sources */,
