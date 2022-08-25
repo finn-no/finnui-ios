@@ -56,7 +56,7 @@ class QuestionFormContainerView: UIView {
     private func setup() {
         if let contactMethod = viewModel.contactMethod {
             let userContactMethodView = UserContactInformationView(
-                viewModel: contactMethod,
+                contactMethod: contactMethod,
                 delegate: self,
                 withAutoLayout: true
             )
