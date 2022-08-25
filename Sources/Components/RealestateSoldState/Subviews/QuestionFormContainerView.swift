@@ -57,6 +57,7 @@ class QuestionFormContainerView: UIView {
         if let contactMethod = viewModel.contactMethod {
             let userContactMethodView = UserContactInformationView(
                 contactMethod: contactMethod,
+                userContactName: viewModel.userContactName,
                 delegate: self,
                 withAutoLayout: true
             )
@@ -95,6 +96,7 @@ class QuestionFormContainerView: UIView {
         let formSubmit = RealestateSoldStateQuestionFormSubmit(
             contactMethodIdentifier: contactMethod.identifier,
             contactMethodValue: contactMethodValue,
+            userContactName: userContactMethodView.enteredUserContactName,
             questions: questionFormView.selectedQuestions
         )
 
