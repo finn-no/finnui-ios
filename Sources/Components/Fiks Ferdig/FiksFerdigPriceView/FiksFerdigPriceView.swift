@@ -1,7 +1,7 @@
 import FinniversKit
 
-public final class TJTPriceView: UIView {
-    public var viewModel: TJTPriceViewModel {
+public final class FiksFerdigPriceView: UIView {
+    public var viewModel: FiksFerdigPriceViewModel {
         didSet {
             update()
         }
@@ -19,6 +19,7 @@ public final class TJTPriceView: UIView {
         let label = Label(style: .title1, withAutoLayout: true)
         label.numberOfLines = 0
         label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.textColor = .textPrimary
         return label
     }()
@@ -43,17 +44,17 @@ public final class TJTPriceView: UIView {
     private lazy var priceStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, withAutoLayout: true)
         stackView.spacing = .spacingS
-        stackView.alignment = .lastBaseline
+        stackView.alignment = .firstBaseline
         return stackView
     }()
 
-    public init(viewModel: TJTPriceViewModel, withAutoLayout: Bool = false) {
+    public init(viewModel: FiksFerdigPriceViewModel, withAutoLayout: Bool = false) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = !withAutoLayout
 
         addSubview(contentStackView)
-        contentStackView.fillInSuperview(margin: .spacingS)
+        contentStackView.fillInSuperview()
 
         contentStackView.addArrangedSubview(tradeTypeLabel)
 
@@ -69,11 +70,42 @@ public final class TJTPriceView: UIView {
 
     private func update() {
         tradeTypeLabel.text = viewModel.tradeType
-        priceLabel.text = viewModel.price
-        shippingLabel.attributedText = viewModel.shippingText
+        priceLabel.text = viewModel.priceString
+        updateShippingLabel()
+        if case .noPrice = viewModel.priceText {
+            priceLabel.font = .title2Strong
+        } else {
+            priceLabel.font = .title1
+        }
         paymentLabel.attributedText = viewModel.payment.text
-
-        priceLabel.accessibilityLabel = "\(viewModel.price) \(viewModel.shippingAccessibilityText)"
+        priceLabel.accessibilityLabel = viewModel.shippingAccessibilityLabel
         paymentLabel.accessibilityLabel = viewModel.payment.accessibilityText
     }
+
+    private func updateShippingLabel() {
+        // This has to be done only when the app is not in the background.
+        // https://stackoverflow.com/questions/46881393/ios-crash-report-unexpected-start-state-exception
+        guard
+            UIApplication.shared.applicationState != .background
+        else {
+            return
+        }
+
+        shippingLabel.textColor = .textPrimary
+        let style = ["tjt-price-highlight": UIColor.discountedPriceLabel.hexString]
+        shippingLabel.setText(
+            fromHTMLString: viewModel.shipping.text,
+            style: style
+        )
+    }
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateShippingLabel()
+    }
+}
+
+extension UIColor {
+    static let discountedPriceLabel = UIColor.dynamicColor(defaultColor: .cherry, darkModeColor: UIColor(hex: "#D91F0A"))
 }
