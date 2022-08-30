@@ -4,7 +4,6 @@ import FinniversKit
 public final class SuggestShippingView: UIView {
     private var viewModel: SuggestShippingViewModel
     private var cancellables = Set<AnyCancellable>()
-    private var buttonCancellable: AnyCancellable?
 
     private let imageHorizontalInset: CGFloat = .spacingS
 
@@ -65,6 +64,7 @@ public final class SuggestShippingView: UIView {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
+        decorate()
     }
 
     required init?(coder: NSCoder) {
@@ -73,7 +73,7 @@ public final class SuggestShippingView: UIView {
 
     private func setup() {
         layer.borderWidth = 1
-        layer.borderColor = UIColor.sardine.cgColor
+        layer.borderColor = UIColor.suggestShippingBorder.cgColor
         layer.cornerRadius = 3
 
         addSubview(horizontalContainer)
@@ -92,13 +92,6 @@ public final class SuggestShippingView: UIView {
             loadingIndicator.heightAnchor.constraint(equalToConstant: 30),
             loadingIndicator.widthAnchor.constraint(equalToConstant: 30),
         ])
-
-        viewModel
-            .$state
-            .sink { [weak self] newState in
-                self?.applyState(newState)
-            }
-            .store(in: &cancellables)
     }
 
     @objc
@@ -106,26 +99,38 @@ public final class SuggestShippingView: UIView {
         viewModel.suggestShipping()
     }
 
-    private func applyState(_ newState: SuggestShippingViewModel.State) {
-        switch newState {
-        case .suggestShipping:
-            title.text = viewModel.title
-            message.text = viewModel.message
-            suggestShippingbutton.setTitle(viewModel.buttonTitle, for: .normal)
-            buttonCancellable = suggestShippingbutton
-                .publisher(for: .touchUpInside)
-                .sink { [weak self] _ in
-                    self?.viewModel.suggestShipping()
-                }
+    private func decorate() {
+        title.text = viewModel.title
+        message.text = viewModel.message
+        suggestShippingbutton.setTitle(viewModel.buttonTitle, for: .normal)
+        suggestShippingbutton
+            .publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.suggestShipping()
+            }
+            .store(in: &cancellables)
 
-        case .processing:
-            containerView.alpha = 0
-            addSubview(loadingIndicator)
-            loadingIndicator.centerInSuperview()
-            loadingIndicator.startAnimating()
-            layoutIfNeeded()
-        }
+        viewModel
+            .$isProcessing
+            .sink { [weak self] isProcessing in
+                if isProcessing {
+                    self?.showLoadingState()
+                }
+            }
+            .store(in: &cancellables)
     }
+
+    private func showLoadingState() {
+        containerView.alpha = 0
+        addSubview(loadingIndicator)
+        loadingIndicator.centerInSuperview()
+        loadingIndicator.startAnimating()
+        layoutIfNeeded()
+    }
+}
+
+private extension UIColor {
+    static let suggestShippingBorder = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }
 
 private extension Button.Style {
@@ -133,9 +138,9 @@ private extension Button.Style {
         .flat.overrideStyle(
             bodyColor: .dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgTertiary),
             borderWidth: 2,
-            borderColor: .dynamicColor(defaultColor: .sardine, darkModeColor: .sardine),
+            borderColor: .suggestShippingBorder,
             highlightedBodyColor: .dynamicColor(defaultColor: .bgPrimary, darkModeColor: .bgTertiary),
-            highlightedBorderColor: .dynamicColor(defaultColor: .sardine, darkModeColor: .sardine)
+            highlightedBorderColor: .suggestShippingBorder
         )
     }
 }
