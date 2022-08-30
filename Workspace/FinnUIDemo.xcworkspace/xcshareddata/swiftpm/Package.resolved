@@ -5,9 +5,9 @@
         "package": "FinniversKit",
         "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
         "state": {
-          "branch": "tjt-object-page",
-          "revision": "a70b014d474501c6603242286c0ecc0fa6ac1efa",
-          "version": null
+          "branch": null,
+          "revision": "53e914c6d8a17867a6733e50ab79114130df3a91",
+          "version": "93.11.0"
         }
       },
       {
