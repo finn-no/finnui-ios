@@ -8,7 +8,7 @@ public struct SimpleTimeLineIndicatorProvider: TimeLineIndicatorProvider {
     private var dotOffset: CGFloat = 0
 
     public init(font: UIFont) {
-        self.dotOffset = SimpleTimeLineIndicatorProvider.textVerticalMargin + font.capHeight / 2
+        self.dotOffset = SimpleTimeLineIndicatorProvider.textVerticalMargin + font.lineHeight / 2
     }
 
     public func createView(withStyle itemStyle: TimeLineItemStyle) -> UIView {
