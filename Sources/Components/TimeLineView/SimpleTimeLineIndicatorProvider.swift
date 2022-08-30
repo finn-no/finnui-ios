@@ -5,14 +5,10 @@ public struct SimpleTimeLineIndicatorProvider: TimeLineIndicatorProvider {
 
     public let width: CGFloat = SimpleTimeLineIndicatorView.indicatorDotSize
 
-    private let font: UIFont
     private var dotOffset: CGFloat = 0
 
     public init(font: UIFont) {
-        self.font = font
-
-        let fontHeight = "I".height(withConstrainedWidth: .greatestFiniteMagnitude, font: font)
-        self.dotOffset = SimpleTimeLineIndicatorProvider.textVerticalMargin + fontHeight / 2
+        self.dotOffset = SimpleTimeLineIndicatorProvider.textVerticalMargin + font.capHeight / 2
     }
 
     public func createView(withStyle itemStyle: TimeLineItemStyle) -> UIView {

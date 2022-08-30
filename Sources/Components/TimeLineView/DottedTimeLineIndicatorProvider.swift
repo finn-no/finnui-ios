@@ -7,12 +7,8 @@ public struct DottedTimeLineIndicatorProvider: TimeLineIndicatorProvider {
 
     private let font: UIFont
     private var dotOffset: CGFloat = 0
-    private var fontHeight: CGFloat {
-        "I".height(withConstrainedWidth: .greatestFiniteMagnitude, font: font)
-    }
-
     private var upperHalf: CGFloat {
-        fontHeight / 2 + DottedTimeLineIndicatorProvider.textVerticalMargin
+        font.capHeight / 2 + DottedTimeLineIndicatorProvider.textVerticalMargin
     }
 
     public init(font: UIFont) {
