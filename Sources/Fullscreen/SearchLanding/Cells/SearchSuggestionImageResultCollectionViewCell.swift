@@ -3,7 +3,7 @@ import FinniversKit
 
 final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell {
 
-    private let searchListItemView = SearchDropdownGroupItemView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    private let searchListItemView = SearchLandingGroupItemView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 
     static func cellIdentifier() -> String {
         return "SearchSuggestionImageResultCollectionViewCell"

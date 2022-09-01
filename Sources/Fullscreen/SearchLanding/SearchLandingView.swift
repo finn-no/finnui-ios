@@ -16,7 +16,6 @@ public final class SearchLandingView: UIView {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         collectionView.register(SearchSuggestionImageResultCollectionViewCell.self)
-
         return collectionView
     }()
 
@@ -105,6 +104,7 @@ public final class SearchLandingView: UIView {
     public func configure(with section: [SearchLandingSection]) {
         print("🕵️‍♀️ configure", section.description)
         var snapshot = dataSource.snapshot()
+        snapshot.deleteAllItems()
         snapshot.appendSections([.viewMoreResults(title: "Test")])
         snapshot.insertSections(section)
         applySnapshot(snapshot)

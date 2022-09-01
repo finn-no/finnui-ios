@@ -2,14 +2,14 @@ import Foundation
 import UIKit
 
 public struct SearchLandingGroupItem: Hashable {
-    public let title: String
+    public let title: NSAttributedString
     public let subtitle: String?
     public let imageUrl: String?
     public let titleColor: UIColor?
     //public let showDeleteButton: Bool
 
     public init(
-        title: String,
+        title: NSAttributedString,
         subtitle: String?,
         imageUrl: String?,
         titleColor: UIColor = .textPrimary

@@ -27,7 +27,7 @@ public class SearchSuggestionsView: UIView {
         tableView.register(SearchSuggestionTableViewCell.self)
         tableView.register(SearchSuggestionMoreResultsTableViewCell.self)
         tableView.register(SearchSuggestionLocationPermissionCell.self)
-        tableView.register(SearchSuggestionsSectionHeader.self)
+        //tableView.register(SearchSuggestionsSectionHeader.self)
         //tableView.register(SearchSuggestionImageResultTableViewCell.self)
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
@@ -97,9 +97,12 @@ extension SearchSuggestionsView: UITableViewDelegate {
 
         switch section {
         case .group(let group):
-            let header = tableView.dequeue(SearchSuggestionsSectionHeader.self)
-            header.configure(with: group.title)
-            return header
+            /*
+             let header = tableView.dequeue(SearchSuggestionsSectionHeader.self)
+             header.configure(with: group.title)
+             return header
+                                    */
+            return UIView(frame: .zero)
         case .viewMoreResults, .locationPermission:
             return UIView(frame: .zero)
         }

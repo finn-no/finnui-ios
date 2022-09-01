@@ -1,17 +1,17 @@
 import UIKit
 import FinniversKit
 
-protocol SearchDropdownGroupItemViewDelegate: AnyObject {
-    func searchDropdownGroupItemViewWasSelected(_ view: SearchDropdownGroupItemView)
-    func searchDropdownGroupItemViewDidSelectRemoveButton(_ view: SearchDropdownGroupItemView)
+protocol SearchLandingGroupItemViewDelegate: AnyObject {
+    func SearchLandingGroupItemViewWasSelected(_ view: SearchLandingGroupItemView)
+    func SearchLandingGroupItemViewDidSelectRemoveButton(_ view: SearchLandingGroupItemView)
 }
 
-class SearchDropdownGroupItemView: UIView {
+class SearchLandingGroupItemView: UIView {
 
     // MARK: - Private properties
 
-    private let item: SearchDropdownGroupItem
-    private weak var delegate: SearchDropdownGroupItemViewDelegate?
+    private let item: SearchLandingGroupItem?
+    private weak var delegate: SearchLandingGroupItemViewDelegate?
     private let imageAndButtonWidth: CGFloat = 40
     private lazy var titlesStackViewTrailingConstraint = titlesStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
     private lazy var highlightLayer = CALayer()
@@ -50,6 +50,16 @@ class SearchDropdownGroupItemView: UIView {
         return label
     }()
 
+    private lazy var iconImageView: UIImageView = {
+        let imageView = UIImageView(withAutoLayout: true)
+        imageView.image = UIImage(named: .searchSmall)
+        imageView.contentMode = .scaleAspectFit
+        imageView.setContentHuggingPriority(.required, for: .horizontal)
+        imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+        imageView.tintColor = .textPrimary
+        return imageView
+    }()
+
     private lazy var removeButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -63,8 +73,8 @@ class SearchDropdownGroupItemView: UIView {
     // MARK: - Init
 
     init(
-        item: SearchDropdownGroupItem,
-        delegate: SearchDropdownGroupItemViewDelegate,
+        item: SearchLandingGroupItem,
+        delegate: SearchLandingGroupItemViewDelegate,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         withAutoLayout: Bool = false
     ) {
@@ -74,28 +84,52 @@ class SearchDropdownGroupItemView: UIView {
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
 
         remoteImageView.dataSource = remoteImageViewDataSource
-        remoteImageView.loadImage(for: item.imageUrl, imageWidth: imageAndButtonWidth)
         setup()
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
 
+    override init(frame: CGRect) {
+        let sharedAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.body, .foregroundColor: UIColor.textPrimary]
+        let attributedString = NSMutableAttributedString(string: "test", attributes: sharedAttributes)
+        self.item = .init(title: attributedString, subtitle: nil, imageUrl: "https://images.finncdn.no/mmo/2022/7/vertical-0/14/0/265/322/740_158853377.jpg")
+        super.init(frame: frame)
+        setup()
+    }
+
     // MARK: - Setup
 
     private func setup() {
-        titleLabel.text = item.title
-        titleLabel.textColor = item.titleColor
-        subtitleLabel.text = item.subtitle
-        removeButton.isHidden = !item.showDeleteButton
+        titleLabel.attributedText = item?.title
+        titleLabel.textColor = item?.titleColor
+        subtitleLabel.text = item?.subtitle
+        removeButton.isHidden = true
 
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
 
+        let layoutGuide = UILayoutGuide()
+        addLayoutGuide(layoutGuide)
+
+        addSubview(iconImageView)
+        iconImageView.isHidden = true
+        remoteImageView.isHidden = true
+
         contentStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewSelection)))
 
         NSLayoutConstraint.activate([
+            layoutGuide.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
+            layoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            layoutGuide.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            layoutGuide.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingS),
+
             remoteImageView.heightAnchor.constraint(equalToConstant: imageAndButtonWidth),
             remoteImageView.widthAnchor.constraint(equalToConstant: imageAndButtonWidth),
+            remoteImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+
+            iconImageView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+            iconImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+            iconImageView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
 
             removeButton.heightAnchor.constraint(equalToConstant: imageAndButtonWidth),
             removeButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth)
@@ -104,14 +138,34 @@ class SearchDropdownGroupItemView: UIView {
         layer.insertSublayer(highlightLayer, at: 0)
     }
 
+    public func configure(with item: SearchLandingGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
+        titleLabel.attributedText = item.title
+        subtitleLabel.text = item.subtitle
+        guard let imageUrl = item.imageUrl else {
+            print("🕵️‍♀️ imageurl was nil")
+            contentStackView.insertArrangedSubview(iconImageView, at: 0)
+            contentStackView.removeArrangedSubview(remoteImageView)
+            iconImageView.isHidden = false
+            remoteImageView.isHidden = true
+            // configure without image - set different constraints
+            return
+        }
+        contentStackView.insertArrangedSubview(remoteImageView, at: 0)
+        contentStackView.removeArrangedSubview(iconImageView)
+        iconImageView.isHidden = true
+        remoteImageView.isHidden = false
+        remoteImageView.dataSource = remoteImageViewDataSource
+        remoteImageView.loadImage(for: imageUrl, imageWidth: imageAndButtonWidth)
+    }
+
     // MARK: - Actions
 
     @objc private func handleViewSelection() {
-        delegate?.searchDropdownGroupItemViewWasSelected(self)
+        delegate?.SearchLandingGroupItemViewWasSelected(self)
     }
 
     @objc private func handleRemoveButtonTap() {
-        delegate?.searchDropdownGroupItemViewDidSelectRemoveButton(self)
+        delegate?.SearchLandingGroupItemViewDidSelectRemoveButton(self)
     }
 
     // MARK: - Overrides
@@ -124,7 +178,7 @@ class SearchDropdownGroupItemView: UIView {
 }
 
 // MARK: - Touch / highlight handling.
-extension SearchDropdownGroupItemView {
+extension SearchLandingGroupItemView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         setHighlightColor(.defaultCellSelectedBackgroundColor)
@@ -158,3 +212,4 @@ extension SearchDropdownGroupItemView {
         CATransaction.commit()
     }
 }
+

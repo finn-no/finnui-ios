@@ -3,9 +3,9 @@ import Foundation
 public struct SearchSuggestionGroup: Hashable {
     public let title: String
     public let items: [SearchSuggestionGroupItem]
-    public let groupType: SearchSuggestionGroupType
+    public let groupType: SearchSuggestionGroupType?
 
-    public init(title: String, items: [SearchSuggestionGroupItem], groupType: SearchSuggestionGroupType) {
+    public init(title: String, items: [SearchSuggestionGroupItem], groupType: SearchSuggestionGroupType? = .regular) {
         self.title = title
         self.items = items
         self.groupType = groupType
@@ -23,9 +23,9 @@ public enum SearchSuggestionGroupType {
 public struct SearchLandingGroup: Hashable {
     public let title: String
     public let items: [SearchLandingGroupItem]
-    public let groupType: SearchSuggestionGroupType
+    public let groupType: SearchSuggestionGroupType?
 
-    public init(title: String, items: [SearchLandingGroupItem], groupType: SearchSuggestionGroupType) {
+    public init(title: String, items: [SearchLandingGroupItem], groupType: SearchSuggestionGroupType? = .regular) {
         self.title = title
         self.items = items
         self.groupType = groupType
