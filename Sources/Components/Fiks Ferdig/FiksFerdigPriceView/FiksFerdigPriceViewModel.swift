@@ -27,7 +27,7 @@ public struct FiksFerdigPriceViewModel {
     }
 
     var shippingAccessibilityLabel: String {
-        return shipping.accessibilityText ?? shipping.text
+        return shipping.accessibilityText ?? shipping.text.string
     }
 }
 
@@ -38,14 +38,17 @@ extension FiksFerdigPriceViewModel {
     }
 
     public struct Shipping {
-        public let text: String
+        public let text: NSAttributedString
+        public let darkModeText: NSAttributedString
         public let accessibilityText: String?
 
         public init(
-            text: String,
+            text: NSAttributedString,
+            darkModeText: NSAttributedString,
             accessibilityText: String?
         ) {
             self.text = text
+            self.darkModeText = darkModeText
             self.accessibilityText = accessibilityText
         }
     }
