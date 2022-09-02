@@ -91,11 +91,24 @@ struct FiksFerdigPriceViewModelBuilder {
         let logoAttachment = NSTextAttachment(image: paymentLogo)
         paymentAttributedText.append(NSAttributedString(attachment: logoAttachment))
 
+        let attributedText = shippingText.attributedHTMLString(
+            font: .bodyStrong,
+            style: ["tjt-price-highlight": UIColor.cherry.hexString],
+            textColor: .textPrimary.resolvedColor(with: .init(userInterfaceStyle: .light))
+        )
+
+        let darkModeAttributedText = shippingText.attributedHTMLString(
+            font: .bodyStrong,
+            style: ["tjt-price-highlight": UIColor.yellow.hexString],
+            textColor: .textPrimary.resolvedColor(with: .init(userInterfaceStyle: .dark))
+        )
+
         return FiksFerdigPriceViewModel(
             tradeType: tradeType,
             priceText: priceText,
             shipping: .init(
-                text: shippingText,
+                text: attributedText,
+                darkModeText: darkModeAttributedText,
                 accessibilityText: shippingAccessibilityText
             ),
             payment: .init(

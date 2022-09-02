@@ -72,6 +72,7 @@ public final class FiksFerdigPriceView: UIView {
         tradeTypeLabel.text = viewModel.tradeType
         priceLabel.text = viewModel.priceString
         updateShippingLabel()
+
         if case .noPrice = viewModel.priceText {
             priceLabel.font = .title2Strong
         } else {
@@ -83,20 +84,11 @@ public final class FiksFerdigPriceView: UIView {
     }
 
     private func updateShippingLabel() {
-        // This has to be done only when the app is not in the background.
-        // https://stackoverflow.com/questions/46881393/ios-crash-report-unexpected-start-state-exception
-        guard
-            UIApplication.shared.applicationState != .background
-        else {
-            return
+        if traitCollection.userInterfaceStyle == .dark {
+            shippingLabel.attributedText = viewModel.shipping.darkModeText
+        } else {
+            shippingLabel.attributedText = viewModel.shipping.text
         }
-
-        shippingLabel.textColor = .textPrimary
-        let style = ["tjt-price-highlight": UIColor.discountedPriceLabel.hexString]
-        shippingLabel.setText(
-            fromHTMLString: viewModel.shipping.text,
-            style: style
-        )
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
