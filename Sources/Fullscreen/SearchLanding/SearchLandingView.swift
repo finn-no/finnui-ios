@@ -8,14 +8,16 @@ public protocol SearchLandingViewDelegate: AnyObject {
 
 public final class SearchLandingView: UIView {
 
+    static let headerKind = "headerKind"
+
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .magenta
         collectionView.delegate = self
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         collectionView.register(SearchSuggestionImageResultCollectionViewCell.self)
+        collectionView.register(SearchSuggestionsSectionHeader.self, ofKind: SearchLandingView.headerKind)
         return collectionView
     }()
 
@@ -29,14 +31,21 @@ public final class SearchLandingView: UIView {
     private static func createFullWidthSection() -> NSCollectionLayoutSection {
         let size = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(106)
+            heightDimension: .estimated(78)
         )
         let item = NSCollectionLayoutItem(layoutSize: size)
         item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil, top: .fixed(.spacingM), trailing: nil, bottom: .fixed(.spacingM))
 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: [item])
 
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(49.0))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: SearchLandingView.headerKind,
+                                                                 alignment: .top)
+
         let section = NSCollectionLayoutSection(group: group)
+        section.boundarySupplementaryItems = [header]
         section.contentInsets = NSDirectionalEdgeInsets(
             vertical: 0,
             horizontal: Self.horizontalSpacing
@@ -46,6 +55,7 @@ public final class SearchLandingView: UIView {
 
     private typealias DataSource = UICollectionViewDiffableDataSource<SearchLandingSection, SearchLandingGroupItem>
     private var dataSource: DataSource!
+    private var sections = [SearchLandingSection]()
 
     private typealias Snapshot = NSDiffableDataSourceSnapshot<SearchLandingSection, SearchLandingGroupItem>
 
@@ -97,16 +107,49 @@ public final class SearchLandingView: UIView {
             }
         )
         print("🕵️‍♀️ \(#function)")
+
+        dataSource.supplementaryViewProvider = {(
+            collectionView: UICollectionView,
+            kind: String,
+            indexPath: IndexPath) -> UICollectionReusableView? in
+
+            if let titleView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SearchSuggestionsSectionHeader.reuseIdentifier,
+                for: indexPath) as? SearchSuggestionsSectionHeader {
+                guard let section = self.sections[safe: indexPath.section] else { return nil }
+                switch section {
+                case .group(let group):
+                    titleView.configure(with: group.title)
+                default:
+                    break
+                }
+                return titleView
+            } else {
+                fatalError("Cannot create new supplementary")
+            }
+        }
     }
+
+    
 
     // MARK: - Snapshot management
 
-    public func configure(with section: [SearchLandingSection]) {
-        print("🕵️‍♀️ configure", section.description)
+    public func configure(with sections: [SearchLandingSection]) {
+        self.sections = sections
+        print("🕵️‍♀️ configure", sections.description)
         var snapshot = dataSource.snapshot()
-        snapshot.deleteAllItems()
-        snapshot.appendSections([.viewMoreResults(title: "Test")])
-        snapshot.insertSections(section)
+        snapshot.appendSections(sections)
+
+        for section in sections {
+            switch section {
+            case .group(let group):
+                print("insertSection group", group.title, group.items)
+                snapshot.appendItems(group.items, toSection: section)
+            default:
+                break
+            }
+        }
         applySnapshot(snapshot)
     }
 
@@ -132,18 +175,3 @@ extension SearchLandingView: UICollectionViewDelegate {
     }
 }
 
-// MARK: - Private extensions
-
-private extension NSDiffableDataSourceSnapshot where SectionIdentifierType == SearchLandingSection, ItemIdentifierType == SearchLandingGroupItem {
-    mutating func insertSections(_ sections: [SearchLandingSection]) {
-        insertSections(sections, beforeSection: .viewMoreResults(title: "Test"))
-        for section in sections {
-            switch section {
-            case .group(let group):
-                appendItems(group.items)
-            default:
-                break
-            }
-        }
-    }
-}
