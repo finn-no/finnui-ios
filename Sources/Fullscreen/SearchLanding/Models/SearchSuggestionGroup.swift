@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SearchSuggestionGroup: Hashable {
+public class SearchSuggestionGroup: UniqueHashableItem {
     public let title: String
     public let items: [SearchSuggestionGroupItem]
     public let groupType: SearchSuggestionGroupType?
@@ -20,7 +20,7 @@ public enum SearchSuggestionGroupType {
 }
 
 
-public struct SearchLandingGroup: Hashable {
+public class SearchLandingGroup: UniqueHashableItem {
     public let title: String
     public let items: [SearchLandingGroupItem]
     public let groupType: SearchSuggestionGroupType?

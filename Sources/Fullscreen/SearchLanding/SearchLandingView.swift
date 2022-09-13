@@ -17,7 +17,7 @@ public final class SearchLandingView: UIView {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
         collectionView.register(SearchSuggestionImageResultCollectionViewCell.self)
-        collectionView.register(SearchSuggestionsSectionHeader.self, ofKind: SearchLandingView.headerKind)
+        collectionView.register(SearchSuggestionsSectionHeader.self, ofKind: UICollectionView.elementKindSectionHeader)
         return collectionView
     }()
 
@@ -41,7 +41,7 @@ public final class SearchLandingView: UIView {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: .absolute(49.0))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-                                                                 elementKind: SearchLandingView.headerKind,
+                                                                 elementKind: UICollectionView.elementKindSectionHeader,
                                                                  alignment: .top)
 
         let section = NSCollectionLayoutSection(group: group)
@@ -54,7 +54,40 @@ public final class SearchLandingView: UIView {
     }
 
     private typealias DataSource = UICollectionViewDiffableDataSource<SearchLandingSection, SearchLandingGroupItem>
-    private var dataSource: DataSource!
+    private lazy var dataSource: DataSource = {
+        let dataSource = DataSource(
+            collectionView: collectionView,
+            cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
+                print("🕵️‍♀️ item", item)
+                let cell = collectionView.dequeue(SearchSuggestionImageResultCollectionViewCell.self, for: indexPath)
+                cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
+                return cell
+            }
+        )
+        print("🕵️‍♀️ \(#function)")
+
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let section = self?.sections[safe: indexPath.section] else { return SearchSuggestionsSectionHeader() }
+            let view = collectionView.dequeue(
+                SearchSuggestionsSectionHeader.self,
+                for: indexPath,
+                ofKind: UICollectionView.elementKindSectionHeader
+            )
+            switch section {
+            case .group(let group):
+                guard group.items.count > 0 else { return SearchSuggestionsSectionHeader() }
+                view.configure(with: group.title)
+            case .viewMoreResults(title: let title):
+                view.configure(with: title)
+            case .locationPermission(title: let title):
+                view.configure(with: title)
+            }
+            return view
+        }
+
+        return dataSource
+    }()
+
     private var sections = [SearchLandingSection]()
 
     private typealias Snapshot = NSDiffableDataSourceSnapshot<SearchLandingSection, SearchLandingGroupItem>
@@ -89,62 +122,21 @@ public final class SearchLandingView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        configureDataSource()
         addSubview(collectionView)
         collectionView.fillInSuperview()
         print("🕵️‍♀️ CV", collectionView.numberOfSections)
     }
 
-    private func configureDataSource() {
-        print("🕵️‍♀️ \(#function)")
-        dataSource = DataSource(
-            collectionView: collectionView,
-            cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
-                print("🕵️‍♀️ item", item)
-                let cell = collectionView.dequeue(SearchSuggestionImageResultCollectionViewCell.self, for: indexPath)
-                cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
-                return cell
-            }
-        )
-        print("🕵️‍♀️ \(#function)")
-
-        dataSource.supplementaryViewProvider = {(
-            collectionView: UICollectionView,
-            kind: String,
-            indexPath: IndexPath) -> UICollectionReusableView? in
-
-            if let titleView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: SearchSuggestionsSectionHeader.reuseIdentifier,
-                for: indexPath) as? SearchSuggestionsSectionHeader {
-                guard let section = self.sections[safe: indexPath.section] else { return nil }
-                switch section {
-                case .group(let group):
-                    titleView.configure(with: group.title)
-                default:
-                    break
-                }
-                return titleView
-            } else {
-                fatalError("Cannot create new supplementary")
-            }
-        }
-    }
-
-    
-
     // MARK: - Snapshot management
 
     public func configure(with sections: [SearchLandingSection]) {
         self.sections = sections
-        print("🕵️‍♀️ configure", sections.description)
-        var snapshot = dataSource.snapshot()
+        var snapshot = Snapshot()
         snapshot.appendSections(sections)
 
         for section in sections {
             switch section {
             case .group(let group):
-                print("insertSection group", group.title, group.items)
                 snapshot.appendItems(group.items, toSection: section)
             default:
                 break
@@ -158,9 +150,7 @@ public final class SearchLandingView: UIView {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             self?.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
         }
-
     }
-
 }
 
 
