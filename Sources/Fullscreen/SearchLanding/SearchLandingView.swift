@@ -4,19 +4,20 @@ import Foundation
 
 public protocol SearchLandingViewDelegate: AnyObject {
     func searchLandingView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String)
+    func searchLandingView(_ view: SearchLandingView, didSelectResultAt indexPath: IndexPath, uuid: UUID)
 }
 
 public final class SearchLandingView: UIView {
-
-    static let headerKind = "headerKind"
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.backgroundColor = .bgPrimary
 
         collectionView.register(SearchSuggestionImageResultCollectionViewCell.self)
+        collectionView.register(SearchSuggestionLocationPermissionCell.self)
         collectionView.register(SearchSuggestionsSectionHeader.self, ofKind: UICollectionView.elementKindSectionHeader)
         return collectionView
     }()
@@ -38,6 +39,7 @@ public final class SearchLandingView: UIView {
 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: [item])
 
+
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: .absolute(49.0))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
@@ -58,13 +60,22 @@ public final class SearchLandingView: UIView {
         let dataSource = DataSource(
             collectionView: collectionView,
             cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
-                print("🕵️‍♀️ item", item)
-                let cell = collectionView.dequeue(SearchSuggestionImageResultCollectionViewCell.self, for: indexPath)
-                cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
-                return cell
+                switch item.type {
+                case .searchResult:
+                    let cell = collectionView.dequeue(SearchSuggestionImageResultCollectionViewCell.self, for: indexPath)
+                    cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
+                    return cell
+                case .locationPermission:
+                    let cell = collectionView.dequeue(SearchSuggestionLocationPermissionCell.self, for: indexPath)
+                    cell.configure(with: item.title)
+                    return cell
+                case .showMoreResults:
+                    let cell = collectionView.dequeue(SearchSuggestionImageResultCollectionViewCell.self, for: indexPath)
+                    cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
+                    return cell
+                }
             }
         )
-        print("🕵️‍♀️ \(#function)")
 
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let section = self?.sections[safe: indexPath.section] else { return SearchSuggestionsSectionHeader() }
@@ -78,9 +89,9 @@ public final class SearchLandingView: UIView {
                 guard group.items.count > 0 else { return SearchSuggestionsSectionHeader() }
                 view.configure(with: group.title)
             case .viewMoreResults(title: let title):
-                view.configure(with: title)
+                view.configure(with: "")
             case .locationPermission(title: let title):
-                view.configure(with: title)
+                view.configure(with: "")
             }
             return view
         }
@@ -107,7 +118,6 @@ public final class SearchLandingView: UIView {
         delegate: SearchLandingViewDelegate?,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
-        print("🕵️‍♀️ init")
         self.delegate = delegate
         self.remoteImageViewDataSource = remoteImageViewDataSource
         super.init(frame: .zero)
@@ -124,7 +134,6 @@ public final class SearchLandingView: UIView {
     private func setup() {
         addSubview(collectionView)
         collectionView.fillInSuperview()
-        print("🕵️‍♀️ CV", collectionView.numberOfSections)
     }
 
     // MARK: - Snapshot management
@@ -138,6 +147,8 @@ public final class SearchLandingView: UIView {
             switch section {
             case .group(let group):
                 snapshot.appendItems(group.items, toSection: section)
+            case .locationPermission(let item):
+                snapshot.appendItems([item], toSection: section)
             default:
                 break
             }
@@ -159,9 +170,11 @@ public final class SearchLandingView: UIView {
 
 extension SearchLandingView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(#function, indexPath)
+        if let result = dataSource.itemIdentifier(for: indexPath) {
+            print("Selected result \(result.title)")
+            delegate?.searchLandingView(self, didSelectResultAt: indexPath, uuid: result.uuid)
+        }
     }
 }
 

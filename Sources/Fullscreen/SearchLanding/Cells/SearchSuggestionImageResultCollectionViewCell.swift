@@ -3,7 +3,7 @@ import FinniversKit
 
 final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell {
 
-    private let searchListItemView = SearchLandingGroupItemView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    private let searchListItemView = SearchLandingGroupItemView(frame: CGRect(x: 0, y: 0, width: 100, height: 49))
 
     static func cellIdentifier() -> String {
         return "SearchSuggestionImageResultCollectionViewCell"
@@ -24,15 +24,10 @@ final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell 
     // MARK: - Setup
 
     private func setup() {
-        backgroundColor = .magenta
         searchListItemView.frame = contentView.bounds
         searchListItemView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         contentView.addSubview(searchListItemView)
-
-        /*
-         set default background selected color - make extension for collection view cell like the table view cells have
-        contentView.addSubview(searchListItemView)
-        searchListItemView?.fillInSuperview()*/
+        searchListItemView.fillInSuperview()
     }
 
     // MARK: - Overrides
@@ -41,37 +36,12 @@ final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell 
         super.prepareForReuse()
         //searchListItemView.prepareForReuse()
     }
-    /*
-    // MARK: - Private properties
-
-    private var searchListItemView: SearchListGroupItemView?
-
-    // MARK: - Init
-
-    override init(style: CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setup()
-    }
-
-    required init?(coder: NSCoder) { fatalError() }
-
-    // MARK: - Setup
-
-    private func setup() {
-        backgroundColor = .magenta
-
-        setDefaultSelectedBackgound()
-
-
-        /*
-        contentView.addSubview(searchListItemView)
-        searchListItemView?.fillInSuperview()*/
-    }*/
 
     // MARK: - Configure
 
     func configure(with item: SearchLandingGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
         searchListItemView.configure(with: item, remoteImageViewDataSource: remoteImageViewDataSource)
+        searchListItemView.backgroundColor = .bgPrimary
     }
 
 }

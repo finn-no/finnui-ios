@@ -1,7 +1,7 @@
 import UIKit
 import FinniversKit
 
-class SearchSuggestionLocationPermissionCell: UITableViewCell {
+class SearchSuggestionLocationPermissionCell: UICollectionViewCell {
 
     // MARK: - Private properties
 
@@ -23,8 +23,8 @@ class SearchSuggestionLocationPermissionCell: UITableViewCell {
 
     // MARK: - Init
 
-    override init(style: CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setup()
     }
 
@@ -35,8 +35,8 @@ class SearchSuggestionLocationPermissionCell: UITableViewCell {
     private func setup() {
         backgroundColor = .bgPrimary
 
-        contentView.addSubview(enableLocationButton)
-        contentView.addSubview(titleLabel)
+        addSubview(enableLocationButton)
+        addSubview(titleLabel)
         titleLabel.fillInSuperview(insets: UIEdgeInsets(top: .spacingL, leading: .spacingM, bottom: -.spacingL, trailing: -.spacingXXL))
 
         NSLayoutConstraint.activate([
@@ -48,7 +48,7 @@ class SearchSuggestionLocationPermissionCell: UITableViewCell {
 
     // MARK: - Configure
 
-    func configure(with title: String) {
-        titleLabel.text = title
+    func configure(with title: NSAttributedString) {
+        titleLabel.attributedText = title
     }
 }

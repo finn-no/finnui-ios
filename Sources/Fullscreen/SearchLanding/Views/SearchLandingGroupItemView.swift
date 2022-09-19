@@ -1,17 +1,12 @@
 import UIKit
 import FinniversKit
 
-protocol SearchLandingGroupItemViewDelegate: AnyObject {
-    func SearchLandingGroupItemViewWasSelected(_ view: SearchLandingGroupItemView)
-    func SearchLandingGroupItemViewDidSelectRemoveButton(_ view: SearchLandingGroupItemView)
-}
 
 class SearchLandingGroupItemView: UIView {
 
     // MARK: - Private properties
 
     private let item: SearchLandingGroupItem?
-    private weak var delegate: SearchLandingGroupItemViewDelegate?
     private let imageAndButtonWidth: CGFloat = 40
     private lazy var titlesStackViewTrailingConstraint = titlesStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
     private lazy var highlightLayer = CALayer()
@@ -74,12 +69,10 @@ class SearchLandingGroupItemView: UIView {
 
     init(
         item: SearchLandingGroupItem,
-        delegate: SearchLandingGroupItemViewDelegate,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         withAutoLayout: Bool = false
     ) {
         self.item = item
-        self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
 
@@ -92,7 +85,7 @@ class SearchLandingGroupItemView: UIView {
     override init(frame: CGRect) {
         let sharedAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.body, .foregroundColor: UIColor.textPrimary]
         let attributedString = NSMutableAttributedString(string: "test", attributes: sharedAttributes)
-        self.item = .init(title: attributedString, subtitle: nil, imageUrl: "https://images.finncdn.no/mmo/2022/7/vertical-0/14/0/265/322/740_158853377.jpg")
+        self.item = .init(title: attributedString, subtitle: nil, imageUrl: "https://images.finncdn.no/mmo/2022/7/vertical-0/14/0/265/322/740_158853377.jpg", uuid: UUID(), type: .searchResult)
         super.init(frame: frame)
         setup()
     }
@@ -114,8 +107,6 @@ class SearchLandingGroupItemView: UIView {
         addSubview(iconImageView)
         iconImageView.isHidden = true
         remoteImageView.isHidden = true
-
-        contentStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleViewSelection)))
 
         NSLayoutConstraint.activate([
             layoutGuide.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
@@ -141,7 +132,7 @@ class SearchLandingGroupItemView: UIView {
     public func configure(with item: SearchLandingGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
         titleLabel.attributedText = item.title
         subtitleLabel.text = item.subtitle
-        guard let imageUrl = item.imageUrl else {
+        guard let imageUrl = item.imageUrl, !imageUrl.isEmpty else {
             print("🕵️‍♀️ imageurl was nil")
             contentStackView.insertArrangedSubview(iconImageView, at: 0)
             contentStackView.removeArrangedSubview(remoteImageView)
@@ -160,12 +151,9 @@ class SearchLandingGroupItemView: UIView {
 
     // MARK: - Actions
 
-    @objc private func handleViewSelection() {
-        delegate?.SearchLandingGroupItemViewWasSelected(self)
-    }
-
     @objc private func handleRemoveButtonTap() {
-        delegate?.SearchLandingGroupItemViewDidSelectRemoveButton(self)
+        print("Tapped", #function)
+        //delegate?.SearchLandingGroupItemViewDidSelectRemoveButton(self)
     }
 
     // MARK: - Overrides
@@ -173,43 +161,5 @@ class SearchLandingGroupItemView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         highlightLayer.frame = bounds.insetBy(dx: -.spacingXS, dy: -.spacingXS)
-        setHighlightColor(.bgPrimary)
     }
 }
-
-// MARK: - Touch / highlight handling.
-extension SearchLandingGroupItemView {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        setHighlightColor(.defaultCellSelectedBackgroundColor)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        setHighlightColor(.bgPrimary)
-    }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesCancelled(touches, with: event)
-        setHighlightColor(.bgPrimary)
-    }
-
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
-
-        if let touch = touches.first, bounds.contains(touch.location(in: self)) {
-            setHighlightColor(.defaultCellSelectedBackgroundColor)
-        } else {
-            setHighlightColor(.bgPrimary)
-        }
-    }
-
-    /// Disable implicit layer animation when changing highlight color.
-    private func setHighlightColor(_ color: UIColor) {
-        CATransaction.begin()
-        CATransaction.setValue(true, forKey: kCATransactionDisableActions)
-        highlightLayer.backgroundColor = color.cgColor
-        CATransaction.commit()
-    }
-}
-

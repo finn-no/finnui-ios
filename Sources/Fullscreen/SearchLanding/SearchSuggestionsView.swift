@@ -1,6 +1,6 @@
 import UIKit
 import FinniversKit
-
+/*
 public protocol SearchSuggestionsViewDelegate: AnyObject {
     func searchSuggestionsView(_ view: SearchSuggestionsView, didSelectResultAt indexPath: IndexPath)
     func searchSuggestionsViewDidSelectViewMoreResults(_ view: SearchSuggestionsView)
@@ -26,7 +26,7 @@ public class SearchSuggestionsView: UIView {
         tableView.dataSource = self
         tableView.register(SearchSuggestionTableViewCell.self)
         tableView.register(SearchSuggestionMoreResultsTableViewCell.self)
-        tableView.register(SearchSuggestionLocationPermissionCell.self)
+        //tableView.register(SearchSuggestionLocationPermissionCell.self)
         //tableView.register(SearchSuggestionsSectionHeader.self)
         //tableView.register(SearchSuggestionImageResultTableViewCell.self)
         tableView.separatorStyle = .none
@@ -181,3 +181,4 @@ extension SearchSuggestionsView: UITableViewDataSource {
         }
     }
 }
+*/

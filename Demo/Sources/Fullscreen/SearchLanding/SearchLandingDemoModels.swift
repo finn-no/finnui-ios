@@ -5,54 +5,54 @@ import FinnUI
 extension Array where Element == SearchLandingSection {
     static func suggestions(withLocationPermission: Bool = false) -> [SearchLandingSection] {
         [
-            withLocationPermission ? .locationPermission(title: "Annonser nær meg") : nil,
+            withLocationPermission ? .locationPermission(.init(title: "Annonser nær meg".attributed, subtitle: nil, imageUrl: nil, uuid: UUID(), type: .locationPermission)) : nil,
             .group(.generateSuggestions(title: "Torget", count: 6)),
             .group(.generateSuggestions(title: "Bolig til salgs", count: 2)),
             .group(.generateSuggestions(title: "Alle stillinger", count: 4)),
-            .viewMoreResults(title: "Finn flere resultater for 'hund'")
+            .viewMoreResults(.init(title: "Finn flere resultater for 'hund'".attributed, subtitle: nil, imageUrl: nil, uuid: UUID(), type: .showMoreResults))
         ].compactMap { $0 }
     }
 
     static func landingPage(withLocationPermission: Bool = false) -> [SearchLandingSection] {
         [
-            withLocationPermission ? .locationPermission(title: "Annonser nær meg") : nil,
+            withLocationPermission ? .locationPermission(.init(title: "Annonser nær meg".attributed, subtitle: nil, imageUrl: nil, uuid: UUID(), type: .locationPermission)) : nil,
             .group(SearchLandingGroup(
                 title: "Torget",
                 items: [
-                    SearchLandingGroupItem(title: "Torget til salgs".attributed, subtitle: "(6 073 treff)", imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Torget gis bort".attributed, subtitle: "(6 treff)", imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Torget ønskes kjøpt".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl)
+                    SearchLandingGroupItem(title: "Torget til salgs".attributed, subtitle: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Torget gis bort".attributed, subtitle: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Torget ønskes kjøpt".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult)
                 ],
                 groupType: .regular
             )),
             .group(SearchLandingGroup(
                 title: "Båt",
                 items: [
-                    SearchLandingGroupItem(title: "Båter til salgs".attributed, subtitle: "(6 073 treff)",imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Båtplass tilbys".attributed, subtitle: "(6 treff)",imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Båtmotorer til salgs".attributed, subtitle: "(12 treff)",imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Båter ønskes kjøpt".attributed, subtitle: "(12 treff)",imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Båter til leie".attributed, subtitle: "(12 treff)",imageUrl: .demoImageUrl)
+                    SearchLandingGroupItem(title: "Båter til salgs".attributed, subtitle: "(6 073 treff)",imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Båtplass tilbys".attributed, subtitle: "(6 treff)",imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Båtmotorer til salgs".attributed, subtitle: "(12 treff)",imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Båter ønskes kjøpt".attributed, subtitle: "(12 treff)",imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Båter til leie".attributed, subtitle: "(12 treff)",imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult)
                 ],
                 groupType: .regular
             )),
             .group(SearchLandingGroup(
                 title: "Bil",
                 items: [
-                    SearchLandingGroupItem(title: "Campingvogner".attributed, subtitle: "(6 073 treff)", imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Biler i Norge".attributed, subtitle: "(6 treff)", imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Bobiler".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Varebiler i Norge".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl)
+                    SearchLandingGroupItem(title: "Campingvogner".attributed, subtitle: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Biler i Norge".attributed, subtitle: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Bobiler".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Varebiler i Norge".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult)
                 ],
                 groupType: .image
             )),
             .group(SearchLandingGroup(
                 title: "Eiendom",
                 items: [
-                    SearchLandingGroupItem(title: "Nye boliger".attributed, subtitle: "(6 073 treff)", imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Fritidstomter".attributed, subtitle: "(6 treff)", imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Bolig til salgs".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl),
-                    SearchLandingGroupItem(title: "Bolig ønskes leid".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl)
+                    SearchLandingGroupItem(title: "Nye boliger".attributed, subtitle: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Fritidstomter".attributed, subtitle: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Bolig til salgs".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult),
+                    SearchLandingGroupItem(title: "Bolig ønskes leid".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), type: .searchResult)
                 ],
                 groupType: .regular
             )),
@@ -62,7 +62,9 @@ extension Array where Element == SearchLandingSection {
                     SearchLandingGroupItem(
                         title: "Leilighet med sjarm og klassisk bad og kjøkken fra 60-tallet. Må ses!".attributed,
                         subtitle: nil,
-                        imageUrl: .demoImageUrl
+                        imageUrl: .demoImageUrl,
+                        uuid: UUID(),
+                        type: .searchResult
                     )
                 ],
                 groupType: .regular
@@ -93,12 +95,12 @@ private enum SuggestionStyle {
 private extension SearchLandingGroup {
     static func generateSuggestions(title: String, count: Int) -> SearchLandingGroup {
         let reusableItems = [
-            SearchLandingGroupItem(title: "sykkelvogn".attributed, subtitle: "(325 treff)", imageUrl: nil),
-            SearchLandingGroupItem(title: "sykkelstativ".attributed, subtitle: "(972 treff)", imageUrl: nil),
-            SearchLandingGroupItem(title: "hundebur".attributed, subtitle: "(972 treff)", imageUrl: nil),
-            SearchLandingGroupItem(title: "dører".attributed, subtitle: "(972 treff)", imageUrl: nil/*, style: .highlighted*/),
-            SearchLandingGroupItem(title: "playstation 5".attributed, subtitle: "(810 treff)", imageUrl: nil/*, style: .highlighted*/),
-            SearchLandingGroupItem(title: "veldig veldig veldig lang tekst som sikkert bruker flere linjer. Hvem vet når denne ender?".attributed, subtitle: "(123 treff)", imageUrl: nil)
+            SearchLandingGroupItem(title: "sykkelvogn".attributed, subtitle: "(325 treff)", imageUrl: nil, uuid: UUID(), type: .searchResult),
+            SearchLandingGroupItem(title: "sykkelstativ".attributed, subtitle: "(972 treff)", imageUrl: nil, uuid: UUID(), type: .searchResult),
+            SearchLandingGroupItem(title: "hundebur".attributed, subtitle: "(972 treff)", imageUrl: nil, uuid: UUID(), type: .searchResult),
+            SearchLandingGroupItem(title: "dører".attributed, subtitle: "(972 treff)", imageUrl: nil, uuid: UUID(), type: .searchResult),
+            SearchLandingGroupItem(title: "playstation 5".attributed, subtitle: "(810 treff)", imageUrl: nil, uuid: UUID(), type: .searchResult),
+            SearchLandingGroupItem(title: "veldig veldig veldig lang tekst som sikkert bruker flere linjer. Hvem vet når denne ender?".attributed, subtitle: "(123 treff)", imageUrl: nil, uuid: UUID(), type: .searchResult)
         ]
 
         var items = [SearchLandingGroupItem]()

@@ -18,11 +18,12 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
         }
     ]
 
+    /*
     private lazy var searchSuggestionsView: SearchSuggestionsView = {
         let view = SearchSuggestionsView(withAutoLayout: true)
         view.delegate = self
         return view
-    }()
+    }()*/
 
     private lazy var searchLandingView = SearchLandingView(withAutoLayout: true, delegate: self, remoteImageViewDataSource: self)
 
@@ -44,6 +45,7 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
     }
 }
 
+/*
 // MARK: - SearchSuggestionsViewDelegate
 
 extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
@@ -63,10 +65,20 @@ extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
     func searchSuggestionsViewDidScroll() {
         print("🔥🔥🔥🔥 \(#function)")
     }
-}
+}*/
 
 // MARK: - Search Landing View Delegate
 extension SearchSuggestionsDemoView: SearchLandingViewDelegate {
+    func searchLandingView(_ view: FinnUI.SearchLandingView, didSelectResultAt indexPath: IndexPath, uuid: UUID) {
+        print("🔥🔥🔥🔥 indexPath = \(indexPath)")
+        print("🔥🔥🔥🔥 \(#function)")
+    }
+
+    func searchLandingView(_ view: SearchLandingView, didSelectResultAt indexPath: IndexPath) {
+        print("🔥🔥🔥🔥 indexPath = \(indexPath)")
+        print("🔥🔥🔥🔥 \(#function)")
+    }
+
     func searchLandingView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String) {
         print("🔥🔥🔥🔥 forAdWithId = \(adId)")
         print("🔥🔥🔥🔥 \(#function)")

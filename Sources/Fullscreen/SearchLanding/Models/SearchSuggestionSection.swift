@@ -8,6 +8,6 @@ public enum SearchSuggestionSection: Hashable {
 
 public enum SearchLandingSection: Hashable {
     case group(SearchLandingGroup)
-    case viewMoreResults(title: String)
-    case locationPermission(title: String)
+    case viewMoreResults(SearchLandingGroupItem)
+    case locationPermission(SearchLandingGroupItem)
 }
