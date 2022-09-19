@@ -84,6 +84,10 @@ extension SearchSuggestionsDemoView: SearchLandingViewDelegate {
         print("🔥🔥🔥🔥 \(#function)")
     }
 
+    func searchLandingView(didTapEnableLocationButton button: UIButton) {
+        print("🔥🔥🔥🔥 \(#function)")
+    }
+
 
 }
 

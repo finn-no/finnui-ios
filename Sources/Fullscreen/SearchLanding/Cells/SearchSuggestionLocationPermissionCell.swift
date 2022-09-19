@@ -4,6 +4,7 @@ import FinniversKit
 class SearchSuggestionLocationPermissionCell: UICollectionViewCell {
 
     // MARK: - Private properties
+    public weak var delegate: SearchLandingViewDelegate?
 
     private lazy var titleLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
@@ -18,6 +19,7 @@ class SearchSuggestionLocationPermissionCell: UICollectionViewCell {
         let button = Button(style: style, size: .small, withAutoLayout: true)
         button.setTitle("Skru på", for: .normal)
         button.setContentCompressionResistancePriority(.required, for: .vertical)
+        button.addTarget(self, action: #selector(handleEnableLocationButtonTap), for: .touchUpInside)
         return button
     }()
 
@@ -50,5 +52,12 @@ class SearchSuggestionLocationPermissionCell: UICollectionViewCell {
 
     func configure(with title: NSAttributedString) {
         titleLabel.attributedText = title
+    }
+
+    // MARK: - Actions
+
+    @objc private func handleEnableLocationButtonTap() {
+        print("Tapped", #function)
+        delegate?.searchLandingView(didTapEnableLocationButton: self.enableLocationButton)
     }
 }

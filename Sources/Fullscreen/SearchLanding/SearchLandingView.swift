@@ -5,6 +5,7 @@ import Foundation
 public protocol SearchLandingViewDelegate: AnyObject {
     func searchLandingView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String)
     func searchLandingView(_ view: SearchLandingView, didSelectResultAt indexPath: IndexPath, uuid: UUID)
+    func searchLandingView(didTapEnableLocationButton button: UIButton)
 }
 
 public final class SearchLandingView: UIView {
@@ -18,6 +19,7 @@ public final class SearchLandingView: UIView {
 
         collectionView.register(SearchSuggestionImageResultCollectionViewCell.self)
         collectionView.register(SearchSuggestionLocationPermissionCell.self)
+        collectionView.register(SearchSuggestionMoreResultsCollectionViewCell.self)
         collectionView.register(SearchSuggestionsSectionHeader.self, ofKind: UICollectionView.elementKindSectionHeader)
         return collectionView
     }()
@@ -35,7 +37,7 @@ public final class SearchLandingView: UIView {
             heightDimension: .estimated(78)
         )
         let item = NSCollectionLayoutItem(layoutSize: size)
-        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil, top: .fixed(.spacingM), trailing: nil, bottom: .fixed(.spacingM))
+        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil, top: .fixed(.spacingM), trailing: nil, bottom: .fixed(.spacingXL))
 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: [item])
 
@@ -70,8 +72,8 @@ public final class SearchLandingView: UIView {
                     cell.configure(with: item.title)
                     return cell
                 case .showMoreResults:
-                    let cell = collectionView.dequeue(SearchSuggestionImageResultCollectionViewCell.self, for: indexPath)
-                    cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
+                    let cell = collectionView.dequeue(SearchSuggestionMoreResultsCollectionViewCell.self, for: indexPath)
+                    cell.configure(with: item.title)
                     return cell
                 }
             }
@@ -149,8 +151,8 @@ public final class SearchLandingView: UIView {
                 snapshot.appendItems(group.items, toSection: section)
             case .locationPermission(let item):
                 snapshot.appendItems([item], toSection: section)
-            default:
-                break
+            case .viewMoreResults(let item):
+                snapshot.appendItems([item], toSection: section)
             }
         }
         applySnapshot(snapshot)

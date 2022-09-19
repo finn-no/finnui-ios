@@ -1,7 +1,7 @@
 import UIKit
 import FinniversKit
 
-class SearchSuggestionMoreResultsTableViewCell: UITableViewCell {
+class SearchSuggestionMoreResultsCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Private properties
 
@@ -29,8 +29,8 @@ class SearchSuggestionMoreResultsTableViewCell: UITableViewCell {
 
     // MARK: - Init
 
-    override init(style: CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setup()
     }
 
@@ -40,7 +40,6 @@ class SearchSuggestionMoreResultsTableViewCell: UITableViewCell {
 
     private func setup() {
         backgroundColor = .bgPrimary
-        setDefaultSelectedBackgound()
 
         contentView.addSubview(stackView)
         stackView.fillInSuperview(insets: UIEdgeInsets(top: .spacingS, leading: .spacingM, bottom: -.spacingS, trailing: -.spacingM))
@@ -53,7 +52,7 @@ class SearchSuggestionMoreResultsTableViewCell: UITableViewCell {
 
     // MARK: - Configure
 
-    func configure(with title: String) {
-        titleLabel.text = title
+    func configure(with title: NSAttributedString) {
+        titleLabel.attributedText = title
     }
 }
