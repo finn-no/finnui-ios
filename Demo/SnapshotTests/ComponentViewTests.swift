@@ -106,4 +106,24 @@ class ComponentViewTests: XCTestCase {
     func testExtendedProfileView() {
         snapshot(.extendedProfileView)
     }
+
+    func testBasicProfileView() {
+        snapshot(.basicProfileView)
+    }
+
+    func testSuggestShippingView() {
+        snapshot(.suggestShippingView)
+    }
+
+    func testShippingRequestedView() {
+        snapshot(.shippingRequestedView)
+    }
+
+    func testShippingRequestErrorView() {
+        snapshot(.shippingRequestErrorView)
+    }
+
+    func testTJTPriceView() {
+        snapshot(.tjtPriceView)
+    }
 }
