@@ -39,6 +39,7 @@
 		4D529E13258357D0007AE5B6 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D529E12258357D0007AE5B6 /* Icons.xcassets */; };
 		4D529E2125837087007AE5B6 /* ImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D529E2025837087007AE5B6 /* ImageAsset.swift */; };
 		5B95900E89AE9E9723E71E21 /* IPadSnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B95919B9CFD316597FE1169 /* IPadSnapshotWrapperViewController.swift */; };
+		5B95976862EDDE331E488125 /* ExtendedProfileDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9590A6804FB7A84BDE1926 /* ExtendedProfileDemoView.swift */; };
 		5B9599DAB9A28758FA2708DF /* RealestateAgencyContentDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9599E888EE6D82C0CCC391 /* RealestateAgencyContentDemoView.swift */; };
 		5B959FA1E7529B5DF3EE7315 /* RealestateSoldStateDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9591016C346EF4BB044C96 /* RealestateSoldStateDemoView.swift */; };
 		5B959FB12D2D88BA79394529 /* FadedExpandableDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B959C33C8E418F6ACF89F17 /* FadedExpandableDemoView.swift */; };
@@ -84,6 +85,7 @@
 		E6ADDE6C2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */; };
 		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
+		F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +176,7 @@
 		4DDD45AB250FA7E1007DBDD5 /* SearchDisplayMenuDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchDisplayMenuDemoView.swift; sourceTree = "<group>"; };
 		4DDD45AD250FA7E1007DBDD5 /* SearchFilterTagsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterTagsData.swift; sourceTree = "<group>"; };
 		4DDD45AE250FA7E1007DBDD5 /* SearchFilterTagsDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterTagsDemoView.swift; sourceTree = "<group>"; };
+		5B9590A6804FB7A84BDE1926 /* ExtendedProfileDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedProfileDemoView.swift; sourceTree = "<group>"; };
 		5B9591016C346EF4BB044C96 /* RealestateSoldStateDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealestateSoldStateDemoView.swift; sourceTree = "<group>"; };
 		5B95919B9CFD316597FE1169 /* IPadSnapshotWrapperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPadSnapshotWrapperViewController.swift; sourceTree = "<group>"; };
 		5B9599E888EE6D82C0CCC391 /* RealestateAgencyContentDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealestateAgencyContentDemoView.swift; sourceTree = "<group>"; };
@@ -207,6 +210,7 @@
 		E6AD7E60283FDD8E00C6D1CA /* ShippingRequestedDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingRequestedDemoView.swift; sourceTree = "<group>"; };
 		E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingRequestErrorDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
+		F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProfileDemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,6 +384,9 @@
 		46E772CB242CEF09008A5E93 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				F0D8D382285788E300FADED2 /* BasicProfile */,
+				E4DBDD952762332300BE21D8 /* ShippingAlternativesView */,
+				710C33F126EB5A4D002BAF1A /* HelthjemView */,
 				ADC5C709E0338FF2B7D08358 /* AdTipsCollapsibleView */,
 				8D680B67DAB7BFCB028C94EE /* ChatAvailability */,
 				4DBC0399250A495D004E8044 /* ExpandCollapseButton */,
@@ -399,6 +406,13 @@
 				E4DBDD952762332300BE21D8 /* ShippingAlternativesView */,
 				E68E2D0B283E6B77009C5792 /* SuggestShipping */,
 				DA2F2713266E276D00E6F17C /* TagCloudGridView */,
+				ADC5C709E0338FF2B7D08358 /* AdTipsCollapsibleView */,
+				5B9596DA9EC0E8F60BDF82E9 /* RealestateSoldState */,
+				5B9599023D2EDC40DD573783 /* RealestateAgencyContent */,
+				5B959973A0305C31A0B99FFE /* FadedExpandableView */,
+				5DE2A0AA27C4DB63002E2EDA /* RecommendationEmptyView */,
+				5D1224BF27BF872400A2AD97 /* RecommendationConsentView */,
+				5B95945BFA1580B77EC4F696 /* ExtendedProfile */,
 				171E41BF2863028000A4FE2C /* TJTPriceView */,
 			);
 			path = Components;
@@ -523,6 +537,14 @@
 				4DDD45AE250FA7E1007DBDD5 /* SearchFilterTagsDemoView.swift */,
 			);
 			path = SearchFilterTags;
+			sourceTree = "<group>";
+		};
+		5B95945BFA1580B77EC4F696 /* ExtendedProfile */ = {
+			isa = PBXGroup;
+			children = (
+				5B9590A6804FB7A84BDE1926 /* ExtendedProfileDemoView.swift */,
+			);
+			path = ExtendedProfile;
 			sourceTree = "<group>";
 		};
 		5B9596DA9EC0E8F60BDF82E9 /* RealestateSoldState */ = {
@@ -721,6 +743,14 @@
 				F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */,
 			);
 			path = Wrappers;
+			sourceTree = "<group>";
+		};
+		F0D8D382285788E300FADED2 /* BasicProfile */ = {
+			isa = PBXGroup;
+			children = (
+				F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */,
+			);
+			path = BasicProfile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -960,6 +990,7 @@
 				5D1224C127BF875600A2AD97 /* RecommendationConsentDemoView.swift in Sources */,
 				46E773AB242CEF0A008A5E93 /* SplitViewController.swift in Sources */,
 				46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */,
+				F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */,
 				9BA6C4A224336B9A009D417B /* DemoWrapperView.swift in Sources */,
 				46E773A9242CEF0A008A5E93 /* RecyclingDemoViews.swift in Sources */,
 				D6D43CE825BF2F4D00234AC2 /* SearchFilterTagsDemoView.swift in Sources */,
@@ -982,6 +1013,7 @@
 				5B959FA1E7529B5DF3EE7315 /* RealestateSoldStateDemoView.swift in Sources */,
 				5B9599DAB9A28758FA2708DF /* RealestateAgencyContentDemoView.swift in Sources */,
 				5B959FB12D2D88BA79394529 /* FadedExpandableDemoView.swift in Sources */,
+				5B95976862EDDE331E488125 /* ExtendedProfileDemoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

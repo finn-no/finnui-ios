@@ -160,8 +160,14 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
         print("📏 Did resize itself")
     }
 
+    public func realestateSoldStateView(
+        _ view: RealestateSoldStateView,
+        didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem
+    ) {
+        print("📲 Did select link item. Kind: \(linkItem.kind) – Title: '\(linkItem.title)'")
+    }
+
     func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int) {
-        print("📲 Did tap phone number with index: \(phoneNumberIndex)")
     }
 }
 
@@ -267,7 +273,7 @@ private extension CompanyProfile.ContactPerson {
             name: "Navn Navnesen",
             jobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            phoneNumbers: ["123 45 678"]
+            links: [.phoneNumber(title: "123 45 678")]
         )
     }
 
@@ -277,7 +283,7 @@ private extension CompanyProfile.ContactPerson {
             name: "Navn Navnesen",
             jobTitle: "Eiendomsmegler / Partner",
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            phoneNumbers: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"]
+            links: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"].map { .phoneNumber(title: $0) }
         )
     }
 
@@ -287,7 +293,7 @@ private extension CompanyProfile.ContactPerson {
             name: "Navn Navnesen",
             jobTitle: "Eiendomsmegler / Partner",
             imageUrl: nil,
-            phoneNumbers: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"]
+            links: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"].map { .phoneNumber(title: $0) }
         )
     }
 
@@ -297,7 +303,7 @@ private extension CompanyProfile.ContactPerson {
             name: name,
             jobTitle: jobTitle,
             imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
-            phoneNumbers: []
+            links: []
         )
     }
 
@@ -307,7 +313,7 @@ private extension CompanyProfile.ContactPerson {
             name: name,
             jobTitle: jobTitle,
             imageUrl: nil,
-            phoneNumbers: ["123 45 678"]
+            links: [.phoneNumber(title: "123 45 678")]
         )
     }
 
@@ -317,7 +323,7 @@ private extension CompanyProfile.ContactPerson {
             name: name,
             jobTitle: jobTitle,
             imageUrl: nil,
-            phoneNumbers: []
+            links: []
         )
     }
 }
