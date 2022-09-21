@@ -31,7 +31,7 @@ public class ExtendedProfileView: UIView {
     private weak var remoteImageViewDataSource: RemoteImageViewDataSource?
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var contactPersonsStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
-    private lazy var logoView = ExtendedProfileLogoView(withAutoLayout: true)
+    private lazy var logoView = CompanyProfileLogoView(withAutoLayout: true)
     private lazy var contentStackViewBottomAnchor = contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
 
     private lazy var hairlineDivider: UIView = {

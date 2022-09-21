@@ -85,6 +85,7 @@
 		E6ADDE6C2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */; };
 		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
+		F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +210,7 @@
 		E6AD7E60283FDD8E00C6D1CA /* ShippingRequestedDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingRequestedDemoView.swift; sourceTree = "<group>"; };
 		E6ADDE6B2849E5C8000D85B4 /* ShippingRequestErrorDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingRequestErrorDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
+		F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProfileDemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +384,9 @@
 		46E772CB242CEF09008A5E93 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				F0D8D382285788E300FADED2 /* BasicProfile */,
+				E4DBDD952762332300BE21D8 /* ShippingAlternativesView */,
+				710C33F126EB5A4D002BAF1A /* HelthjemView */,
 				ADC5C709E0338FF2B7D08358 /* AdTipsCollapsibleView */,
 				8D680B67DAB7BFCB028C94EE /* ChatAvailability */,
 				4DBC0399250A495D004E8044 /* ExpandCollapseButton */,
@@ -740,6 +745,14 @@
 			path = Wrappers;
 			sourceTree = "<group>";
 		};
+		F0D8D382285788E300FADED2 /* BasicProfile */ = {
+			isa = PBXGroup;
+			children = (
+				F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */,
+			);
+			path = BasicProfile;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -977,6 +990,7 @@
 				5D1224C127BF875600A2AD97 /* RecommendationConsentDemoView.swift in Sources */,
 				46E773AB242CEF0A008A5E93 /* SplitViewController.swift in Sources */,
 				46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */,
+				F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */,
 				9BA6C4A224336B9A009D417B /* DemoWrapperView.swift in Sources */,
 				46E773A9242CEF0A008A5E93 /* RecyclingDemoViews.swift in Sources */,
 				D6D43CE825BF2F4D00234AC2 /* SearchFilterTagsDemoView.swift in Sources */,

@@ -28,6 +28,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case recommendationEmptyView
     case fadedExpandableView
     case extendedProfileView
+    case basicProfileView
     case suggestShippingView
     case shippingRequestedView
     case shippingRequestErrorView
@@ -81,6 +82,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<FadedExpandableDemoView>()
         case .extendedProfileView:
             return DemoViewController<ExtendedProfileDemoView>()
+        case .basicProfileView:
+            return DemoViewController<BasicProfileDemoView>()
         case .suggestShippingView:
             return DemoViewController<SuggestShippingDemoView>()
         case .shippingRequestedView:

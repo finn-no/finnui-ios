@@ -81,6 +81,7 @@ class ExtendedProfileContactPersonView: UIView {
 
         nameLabel.text = contactPerson.name
         jobTitleLabel.text = contactPerson.jobTitle
+        jobTitleLabel.isHidden = contactPerson.jobTitle == nil
 
         addSubview(stackView)
         stackView.fillInSuperview()
