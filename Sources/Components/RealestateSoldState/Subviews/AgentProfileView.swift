@@ -14,13 +14,14 @@ class AgentProfileView: UIView {
     // MARK: - Private properties
 
     private let numberOfPhoneNumbersPerRow = 2
+    private let portraitImageSize: CGFloat = 88
     private var contactPerson: CompanyProfile.ContactPerson?
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
     private lazy var contactStackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
+    private lazy var portraitImageView = ContactPersonImageView(withAutoLayout: true)
     private lazy var titleLabel = Label.create(style: .title3Strong)
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
-    private lazy var imageSize = CGSize(width: 88, height: 88)
 
     private lazy var phoneNumbersCollectionView = OverflowCollectionView(
         cellType: ContactPersonLinkCollectionViewCell.self,
@@ -28,15 +29,6 @@ class AgentProfileView: UIView {
         delegate: self,
         withAutoLayout: true
     )
-
-    private lazy var remoteImageView: RemoteImageView = {
-        let view = RemoteImageView(withAutoLayout: true)
-        view.contentMode = .scaleAspectFill
-        view.clipsToBounds = true
-        view.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        view.setContentHuggingPriority(.defaultLow, for: .vertical)
-        return view
-    }()
 
     // MARK: - Init
 
@@ -65,8 +57,8 @@ class AgentProfileView: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            remoteImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
-            remoteImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
+            portraitImageView.heightAnchor.constraint(equalToConstant: portraitImageSize),
+            portraitImageView.widthAnchor.constraint(equalToConstant: portraitImageSize),
 
             contactStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
             contactStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -86,7 +78,7 @@ class AgentProfileView: UIView {
         let linkCellModels = contactPerson.links.map { ContactPersonLinkViewModel(title: $0.title, textColor: .textAction) }
         phoneNumbersCollectionView.configure(with: linkCellModels)
 
-        remoteImageView.dataSource = remoteImageViewDataSource
+        portraitImageView.dataSource = remoteImageViewDataSource
 
         if let jobTitle = contactPerson.jobTitle {
             jobTitleLabel.text = jobTitle
@@ -96,10 +88,10 @@ class AgentProfileView: UIView {
         }
 
         if let imageUrl = contactPerson.imageUrl {
-            remoteImageView.loadImage(for: imageUrl, imageWidth: imageSize.width)
-            contactStackView.insertArrangedSubview(remoteImageView, at: 0)
+            portraitImageView.loadImage(for: imageUrl, imageWidth: portraitImageSize)
+            contactStackView.insertArrangedSubview(portraitImageView, at: 0)
         } else {
-            remoteImageView.removeFromSuperview()
+            portraitImageView.removeFromSuperview()
         }
     }
 
@@ -107,7 +99,7 @@ class AgentProfileView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        remoteImageView.layer.cornerRadius = min(imageSize.height, imageSize.width) / 2
+        portraitImageView.layer.cornerRadius = portraitImageSize / 2
     }
 }
 
