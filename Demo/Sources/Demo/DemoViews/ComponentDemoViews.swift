@@ -32,7 +32,14 @@ public enum ComponentDemoViews: String, DemoViews {
     case suggestShippingView
     case shippingRequestedView
     case shippingRequestErrorView
-    case tjtPriceView
+    case fiksFerdigAccordionView
+    case timeLineView
+    case fiksFerdigServiceInfoView
+    case fiksFerdigShippingInfoView
+    case fiksFerdigSafePaymentInfoView
+    case fiksFerdigInfoView
+    case fiksFerdigPriceView
+    case fiksFerdigContactSellerView
 
     public var viewController: UIViewController {
         switch self {
@@ -84,14 +91,28 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<ExtendedProfileDemoView>()
         case .basicProfileView:
             return DemoViewController<BasicProfileDemoView>()
+        case .fiksFerdigAccordionView:
+            return DemoViewController<FiksFerdigAccordionDemoView>()
         case .suggestShippingView:
             return DemoViewController<SuggestShippingDemoView>()
         case .shippingRequestedView:
             return DemoViewController<ShippingRequestedDemoView>()
         case .shippingRequestErrorView:
             return DemoViewController<ShippingRequestErrorDemoView>()
-        case .tjtPriceView:
-            return DemoViewController<TJTPriceDemoView>()
+        case .timeLineView:
+            return DemoViewController<TimeLineDemoView>()
+        case .fiksFerdigServiceInfoView:
+            return DemoViewController<FiksFerdigServiceInfoDemoView>()
+        case .fiksFerdigShippingInfoView:
+            return DemoViewController<FiksFerdigShippingInfoDemoView>()
+        case .fiksFerdigSafePaymentInfoView:
+            return DemoViewController<FiksFerdigShippingInfoDemoView>()
+        case .fiksFerdigInfoView:
+            return DemoViewController<FiksFerdigInfoDemoView>()
+        case .fiksFerdigPriceView:
+            return DemoViewController<FiksFerdigPriceDemoView>()
+        case .fiksFerdigContactSellerView:
+            return DemoViewController<FiksFerdigContactSellerDemoView>()
         }
     }
 }

@@ -1,7 +1,6 @@
 import FinnUI
 import UIKit
 
-
 public class ShippingAlternativesDemoView: UIView {
 
     private lazy var shippingAlternativesView: ShippingAlternativesView = {

@@ -30,8 +30,8 @@ final class SearchFilterButtonView: UIView {
 
     private let title: String
 
-    private static let iconWidth: CGFloat = 25
-    fileprivate static let padding: CGFloat = .spacingXS
+    private static let iconWidth: CGFloat = 15
+    fileprivate static let padding: CGFloat = .spacingS
 
     // MARK: - Internal properties
 
@@ -124,7 +124,7 @@ private extension CGColor {
 // MARK: - Private classes
 
 private class InsetLabel: UILabel {
-    static let trailingInset: CGFloat = SearchFilterButtonView.padding + .spacingXS
+    static let trailingInset: CGFloat = SearchFilterButtonView.padding
 
     override func drawText(in rect: CGRect) {
         let insets = UIEdgeInsets(trailing: InsetLabel.trailingInset)

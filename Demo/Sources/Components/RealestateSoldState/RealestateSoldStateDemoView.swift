@@ -128,6 +128,7 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
               ✅ Did submit form!
               \tContact identifier: '\(form.contactMethodIdentifier)'
               \tContact value: '\(form.contactMethodValue)'
+              \tUser name: '\(form.userContactName ?? "[empty]")'
               \tSelected question ids:
               \t\t\(form.questions.map(\.id).joined(separator: ", "))
               """)
@@ -353,6 +354,7 @@ private extension QuestionFormViewModel {
                     textFieldPlaceholder: "Legg inn ditt telefonnummer"
                 )
             ),
+            userContactName: .init(title: "Navnet ditt", initialValue: "Navn Navnesen"),
             submitDisclaimer: "Ved å trykke \"Send skjema\" samtykker du til at FINN kan sende dine opplysninger fra skjema over til ansvarlig megler for denne annonsen.",
             submitButtonTitle: "Send skjema",
             userFreeTextCharacterLimit: 40,
@@ -366,6 +368,7 @@ private extension QuestionFormViewModel {
             questionsTitle: questionsTitle,
             questions: questions,
             contactMethod: nil,
+            userContactName: .init(title: "Navnet ditt"),
             submitDisclaimer: submitDisclaimer,
             submitButtonTitle: submitButtonTitle,
             userFreeTextCharacterLimit: userFreeTextCharacterLimit,
