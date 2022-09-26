@@ -15,7 +15,7 @@ class QuestionFormContainerView: UIView {
     // MARK: - Private properties
 
     private let viewModel: QuestionFormViewModel
-    private let styling: RealestateSoldStateModel.Styling
+    private let style: RealestateSoldStateModel.Style
     private var userContactMethodView: UserContactInformationView?
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
@@ -28,7 +28,7 @@ class QuestionFormContainerView: UIView {
     }()
 
     private lazy var submitButton: Button = {
-        let button = Button(style: .callToAction.override(using: styling.ctaButton), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: style.actionButtonStyle), size: .normal, withAutoLayout: true)
         button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -37,12 +37,12 @@ class QuestionFormContainerView: UIView {
 
     init(
         viewModel: QuestionFormViewModel,
-        styling: RealestateSoldStateModel.Styling,
+        style: RealestateSoldStateModel.Style,
         delegate: QuestionFormContainerViewDelegate,
         withAutoLayout: Bool
     ) {
         self.viewModel = viewModel
-        self.styling = styling
+        self.style = style
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout

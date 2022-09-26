@@ -43,8 +43,8 @@ public class RealestateAgencyContentView: UIView {
     private func setup() {
         clipsToBounds = true
         layer.cornerRadius = 8
-        backgroundColor = viewModel.styling.backgroundColor
-        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
+        backgroundColor = viewModel.style.backgroundColor
+        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.style.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
 
         addSubview(logoImageWrapperView)
 
@@ -81,7 +81,7 @@ public class RealestateAgencyContentView: UIView {
             articleViews = viewModel.articles.map {
                 RealestateAgencyHighlightedContentItemView(
                     article: $0,
-                    styling: viewModel.styling,
+                    style: viewModel.style,
                     remoteImageViewDataSource: remoteImageViewDataSource,
                     delegate: self
                 )
@@ -90,7 +90,7 @@ public class RealestateAgencyContentView: UIView {
             articleViews = viewModel.articles.map {
                 RealestateAgencyContentItemView(
                     article: $0,
-                    styling: viewModel.styling,
+                    style: viewModel.style,
                     imageHeight: horizontalSizeClass.imageHeight,
                     remoteImageViewDataSource: remoteImageViewDataSource,
                     delegate: self

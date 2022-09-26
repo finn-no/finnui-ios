@@ -4,29 +4,24 @@ import FinniversKit
 extension Button {
     static func create(
         for article: RealestateAgencyContentViewModel.ArticleItem,
-        styling: RealestateAgencyContentViewModel.Styling
+        profileStyle: CompanyProfile.ProfileStyle
     ) -> Button {
         let highlightedImageColor: UIColor
-        let style: Button.Style
+        let buttonStyle: Button.Style
 
         switch article.buttonKind {
         case .highlighted:
-            highlightedImageColor = styling.actionButton.textColor
-            style = .callToAction.overrideStyle(
-                bodyColor: styling.actionButton.backgroundColor,
-                borderColor: styling.actionButton.borderColor,
-                textColor: styling.actionButton.textColor,
-                highlightedBodyColor: styling.actionButton.backgroundActiveColor
-            )
+            highlightedImageColor = profileStyle.actionButtonStyle?.textColor ?? profileStyle.textColor
+            buttonStyle = .callToAction.override(using: profileStyle.actionButtonStyle)
         case .normal:
-            highlightedImageColor = styling.textColor.withAlphaComponent(0.7)
-            style = .flat.overrideStyle(
-                textColor: styling.textColor,
+            highlightedImageColor = profileStyle.textColor.withAlphaComponent(0.7)
+            buttonStyle = .flat.overrideStyle(
+                textColor: profileStyle.textColor,
                 highlightedTextColor: highlightedImageColor
             )
         }
 
-        let button = Button(style: style, size: .normal, withAutoLayout: true)
+        let button = Button(style: buttonStyle, size: .normal, withAutoLayout: true)
         button.setTitle(article.buttonTitle, for: .normal)
         button.tintColor = button.currentTitleColor
         button.semanticContentAttribute = .forceRightToLeft
