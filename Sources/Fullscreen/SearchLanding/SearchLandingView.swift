@@ -70,6 +70,7 @@ public final class SearchLandingView: UIView {
                 case .locationPermission:
                     let cell = collectionView.dequeue(SearchSuggestionLocationPermissionCell.self, for: indexPath)
                     cell.configure(with: item.title)
+                    cell.delegate = self.delegate
                     return cell
                 case .showMoreResults:
                     let cell = collectionView.dequeue(SearchSuggestionMoreResultsCollectionViewCell.self, for: indexPath)
@@ -140,7 +141,8 @@ public final class SearchLandingView: UIView {
 
     // MARK: - Snapshot management
 
-    public func configure(with sections: [SearchLandingSection]) {
+    public func configure(with sections: [SearchLandingSection], delegate: SearchLandingViewDelegate?) {
+        self.delegate = delegate
         self.sections = sections
         var snapshot = Snapshot()
         snapshot.appendSections(sections)

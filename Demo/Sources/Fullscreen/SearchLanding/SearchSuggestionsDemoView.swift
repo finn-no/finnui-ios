@@ -5,25 +5,18 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
 
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Search suggestions", description: "With location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .suggestions(withLocationPermission: true))
+            self?.searchLandingView.configure(with: .suggestions(withLocationPermission: true), delegate: self)
         },
         TweakingOption(title: "Search suggestions", description: "Without location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .suggestions())
+            self?.searchLandingView.configure(with: .suggestions(), delegate: self)
         },
         TweakingOption(title: "Search landingpage", description: "With location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .landingPage(withLocationPermission: true))
+            self?.searchLandingView.configure(with: .landingPage(withLocationPermission: true), delegate: self)
         },
         TweakingOption(title: "Search landingpage", description: "Without location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .landingPage())
+            self?.searchLandingView.configure(with: .landingPage(), delegate: self)
         }
     ]
-
-    /*
-    private lazy var searchSuggestionsView: SearchSuggestionsView = {
-        let view = SearchSuggestionsView(withAutoLayout: true)
-        view.delegate = self
-        return view
-    }()*/
 
     private lazy var searchLandingView = SearchLandingView(withAutoLayout: true, delegate: self, remoteImageViewDataSource: self)
 
@@ -69,26 +62,18 @@ extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
 
 // MARK: - Search Landing View Delegate
 extension SearchSuggestionsDemoView: SearchLandingViewDelegate {
+    func searchLandingView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String) {
+        print("🔥🔥🔥🔥 \(#function)")
+    }
+
     func searchLandingView(_ view: FinnUI.SearchLandingView, didSelectResultAt indexPath: IndexPath, uuid: UUID) {
         print("🔥🔥🔥🔥 indexPath = \(indexPath)")
-        print("🔥🔥🔥🔥 \(#function)")
-    }
-
-    func searchLandingView(_ view: SearchLandingView, didSelectResultAt indexPath: IndexPath) {
-        print("🔥🔥🔥🔥 indexPath = \(indexPath)")
-        print("🔥🔥🔥🔥 \(#function)")
-    }
-
-    func searchLandingView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String) {
-        print("🔥🔥🔥🔥 forAdWithId = \(adId)")
         print("🔥🔥🔥🔥 \(#function)")
     }
 
     func searchLandingView(didTapEnableLocationButton button: UIButton) {
         print("🔥🔥🔥🔥 \(#function)")
     }
-
-
 }
 
 

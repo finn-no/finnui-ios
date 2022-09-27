@@ -57,7 +57,6 @@ class SearchSuggestionLocationPermissionCell: UICollectionViewCell {
     // MARK: - Actions
 
     @objc private func handleEnableLocationButtonTap() {
-        print("Tapped", #function)
         delegate?.searchLandingView(didTapEnableLocationButton: self.enableLocationButton)
     }
 }

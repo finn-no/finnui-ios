@@ -21,6 +21,10 @@ class SearchLandingGroupItemView: UIView {
     private lazy var remoteImageView: RemoteImageView = {
         let imageView = RemoteImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = .imageBorder
+        imageView.layer.cornerRadius = .spacingS
+        imageView.clipsToBounds = true
         return imageView
     }()
 
@@ -33,7 +37,7 @@ class SearchLandingGroupItemView: UIView {
     private lazy var titleLabel: Label = {
         let label = Label(style: .body, withAutoLayout: true)
         label.setContentHuggingPriority(.required, for: .vertical)
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         return label
     }()
 
@@ -41,7 +45,7 @@ class SearchLandingGroupItemView: UIView {
         let label = Label(style: .caption, withAutoLayout: true)
         label.setContentHuggingPriority(.required, for: .vertical)
         label.textColor = .textSecondary
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         return label
     }()
 
@@ -131,6 +135,7 @@ class SearchLandingGroupItemView: UIView {
 
     public func configure(with item: SearchLandingGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
         titleLabel.attributedText = item.title
+        titleLabel.textColor = item.titleColor
         subtitleLabel.text = item.subtitle
         guard let imageUrl = item.imageUrl, !imageUrl.isEmpty else {
             print("🕵️‍♀️ imageurl was nil")
