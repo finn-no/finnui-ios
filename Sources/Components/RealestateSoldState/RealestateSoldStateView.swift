@@ -11,7 +11,7 @@ public protocol RealestateSoldStateViewDelegate: AnyObject {
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL)
     func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView)
     func realestateSoldStateViewDidResize(_ view: RealestateSoldStateView)
-    func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int)
+    func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem)
 }
 
 public class RealestateSoldStateView: UIView {
@@ -77,21 +77,21 @@ public class RealestateSoldStateView: UIView {
 
     private lazy var questionFormView = QuestionFormContainerView(
         viewModel: viewModel.questionForm,
-        styling: viewModel.styling,
+        style: viewModel.style,
         delegate: self,
         withAutoLayout: true
     )
 
     private lazy var companyProfileView = CompanyProfileView(
         viewModel: viewModel.companyProfile,
-        styling: viewModel.styling.profileBox,
+        style: viewModel.style.profileStyle,
         remoteImageViewDataSource: remoteImageViewDataSource,
         delegate: self,
         withAutoLayout: true
     )
 
     private lazy var presentFormButton: Button = {
-        let button = Button(style: .callToAction.override(using: viewModel.styling.ctaButton), size: .normal, withAutoLayout: true)
+        let button = Button(style: .callToAction.override(using: viewModel.style.actionButtonStyle), size: .normal, withAutoLayout: true)
         button.setTitle(viewModel.presentFormButtonTitle, for: .normal)
         button.addTarget(self, action: #selector(presentFormButtonTapped), for: .touchUpInside)
         return button
@@ -115,7 +115,7 @@ public class RealestateSoldStateView: UIView {
         backgroundColor = .clear
         backgroundView.backgroundColor = .bgTertiary
         expandToggleView.backgroundColor = .bgTertiary
-        logoBackgroundView.backgroundColor = viewModel.styling.heading.backgroundColor
+        logoBackgroundView.backgroundColor = viewModel.style.headingStyle.backgroundColor
         titleLabel.text = viewModel.title
 
         leftStackView.addArrangedSubviews([titleLabel, questionFormView, presentFormButton])
@@ -156,8 +156,8 @@ public class RealestateSoldStateView: UIView {
 
         expandToggleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleExpandViewTap)))
 
-        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.heading.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
-        agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
+        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.style.headingStyle.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
+        agentProfileView.configure(with: viewModel.contactPerson, remoteImageViewDataSource: remoteImageViewDataSource)
     }
 
     // MARK: - Overrides
@@ -264,7 +264,7 @@ extension RealestateSoldStateView: CompanyProfileViewDelegate {
 // MARK: - AgentProfileViewDelegate
 
 extension RealestateSoldStateView: AgentProfileViewDelegate {
-    func agentProfileView(_ view: AgentProfileView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int) {
-        delegate?.realestateSoldStateView(self, didSelectPhoneButtonWithIndex: phoneNumberIndex)
+    func agentProfileView(_ view: AgentProfileView, didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem) {
+        delegate?.realestateSoldStateView(self, didSelectLinkItem: linkItem)
     }
 }

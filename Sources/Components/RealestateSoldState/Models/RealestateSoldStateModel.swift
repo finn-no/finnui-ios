@@ -4,29 +4,29 @@ public struct RealestateSoldStateModel {
     public let title: String
     public let logoUrl: String
     public let presentFormButtonTitle: String
-    public let agentProfile: AgentProfileModel
+    public let contactPerson: CompanyProfile.ContactPerson
     public let questionForm: QuestionFormViewModel
     public let companyProfile: CompanyProfileModel
     public let formSubmitted: RealestateSoldStateFormSubmittedModel
-    public let styling: Styling
+    public let style: Style
 
     public init(
         title: String,
         logoUrl: String,
         presentFormButtonTitle: String,
-        agentProfile: AgentProfileModel,
+        contactPerson: CompanyProfile.ContactPerson,
         questionForm: QuestionFormViewModel,
         companyProfile: CompanyProfileModel,
         formSubmitted: RealestateSoldStateFormSubmittedModel,
-        styling: Styling
+        style: Style
     ) {
         self.title = title
         self.logoUrl = logoUrl
         self.presentFormButtonTitle = presentFormButtonTitle
-        self.agentProfile = agentProfile
+        self.contactPerson = contactPerson
         self.questionForm = questionForm
         self.companyProfile = companyProfile
         self.formSubmitted = formSubmitted
-        self.styling = styling
+        self.style = style
     }
 }

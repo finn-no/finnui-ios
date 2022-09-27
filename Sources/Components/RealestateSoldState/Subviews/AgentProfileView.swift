@@ -2,7 +2,7 @@ import UIKit
 import FinniversKit
 
 protocol AgentProfileViewDelegate: AnyObject {
-    func agentProfileView(_ view: AgentProfileView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int)
+    func agentProfileView(_ view: AgentProfileView, didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem)
 }
 
 class AgentProfileView: UIView {
@@ -14,28 +14,21 @@ class AgentProfileView: UIView {
     // MARK: - Private properties
 
     private let numberOfPhoneNumbersPerRow = 2
+    private let portraitImageSize: CGFloat = 88
+    private var contactPerson: CompanyProfile.ContactPerson?
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
     private lazy var contactStackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
+    private lazy var portraitImageView = ContactPersonImageView(withAutoLayout: true)
     private lazy var titleLabel = Label.create(style: .title3Strong)
     private lazy var nameLabel = Label.create(style: .bodyStrong)
     private lazy var jobTitleLabel = Label.create(style: .detail)
-    private lazy var imageSize = CGSize(width: 88, height: 88)
 
     private lazy var phoneNumbersCollectionView = OverflowCollectionView(
-        cellType: AgentPhoneNumberCollectionViewCell.self,
+        cellType: ContactPersonLinkCollectionViewCell.self,
         cellSpacing: .init(horizontal: 24, vertical: .spacingXS),
         delegate: self,
         withAutoLayout: true
     )
-
-    private lazy var remoteImageView: RemoteImageView = {
-        let view = RemoteImageView(withAutoLayout: true)
-        view.contentMode = .scaleAspectFill
-        view.clipsToBounds = true
-        view.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        view.setContentHuggingPriority(.defaultLow, for: .vertical)
-        return view
-    }()
 
     // MARK: - Init
 
@@ -64,8 +57,8 @@ class AgentProfileView: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            remoteImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
-            remoteImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
+            portraitImageView.heightAnchor.constraint(equalToConstant: portraitImageSize),
+            portraitImageView.widthAnchor.constraint(equalToConstant: portraitImageSize),
 
             contactStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
             contactStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -76,18 +69,29 @@ class AgentProfileView: UIView {
 
     // MARK: - Internal methods
 
-    func configure(with model: AgentProfileModel, remoteImageViewDataSource: RemoteImageViewDataSource?) {
-        titleLabel.text = model.title
-        nameLabel.text = model.agentName
-        jobTitleLabel.text = model.agentJobTitle
-        phoneNumbersCollectionView.configure(with: model.phoneNumbers)
-        remoteImageView.dataSource = remoteImageViewDataSource
+    func configure(with contactPerson: CompanyProfile.ContactPerson, remoteImageViewDataSource: RemoteImageViewDataSource?) {
+        self.contactPerson = contactPerson
+        titleLabel.text = contactPerson.title
+        nameLabel.text = contactPerson.name
+        jobTitleLabel.text = contactPerson.jobTitle
 
-        if let imageUrl = model.imageUrl {
-            remoteImageView.loadImage(for: imageUrl, imageWidth: imageSize.width)
-            contactStackView.insertArrangedSubview(remoteImageView, at: 0)
+        let linkCellModels = contactPerson.links.map { ContactPersonLinkViewModel(title: $0.title, textColor: .textAction) }
+        phoneNumbersCollectionView.configure(with: linkCellModels)
+
+        portraitImageView.dataSource = remoteImageViewDataSource
+
+        if let jobTitle = contactPerson.jobTitle {
+            jobTitleLabel.text = jobTitle
+            jobTitleLabel.isHidden = false
         } else {
-            remoteImageView.removeFromSuperview()
+            jobTitleLabel.isHidden = true
+        }
+
+        if let imageUrl = contactPerson.imageUrl {
+            portraitImageView.loadImage(for: imageUrl, imageWidth: portraitImageSize)
+            contactStackView.insertArrangedSubview(portraitImageView, at: 0)
+        } else {
+            portraitImageView.removeFromSuperview()
         }
     }
 
@@ -95,7 +99,7 @@ class AgentProfileView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        remoteImageView.layer.cornerRadius = min(imageSize.height, imageSize.width) / 2
+        portraitImageView.layer.cornerRadius = portraitImageSize / 2
     }
 }
 
@@ -106,7 +110,8 @@ extension AgentProfileView: OverflowCollectionViewDelegate {
         _ view: OverflowCollectionView<Cell>,
         didSelectItemAtIndex index: Int
     ) where Cell: OverflowCollectionViewCell {
-        delegate?.agentProfileView(self, didSelectPhoneButtonWithIndex: index)
+        guard let linkItem = contactPerson?.links[safe: index] else { return }
+        delegate?.agentProfileView(self, didSelectLinkItem: linkItem)
     }
 }
 
