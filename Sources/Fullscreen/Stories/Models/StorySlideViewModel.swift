@@ -15,8 +15,8 @@ public struct StorySlideViewModel {
         detailText: String?,
         price: String?,
         read: Bool?,
-        notificationId: Int?,
-        adId: Int?
+        notificationId: Int? = nil,
+        adId: Int? = nil
     ) {
         self.imageUrl = imageUrl
         self.title = title
