@@ -14,13 +14,13 @@ public final class SearchLandingView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = .bgPrimary
 
         collectionView.register(SearchSuggestionImageResultCollectionViewCell.self)
         collectionView.register(SearchSuggestionLocationPermissionCell.self)
         collectionView.register(SearchSuggestionMoreResultsCollectionViewCell.self)
         collectionView.register(SearchSuggestionsSectionHeader.self, ofKind: UICollectionView.elementKindSectionHeader)
+        collectionView.register(SearchSuggestionsSectionFooter.self, ofKind: UICollectionView.elementKindSectionFooter)
         return collectionView
     }()
 
@@ -37,19 +37,25 @@ public final class SearchLandingView: UIView {
             heightDimension: .estimated(78)
         )
         let item = NSCollectionLayoutItem(layoutSize: size)
-        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil, top: .fixed(.spacingM), trailing: nil, bottom: .fixed(.spacingXL))
+        //item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil, top: .fixed(.spacingM), trailing: nil, bottom: .fixed(.spacingM))
 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: [item])
 
 
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .absolute(49.0))
+                                                heightDimension: .absolute(48.0))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
                                                                  elementKind: UICollectionView.elementKindSectionHeader,
                                                                  alignment: .top)
 
+        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(7.0))
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize,
+                                                                 elementKind: UICollectionView.elementKindSectionFooter,
+                                                                 alignment: .bottom)
+
         let section = NSCollectionLayoutSection(group: group)
-        section.boundarySupplementaryItems = [header]
+        section.boundarySupplementaryItems = [header, footer]
         section.contentInsets = NSDirectionalEdgeInsets(
             vertical: 0,
             horizontal: Self.horizontalSpacing
@@ -81,24 +87,40 @@ public final class SearchLandingView: UIView {
         )
 
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let section = self?.sections[safe: indexPath.section] else { return SearchSuggestionsSectionHeader() }
-            let view = collectionView.dequeue(
-                SearchSuggestionsSectionHeader.self,
-                for: indexPath,
-                ofKind: UICollectionView.elementKindSectionHeader
-            )
-            switch section {
-            case .group(let group):
-                guard group.items.count > 0 else { return SearchSuggestionsSectionHeader() }
-                view.configure(with: group.title)
-            case .viewMoreResults(title: let title):
-                view.configure(with: "")
-            case .locationPermission(title: let title):
-                view.configure(with: "")
+            if kind == "UICollectionElementKindSectionHeader" {
+                guard let section = self?.sections[safe: indexPath.section] else { return SearchSuggestionsSectionHeader() }
+                let view = collectionView.dequeue(
+                    SearchSuggestionsSectionHeader.self,
+                    for: indexPath,
+                    ofKind: UICollectionView.elementKindSectionHeader
+                )
+                switch section {
+                case .group(let group):
+                    guard group.items.count > 0 else { return SearchSuggestionsSectionHeader() }
+                    view.configure(with: group.title)
+                case .viewMoreResults(title: let title):
+                    view.configure(with: "")
+                case .locationPermission(title: let title):
+                    view.configure(with: "")
+                }
+                return view
+            } else if kind == "UICollectionElementKindSectionFooter" {
+                guard let section = self?.sections[safe: indexPath.section] else { return SearchSuggestionsSectionFooter() }
+                let view = collectionView.dequeue(
+                    SearchSuggestionsSectionFooter.self,
+                    for: indexPath,
+                    ofKind: UICollectionView.elementKindSectionFooter
+                )
+                switch section {
+                case .group(let group):
+                    guard group.items.count > 0 else { return SearchSuggestionsSectionFooter() }
+                    return view
+                default:
+                    return view
+                }
             }
-            return view
+            return UICollectionReusableView()
         }
-
         return dataSource
     }()
 
@@ -135,8 +157,9 @@ public final class SearchLandingView: UIView {
     // MARK: - Setup
 
     private func setup() {
+        backgroundColor = .bgTertiary
         addSubview(collectionView)
-        collectionView.fillInSuperview()
+        collectionView.fillInSuperview(insets: UIEdgeInsets(top: .spacingM, leading: 0, bottom: -.spacingM, trailing: 0))
     }
 
     // MARK: - Snapshot management

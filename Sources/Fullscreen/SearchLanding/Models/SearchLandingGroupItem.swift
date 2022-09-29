@@ -4,6 +4,7 @@ import UIKit
 public struct SearchLandingGroupItem: Hashable {
     public let title: NSAttributedString
     public let subtitle: String?
+    public let detail: String?
     public let imageUrl: String?
     public let titleColor: UIColor?
     public let uuid: UUID
@@ -17,7 +18,8 @@ public struct SearchLandingGroupItem: Hashable {
     }
     public init(
         title: NSAttributedString,
-        subtitle: String?,
+        subtitle: String? = nil,
+        detail: String? = nil,
         imageUrl: String?,
         titleColor: UIColor = .textPrimary,
         uuid: UUID,
@@ -26,6 +28,7 @@ public struct SearchLandingGroupItem: Hashable {
     ) {
         self.title = title
         self.subtitle = subtitle
+        self.detail = detail
         self.imageUrl = imageUrl
         self.titleColor = titleColor
         self.uuid = uuid

@@ -2,97 +2,10 @@ import UIKit
 import FinniversKit
 
 
-class SearchLandingGroupItemView: UIView {
+class SearchLandingGroupImageItemView: UIView {
 
     // MARK: - Private properties
 
-    private lazy var titleLabel: UILabel = {
-        let label = Label(style: .body, withAutoLayout: true)
-        label.numberOfLines = 1
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        return label
-    }()
-
-    private lazy var detailLabel: UILabel = {
-        let label = UILabel(withAutoLayout: true)
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        label.textColor = .textPrimary
-        label.font = .detail
-        return label
-    }()
-
-    private lazy var iconImageView: UIImageView = {
-        let imageView = UIImageView(withAutoLayout: true)
-        imageView.image = UIImage(named: .searchSmall)
-        imageView.contentMode = .scaleAspectFit
-        imageView.setContentHuggingPriority(.required, for: .horizontal)
-        imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        imageView.tintColor = .textPrimary
-        return imageView
-    }()
-
-    // MARK: - Init
-
-    init(
-        remoteImageViewDataSource: RemoteImageViewDataSource,
-        withAutoLayout: Bool = false
-    ) {
-        super.init(frame: .zero)
-        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
-        setup()
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-
-    required init?(coder: NSCoder) { fatalError() }
-
-    // MARK: - Setup
-
-    private func setup() {
-        backgroundColor = .bgPrimary
-
-        addSubview(titleLabel)
-        addSubview(detailLabel)
-        addSubview(iconImageView)
-
-        let layoutGuide = UILayoutGuide()
-        addLayoutGuide(layoutGuide)
-
-        NSLayoutConstraint.activate([
-            layoutGuide.topAnchor.constraint(equalTo: topAnchor),
-            layoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-            layoutGuide.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-            layoutGuide.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            iconImageView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
-            iconImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
-            iconImageView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
-
-            titleLabel.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: .spacingS),
-            titleLabel.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
-
-            detailLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: .spacingXS),
-            detailLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            detailLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
-        ])
-    }
-
-    // MARK: - Configure
-
-    func configure(with item: SearchLandingGroupItem) {
-        titleLabel.attributedText = item.title
-        titleLabel.textColor = item.titleColor
-        detailLabel.text = item.detail
-    }
-}
-
-    /*// MARK: - Private properties
-
-    private let item: SearchLandingGroupItem?
     private let imageAndButtonWidth: CGFloat = 40
     private lazy var titlesStackViewTrailingConstraint = titlesStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM)
     private lazy var highlightLayer = CALayer()
@@ -128,18 +41,10 @@ class SearchLandingGroupItemView: UIView {
     }()
 
     private lazy var subtitleLabel: Label = {
-        let label = Label(style: .caption, withAutoLayout: true)
+        let label = Label(style: .detail, withAutoLayout: true)
         label.setContentHuggingPriority(.required, for: .vertical)
         label.textColor = .textSecondary
         label.numberOfLines = 1
-        return label
-    }()
-
-    private lazy var detailLabel: UILabel = {
-        let label = UILabel(withAutoLayout: true)
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        label.textColor = .textPrimary
-        label.font = .detail
         return label
     }()
 
@@ -166,11 +71,9 @@ class SearchLandingGroupItemView: UIView {
     // MARK: - Init
 
     init(
-        item: SearchLandingGroupItem,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         withAutoLayout: Bool = false
     ) {
-        self.item = item
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
 
@@ -181,9 +84,6 @@ class SearchLandingGroupItemView: UIView {
     required init?(coder aDecoder: NSCoder) { fatalError() }
 
     override init(frame: CGRect) {
-        let sharedAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.body, .foregroundColor: UIColor.textPrimary]
-        let attributedString = NSMutableAttributedString(string: "test", attributes: sharedAttributes)
-        self.item = .init(title: attributedString, subtitle: nil, detail: nil, imageUrl: "https://images.finncdn.no/mmo/2022/7/vertical-0/14/0/265/322/740_158853377.jpg", uuid: UUID(), type: .searchResult)
         super.init(frame: frame)
         setup()
     }
@@ -191,9 +91,6 @@ class SearchLandingGroupItemView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        titleLabel.attributedText = item?.title
-        titleLabel.textColor = item?.titleColor
-        subtitleLabel.text = item?.subtitle
         removeButton.isHidden = true
 
         addSubview(contentStackView)
@@ -205,8 +102,6 @@ class SearchLandingGroupItemView: UIView {
         addSubview(iconImageView)
         iconImageView.isHidden = true
         remoteImageView.isHidden = true
-
-        addSubview(detailLabel)
 
         NSLayoutConstraint.activate([
             layoutGuide.topAnchor.constraint(equalTo: topAnchor, constant: .spacingS),
@@ -223,12 +118,7 @@ class SearchLandingGroupItemView: UIView {
             iconImageView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
 
             removeButton.heightAnchor.constraint(equalToConstant: imageAndButtonWidth),
-            removeButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth),
-
-
-            detailLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: .spacingXS),
-            detailLabel.lastBaselineAnchor.constraint(equalTo: titleLabel.lastBaselineAnchor),
-            detailLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
+            removeButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth)
         ])
 
         layer.insertSublayer(highlightLayer, at: 0)
@@ -239,7 +129,6 @@ class SearchLandingGroupItemView: UIView {
         titleLabel.textColor = item.titleColor
 
         subtitleLabel.text = item.subtitle
-        detailLabel.text = item.detail
         guard let imageUrl = item.imageUrl, !imageUrl.isEmpty else {
             print("🕵️‍♀️ imageurl was nil")
             contentStackView.insertArrangedSubview(iconImageView, at: 0)
@@ -270,4 +159,3 @@ class SearchLandingGroupItemView: UIView {
         highlightLayer.frame = bounds.insetBy(dx: -.spacingXS, dy: -.spacingXS)
     }
 }
-*/

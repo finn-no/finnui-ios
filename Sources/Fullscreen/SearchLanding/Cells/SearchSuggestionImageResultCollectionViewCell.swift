@@ -3,7 +3,8 @@ import FinniversKit
 
 final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell {
 
-    private let searchListItemView = SearchLandingGroupItemView(frame: CGRect(x: 0, y: 0, width: 100, height: 49))
+    private let searchListItemView = SearchLandingGroupItemView(frame: .zero)
+    private let searchListImageItemView = SearchLandingGroupImageItemView(frame: .zero)
 
     static func cellIdentifier() -> String {
         return "SearchSuggestionImageResultCollectionViewCell"
@@ -27,7 +28,12 @@ final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell 
         searchListItemView.frame = contentView.bounds
         searchListItemView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         contentView.addSubview(searchListItemView)
-        searchListItemView.fillInSuperview()
+        searchListItemView.fillInSuperview(insets: UIEdgeInsets(top: 0, leading: 0, bottom: -.spacingM, trailing: 0))
+
+        searchListImageItemView.frame = contentView.bounds
+        searchListImageItemView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        contentView.addSubview(searchListImageItemView)
+        searchListImageItemView.fillInSuperview(insets: UIEdgeInsets(top: 0, leading: 0, bottom: -.spacingM, trailing: 0))
     }
 
     // MARK: - Overrides
@@ -40,8 +46,16 @@ final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell 
     // MARK: - Configure
 
     func configure(with item: SearchLandingGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
-        searchListItemView.configure(with: item, remoteImageViewDataSource: remoteImageViewDataSource)
-        searchListItemView.backgroundColor = .bgPrimary
+        if item.imageUrl == nil {
+            searchListItemView.configure(with: item)
+            searchListImageItemView.isHidden = true
+            searchListItemView.isHidden = false
+        } else {
+            searchListImageItemView.configure(with: item, remoteImageViewDataSource: remoteImageViewDataSource)
+            searchListItemView.isHidden = true
+            searchListImageItemView.isHidden = false
+        }
+
     }
 
 }
