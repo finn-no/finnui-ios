@@ -83,6 +83,10 @@ class ComponentViewTests: XCTestCase {
         snapshot(.shippingAlternativesView)
     }
 
+    func testRealestateAgencyBanner() {
+        snapshot(.realestateAgencyBanner, includeIPad: true)
+    }
+
     func testRealestateSoldState() {
         snapshot(.realestateSoldState, includeIPad: true)
     }
