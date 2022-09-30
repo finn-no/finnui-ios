@@ -42,7 +42,7 @@ class SearchSuggestionMoreResultsCollectionViewCell: UICollectionViewCell {
         backgroundColor = .bgPrimary
 
         contentView.addSubview(stackView)
-        stackView.fillInSuperview(insets: UIEdgeInsets(top: .spacingS, leading: .spacingM, bottom: -.spacingS, trailing: -.spacingM))
+        stackView.fillInSuperview(insets: UIEdgeInsets(top: .spacingM, leading: .spacingM, bottom: -.spacingM, trailing: -.spacingM))
 
         NSLayoutConstraint.activate([
             iconImageView.widthAnchor.constraint(equalToConstant: 28),

@@ -39,7 +39,7 @@ class SearchSuggestionLocationPermissionCell: UICollectionViewCell {
 
         addSubview(enableLocationButton)
         addSubview(titleLabel)
-        titleLabel.fillInSuperview(insets: UIEdgeInsets(top: .spacingL, leading: .spacingM, bottom: -.spacingL, trailing: -.spacingXXL))
+        titleLabel.fillInSuperview(insets: UIEdgeInsets(top: .spacingM, leading: .spacingM, bottom: -.spacingM, trailing: -.spacingXXL))
 
         NSLayoutConstraint.activate([
             enableLocationButton.topAnchor.constraint(equalTo: topAnchor, constant: .spacingM),

@@ -24,11 +24,17 @@ class SearchSuggestionsSectionHeader: UICollectionReusableView {
         setContentHuggingPriority(.required, for: .horizontal)
         backgroundColor = .bgPrimary
         titleLabel.textColor = .textPrimary
-        addSubview(titleLabel)
-        titleLabel.fillInSuperview(insets: UIEdgeInsets(top: .spacingXS, leading: .spacingM, bottom: -.spacingXS, trailing: -.spacingM))
+        
     }
 
+
+    func configure() {
+        titleLabel.removeFromSuperview()
+      }
+    
     func configure(with title: String) {
         titleLabel.text = title
+        addSubview(titleLabel)
+        titleLabel.fillInSuperview(insets: UIEdgeInsets(top: .spacingM, leading: .spacingM, bottom: -.spacingM, trailing: -.spacingM))
     }
 }

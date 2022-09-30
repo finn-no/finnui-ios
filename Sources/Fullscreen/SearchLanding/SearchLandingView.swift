@@ -6,6 +6,7 @@ public protocol SearchLandingViewDelegate: AnyObject {
     func searchLandingView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String)
     func searchLandingView(_ view: SearchLandingView, didSelectResultAt indexPath: IndexPath, uuid: UUID)
     func searchLandingView(didTapEnableLocationButton button: UIButton)
+    func searchSuggestionsViewDidScroll()
 }
 
 public final class SearchLandingView: UIView {
@@ -37,13 +38,12 @@ public final class SearchLandingView: UIView {
             heightDimension: .estimated(78)
         )
         let item = NSCollectionLayoutItem(layoutSize: size)
-        //item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil, top: .fixed(.spacingM), trailing: nil, bottom: .fixed(.spacingM))
 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: [item])
 
 
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .absolute(48.0))
+                                                heightDimension: .estimated(0.0))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
                                                                  elementKind: UICollectionView.elementKindSectionHeader,
                                                                  alignment: .top)
@@ -99,9 +99,9 @@ public final class SearchLandingView: UIView {
                     guard group.items.count > 0 else { return SearchSuggestionsSectionHeader() }
                     view.configure(with: group.title)
                 case .viewMoreResults(title: let title):
-                    view.configure(with: "")
+                    view.configure()
                 case .locationPermission(title: let title):
-                    view.configure(with: "")
+                    view.configure()
                 }
                 return view
             } else if kind == "UICollectionElementKindSectionFooter" {
@@ -202,6 +202,10 @@ extension SearchLandingView: UICollectionViewDelegate {
             print("Selected result \(result.title)")
             delegate?.searchLandingView(self, didSelectResultAt: indexPath, uuid: result.uuid)
         }
+    }
+
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegate?.searchSuggestionsViewDidScroll()
     }
 }
 
