@@ -90,6 +90,7 @@
 		E6ADF7F32860697700EBCA5F /* ShippingInfoAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF7F22860697700EBCA5F /* ShippingInfoAccordionDemoView.swift */; };
 		E6ADF7F62862004F00EBCA5F /* SafePaymentAccordionDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */; };
 		E6ADF8EB28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */; };
+		E807ACF428E5875500E5DCBC /* WishListButtonDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E807ACF328E5875500E5DCBC /* WishListButtonDemoView.swift */; };
 		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
 		F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */; };
@@ -223,6 +224,7 @@
 		E6ADF7F22860697700EBCA5F /* ShippingInfoAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingInfoAccordionDemoView.swift; sourceTree = "<group>"; };
 		E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafePaymentAccordionDemoView.swift; sourceTree = "<group>"; };
 		E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdingInfoDemoView.swift; sourceTree = "<group>"; };
+		E807ACF328E5875500E5DCBC /* WishListButtonDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListButtonDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
 		F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProfileDemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -421,6 +423,7 @@
 				DA2F2713266E276D00E6F17C /* TagCloudGridView */,
 				5B95945BFA1580B77EC4F696 /* ExtendedProfile */,
 				E640A7C22858B0E1002CA903 /* TimeLineView */,
+				E807ACF228E5873000E5DCBC /* WishListButton */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -782,6 +785,14 @@
 			path = FiksFerdigInfoView;
 			sourceTree = "<group>";
 		};
+		E807ACF228E5873000E5DCBC /* WishListButton */ = {
+			isa = PBXGroup;
+			children = (
+				E807ACF328E5875500E5DCBC /* WishListButtonDemoView.swift */,
+			);
+			path = WishListButton;
+			sourceTree = "<group>";
+		};
 		F05770EF2799AB4100C8DD85 /* Wrappers */ = {
 			isa = PBXGroup;
 			children = (
@@ -997,6 +1008,7 @@
 				D6D43CF725BF2FA900234AC2 /* NewYearsDemoView.swift in Sources */,
 				4D529E2125837087007AE5B6 /* ImageAsset.swift in Sources */,
 				46E773AA242CEF0A008A5E93 /* MiniToastView.swift in Sources */,
+				E807ACF428E5875500E5DCBC /* WishListButtonDemoView.swift in Sources */,
 				9BBC904024FD252B0003D2D8 /* UITraitCollection+Extensions.swift in Sources */,
 				DA083C2E2462BCA800B26235 /* SwiftUIDemoViews.swift in Sources */,
 				46E77452242CEF0A008A5E93 /* ScrollViewController.swift in Sources */,
