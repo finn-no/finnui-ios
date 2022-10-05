@@ -158,4 +158,8 @@ class ComponentViewTests: XCTestCase {
     func testFiksFerdigContactSellerView() {
         snapshot(.fiksFerdigContactSellerView)
     }
+    
+    func testWishlistButtonView() {
+        snapshot(.wishlistButtonView)
+    }
 }

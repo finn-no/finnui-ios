@@ -94,6 +94,8 @@
 		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
 		F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */; };
+		F343580628ED981800AA3684 /* WishlistButtonDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F343580528ED981800AA3684 /* WishlistButtonDemoView.swift */; };
+		F343580828ED98F800AA3684 /* WishlistButtonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F343580728ED98F800AA3684 /* WishlistButtonData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,6 +229,8 @@
 		E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdingInfoDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
 		F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProfileDemoView.swift; sourceTree = "<group>"; };
+		F343580528ED981800AA3684 /* WishlistButtonDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistButtonDemoView.swift; sourceTree = "<group>"; };
+		F343580728ED98F800AA3684 /* WishlistButtonData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistButtonData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -424,6 +428,7 @@
 				5B95945BFA1580B77EC4F696 /* ExtendedProfile */,
 				E640A7C22858B0E1002CA903 /* TimeLineView */,
 				5B959225F96A844EB3287ECD /* RealestateAgencyBannerView */,
+				F343580428ED97DB00AA3684 /* WishlistButtonView */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -810,6 +815,15 @@
 			path = BasicProfile;
 			sourceTree = "<group>";
 		};
+		F343580428ED97DB00AA3684 /* WishlistButtonView */ = {
+			isa = PBXGroup;
+			children = (
+				F343580728ED98F800AA3684 /* WishlistButtonData.swift */,
+				F343580528ED981800AA3684 /* WishlistButtonDemoView.swift */,
+			);
+			path = WishlistButtonView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1006,6 +1020,7 @@
 			files = (
 				46E773A4242CEF0A008A5E93 /* DemoHelpers.swift in Sources */,
 				D6D43CF725BF2FA900234AC2 /* NewYearsDemoView.swift in Sources */,
+				F343580628ED981800AA3684 /* WishlistButtonDemoView.swift in Sources */,
 				4D529E2125837087007AE5B6 /* ImageAsset.swift in Sources */,
 				46E773AA242CEF0A008A5E93 /* MiniToastView.swift in Sources */,
 				9BBC904024FD252B0003D2D8 /* UITraitCollection+Extensions.swift in Sources */,
@@ -1030,6 +1045,7 @@
 				E4DBDD972762335200BE21D8 /* ShippingAlternativesDemoView.swift in Sources */,
 				46E77453242CEF0A008A5E93 /* CornerAnchoringViewController.swift in Sources */,
 				DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */,
+				F343580828ED98F800AA3684 /* WishlistButtonData.swift in Sources */,
 				46E77451242CEF0A008A5E93 /* TweakingOptionsTableViewController.swift in Sources */,
 				DA2F2715266E28B000E6F17C /* TagCloudGridDemoView.swift in Sources */,
 				46E77455242CEF0A008A5E93 /* TweakingOption.swift in Sources */,
