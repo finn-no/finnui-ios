@@ -6,4 +6,6 @@ struct WishlistButtonData: WishlistButtonViewModel {
     }
 
     var isWishlisted: Bool
+    
+    var id: Int
 }

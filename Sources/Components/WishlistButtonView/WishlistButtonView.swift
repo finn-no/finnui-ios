@@ -3,13 +3,27 @@ import UIKit
 
 /// View model for populating a wishlist button view
 public protocol WishlistButtonViewModel {
+    /// ID of the wishlistable item
+    var id: Int { get }
+    /// Title of the button
     var title: String { get }
+    /// A boolean value indicating whether the item is wishlisted
     var isWishlisted: Bool { get }
 }
 
 /// Delegate for handling wishlist button interaction
 public protocol WishlistButtonViewDelegate: AnyObject {
-    func wishlistButtonDidSelect(_ wishlistButtonView: WishlistButtonView, button: Button, viewModel: WishlistButtonViewModel)
+    
+    /// Handler called when the wishlist button is tapped.
+    /// - Parameters:
+    ///   - wishlistButtonView: The view that called this handler
+    ///   - button: The button that was tapped
+    ///   - viewModel: View model of the view that called this handler
+    func wishlistButtonDidSelect(
+        _ wishlistButtonView: WishlistButtonView,
+        button: Button,
+        viewModel: WishlistButtonViewModel
+    )
 }
 
 /// A view for wishlisting of an object
@@ -55,7 +69,9 @@ public class WishlistButtonView: UIView {
 
     // MARK: - Public methods
     
+    
     /// Configure the view with a view model
+    /// - Parameter viewModel: A view model based on a wishlistable item
     public func configure(with viewModel: WishlistButtonViewModel) {
         self.viewModel = viewModel
         button.setTitle(viewModel.title, for: .normal)

@@ -7,7 +7,7 @@ final class WishlistButtonDemoView: UIView {
     // MARK: - Private properties
 
     private lazy var wishlistButtonView = WishlistButtonView(withAutoLayout: true)
-    private lazy var data = WishlistButtonData(isWishlisted: false)
+    private lazy var data = WishlistButtonData(isWishlisted: false, id: 42)
 
     // MARK: - Init
 
