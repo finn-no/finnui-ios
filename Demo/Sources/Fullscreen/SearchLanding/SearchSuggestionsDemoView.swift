@@ -18,7 +18,7 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
         }
     ]
 
-    private lazy var searchLandingView = SearchLandingView(withAutoLayout: true, delegate: self, remoteImageViewDataSource: self)
+    private lazy var searchLandingView = FrontpageSearchView(withAutoLayout: true, delegate: self, remoteImageViewDataSource: self)
 
     // MARK: - Init
 
@@ -61,17 +61,21 @@ extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
 }*/
 
 // MARK: - Search Landing View Delegate
-extension SearchSuggestionsDemoView: SearchLandingViewDelegate {
-    func searchLandingView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String) {
+extension SearchSuggestionsDemoView: FrontpageSearchViewDelegate {
+    func frontpageSearchViewDidScroll() {
         print("🔥🔥🔥🔥 \(#function)")
     }
 
-    func searchLandingView(_ view: FinnUI.SearchLandingView, didSelectResultAt indexPath: IndexPath, uuid: UUID) {
+    func frontpageSearchView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String) {
+        print("🔥🔥🔥🔥 \(#function)")
+    }
+
+    func frontpageSearchView(_ view: FinnUI.FrontpageSearchView, didSelectResultAt indexPath: IndexPath, uuid: UUID) {
         print("🔥🔥🔥🔥 indexPath = \(indexPath)")
         print("🔥🔥🔥🔥 \(#function)")
     }
 
-    func searchLandingView(didTapEnableLocationButton button: UIButton) {
+    func frontpageSearchView(didTapEnableLocationButton button: UIButton) {
         print("🔥🔥🔥🔥 \(#function)")
     }
 }

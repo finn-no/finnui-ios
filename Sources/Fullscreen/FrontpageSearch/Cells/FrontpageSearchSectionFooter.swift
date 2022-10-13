@@ -1,7 +1,7 @@
 import UIKit
 import FinniversKit
 
-class SearchSuggestionsSectionFooter: UICollectionReusableView {
+class FrontpageSearchSectionFooter: UICollectionReusableView {
 
     private var footer = UIView()
 

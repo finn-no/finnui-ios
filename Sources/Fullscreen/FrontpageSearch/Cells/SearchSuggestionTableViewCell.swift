@@ -1,4 +1,4 @@
-import UIKit
+/*import UIKit
 import FinniversKit
 
 class SearchSuggestionTableViewCell: UITableViewCell {
@@ -78,3 +78,4 @@ class SearchSuggestionTableViewCell: UITableViewCell {
         detailLabel.text = item.detail
     }
 }
+*/

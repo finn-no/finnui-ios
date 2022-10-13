@@ -83,7 +83,7 @@ class SearchLandingGroupItemView: UIView {
 
     // MARK: - Configure
 
-    func configure(with item: SearchLandingGroupItem) {
+    func configure(with item: FrontpageSearchGroupItem) {
         titleLabel.attributedText = item.title
         titleLabel.textColor = item.titleColor
         detailLabel.text = item.detail

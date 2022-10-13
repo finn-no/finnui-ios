@@ -1,10 +1,10 @@
 import UIKit
 import FinniversKit
 
-class SearchSuggestionLocationPermissionCell: UICollectionViewCell {
+class FrontpageSearchLocationPermissionCell: UICollectionViewCell {
 
     // MARK: - Private properties
-    public weak var delegate: SearchLandingViewDelegate?
+    public weak var delegate: FrontpageSearchViewDelegate?
 
     private lazy var titleLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
@@ -57,6 +57,6 @@ class SearchSuggestionLocationPermissionCell: UICollectionViewCell {
     // MARK: - Actions
 
     @objc private func handleEnableLocationButtonTap() {
-        delegate?.searchLandingView(didTapEnableLocationButton: self.enableLocationButton)
+        delegate?.frontpageSearchView(didTapEnableLocationButton: self.enableLocationButton)
     }
 }

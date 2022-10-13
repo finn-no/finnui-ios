@@ -1,7 +1,7 @@
 import UIKit
 import FinniversKit
 
-class SearchSuggestionMoreResultsCollectionViewCell: UICollectionViewCell {
+class FrontpageSearchMoreResultsCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Private properties
 

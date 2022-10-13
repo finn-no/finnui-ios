@@ -13,7 +13,7 @@ class SearchLandingGroupImageItemView: UIView {
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
         stackView.alignment = .center
-        stackView.addArrangedSubviews([remoteImageView, titlesStackView, removeButton])
+        stackView.addArrangedSubviews([remoteImageView, titlesStackView, removeButton, favoriteButton])
         return stackView
     }()
 
@@ -68,6 +68,16 @@ class SearchLandingGroupImageItemView: UIView {
         return button
     }()
 
+    private lazy var favoriteButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let buttonImage = UIImage(named: .favorited).withRenderingMode(.alwaysTemplate)
+        button.setImage(buttonImage, for: .normal)
+        button.imageView?.tintColor = .textAction
+        //button.addTarget(self, action: #selector(h), for: .touchUpInside)
+        return button
+    }()
+
     // MARK: - Init
 
     init(
@@ -92,6 +102,7 @@ class SearchLandingGroupImageItemView: UIView {
 
     private func setup() {
         removeButton.isHidden = true
+        favoriteButton.isHidden = true
 
         addSubview(contentStackView)
         contentStackView.fillInSuperview()
@@ -118,19 +129,23 @@ class SearchLandingGroupImageItemView: UIView {
             iconImageView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
 
             removeButton.heightAnchor.constraint(equalToConstant: imageAndButtonWidth),
-            removeButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth)
+            removeButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth),
+            removeButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
+
+            favoriteButton.heightAnchor.constraint(equalToConstant: 20),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 20),
+            favoriteButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
         ])
 
         layer.insertSublayer(highlightLayer, at: 0)
     }
 
-    public func configure(with item: SearchLandingGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
+    public func configure(with item: FrontpageSearchGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
         titleLabel.attributedText = item.title
         titleLabel.textColor = item.titleColor
 
         subtitleLabel.text = item.subtitle
         guard let imageUrl = item.imageUrl, !imageUrl.isEmpty else {
-            print("🕵️‍♀️ imageurl was nil")
             contentStackView.insertArrangedSubview(iconImageView, at: 0)
             contentStackView.removeArrangedSubview(remoteImageView)
             iconImageView.isHidden = false
@@ -143,6 +158,7 @@ class SearchLandingGroupImageItemView: UIView {
         remoteImageView.isHidden = false
         remoteImageView.dataSource = remoteImageViewDataSource
         remoteImageView.loadImage(for: imageUrl, imageWidth: imageAndButtonWidth)
+        favoriteButton.isHidden = false
     }
 
     // MARK: - Actions

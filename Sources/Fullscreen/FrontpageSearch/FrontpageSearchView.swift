@@ -2,14 +2,14 @@ import UIKit
 import FinniversKit
 import Foundation
 
-public protocol SearchLandingViewDelegate: AnyObject {
-    func searchLandingView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String)
-    func searchLandingView(_ view: SearchLandingView, didSelectResultAt indexPath: IndexPath, uuid: UUID)
-    func searchLandingView(didTapEnableLocationButton button: UIButton)
-    func searchSuggestionsViewDidScroll()
+public protocol FrontpageSearchViewDelegate: AnyObject {
+    func frontpageSearchView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String)
+    func frontpageSearchView(_ view: FrontpageSearchView, didSelectResultAt indexPath: IndexPath, uuid: UUID)
+    func frontpageSearchView(didTapEnableLocationButton button: UIButton)
+    func frontpageSearchViewDidScroll()
 }
 
-public final class SearchLandingView: UIView {
+public final class FrontpageSearchView: UIView {
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
@@ -17,11 +17,11 @@ public final class SearchLandingView: UIView {
         collectionView.delegate = self
         collectionView.backgroundColor = .bgPrimary
 
-        collectionView.register(SearchSuggestionImageResultCollectionViewCell.self)
-        collectionView.register(SearchSuggestionLocationPermissionCell.self)
-        collectionView.register(SearchSuggestionMoreResultsCollectionViewCell.self)
-        collectionView.register(SearchSuggestionsSectionHeader.self, ofKind: UICollectionView.elementKindSectionHeader)
-        collectionView.register(SearchSuggestionsSectionFooter.self, ofKind: UICollectionView.elementKindSectionFooter)
+        collectionView.register(FrontpageSearchImageResultCollectionViewCell.self)
+        collectionView.register(FrontpageSearchLocationPermissionCell.self)
+        collectionView.register(FrontpageSearchMoreResultsCollectionViewCell.self)
+        collectionView.register(FrontpageSearchSectionHeader.self, ofKind: UICollectionView.elementKindSectionHeader)
+        collectionView.register(FrontpageSearchSectionFooter.self, ofKind: UICollectionView.elementKindSectionFooter)
         return collectionView
     }()
 
@@ -63,23 +63,23 @@ public final class SearchLandingView: UIView {
         return section
     }
 
-    private typealias DataSource = UICollectionViewDiffableDataSource<SearchLandingSection, SearchLandingGroupItem>
+    private typealias DataSource = UICollectionViewDiffableDataSource<FrontpageSearchSection, FrontpageSearchGroupItem>
     private lazy var dataSource: DataSource = {
         let dataSource = DataSource(
             collectionView: collectionView,
             cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
-                switch item.type {
+                switch item.groupType {
                 case .searchResult:
-                    let cell = collectionView.dequeue(SearchSuggestionImageResultCollectionViewCell.self, for: indexPath)
+                    let cell = collectionView.dequeue(FrontpageSearchImageResultCollectionViewCell.self, for: indexPath)
                     cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
                     return cell
                 case .locationPermission:
-                    let cell = collectionView.dequeue(SearchSuggestionLocationPermissionCell.self, for: indexPath)
+                    let cell = collectionView.dequeue(FrontpageSearchLocationPermissionCell.self, for: indexPath)
                     cell.configure(with: item.title)
                     cell.delegate = self.delegate
                     return cell
                 case .showMoreResults:
-                    let cell = collectionView.dequeue(SearchSuggestionMoreResultsCollectionViewCell.self, for: indexPath)
+                    let cell = collectionView.dequeue(FrontpageSearchMoreResultsCollectionViewCell.self, for: indexPath)
                     cell.configure(with: item.title)
                     return cell
                 }
@@ -88,15 +88,15 @@ public final class SearchLandingView: UIView {
 
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             if kind == "UICollectionElementKindSectionHeader" {
-                guard let section = self?.sections[safe: indexPath.section] else { return SearchSuggestionsSectionHeader() }
+                guard let section = self?.sections[safe: indexPath.section] else { return FrontpageSearchSectionHeader() }
                 let view = collectionView.dequeue(
-                    SearchSuggestionsSectionHeader.self,
+                    FrontpageSearchSectionHeader.self,
                     for: indexPath,
                     ofKind: UICollectionView.elementKindSectionHeader
                 )
                 switch section {
                 case .group(let group):
-                    guard group.items.count > 0 else { return SearchSuggestionsSectionHeader() }
+                    guard group.items.count > 0 else { return FrontpageSearchSectionHeader() }
                     view.configure(with: group.title)
                 case .viewMoreResults(title: let title):
                     view.configure()
@@ -105,15 +105,15 @@ public final class SearchLandingView: UIView {
                 }
                 return view
             } else if kind == "UICollectionElementKindSectionFooter" {
-                guard let section = self?.sections[safe: indexPath.section] else { return SearchSuggestionsSectionFooter() }
+                guard let section = self?.sections[safe: indexPath.section] else { return FrontpageSearchSectionFooter() }
                 let view = collectionView.dequeue(
-                    SearchSuggestionsSectionFooter.self,
+                    FrontpageSearchSectionFooter.self,
                     for: indexPath,
                     ofKind: UICollectionView.elementKindSectionFooter
                 )
                 switch section {
                 case .group(let group):
-                    guard group.items.count > 0 else { return SearchSuggestionsSectionFooter() }
+                    guard group.items.count > 0 else { return FrontpageSearchSectionFooter() }
                     return view
                 default:
                     return view
@@ -124,11 +124,11 @@ public final class SearchLandingView: UIView {
         return dataSource
     }()
 
-    private var sections = [SearchLandingSection]()
+    private var sections = [FrontpageSearchSection]()
 
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<SearchLandingSection, SearchLandingGroupItem>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<FrontpageSearchSection, FrontpageSearchGroupItem>
 
-    private weak var delegate: SearchLandingViewDelegate?
+    private weak var delegate: FrontpageSearchViewDelegate?
 
     private var remoteImageViewDataSource: RemoteImageViewDataSource
 
@@ -140,7 +140,7 @@ public final class SearchLandingView: UIView {
 
     public init(
         withAutoLayout: Bool,
-        delegate: SearchLandingViewDelegate?,
+        delegate: FrontpageSearchViewDelegate?,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
         self.delegate = delegate
@@ -159,12 +159,12 @@ public final class SearchLandingView: UIView {
     private func setup() {
         backgroundColor = .bgTertiary
         addSubview(collectionView)
-        collectionView.fillInSuperview(insets: UIEdgeInsets(top: .spacingM, leading: 0, bottom: -.spacingM, trailing: 0))
+        collectionView.fillInSuperview(insets: UIEdgeInsets(top: .spacingM, leading: 0, bottom: 0, trailing: 0))
     }
 
     // MARK: - Snapshot management
 
-    public func configure(with sections: [SearchLandingSection], delegate: SearchLandingViewDelegate?) {
+    public func configure(with sections: [FrontpageSearchSection], delegate: FrontpageSearchViewDelegate?) {
         self.delegate = delegate
         self.sections = sections
         var snapshot = Snapshot()
@@ -195,17 +195,17 @@ public final class SearchLandingView: UIView {
 
 // MARK: - UICollectionViewDelegate
 
-extension SearchLandingView: UICollectionViewDelegate {
+extension FrontpageSearchView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(#function, indexPath)
         if let result = dataSource.itemIdentifier(for: indexPath) {
             print("Selected result \(result.title)")
-            delegate?.searchLandingView(self, didSelectResultAt: indexPath, uuid: result.uuid)
+            delegate?.frontpageSearchView(self, didSelectResultAt: indexPath, uuid: result.uuid)
         }
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        delegate?.searchSuggestionsViewDidScroll()
+        delegate?.frontpageSearchViewDidScroll()
     }
 }
 

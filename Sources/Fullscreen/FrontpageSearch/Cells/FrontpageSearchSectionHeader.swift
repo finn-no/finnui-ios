@@ -1,7 +1,7 @@
 import UIKit
 import FinniversKit
 
-class SearchSuggestionsSectionHeader: UICollectionReusableView {
+class FrontpageSearchSectionHeader: UICollectionReusableView {
     public var kind = "SearchSuggestionsSectionHeader"
 
     private lazy var titleLabel = Label(style: .bodyStrong, withAutoLayout: true)

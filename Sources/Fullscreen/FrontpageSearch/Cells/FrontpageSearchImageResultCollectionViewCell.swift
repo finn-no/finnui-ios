@@ -1,7 +1,7 @@
 import UIKit
 import FinniversKit
 
-final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell {
+final class FrontpageSearchImageResultCollectionViewCell: UICollectionViewCell {
 
     private let searchListItemView = SearchLandingGroupItemView(frame: .zero)
     private let searchListImageItemView = SearchLandingGroupImageItemView(frame: .zero)
@@ -45,7 +45,7 @@ final class SearchSuggestionImageResultCollectionViewCell: UICollectionViewCell 
 
     // MARK: - Configure
 
-    func configure(with item: SearchLandingGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
+    func configure(with item: FrontpageSearchGroupItem, remoteImageViewDataSource: RemoteImageViewDataSource) {
         if item.imageUrl == nil {
             searchListItemView.configure(with: item)
             searchListImageItemView.isHidden = true

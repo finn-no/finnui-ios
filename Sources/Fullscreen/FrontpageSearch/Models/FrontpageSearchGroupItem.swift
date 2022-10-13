@@ -1,21 +1,31 @@
 import Foundation
 import UIKit
 
-public struct SearchLandingGroupItem: Hashable {
+public struct FrontpageSearchGroupItem: Hashable {
     public let title: NSAttributedString
     public let subtitle: String?
     public let detail: String?
     public let imageUrl: String?
     public let titleColor: UIColor?
     public let uuid: UUID
-    public let type: SearchResultType
-    //public let showDeleteButton: Bool
+    public let groupType: ResultGroupType
+    public let displayType: FrontpageResultItemType
 
-    public enum SearchResultType {
+    public enum ResultGroupType {
         case searchResult
         case locationPermission
         case showMoreResults
     }
+
+    public enum FrontpageResultItemType {
+        case companyProfile
+        case geo
+        case myFindings
+        case myFindingsList
+        case recommend
+        case standard
+    }
+
     public init(
         title: NSAttributedString,
         subtitle: String? = nil,
@@ -23,8 +33,8 @@ public struct SearchLandingGroupItem: Hashable {
         imageUrl: String?,
         titleColor: UIColor = .textPrimary,
         uuid: UUID,
-        type: SearchResultType
-       // showDeleteButton: Bool
+        groupType: ResultGroupType,
+        displayType: FrontpageResultItemType
     ) {
         self.title = title
         self.subtitle = subtitle
@@ -32,7 +42,7 @@ public struct SearchLandingGroupItem: Hashable {
         self.imageUrl = imageUrl
         self.titleColor = titleColor
         self.uuid = uuid
-        self.type = type
-        //self.showDeleteButton = showDeleteButton
+        self.groupType = groupType
+        self.displayType = displayType
     }
 }

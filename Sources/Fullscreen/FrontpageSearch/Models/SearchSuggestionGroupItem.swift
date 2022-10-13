@@ -1,4 +1,4 @@
-import Foundation
+/*import Foundation
 
 public struct SearchSuggestionGroupItem: Hashable {
     public let title: NSAttributedString
@@ -8,4 +8,4 @@ public struct SearchSuggestionGroupItem: Hashable {
         self.title = title
         self.detail = detail
     }
-}
+}*/
