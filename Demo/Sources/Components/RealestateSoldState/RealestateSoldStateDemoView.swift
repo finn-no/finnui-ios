@@ -128,6 +128,10 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
               ✅ Did submit form!
               \tContact identifier: '\(form.contactMethodIdentifier)'
               \tContact value: '\(form.contactMethodValue)'
+<<<<<<< HEAD
+=======
+              \tUser name: '\(form.userContactName ?? "[empty]")'
+>>>>>>> master
               \tSelected question ids:
               \t\t\(form.questions.map(\.id).joined(separator: ", "))
               """)
@@ -160,8 +164,19 @@ extension RealestateSoldStateDemoView: RealestateSoldStateViewDelegate {
         print("📏 Did resize itself")
     }
 
+<<<<<<< HEAD
     func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int) {
         print("📲 Did tap phone number with index: \(phoneNumberIndex)")
+=======
+    public func realestateSoldStateView(
+        _ view: RealestateSoldStateView,
+        didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem
+    ) {
+        print("📲 Did select link item. Kind: \(linkItem.kind) – Title: '\(linkItem.title)'")
+    }
+
+    func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int) {
+>>>>>>> master
     }
 }
 
@@ -173,11 +188,19 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
+<<<<<<< HEAD
             agentProfile: .demoModel,
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
             styling: .demoStyle
+=======
+            contactPerson: .demoModel,
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            style: .demoStyle
+>>>>>>> master
         )
     }
 
@@ -186,11 +209,19 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
+<<<<<<< HEAD
             agentProfile: .demoModelWithSeveralPhoneNumbers,
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
             styling: .demoStyle
+=======
+            contactPerson: .demoModelWithSeveralPhoneNumbers,
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            style: .demoStyle
+>>>>>>> master
         )
     }
 
@@ -199,11 +230,19 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
+<<<<<<< HEAD
             agentProfile: .demoModel,
             questionForm: .demoModel.copyWithoutContactInfo(),
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
             styling: .demoStyle
+=======
+            contactPerson: .demoModel,
+            questionForm: .demoModel.copyWithoutContactInfo(),
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            style: .demoStyle
+>>>>>>> master
         )
     }
 
@@ -212,11 +251,19 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
+<<<<<<< HEAD
             agentProfile: .demoModel.copyWithoutPhoneNumber(),
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
             styling: .demoStyle
+=======
+            contactPerson: .demoModel.copyWithoutPhoneNumber(),
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            style: .demoStyle
+>>>>>>> master
         )
     }
 
@@ -225,11 +272,19 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
+<<<<<<< HEAD
             agentProfile: .demoModel.copyWithoutImage(),
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
             styling: .demoStyle
+=======
+            contactPerson: .demoModel.copyWithoutImage(),
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            style: .demoStyle
+>>>>>>> master
         )
     }
 
@@ -238,11 +293,19 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
+<<<<<<< HEAD
             agentProfile: .demoModelWithoutImageWithSeveralPhoneNumbers,
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
             styling: .demoStyle
+=======
+            contactPerson: .demoModelWithoutImageWithSeveralPhoneNumbers,
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            style: .demoStyle
+>>>>>>> master
         )
     }
 
@@ -251,15 +314,24 @@ private extension RealestateSoldStateModel {
             title: "Har du noen spørsmål rundt salget av denne boligen?",
             logoUrl: "FINN-LOGO",
             presentFormButtonTitle: "Still spørsmål til megler",
+<<<<<<< HEAD
             agentProfile: .demoModel.copyWithoutPhoneNumberOrImage(),
             questionForm: .demoModel,
             companyProfile: .demoModel,
             formSubmitted: .demoModel,
             styling: .demoStyle
+=======
+            contactPerson: .demoModel.copyWithoutPhoneNumberOrImage(),
+            questionForm: .demoModel,
+            companyProfile: .demoModel,
+            formSubmitted: .demoModel,
+            style: .demoStyle
+>>>>>>> master
         )
     }
 }
 
+<<<<<<< HEAD
 private extension AgentProfileModel {
     static var demoModel: AgentProfileModel {
         AgentProfileModel(
@@ -318,6 +390,66 @@ private extension AgentProfileModel {
             agentJobTitle: agentJobTitle,
             imageUrl: nil,
             phoneNumbers: []
+=======
+private extension CompanyProfile.ContactPerson {
+    static var demoModel: CompanyProfile.ContactPerson {
+        .init(
+            title: "Ansvarlig megler for dette salget",
+            name: "Navn Navnesen",
+            jobTitle: "Eiendomsmegler / Partner",
+            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            links: [.phoneNumber(title: "123 45 678")]
+        )
+    }
+
+    static var demoModelWithSeveralPhoneNumbers: CompanyProfile.ContactPerson {
+        .init(
+            title: "Ansvarlig megler for dette salget",
+            name: "Navn Navnesen",
+            jobTitle: "Eiendomsmegler / Partner",
+            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            links: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"].map { .phoneNumber(title: $0) }
+        )
+    }
+
+    static var demoModelWithoutImageWithSeveralPhoneNumbers: CompanyProfile.ContactPerson {
+        .init(
+            title: "Ansvarlig megler for dette salget",
+            name: "Navn Navnesen",
+            jobTitle: "Eiendomsmegler / Partner",
+            imageUrl: nil,
+            links: ["(+47) 123 45 678", "12 34 56 78", "+47 99 88 77 66"].map { .phoneNumber(title: $0) }
+        )
+    }
+
+    func copyWithoutPhoneNumber() -> CompanyProfile.ContactPerson {
+        .init(
+            title: title,
+            name: name,
+            jobTitle: jobTitle,
+            imageUrl: "https://ih1.redbubble.net/image.1257154546.3057/flat,128x128,075,t-pad,128x128,f8f8f8.jpg",
+            links: []
+        )
+    }
+
+    func copyWithoutImage() -> CompanyProfile.ContactPerson {
+        .init(
+            title: title,
+            name: name,
+            jobTitle: jobTitle,
+            imageUrl: nil,
+            links: [.phoneNumber(title: "123 45 678")]
+        )
+    }
+
+    func copyWithoutPhoneNumberOrImage() -> CompanyProfile.ContactPerson {
+        .init(
+            title: title,
+            name: name,
+            jobTitle: jobTitle,
+            imageUrl: nil,
+            links: []
+>>>>>>> master
         )
     }
 }
@@ -347,6 +479,10 @@ private extension QuestionFormViewModel {
                     textFieldPlaceholder: "Legg inn ditt telefonnummer"
                 )
             ),
+<<<<<<< HEAD
+=======
+            userContactName: .init(title: "Navnet ditt", initialValue: "Navn Navnesen"),
+>>>>>>> master
             submitDisclaimer: "Ved å trykke \"Send skjema\" samtykker du til at FINN kan sende dine opplysninger fra skjema over til ansvarlig megler for denne annonsen.",
             submitButtonTitle: "Send skjema",
             userFreeTextCharacterLimit: 40,
@@ -360,6 +496,10 @@ private extension QuestionFormViewModel {
             questionsTitle: questionsTitle,
             questions: questions,
             contactMethod: nil,
+<<<<<<< HEAD
+=======
+            userContactName: .init(title: "Navnet ditt"),
+>>>>>>> master
             submitDisclaimer: submitDisclaimer,
             submitButtonTitle: submitButtonTitle,
             userFreeTextCharacterLimit: userFreeTextCharacterLimit,
@@ -401,6 +541,7 @@ private extension LinkButtonViewModel {
     }
 }
 
+<<<<<<< HEAD
 private extension RealestateSoldStateModel.Styling {
     static var demoStyle: RealestateSoldStateModel.Styling {
         .init(
@@ -410,16 +551,36 @@ private extension RealestateSoldStateModel.Styling {
             ),
             profileBox: .init(
                 actionButton: .init(
+=======
+private extension RealestateSoldStateModel.Style {
+    static var demoStyle: RealestateSoldStateModel.Style {
+        .init(
+            headingStyle: .init(
+                backgroundColor: UIColor(hex: "#0063FB"),
+                logoBackgroundColor: UIColor(hex: "#FFFFFF")
+            ),
+            profileStyle: .init(
+                textColor: UIColor(hex: "#FFFFFF"),
+                backgroundColor: UIColor(hex: "#0063FB"),
+                logoBackgroundColor: UIColor(hex: "#FFFFFF"),
+                actionButtonStyle: .init(
+>>>>>>> master
                     textColor: UIColor(hex: "#464646"),
                     backgroundColor: UIColor(hex: "#FFFFFF"),
                     backgroundActiveColor: UIColor(hex: "#CCDEED"),
                     borderColor: UIColor(hex: "#FFFFFF")
+<<<<<<< HEAD
                 ),
                 textColor: UIColor(hex: "#FFFFFF"),
                 backgroundColor: UIColor(hex: "#0063FB"),
                 logoBackgroundColor: UIColor(hex: "#FFFFFF")
             ),
             ctaButton: .init(
+=======
+                )
+            ),
+            actionButtonStyle: .init(
+>>>>>>> master
                 textColor: UIColor(hex: "#FFFFFF"),
                 backgroundColor: UIColor(hex: "#0063FB"),
                 backgroundActiveColor: UIColor(hex: "#1E78C2"),

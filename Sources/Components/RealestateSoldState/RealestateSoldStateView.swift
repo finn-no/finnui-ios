@@ -11,7 +11,11 @@ public protocol RealestateSoldStateViewDelegate: AnyObject {
     func realestateSoldStateView(_ view: RealestateSoldStateView, didTapCompanyProfileButtonWithIdentifier identifier: String?, url: URL)
     func realestateSoldStateViewDidToggleExpandedState(_ view: RealestateSoldStateView)
     func realestateSoldStateViewDidResize(_ view: RealestateSoldStateView)
+<<<<<<< HEAD
     func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int)
+=======
+    func realestateSoldStateView(_ view: RealestateSoldStateView, didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem)
+>>>>>>> master
 }
 
 public class RealestateSoldStateView: UIView {
@@ -77,21 +81,33 @@ public class RealestateSoldStateView: UIView {
 
     private lazy var questionFormView = QuestionFormContainerView(
         viewModel: viewModel.questionForm,
+<<<<<<< HEAD
         styling: viewModel.styling,
+=======
+        style: viewModel.style,
+>>>>>>> master
         delegate: self,
         withAutoLayout: true
     )
 
     private lazy var companyProfileView = CompanyProfileView(
         viewModel: viewModel.companyProfile,
+<<<<<<< HEAD
         styling: viewModel.styling.profileBox,
+=======
+        style: viewModel.style.profileStyle,
+>>>>>>> master
         remoteImageViewDataSource: remoteImageViewDataSource,
         delegate: self,
         withAutoLayout: true
     )
 
     private lazy var presentFormButton: Button = {
+<<<<<<< HEAD
         let button = Button(style: .callToAction.override(using: viewModel.styling.ctaButton), size: .normal, withAutoLayout: true)
+=======
+        let button = Button(style: .callToAction.override(using: viewModel.style.actionButtonStyle), size: .normal, withAutoLayout: true)
+>>>>>>> master
         button.setTitle(viewModel.presentFormButtonTitle, for: .normal)
         button.addTarget(self, action: #selector(presentFormButtonTapped), for: .touchUpInside)
         return button
@@ -115,7 +131,11 @@ public class RealestateSoldStateView: UIView {
         backgroundColor = .clear
         backgroundView.backgroundColor = .bgTertiary
         expandToggleView.backgroundColor = .bgTertiary
+<<<<<<< HEAD
         logoBackgroundView.backgroundColor = viewModel.styling.heading.backgroundColor
+=======
+        logoBackgroundView.backgroundColor = viewModel.style.headingStyle.backgroundColor
+>>>>>>> master
         titleLabel.text = viewModel.title
 
         leftStackView.addArrangedSubviews([titleLabel, questionFormView, presentFormButton])
@@ -156,8 +176,13 @@ public class RealestateSoldStateView: UIView {
 
         expandToggleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleExpandViewTap)))
 
+<<<<<<< HEAD
         logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.styling.heading.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
         agentProfileView.configure(with: viewModel.agentProfile, remoteImageViewDataSource: remoteImageViewDataSource)
+=======
+        logoImageWrapperView.configure(imageUrl: viewModel.logoUrl, backgroundColor: viewModel.style.headingStyle.logoBackgroundColor, remoteImageViewDataSource: remoteImageViewDataSource)
+        agentProfileView.configure(with: viewModel.contactPerson, remoteImageViewDataSource: remoteImageViewDataSource)
+>>>>>>> master
     }
 
     // MARK: - Overrides
@@ -264,7 +289,12 @@ extension RealestateSoldStateView: CompanyProfileViewDelegate {
 // MARK: - AgentProfileViewDelegate
 
 extension RealestateSoldStateView: AgentProfileViewDelegate {
+<<<<<<< HEAD
     func agentProfileView(_ view: AgentProfileView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int) {
         delegate?.realestateSoldStateView(self, didSelectPhoneButtonWithIndex: phoneNumberIndex)
+=======
+    func agentProfileView(_ view: AgentProfileView, didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem) {
+        delegate?.realestateSoldStateView(self, didSelectLinkItem: linkItem)
+>>>>>>> master
     }
 }

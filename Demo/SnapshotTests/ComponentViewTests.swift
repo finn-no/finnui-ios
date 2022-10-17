@@ -83,6 +83,13 @@ class ComponentViewTests: XCTestCase {
         snapshot(.shippingAlternativesView)
     }
 
+<<<<<<< HEAD
+=======
+    func testRealestateAgencyBanner() {
+        snapshot(.realestateAgencyBanner, includeIPad: true)
+    }
+
+>>>>>>> master
     func testRealestateSoldState() {
         snapshot(.realestateSoldState, includeIPad: true)
     }
@@ -103,6 +110,17 @@ class ComponentViewTests: XCTestCase {
         snapshot(.fadedExpandableView)
     }
 
+<<<<<<< HEAD
+=======
+    func testExtendedProfileView() {
+        snapshot(.extendedProfileView)
+    }
+
+    func testBasicProfileView() {
+        snapshot(.basicProfileView)
+    }
+
+>>>>>>> master
     func testSuggestShippingView() {
         snapshot(.suggestShippingView)
     }
@@ -115,7 +133,40 @@ class ComponentViewTests: XCTestCase {
         snapshot(.shippingRequestErrorView)
     }
 
+<<<<<<< HEAD
     func testTJTPriceView() {
         snapshot(.tjtPriceView)
+=======
+    func testFiksFerdigPriceView() {
+        snapshot(.fiksFerdigPriceView)
+    }
+
+    func testFiksFerdigAccordionView() {
+        snapshot(.fiksFerdigAccordionView)
+    }
+
+    func testTimeLineView() {
+        snapshot(.timeLineView)
+    }
+
+    func testFiksFerdigServiceInfoView() {
+        snapshot(.fiksFerdigServiceInfoView)
+    }
+
+    func testFiksFerdigShippingInfoView() {
+        snapshot(.fiksFerdigShippingInfoView)
+    }
+
+    func testFiksFerdigSafePaymentInfoView() {
+        snapshot(.fiksFerdigSafePaymentInfoView)
+    }
+
+    func testFiksFerdigInfoView() {
+        snapshot(.fiksFerdigInfoView)
+    }
+
+    func testFiksFerdigContactSellerView() {
+        snapshot(.fiksFerdigContactSellerView)
+>>>>>>> master
     }
 }

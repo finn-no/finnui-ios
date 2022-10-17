@@ -11,14 +11,22 @@ class CompanyProfileView: UIView {
     // MARK: - Private properties
 
     private let viewModel: CompanyProfileModel
+<<<<<<< HEAD
     private let styling: RealestateSoldStateModel.Styling.ProfileBoxStyle
+=======
+    private let style: CompanyProfile.ProfileStyle
+>>>>>>> master
     private weak var delegate: CompanyProfileViewDelegate?
     private lazy var logoHeaderView = CompanyProfileHeaderView(withAutoLayout: true)
 
     private lazy var sloganLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
         label.numberOfLines = 0
+<<<<<<< HEAD
         label.textColor = styling.textColor
+=======
+        label.textColor = style.textColor
+>>>>>>> master
         return label
     }()
 
@@ -29,7 +37,11 @@ class CompanyProfileView: UIView {
     }()
 
     private lazy var ctaButton: Button = {
+<<<<<<< HEAD
         let button = Button(style: .callToAction.override(using: styling.actionButton), size: .normal, withAutoLayout: true)
+=======
+        let button = Button(style: .callToAction.override(using: style.actionButtonStyle), size: .normal, withAutoLayout: true)
+>>>>>>> master
         button.addTarget(self, action: #selector(handleCtaButtonTap), for: .touchUpInside)
         return button
     }()
@@ -38,13 +50,21 @@ class CompanyProfileView: UIView {
 
     init(
         viewModel: CompanyProfileModel,
+<<<<<<< HEAD
         styling: RealestateSoldStateModel.Styling.ProfileBoxStyle,
+=======
+        style: CompanyProfile.ProfileStyle,
+>>>>>>> master
         remoteImageViewDataSource: RemoteImageViewDataSource?,
         delegate: CompanyProfileViewDelegate,
         withAutoLayout: Bool
     ) {
         self.viewModel = viewModel
+<<<<<<< HEAD
         self.styling = styling
+=======
+        self.style = style
+>>>>>>> master
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
@@ -57,7 +77,11 @@ class CompanyProfileView: UIView {
 
     private func setup(remoteImageViewDataSource: RemoteImageViewDataSource?) {
         clipsToBounds = true
+<<<<<<< HEAD
         backgroundColor = styling.backgroundColor
+=======
+        backgroundColor = style.backgroundColor
+>>>>>>> master
         layer.borderColor = UIColor.companyProfileBorder.cgColor
 
         addSubview(logoHeaderView)
@@ -84,10 +108,17 @@ class CompanyProfileView: UIView {
             ctaButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM)
         ])
 
+<<<<<<< HEAD
         logoHeaderView.configure(backgroundColor: styling.logoBackgroundColor, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
 
         sloganLabel.text = viewModel.slogan
         buttonListView.configure(with: viewModel.buttonLinks.map { $0.overrideStyle(using: styling) })
+=======
+        logoHeaderView.configure(backgroundColor: style.logoBackgroundColor, imageUrl: viewModel.imageUrl, remoteImageViewDataSource: remoteImageViewDataSource)
+
+        sloganLabel.text = viewModel.slogan
+        buttonListView.configure(with: viewModel.buttonLinks.map { $0.overrideStyle(using: style) })
+>>>>>>> master
         ctaButton.setTitle(viewModel.ctaButtonTitle, for: .normal)
     }
 
@@ -122,12 +153,21 @@ private extension UIColor {
 }
 
 private extension LinkButtonViewModel {
+<<<<<<< HEAD
     func overrideStyle(using styling: RealestateSoldStateModel.Styling.ProfileBoxStyle) -> LinkButtonViewModel {
         guard let buttonStyle = buttonStyle else { return self }
 
         let newButtonStyle = buttonStyle.overrideStyle(
             textColor: styling.textColor,
             highlightedTextColor: styling.textColor.withAlphaComponent(0.6)
+=======
+    func overrideStyle(using profileStyle: CompanyProfile.ProfileStyle) -> LinkButtonViewModel {
+        guard let buttonStyle = buttonStyle else { return self }
+
+        let newButtonStyle = buttonStyle.overrideStyle(
+            textColor: profileStyle.textColor,
+            highlightedTextColor: profileStyle.textColor.withAlphaComponent(0.6)
+>>>>>>> master
         )
 
         return LinkButtonViewModel(
@@ -136,7 +176,11 @@ private extension LinkButtonViewModel {
             subtitle: subtitle,
             linkUrl: linkUrl,
             isExternal: isExternal,
+<<<<<<< HEAD
             externalIconColor: styling.textColor,
+=======
+            externalIconColor: profileStyle.textColor,
+>>>>>>> master
             buttonStyle: newButtonStyle,
             buttonSize: buttonSize
         )

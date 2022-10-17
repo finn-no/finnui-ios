@@ -57,6 +57,7 @@ enum ImageAsset: String {
     case favoritesSortAdStatus
     case favoritesSortDistance
     case favoritesSortLastAdded
+    case fiksFerdigContactSeller
     case finnLogoSimple
     case heartMini
     case lock
@@ -86,6 +87,12 @@ enum ImageAsset: String {
     case splashLogo
     case storyPlaceholder
     case tagMini
+    case tjtHelthjemIcon
+    case tjtLockShield
+    case tjtPostenIcon
+    case tjtPostnordIcon
+    case tjtShipmentInTransit
+    case tjtTorgetShipping
     case trashcan
     case verified
     case videoChat
@@ -117,6 +124,7 @@ enum ImageAsset: String {
             .favoritesSortAdStatus,
             .favoritesSortDistance,
             .favoritesSortLastAdded,
+            .fiksFerdigContactSeller,
             .finnLogoSimple,
             .heartMini,
             .lock,
@@ -146,6 +154,12 @@ enum ImageAsset: String {
             .splashLogo,
             .storyPlaceholder,
             .tagMini,
+            .tjtHelthjemIcon,
+            .tjtLockShield,
+            .tjtPostenIcon,
+            .tjtPostnordIcon,
+            .tjtShipmentInTransit,
+            .tjtTorgetShipping,
             .trashcan,
             .verified,
             .videoChat,

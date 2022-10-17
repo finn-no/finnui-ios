@@ -40,7 +40,11 @@ class RealestateAgencyContentItemView: UIView {
 
     init(
         article: RealestateAgencyContentViewModel.ArticleItem,
+<<<<<<< HEAD
         styling: RealestateAgencyContentViewModel.Styling,
+=======
+        style: CompanyProfile.ProfileStyle,
+>>>>>>> master
         imageHeight: ImageHeight,
         remoteImageViewDataSource: RemoteImageViewDataSource,
         delegate: RealestateAgencyContentItemDelegate?
@@ -50,7 +54,11 @@ class RealestateAgencyContentItemView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         setup(imageHeight: imageHeight)
+<<<<<<< HEAD
         configure(with: article, styling: styling, remoteImageViewDataSource: remoteImageViewDataSource)
+=======
+        configure(with: article, style: style, remoteImageViewDataSource: remoteImageViewDataSource)
+>>>>>>> master
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -74,11 +82,19 @@ class RealestateAgencyContentItemView: UIView {
 
     private func configure(
         with article: RealestateAgencyContentViewModel.ArticleItem,
+<<<<<<< HEAD
         styling: RealestateAgencyContentViewModel.Styling,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
         titleLabel.textColor = styling.textColor
         bodyLabel.textColor = styling.textColor
+=======
+        style: CompanyProfile.ProfileStyle,
+        remoteImageViewDataSource: RemoteImageViewDataSource
+    ) {
+        titleLabel.textColor = style.textColor
+        bodyLabel.textColor = style.textColor
+>>>>>>> master
 
         titleLabel.text = article.title
         bodyLabel.text = article.body
@@ -86,7 +102,11 @@ class RealestateAgencyContentItemView: UIView {
         imageView.dataSource = remoteImageViewDataSource
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
+<<<<<<< HEAD
         let actionButton = Button.create(for: article, styling: styling)
+=======
+        let actionButton = Button.create(for: article, profileStyle: style)
+>>>>>>> master
         buttonStackView.addArrangedSubview(actionButton)
 
         if article.buttonKind == .normal {

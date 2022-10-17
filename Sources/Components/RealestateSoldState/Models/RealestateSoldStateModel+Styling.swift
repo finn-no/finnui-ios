@@ -1,6 +1,7 @@
 import UIKit
 
 extension RealestateSoldStateModel {
+<<<<<<< HEAD
     public struct Styling {
         public let heading: HeadingStyle
         public let profileBox: ProfileBoxStyle
@@ -15,6 +16,24 @@ extension RealestateSoldStateModel {
 }
 
 extension RealestateSoldStateModel.Styling {
+=======
+    public struct Style {
+        public let headingStyle: HeadingStyle
+        public let profileStyle: CompanyProfile.ProfileStyle
+        public let actionButtonStyle: CompanyProfile.ButtonStyle
+
+        public init(
+            headingStyle: HeadingStyle,
+            profileStyle: CompanyProfile.ProfileStyle,
+            actionButtonStyle: CompanyProfile.ButtonStyle
+        ) {
+            self.headingStyle = headingStyle
+            self.profileStyle = profileStyle
+            self.actionButtonStyle = actionButtonStyle
+        }
+    }
+
+>>>>>>> master
     public struct HeadingStyle {
         public let backgroundColor: UIColor
         public let logoBackgroundColor: UIColor
@@ -24,6 +43,7 @@ extension RealestateSoldStateModel.Styling {
             self.logoBackgroundColor = logoBackgroundColor
         }
     }
+<<<<<<< HEAD
 
     public struct ProfileBoxStyle {
         public let actionButton: ButtonStyle
@@ -52,5 +72,7 @@ extension RealestateSoldStateModel.Styling {
             self.borderColor = borderColor
         }
     }
+=======
+>>>>>>> master
 }
 

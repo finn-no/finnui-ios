@@ -22,15 +22,35 @@ public enum ComponentDemoViews: String, DemoViews {
     case numberedAdTipsCollapsibleView
     case helthjemView
     case shippingAlternativesView
+<<<<<<< HEAD
+=======
+    case realestateAgencyBanner
+>>>>>>> master
     case realestateSoldState
     case realestateAgencyContent
     case recommendationConsentView
     case recommendationEmptyView
     case fadedExpandableView
+<<<<<<< HEAD
     case suggestShippingView
     case shippingRequestedView
     case shippingRequestErrorView
     case tjtPriceView
+=======
+    case extendedProfileView
+    case basicProfileView
+    case suggestShippingView
+    case shippingRequestedView
+    case shippingRequestErrorView
+    case fiksFerdigAccordionView
+    case timeLineView
+    case fiksFerdigServiceInfoView
+    case fiksFerdigShippingInfoView
+    case fiksFerdigSafePaymentInfoView
+    case fiksFerdigInfoView
+    case fiksFerdigPriceView
+    case fiksFerdigContactSellerView
+>>>>>>> master
 
     public var viewController: UIViewController {
         switch self {
@@ -68,6 +88,11 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<HelthjemDemoView>()
         case .shippingAlternativesView:
             return DemoViewController<ShippingAlternativesDemoView>()
+<<<<<<< HEAD
+=======
+        case .realestateAgencyBanner:
+            return DemoViewController<RealestateAgencyBannerDemoView>()
+>>>>>>> master
         case .realestateSoldState:
             return DemoViewController<RealestateSoldStateDemoView>(dismissType: .dismissButton)
         case .realestateAgencyContent:
@@ -78,14 +103,40 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<RecommendationEmptyDemoView>()
         case .fadedExpandableView:
             return DemoViewController<FadedExpandableDemoView>()
+<<<<<<< HEAD
+=======
+        case .extendedProfileView:
+            return DemoViewController<ExtendedProfileDemoView>()
+        case .basicProfileView:
+            return DemoViewController<BasicProfileDemoView>()
+        case .fiksFerdigAccordionView:
+            return DemoViewController<FiksFerdigAccordionDemoView>()
+>>>>>>> master
         case .suggestShippingView:
             return DemoViewController<SuggestShippingDemoView>()
         case .shippingRequestedView:
             return DemoViewController<ShippingRequestedDemoView>()
         case .shippingRequestErrorView:
             return DemoViewController<ShippingRequestErrorDemoView>()
+<<<<<<< HEAD
         case .tjtPriceView:
             return DemoViewController<TJTPriceDemoView>()
+=======
+        case .timeLineView:
+            return DemoViewController<TimeLineDemoView>()
+        case .fiksFerdigServiceInfoView:
+            return DemoViewController<FiksFerdigServiceInfoDemoView>()
+        case .fiksFerdigShippingInfoView:
+            return DemoViewController<FiksFerdigShippingInfoDemoView>()
+        case .fiksFerdigSafePaymentInfoView:
+            return DemoViewController<FiksFerdigShippingInfoDemoView>()
+        case .fiksFerdigInfoView:
+            return DemoViewController<FiksFerdigInfoDemoView>()
+        case .fiksFerdigPriceView:
+            return DemoViewController<FiksFerdigPriceDemoView>()
+        case .fiksFerdigContactSellerView:
+            return DemoViewController<FiksFerdigContactSellerDemoView>()
+>>>>>>> master
         }
     }
 }

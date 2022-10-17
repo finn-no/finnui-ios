@@ -1,7 +1,10 @@
 import FinnUI
 import UIKit
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 public class ShippingAlternativesDemoView: UIView {
 
     private lazy var shippingAlternativesView: ShippingAlternativesView = {

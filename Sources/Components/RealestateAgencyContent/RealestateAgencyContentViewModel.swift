@@ -3,12 +3,21 @@ import UIKit
 public struct RealestateAgencyContentViewModel {
     public let logoUrl: String
     public let articles: [ArticleItem]
+<<<<<<< HEAD
     public let styling: Styling
 
     public init(logoUrl: String, articles: [ArticleItem], styling: Styling) {
         self.logoUrl = logoUrl
         self.articles = articles
         self.styling = styling
+=======
+    public let style: CompanyProfile.ProfileStyle
+
+    public init(logoUrl: String, articles: [ArticleItem], style: CompanyProfile.ProfileStyle) {
+        self.logoUrl = logoUrl
+        self.articles = articles
+        self.style = style
+>>>>>>> master
     }
 }
 
@@ -38,6 +47,7 @@ extension RealestateAgencyContentViewModel {
         }
     }
 }
+<<<<<<< HEAD
 
 // MARK: - Styling
 
@@ -74,3 +84,5 @@ extension RealestateAgencyContentViewModel.Styling {
         }
     }
 }
+=======
+>>>>>>> master
