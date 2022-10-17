@@ -43,11 +43,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
 
     init(
         article: RealestateAgencyContentViewModel.ArticleItem,
-<<<<<<< HEAD
-        styling: RealestateAgencyContentViewModel.Styling,
-=======
         style: CompanyProfile.ProfileStyle,
->>>>>>> master
         remoteImageViewDataSource: RemoteImageViewDataSource,
         delegate: RealestateAgencyContentItemDelegate?
     ) {
@@ -56,11 +52,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         setup()
-<<<<<<< HEAD
-        configure(with: article, styling: styling, remoteImageViewDataSource: remoteImageViewDataSource)
-=======
         configure(with: article, style: style, remoteImageViewDataSource: remoteImageViewDataSource)
->>>>>>> master
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -82,19 +74,11 @@ class RealestateAgencyHighlightedContentItemView: UIView {
 
     private func configure(
         with article: RealestateAgencyContentViewModel.ArticleItem,
-<<<<<<< HEAD
-        styling: RealestateAgencyContentViewModel.Styling,
-        remoteImageViewDataSource: RemoteImageViewDataSource
-    ) {
-        titleLabel.textColor = styling.textColor
-        bodyLabel.textColor = styling.textColor
-=======
         style: CompanyProfile.ProfileStyle,
         remoteImageViewDataSource: RemoteImageViewDataSource
     ) {
         titleLabel.textColor = style.textColor
         bodyLabel.textColor = style.textColor
->>>>>>> master
 
         titleLabel.text = article.title
         bodyLabel.text = article.body
@@ -102,11 +86,7 @@ class RealestateAgencyHighlightedContentItemView: UIView {
         imageView.dataSource = remoteImageViewDataSource
         imageView.loadImage(for: article.imageUrl, imageWidth: .zero, loadingColor: .sardine)
 
-<<<<<<< HEAD
-        let actionButton = Button.create(for: article, styling: styling)
-=======
         let actionButton = Button.create(for: article, profileStyle: style)
->>>>>>> master
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
         buttonStackView.addArrangedSubview(actionButton)
 

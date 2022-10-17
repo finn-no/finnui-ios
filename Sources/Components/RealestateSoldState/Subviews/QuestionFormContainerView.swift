@@ -15,11 +15,7 @@ class QuestionFormContainerView: UIView {
     // MARK: - Private properties
 
     private let viewModel: QuestionFormViewModel
-<<<<<<< HEAD
-    private let styling: RealestateSoldStateModel.Styling
-=======
     private let style: RealestateSoldStateModel.Style
->>>>>>> master
     private var userContactMethodView: UserContactInformationView?
     private weak var delegate: QuestionFormContainerViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingL, withAutoLayout: true)
@@ -32,11 +28,7 @@ class QuestionFormContainerView: UIView {
     }()
 
     private lazy var submitButton: Button = {
-<<<<<<< HEAD
-        let button = Button(style: .callToAction.override(using: styling.ctaButton), size: .normal, withAutoLayout: true)
-=======
         let button = Button(style: .callToAction.override(using: style.actionButtonStyle), size: .normal, withAutoLayout: true)
->>>>>>> master
         button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -45,20 +37,12 @@ class QuestionFormContainerView: UIView {
 
     init(
         viewModel: QuestionFormViewModel,
-<<<<<<< HEAD
-        styling: RealestateSoldStateModel.Styling,
-=======
         style: RealestateSoldStateModel.Style,
->>>>>>> master
         delegate: QuestionFormContainerViewDelegate,
         withAutoLayout: Bool
     ) {
         self.viewModel = viewModel
-<<<<<<< HEAD
-        self.styling = styling
-=======
         self.style = style
->>>>>>> master
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
@@ -72,12 +56,8 @@ class QuestionFormContainerView: UIView {
     private func setup() {
         if let contactMethod = viewModel.contactMethod {
             let userContactMethodView = UserContactInformationView(
-<<<<<<< HEAD
-                viewModel: contactMethod,
-=======
                 contactMethod: contactMethod,
                 userContactName: viewModel.userContactName,
->>>>>>> master
                 delegate: self,
                 withAutoLayout: true
             )
@@ -116,10 +96,7 @@ class QuestionFormContainerView: UIView {
         let formSubmit = RealestateSoldStateQuestionFormSubmit(
             contactMethodIdentifier: contactMethod.identifier,
             contactMethodValue: contactMethodValue,
-<<<<<<< HEAD
-=======
             userContactName: userContactMethodView.enteredUserContactName,
->>>>>>> master
             questions: questionFormView.selectedQuestions
         )
 

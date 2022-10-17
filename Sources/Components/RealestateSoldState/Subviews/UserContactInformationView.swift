@@ -10,11 +10,8 @@ class UserContactInformationView: UIView {
 
     // MARK: - Internal methods
 
-<<<<<<< HEAD
-=======
     private(set) var enteredUserContactName: String?
 
->>>>>>> master
     var selectedContactMethod: UserContactMethodSelectionModel? {
         contactMethodModels.selectedModel
     }
@@ -31,30 +28,16 @@ class UserContactInformationView: UIView {
     private weak var delegate: UserContactInformationViewDelegate?
     private let contactMethodEmail: UserContactMethodSelectionModel.Email
     private let contactMethodPhone: UserContactMethodSelectionModel.Phone
-<<<<<<< HEAD
-=======
     private let userContactName: QuestionFormViewModel.UserContactName
->>>>>>> master
     private var hasDoneInitialSetup = false
     private lazy var titleLabel = Label(style: .title3Strong, withAutoLayout: true)
     private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
     private lazy var contactMethodStackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
     private lazy var contactMethodTitleLabel = Label(style: .captionStrong, withAutoLayout: true)
-<<<<<<< HEAD
-    private lazy var emailAddressView = EmailAddressView(viewModel: contactMethodEmail, withAutoLayout: true)
-
-    private lazy var phoneNumberTextField: TextField = {
-        let textField = TextField(viewModel: contactMethodPhone, delegate: self)
-        textField.configure(textFieldBackgroundColor: .bgPrimary)
-        textField.configureBorder(radius: 4, width: 1, color: .dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine))
-        return textField
-    }()
-=======
     private lazy var userContactNameTitleLabel = Label(style: .captionStrong, withAutoLayout: true)
     private lazy var emailAddressView = EmailAddressView(viewModel: contactMethodEmail, withAutoLayout: true)
     private lazy var phoneNumberTextField = TextField(viewModel: contactMethodPhone, delegate: self)
     private lazy var userContactNameTextField = TextField(viewModel: userContactName, delegate: self)
->>>>>>> master
 
     private var contactMethodModels: [UserContactMethodSelectionModel] {
         [contactMethodEmail, contactMethodPhone]
@@ -63,14 +46,6 @@ class UserContactInformationView: UIView {
     // MARK: - Init
 
     init(
-<<<<<<< HEAD
-        viewModel: QuestionFormViewModel.ContactMethod,
-        delegate: UserContactInformationViewDelegate,
-        withAutoLayout: Bool
-    ) {
-        contactMethodEmail = viewModel.emailMethod
-        contactMethodPhone = viewModel.phoneMethod
-=======
         contactMethod: QuestionFormViewModel.ContactMethod,
         userContactName : QuestionFormViewModel.UserContactName,
         delegate: UserContactInformationViewDelegate,
@@ -79,17 +54,12 @@ class UserContactInformationView: UIView {
         contactMethodEmail = contactMethod.emailMethod
         contactMethodPhone = contactMethod.phoneMethod
         self.userContactName = userContactName
->>>>>>> master
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
 
-<<<<<<< HEAD
-        setup(title: viewModel.title)
-=======
         setup(title: contactMethod.title)
         enteredUserContactName = userContactName.initialValue
->>>>>>> master
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -100,14 +70,6 @@ class UserContactInformationView: UIView {
         emailAddressView.isHidden = true
         phoneNumberTextField.isHidden = true
 
-<<<<<<< HEAD
-        contentStackView.addArrangedSubviews([titleLabel, contactMethodStackView, contactMethodTitleLabel, emailAddressView, phoneNumberTextField])
-        addSubview(contentStackView)
-        contentStackView.fillInSuperview()
-        contentStackView.setCustomSpacing(.spacingXS, after: contactMethodTitleLabel)
-
-        titleLabel.text = title
-=======
         contentStackView.addArrangedSubviews([
             titleLabel,
             contactMethodStackView,
@@ -125,7 +87,6 @@ class UserContactInformationView: UIView {
 
         titleLabel.text = title
         userContactNameTitleLabel.text = userContactName.title
->>>>>>> master
 
         // Make sure at only one contact method is marked as selected by default.
         if contactMethodModels.selectedModel == nil {
@@ -182,17 +143,12 @@ extension UserContactInformationView: UserContactMethodSelectionViewDelegate {
 
 extension UserContactInformationView: TextFieldDelegate {
     func textFieldDidChange(_ textField: TextField) {
-<<<<<<< HEAD
-        contactMethodPhone.value = textField.text
-        delegate?.userContactInformationViewDidUpdateTextField(self)
-=======
         if textField == phoneNumberTextField {
             contactMethodPhone.value = textField.text
             delegate?.userContactInformationViewDidUpdateTextField(self)
         } else if textField == userContactNameTextField {
             enteredUserContactName = textField.text
         }
->>>>>>> master
     }
 }
 
@@ -205,8 +161,6 @@ private extension TextField {
         text = viewModel.value
         self.delegate = delegate
         textField.placeholder = viewModel.textFieldPlaceholder
-<<<<<<< HEAD
-=======
         configureColors()
     }
 
@@ -222,7 +176,6 @@ private extension TextField {
     func configureColors() {
         configure(textFieldBackgroundColor: .bgPrimary)
         configureBorder(radius: 4, width: 1, color: .dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine))
->>>>>>> master
     }
 }
 

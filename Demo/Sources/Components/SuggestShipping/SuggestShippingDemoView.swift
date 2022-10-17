@@ -2,18 +2,6 @@ import UIKit
 import FinnUI
 import FinniversKit
 
-<<<<<<< HEAD
-@MainActor
-class DemoSuggestShippingEndpoint: SuggestShippingService {
-    func suggestShipping(forAdId adId: String) async {
-    }
-}
-
-final class SuggestShippingDemoView: UIView {
-    var endpoint = DemoSuggestShippingEndpoint()
-
-    private lazy var suggestShippingView: SuggestShippingView = {
-=======
 final class SuggestShippingDemoView: UIView {
     private lazy var suggestShippingView: SuggestShippingView = {
         let actionModels = [
@@ -34,18 +22,13 @@ final class SuggestShippingDemoView: UIView {
             message: "Do you really want to suggest shipping?",
             preferredStyle: .alert
         )
->>>>>>> master
         let suggestViewModel = SuggestShippingViewModel(
             title: "Fiks ferdig frakt og betaling",
             message: "Vi sier i fra til selger at du vil kjøpe og sende via FINN. Vi varsler deg når du kan legge inn et bud.",
             buttonTitle: "Be om fiks ferdig",
             adId: "dummy",
-<<<<<<< HEAD
-            suggestShippingService: endpoint)
-=======
             alertModel: alertModel)
         suggestViewModel.delegate = self
->>>>>>> master
         return SuggestShippingView(viewModel: suggestViewModel, withAutoLayout: true)
     }()
 
@@ -67,12 +50,9 @@ final class SuggestShippingDemoView: UIView {
         ])
     }
 }
-<<<<<<< HEAD
-=======
 
 extension SuggestShippingDemoView: SuggestShippingViewModelDelegate {
     func didRequestShipping(suggestShippingViewModel: SuggestShippingViewModel) {
         print("🎉 didRequestShipping called")
     }
 }
->>>>>>> master

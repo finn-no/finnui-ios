@@ -93,19 +93,11 @@ private extension RealestateAgencyContentViewModel {
         return RealestateAgencyContentViewModel(
             logoUrl: "FINN-LOGO",
             articles: articles,
-<<<<<<< HEAD
-            styling: RealestateAgencyContentViewModel.Styling(
-                textColor: .milk,
-                backgroundColor: .primaryBlue,
-                logoBackgroundColor: .white,
-                actionButton: .init(
-=======
             style: .init(
                 textColor: .milk,
                 backgroundColor: .primaryBlue,
                 logoBackgroundColor: .white,
                 actionButtonStyle: .init(
->>>>>>> master
                     textColor: .primaryBlue,
                     backgroundColor: .milk,
                     backgroundActiveColor: .milk.withAlphaComponent(0.7),

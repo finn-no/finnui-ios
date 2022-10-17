@@ -9,6 +9,15 @@
           "revision": "53e914c6d8a17867a6733e50ab79114130df3a91",
           "version": "93.11.0"
         }
+      },
+      {
+        "package": "swift-snapshot-testing",
+        "repositoryURL": "https://github.com/pimms/swift-snapshot-testing.git",
+        "state": {
+          "branch": null,
+          "revision": "0efeef44df913fe60ea868f037f271ac927a8e8c",
+          "version": null
+        }
       }
     ]
   },

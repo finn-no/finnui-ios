@@ -2,11 +2,7 @@ import UIKit
 import FinniversKit
 
 protocol AgentProfileViewDelegate: AnyObject {
-<<<<<<< HEAD
-    func agentProfileView(_ view: AgentProfileView, didSelectPhoneButtonWithIndex phoneNumberIndex: Int)
-=======
     func agentProfileView(_ view: AgentProfileView, didSelectLinkItem linkItem: CompanyProfile.ContactPerson.LinkItem)
->>>>>>> master
 }
 
 class AgentProfileView: UIView {
@@ -18,17 +14,6 @@ class AgentProfileView: UIView {
     // MARK: - Private properties
 
     private let numberOfPhoneNumbersPerRow = 2
-<<<<<<< HEAD
-    private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
-    private lazy var contactStackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
-    private lazy var titleLabel = Label.create(style: .title3Strong)
-    private lazy var nameLabel = Label.create(style: .bodyStrong)
-    private lazy var jobTitleLabel = Label.create(style: .detail)
-    private lazy var imageSize = CGSize(width: 88, height: 88)
-
-    private lazy var phoneNumbersCollectionView = OverflowCollectionView(
-        cellType: AgentPhoneNumberCollectionViewCell.self,
-=======
     private let portraitImageSize: CGFloat = 88
     private var contactPerson: CompanyProfile.ContactPerson?
     private lazy var textStackView = UIStackView(axis: .vertical, spacing: .spacingXS, withAutoLayout: true)
@@ -40,24 +25,11 @@ class AgentProfileView: UIView {
 
     private lazy var phoneNumbersCollectionView = OverflowCollectionView(
         cellType: ContactPersonLinkCollectionViewCell.self,
->>>>>>> master
         cellSpacing: .init(horizontal: 24, vertical: .spacingXS),
         delegate: self,
         withAutoLayout: true
     )
 
-<<<<<<< HEAD
-    private lazy var remoteImageView: RemoteImageView = {
-        let view = RemoteImageView(withAutoLayout: true)
-        view.contentMode = .scaleAspectFill
-        view.clipsToBounds = true
-        view.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        view.setContentHuggingPriority(.defaultLow, for: .vertical)
-        return view
-    }()
-
-=======
->>>>>>> master
     // MARK: - Init
 
     init(delegate: AgentProfileViewDelegate, withAutoLayout: Bool) {
@@ -85,13 +57,8 @@ class AgentProfileView: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-<<<<<<< HEAD
-            remoteImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
-            remoteImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
-=======
             portraitImageView.heightAnchor.constraint(equalToConstant: portraitImageSize),
             portraitImageView.widthAnchor.constraint(equalToConstant: portraitImageSize),
->>>>>>> master
 
             contactStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
             contactStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -102,20 +69,6 @@ class AgentProfileView: UIView {
 
     // MARK: - Internal methods
 
-<<<<<<< HEAD
-    func configure(with model: AgentProfileModel, remoteImageViewDataSource: RemoteImageViewDataSource?) {
-        titleLabel.text = model.title
-        nameLabel.text = model.agentName
-        jobTitleLabel.text = model.agentJobTitle
-        phoneNumbersCollectionView.configure(with: model.phoneNumbers)
-        remoteImageView.dataSource = remoteImageViewDataSource
-
-        if let imageUrl = model.imageUrl {
-            remoteImageView.loadImage(for: imageUrl, imageWidth: imageSize.width)
-            contactStackView.insertArrangedSubview(remoteImageView, at: 0)
-        } else {
-            remoteImageView.removeFromSuperview()
-=======
     func configure(with contactPerson: CompanyProfile.ContactPerson, remoteImageViewDataSource: RemoteImageViewDataSource?) {
         self.contactPerson = contactPerson
         titleLabel.text = contactPerson.title
@@ -139,7 +92,6 @@ class AgentProfileView: UIView {
             contactStackView.insertArrangedSubview(portraitImageView, at: 0)
         } else {
             portraitImageView.removeFromSuperview()
->>>>>>> master
         }
     }
 
@@ -147,11 +99,7 @@ class AgentProfileView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-<<<<<<< HEAD
-        remoteImageView.layer.cornerRadius = min(imageSize.height, imageSize.width) / 2
-=======
         portraitImageView.layer.cornerRadius = portraitImageSize / 2
->>>>>>> master
     }
 }
 
@@ -162,12 +110,8 @@ extension AgentProfileView: OverflowCollectionViewDelegate {
         _ view: OverflowCollectionView<Cell>,
         didSelectItemAtIndex index: Int
     ) where Cell: OverflowCollectionViewCell {
-<<<<<<< HEAD
-        delegate?.agentProfileView(self, didSelectPhoneButtonWithIndex: index)
-=======
         guard let linkItem = contactPerson?.links[safe: index] else { return }
         delegate?.agentProfileView(self, didSelectLinkItem: linkItem)
->>>>>>> master
     }
 }
 

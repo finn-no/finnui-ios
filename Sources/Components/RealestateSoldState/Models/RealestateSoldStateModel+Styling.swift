@@ -1,22 +1,6 @@
 import UIKit
 
 extension RealestateSoldStateModel {
-<<<<<<< HEAD
-    public struct Styling {
-        public let heading: HeadingStyle
-        public let profileBox: ProfileBoxStyle
-        public let ctaButton: ButtonStyle
-
-        public init(heading: HeadingStyle, profileBox: ProfileBoxStyle, ctaButton: ButtonStyle) {
-            self.heading = heading
-            self.profileBox = profileBox
-            self.ctaButton = ctaButton
-        }
-    }
-}
-
-extension RealestateSoldStateModel.Styling {
-=======
     public struct Style {
         public let headingStyle: HeadingStyle
         public let profileStyle: CompanyProfile.ProfileStyle
@@ -33,7 +17,6 @@ extension RealestateSoldStateModel.Styling {
         }
     }
 
->>>>>>> master
     public struct HeadingStyle {
         public let backgroundColor: UIColor
         public let logoBackgroundColor: UIColor
@@ -43,36 +26,5 @@ extension RealestateSoldStateModel.Styling {
             self.logoBackgroundColor = logoBackgroundColor
         }
     }
-<<<<<<< HEAD
-
-    public struct ProfileBoxStyle {
-        public let actionButton: ButtonStyle
-        public let textColor: UIColor
-        public let backgroundColor: UIColor
-        public let logoBackgroundColor: UIColor
-
-        public init(actionButton: ButtonStyle, textColor: UIColor, backgroundColor: UIColor, logoBackgroundColor: UIColor) {
-            self.actionButton = actionButton
-            self.textColor = textColor
-            self.backgroundColor = backgroundColor
-            self.logoBackgroundColor = logoBackgroundColor
-        }
-    }
-
-    public struct ButtonStyle {
-        public let textColor: UIColor
-        public let backgroundColor: UIColor
-        public let backgroundActiveColor: UIColor
-        public let borderColor: UIColor
-
-        public init(textColor: UIColor, backgroundColor: UIColor, backgroundActiveColor: UIColor, borderColor: UIColor) {
-            self.textColor = textColor
-            self.backgroundColor = backgroundColor
-            self.backgroundActiveColor = backgroundActiveColor
-            self.borderColor = borderColor
-        }
-    }
-=======
->>>>>>> master
 }
 
