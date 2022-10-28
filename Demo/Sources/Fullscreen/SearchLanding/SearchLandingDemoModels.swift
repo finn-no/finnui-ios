@@ -8,8 +8,23 @@ extension Array where Element == FrontpageSearchSection {
             withLocationPermission ? .locationPermission(.init(title: "Annonser nær meg".attributed, subtitle: nil, imageUrl: nil, uuid: UUID(), groupType:  .locationPermission, displayType: .standard)) : nil,
             .group(.generateSuggestions(title: "Torget", count: 6)),
             .group(.generateSuggestions(title: "Bolig til salgs", count: 2)),
+            .group(FrontpageSearchGroup(
+                title: "FINN foreslår",
+                items: [
+                    FrontpageSearchGroupItem(
+                        title: "Leilighet med sjarm og klassisk bad og kjøkken fra 60-tallet. Må ses!".attributed,
+                        subtitle: nil,
+                        imageUrl: .demoImageUrl,
+                        uuid: UUID(),
+                        groupType:  .searchResult,
+                        displayType: .recommend
+                    )
+                ],
+                groupType: .regular
+            )),
             .group(.generateSuggestions(title: "Alle stillinger", count: 4)),
             .viewMoreResults(.init(title: "Finn flere resultater for 'hund'".attributed, subtitle: nil, imageUrl: nil, uuid: UUID(), groupType:  .showMoreResults, displayType: .standard))
+            
         ].compactMap { $0 }
     }
 
@@ -59,20 +74,6 @@ extension Array where Element == FrontpageSearchSection {
                     FrontpageSearchGroupItem(title: "Fritidstomter".attributed, detail: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
                     FrontpageSearchGroupItem(title: "Bolig til salgs".attributed, detail: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
                     FrontpageSearchGroupItem(title: "Bolig ønskes leid".attributed, detail: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
-                ],
-                groupType: .regular
-            )),
-            .group(FrontpageSearchGroup(
-                title: "FINN foreslår",
-                items: [
-                    FrontpageSearchGroupItem(
-                        title: "Leilighet med sjarm og klassisk bad og kjøkken fra 60-tallet. Må ses!".attributed,
-                        subtitle: nil,
-                        imageUrl: .demoImageUrl,
-                        uuid: UUID(),
-                        groupType:  .searchResult,
-                        displayType: .recommend
-                    )
                 ],
                 groupType: .regular
             ))
