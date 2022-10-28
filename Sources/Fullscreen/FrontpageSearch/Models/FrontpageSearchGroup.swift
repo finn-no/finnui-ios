@@ -1,17 +1,4 @@
 import Foundation
-
-/*
-public class SearchSuggestionGroup: UniqueHashableItem {
-    public let title: String
-    public let items: [SearchSuggestionGroupItem]
-    public let groupType: SearchSuggestionGroupType?
-
-    public init(title: String, items: [SearchSuggestionGroupItem], groupType: SearchSuggestionGroupType? = .regular) {
-        self.title = title
-        self.items = items
-        self.groupType = groupType
-    }
-}*/
 public class FrontpageSearchGroup: UniqueHashableItem {
     public let title: String
     public let items: [FrontpageSearchGroupItem]

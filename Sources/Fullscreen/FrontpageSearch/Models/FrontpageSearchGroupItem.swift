@@ -10,6 +10,8 @@ public struct FrontpageSearchGroupItem: Hashable {
     public let uuid: UUID
     public let groupType: ResultGroupType
     public let displayType: FrontpageResultItemType
+    public let adId: Int?
+    public let isFavorite: Bool?
 
     public enum ResultGroupType {
         case searchResult
@@ -34,7 +36,9 @@ public struct FrontpageSearchGroupItem: Hashable {
         titleColor: UIColor = .textPrimary,
         uuid: UUID,
         groupType: ResultGroupType,
-        displayType: FrontpageResultItemType
+        displayType: FrontpageResultItemType,
+        adId: Int? = nil,
+        isFavorite: Bool? = nil
     ) {
         self.title = title
         self.subtitle = subtitle
@@ -44,5 +48,7 @@ public struct FrontpageSearchGroupItem: Hashable {
         self.uuid = uuid
         self.groupType = groupType
         self.displayType = displayType
+        self.adId = adId
+        self.isFavorite = isFavorite
     }
 }

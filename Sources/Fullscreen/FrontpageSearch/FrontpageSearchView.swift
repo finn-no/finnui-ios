@@ -3,7 +3,7 @@ import FinniversKit
 import Foundation
 
 public protocol FrontpageSearchViewDelegate: AnyObject {
-    func frontpageSearchView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String)
+    func frontpageSearchView(didSelectFavoriteButton button: UIButton, forAdWithId: Int, cell: FrontpageSearchImageResultCollectionViewCell)
     func frontpageSearchView(_ view: FrontpageSearchView, didSelectResultAt indexPath: IndexPath, uuid: UUID)
     func frontpageSearchView(didTapEnableLocationButton button: UIButton)
     func frontpageSearchViewDidScroll()
@@ -18,6 +18,7 @@ public final class FrontpageSearchView: UIView {
         collectionView.backgroundColor = .bgPrimary
 
         collectionView.register(FrontpageSearchImageResultCollectionViewCell.self)
+        collectionView.register(FrontpageSearchResultCell.self)
         collectionView.register(FrontpageSearchLocationPermissionCell.self)
         collectionView.register(FrontpageSearchMoreResultsCollectionViewCell.self)
         collectionView.register(FrontpageSearchSectionHeader.self, ofKind: UICollectionView.elementKindSectionHeader)
@@ -41,19 +42,17 @@ public final class FrontpageSearchView: UIView {
 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: [item])
 
-
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .estimated(0.0))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(0.0))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
                                                                  elementKind: UICollectionView.elementKindSectionHeader,
-                                                                 alignment: .top)
+                                                                 alignment: .top
+        )
 
-        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .absolute(7.0))
+        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(7.0))
         let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize,
                                                                  elementKind: UICollectionView.elementKindSectionFooter,
-                                                                 alignment: .bottom)
-
+                                                                 alignment: .bottom
+        )
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [header, footer]
         section.contentInsets = NSDirectionalEdgeInsets(
@@ -70,9 +69,22 @@ public final class FrontpageSearchView: UIView {
             cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
                 switch item.groupType {
                 case .searchResult:
-                    let cell = collectionView.dequeue(FrontpageSearchImageResultCollectionViewCell.self, for: indexPath)
-                    cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
-                    return cell
+                    switch item.displayType {
+                    case .standard:
+                        let cell = collectionView.dequeue(FrontpageSearchResultCell.self, for: indexPath)
+                        cell.configure(with: item)
+                        return cell
+                    case .recommend, .myFindings, .companyProfile, .geo:
+                        let cell = collectionView.dequeue(FrontpageSearchImageResultCollectionViewCell.self, for: indexPath)
+                        cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
+                        cell.delegate = self.delegate
+                        return cell
+                    case .myFindingsList:
+                        // should return an image cell with a circular image - not yet implemented
+                        let cell = collectionView.dequeue(FrontpageSearchImageResultCollectionViewCell.self, for: indexPath)
+                        cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
+                        return cell
+                    }
                 case .locationPermission:
                     let cell = collectionView.dequeue(FrontpageSearchLocationPermissionCell.self, for: indexPath)
                     cell.configure(with: item.title)
@@ -88,15 +100,22 @@ public final class FrontpageSearchView: UIView {
 
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             if kind == "UICollectionElementKindSectionHeader" {
-                guard let section = self?.sections[safe: indexPath.section] else { return FrontpageSearchSectionHeader() }
+
                 let view = collectionView.dequeue(
                     FrontpageSearchSectionHeader.self,
                     for: indexPath,
                     ofKind: UICollectionView.elementKindSectionHeader
                 )
+                guard let section = self?.sections[safe: indexPath.section] else {
+                    view.configure()
+                    return view
+                }
                 switch section {
                 case .group(let group):
-                    guard group.items.count > 0 else { return FrontpageSearchSectionHeader() }
+                    guard group.items.count > 0 else {
+                        view.configure()
+                        return view
+                    }
                     view.configure(with: group.title)
                 case .viewMoreResults(title: let title):
                     view.configure()
@@ -105,19 +124,12 @@ public final class FrontpageSearchView: UIView {
                 }
                 return view
             } else if kind == "UICollectionElementKindSectionFooter" {
-                guard let section = self?.sections[safe: indexPath.section] else { return FrontpageSearchSectionFooter() }
                 let view = collectionView.dequeue(
                     FrontpageSearchSectionFooter.self,
                     for: indexPath,
                     ofKind: UICollectionView.elementKindSectionFooter
                 )
-                switch section {
-                case .group(let group):
-                    guard group.items.count > 0 else { return FrontpageSearchSectionFooter() }
-                    return view
-                default:
-                    return view
-                }
+                return view
             }
             return UICollectionReusableView()
         }
@@ -125,11 +137,8 @@ public final class FrontpageSearchView: UIView {
     }()
 
     private var sections = [FrontpageSearchSection]()
-
     private typealias Snapshot = NSDiffableDataSourceSnapshot<FrontpageSearchSection, FrontpageSearchGroupItem>
-
     private weak var delegate: FrontpageSearchViewDelegate?
-
     private var remoteImageViewDataSource: RemoteImageViewDataSource
 
     // MARK: - Internal properties
@@ -183,23 +192,30 @@ public final class FrontpageSearchView: UIView {
         applySnapshot(snapshot)
     }
 
-
     private func applySnapshot(_ snapshot: Snapshot, animatingDifferences: Bool = true) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             self?.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
         }
     }
+
+    // MARK: - Favorite button handling
+    public func toggleFavoriteButtonState(for adId: Int, favorited: Bool) {
+        let cells = collectionView.visibleCells
+        cells.forEach { cell in
+            if let favoriteCell = cell as? FrontpageSearchImageResultCollectionViewCell {
+                if favoriteCell.getAdIdForCell() == adId {
+                    favoriteCell.updateFavoriteButton(isFavorite: favorited)
+                }
+            }
+        }
+    }
 }
-
-
 
 // MARK: - UICollectionViewDelegate
 
 extension FrontpageSearchView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function, indexPath)
         if let result = dataSource.itemIdentifier(for: indexPath) {
-            print("Selected result \(result.title)")
             delegate?.frontpageSearchView(self, didSelectResultAt: indexPath, uuid: result.uuid)
         }
     }

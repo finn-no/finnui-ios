@@ -62,11 +62,11 @@ extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
 
 // MARK: - Search Landing View Delegate
 extension SearchSuggestionsDemoView: FrontpageSearchViewDelegate {
-    func frontpageSearchViewDidScroll() {
+    func frontpageSearchView(didSelectFavoriteButton button: UIButton, forAdWithId: Int, cell: FrontpageSearchImageResultCollectionViewCell) {
         print("🔥🔥🔥🔥 \(#function)")
     }
 
-    func frontpageSearchView(didSelectFavoriteButton button: UIButton, forAdWithId adId: String) {
+    func frontpageSearchViewDidScroll() {
         print("🔥🔥🔥🔥 \(#function)")
     }
 

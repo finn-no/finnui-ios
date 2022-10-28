@@ -1,12 +1,13 @@
-/*import UIKit
+import UIKit
 import FinniversKit
 
-class SearchSuggestionTableViewCell: UITableViewCell {
+final class FrontpageSearchResultCell: UICollectionViewCell {
 
     // MARK: - Private properties
 
     private lazy var titleLabel: UILabel = {
-        let label = UILabel(withAutoLayout: true)
+        let label = Label(style: .body, withAutoLayout: true)
+        label.numberOfLines = 1
         label.setContentHuggingPriority(.required, for: .horizontal)
         return label
     }()
@@ -31,8 +32,17 @@ class SearchSuggestionTableViewCell: UITableViewCell {
 
     // MARK: - Init
 
-    override init(style: CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init(
+        remoteImageViewDataSource: RemoteImageViewDataSource,
+        withAutoLayout: Bool = false
+    ) {
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
+        setup()
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setup()
     }
 
@@ -42,20 +52,19 @@ class SearchSuggestionTableViewCell: UITableViewCell {
 
     private func setup() {
         backgroundColor = .bgPrimary
-        setDefaultSelectedBackgound()
 
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(detailLabel)
-        contentView.addSubview(iconImageView)
+        addSubview(titleLabel)
+        addSubview(detailLabel)
+        addSubview(iconImageView)
 
         let layoutGuide = UILayoutGuide()
-        contentView.addLayoutGuide(layoutGuide)
+        addLayoutGuide(layoutGuide)
 
         NSLayoutConstraint.activate([
-            layoutGuide.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .spacingS),
-            layoutGuide.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .spacingM),
-            layoutGuide.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.spacingM),
-            layoutGuide.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.spacingS),
+            layoutGuide.topAnchor.constraint(equalTo: topAnchor),
+            layoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+            layoutGuide.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+            layoutGuide.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingM),
 
             iconImageView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
             iconImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
@@ -66,16 +75,25 @@ class SearchSuggestionTableViewCell: UITableViewCell {
             titleLabel.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
 
             detailLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: .spacingXS),
-            detailLabel.lastBaselineAnchor.constraint(equalTo: titleLabel.lastBaselineAnchor),
+            detailLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             detailLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
         ])
     }
 
     // MARK: - Configure
 
-    func configure(with item: SearchSuggestionGroupItem) {
+    func configure(with item: FrontpageSearchGroupItem) {
         titleLabel.attributedText = item.title
+        titleLabel.textColor = item.titleColor
         detailLabel.text = item.detail
     }
+
+    // MARK: - Reuse
+
+    override func prepareForReuse() {
+        titleLabel.attributedText = nil
+        titleLabel.textColor = .textPrimary
+        detailLabel.text = nil
+    }
 }
-*/
+
