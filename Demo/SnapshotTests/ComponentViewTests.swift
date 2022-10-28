@@ -83,13 +83,10 @@ class ComponentViewTests: XCTestCase {
         snapshot(.shippingAlternativesView)
     }
 
-<<<<<<< HEAD
-=======
     func testRealestateAgencyBanner() {
         snapshot(.realestateAgencyBanner, includeIPad: true)
     }
 
->>>>>>> master
     func testRealestateSoldState() {
         snapshot(.realestateSoldState, includeIPad: true)
     }
@@ -110,8 +107,6 @@ class ComponentViewTests: XCTestCase {
         snapshot(.fadedExpandableView)
     }
 
-<<<<<<< HEAD
-=======
     func testExtendedProfileView() {
         snapshot(.extendedProfileView)
     }
@@ -120,7 +115,6 @@ class ComponentViewTests: XCTestCase {
         snapshot(.basicProfileView)
     }
 
->>>>>>> master
     func testSuggestShippingView() {
         snapshot(.suggestShippingView)
     }
@@ -133,10 +127,6 @@ class ComponentViewTests: XCTestCase {
         snapshot(.shippingRequestErrorView)
     }
 
-<<<<<<< HEAD
-    func testTJTPriceView() {
-        snapshot(.tjtPriceView)
-=======
     func testFiksFerdigPriceView() {
         snapshot(.fiksFerdigPriceView)
     }
@@ -167,6 +157,5 @@ class ComponentViewTests: XCTestCase {
 
     func testFiksFerdigContactSellerView() {
         snapshot(.fiksFerdigContactSellerView)
->>>>>>> master
     }
 }
