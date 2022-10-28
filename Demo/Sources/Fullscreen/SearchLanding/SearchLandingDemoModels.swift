@@ -19,40 +19,46 @@ extension Array where Element == FrontpageSearchSection {
             .group(FrontpageSearchGroup(
                 title: "Torget",
                 items: [
-                    FrontpageSearchGroupItem(title: "Torget til salgs".attributed, subtitle: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Torget gis bort".attributed, subtitle: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Torget ønskes kjøpt".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
+                    FrontpageSearchGroupItem(title: "Torget til salgs".attributed, detail: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Torget gis bort".attributed, detail: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Torget ønskes kjøpt".attributed, detail: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
                 ],
                 groupType: .regular
             )),
             .group(FrontpageSearchGroup(
                 title: "Båt",
                 items: [
-                    FrontpageSearchGroupItem(title: "Båter til salgs".attributed, subtitle: "(6 073 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Båtplass tilbys".attributed, subtitle: "(6 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Båtmotorer til salgs".attributed, subtitle: "(12 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Båter ønskes kjøpt".attributed, subtitle: "(12 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Båter til leie".attributed, subtitle: "(12 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
+                    FrontpageSearchGroupItem(title: "Båter til salgs".attributed, detail: "(6 073 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Båtplass tilbys".attributed, detail: "(6 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Båtmotorer til salgs".attributed, detail: "(12 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Båter ønskes kjøpt".attributed, detail: "(12 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Båter til leie".attributed, detail: "(12 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
                 ],
                 groupType: .regular
             )),
             .group(FrontpageSearchGroup(
+                title: "Favoritter",
+                items: [
+                    FrontpageSearchGroupItem(title: "sykkelstativ".attributed, subtitle: "(972 treff)", imageUrl: "https://images.finncdn.no/dynamic/default/2022/2/vertical-0/13/7/248/225/367_1252619664.jpg", uuid: UUID(), groupType:  .searchResult, displayType: .myFindings, isFavorite: true),
+                    FrontpageSearchGroupItem(title: "valp".attributed, subtitle: "(972 treff)", imageUrl: "https://images.finncdn.no/mmo/2022/10/vertical-0/25/4/270/226/444_343523977.jpg", uuid: UUID(), groupType:  .searchResult, displayType: .myFindings, isFavorite: true)],
+                groupType: .image)),
+            .group(FrontpageSearchGroup(
                 title: "Bil",
                 items: [
-                    FrontpageSearchGroupItem(title: "Campingvogner".attributed, subtitle: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Biler i Norge".attributed, subtitle: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Bobiler".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Varebiler i Norge".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
+                    FrontpageSearchGroupItem(title: "Campingvogner".attributed, detail: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Biler i Norge".attributed, detail: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Bobiler".attributed, detail: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Varebiler i Norge".attributed, detail: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
                 ],
                 groupType: .image
             )),
             .group(FrontpageSearchGroup(
                 title: "Eiendom",
                 items: [
-                    FrontpageSearchGroupItem(title: "Nye boliger".attributed, subtitle: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Fritidstomter".attributed, subtitle: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Bolig til salgs".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-                    FrontpageSearchGroupItem(title: "Bolig ønskes leid".attributed, subtitle: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
+                    FrontpageSearchGroupItem(title: "Nye boliger".attributed, detail: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Fritidstomter".attributed, detail: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Bolig til salgs".attributed, detail: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+                    FrontpageSearchGroupItem(title: "Bolig ønskes leid".attributed, detail: "(12 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
                 ],
                 groupType: .regular
             )),
@@ -96,12 +102,12 @@ private enum SuggestionStyle {
 private extension FrontpageSearchGroup {
     static func generateSuggestions(title: String, count: Int) -> FrontpageSearchGroup {
         let reusableItems = [
-            FrontpageSearchGroupItem(title: "sykkelvogn".attributed, subtitle: "(325 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "sykkelstativ".attributed, subtitle: "(972 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "hundebur".attributed, subtitle: "(972 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "dører".attributed, subtitle: "(972 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "playstation 5".attributed, subtitle: "(810 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "veldig veldig veldig lang tekst som sikkert bruker flere linjer. Hvem vet når denne ender?".attributed, subtitle: "(123 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
+            FrontpageSearchGroupItem(title: "sykkelvogn".attributed, detail: "(325 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "sykkelstativ".attributed, detail: "(972 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "hundebur".attributed, detail: "(972 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "dører".attributed, detail: "(972 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "playstation 5".attributed, detail: "(810 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "veldig veldig veldig lang tekst som sikkert bruker flere linjer. Hvem vet når denne ender?".attributed, detail: "(123 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
         ]
 
         var items = [FrontpageSearchGroupItem]()

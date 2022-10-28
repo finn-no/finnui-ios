@@ -38,28 +38,6 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
     }
 }
 
-/*
-// MARK: - SearchSuggestionsViewDelegate
-
-extension SearchSuggestionsDemoView: SearchSuggestionsViewDelegate {
-    func searchSuggestionsView(_ view: SearchSuggestionsView, didSelectResultAt indexPath: IndexPath) {
-        print("🔥🔥🔥🔥 indexPath = \(indexPath)")
-        print("🔥🔥🔥🔥 \(#function)")
-    }
-
-    func searchSuggestionsViewDidSelectViewMoreResults(_ view: SearchSuggestionsView) {
-        print("🔥🔥🔥🔥 \(#function)")
-    }
-
-    func searchSuggestionsViewDidSelectLocationButton(_ view: SearchSuggestionsView) {
-        print("🔥🔥🔥🔥 \(#function)")
-    }
-
-    func searchSuggestionsViewDidScroll() {
-        print("🔥🔥🔥🔥 \(#function)")
-    }
-}*/
-
 // MARK: - Search Landing View Delegate
 extension SearchSuggestionsDemoView: FrontpageSearchViewDelegate {
     func frontpageSearchView(didSelectFavoriteButton button: UIButton, forAdWithId: Int, cell: FrontpageSearchImageResultCollectionViewCell) {
