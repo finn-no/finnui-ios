@@ -102,12 +102,12 @@ private enum SuggestionStyle {
 private extension FrontpageSearchGroup {
     static func generateSuggestions(title: String, count: Int) -> FrontpageSearchGroup {
         let reusableItems = [
-            FrontpageSearchGroupItem(title: "sykkelvogn".attributed, detail: "(325 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "sykkelstativ".attributed, detail: "(972 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "hundebur".attributed, detail: "(972 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "dører".attributed, detail: "(972 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "playstation 5".attributed, detail: "(810 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "veldig veldig veldig lang tekst som sikkert bruker flere linjer. Hvem vet når denne ender?".attributed, detail: "(123 treff)", imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
+            FrontpageSearchGroupItem(title: "sykkelvogn".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "sykkelstativ".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "hundebur".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "dører".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "playstation 5".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "veldig veldig veldig lang tekst som sikkert bruker flere linjer. Hvem vet når denne ender?".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
         ]
 
         var items = [FrontpageSearchGroupItem]()
