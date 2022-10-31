@@ -189,13 +189,7 @@ public final class FrontpageSearchView: UIView {
                 snapshot.appendItems([item], toSection: section)
             }
         }
-        applySnapshot(snapshot)
-    }
-
-    private func applySnapshot(_ snapshot: Snapshot, animatingDifferences: Bool = true) {
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            self?.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
-        }
+        dataSource.apply(snapshot)
     }
 
     // MARK: - Favorite button handling

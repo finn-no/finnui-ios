@@ -48,7 +48,7 @@ class FullscreenViewTests: XCTestCase {
     }
 
     func testSearchSuggestions() {
-        snapshot(.searchSuggestions, delay: 1)
+        snapshot(.searchSuggestions)
     }
 
     func testExploreView() {
