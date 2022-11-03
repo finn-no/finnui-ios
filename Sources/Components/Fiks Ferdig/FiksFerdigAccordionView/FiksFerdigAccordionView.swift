@@ -43,7 +43,7 @@ public class FiksFerdigAccordionView: UIStackView {
 
     private lazy var separatorView: UIView = {
         let view = UIView(withAutoLayout: true)
-        view.backgroundColor = .separator
+        view.backgroundColor = .borderDefault
         return view
     }()
 
@@ -155,10 +155,4 @@ public class FiksFerdigAccordionView: UIStackView {
     private func didTapHeader() {
         viewModel.isExpanded.toggle()
     }
-}
-
-// MARK: - Private extensions
-
-private extension UIColor {
-    static var separator = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }

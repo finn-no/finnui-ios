@@ -175,7 +175,7 @@ private extension TextField {
 
     func configureColors() {
         configure(textFieldBackgroundColor: .bgPrimary)
-        configureBorder(radius: 4, width: 1, color: .dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine))
+        configureBorder(radius: 4, width: 1, color: .borderDefault)
     }
 }
 

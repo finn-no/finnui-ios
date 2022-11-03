@@ -213,7 +213,7 @@ private extension UIColor {
     }
 
     class var primaryButtonBorderColor: UIColor {
-        dynamicColor(defaultColor: .init(hex: "#C3CCD9"), darkModeColor: .textSecondary)
+        dynamicColor(defaultColor: .sardine, darkModeColor: .textSecondary)
     }
 
     class var secondaryButtonColor: UIColor {

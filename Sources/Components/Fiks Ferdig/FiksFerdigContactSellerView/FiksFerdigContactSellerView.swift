@@ -63,7 +63,7 @@ public final class FiksFerdigContactSellerView: UIView {
 
     private func setup() {
         layer.borderWidth = 1
-        layer.borderColor = UIColor.contactSellerBorder.cgColor
+        layer.borderColor = UIColor.borderDefault.cgColor
         layer.cornerRadius = 3
 
         addSubview(containerView)
@@ -85,8 +85,4 @@ public final class FiksFerdigContactSellerView: UIView {
         messageLabel.text = viewModel.message
         contactSellerButton.setTitle(viewModel.buttonTitle, for: .normal)
     }
-}
-
-private extension UIColor {
-    static let contactSellerBorder = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }
