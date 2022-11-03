@@ -113,7 +113,7 @@ class QuestionFormView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        textView.layer.borderColor = UIColor.textViewBorderColor.cgColor
+        textView.layer.borderColor = UIColor.borderDefault.cgColor
     }
 
     // MARK: - Private methods
@@ -170,11 +170,5 @@ private extension Array where Element == RealestateSoldStateQuestionModel {
 
     var firstUserFreetext: RealestateSoldStateQuestionModel? {
         first { $0.kind == .userFreetext }
-    }
-}
-
-private extension UIColor {
-    static var textViewBorderColor: UIColor {
-        dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
     }
 }

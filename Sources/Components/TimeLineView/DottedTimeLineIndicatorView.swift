@@ -1,4 +1,4 @@
-import UIKit
+import FinniversKit
 
 final class DottedTimeLineIndicatorView: UIView {
     static var indicatorDotSize: CGFloat = 8
@@ -33,7 +33,7 @@ final class DottedTimeLineIndicatorView: UIView {
                     y: indicatorDotY
                 ),
                 radius: DottedTimeLineIndicatorView.indicatorDotSize / 2,
-                color: .timelineIndicator
+                color: .borderDefault
             )
         )
 
@@ -53,7 +53,7 @@ final class DottedTimeLineIndicatorView: UIView {
                             y: upwardsOffset
                         ),
                         radius: DottedTimeLineIndicatorView.fillingDotSize / 2,
-                        color: .timelineIndicator
+                        color: .borderDefault
                     )
                 )
             }
@@ -66,7 +66,7 @@ final class DottedTimeLineIndicatorView: UIView {
                             y: downwardsOffset
                         ),
                         radius: DottedTimeLineIndicatorView.fillingDotSize / 2,
-                        color: .timelineIndicator
+                        color: .borderDefault
                     )
                 )
             }
@@ -82,10 +82,4 @@ final class DottedTimeLineIndicatorView: UIView {
             height: UIView.noIntrinsicMetric
         )
     }
-}
-
-// MARK: - Private extensions
-
-private extension UIColor {
-    static var timelineIndicator = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }

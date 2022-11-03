@@ -74,7 +74,7 @@ final class ExploreSelectedCategoryCell: UICollectionViewCell {
         clipsToBounds = true
 
         dropShadow(
-            color: .dynamicColor(defaultColor: UIColor(hex: "C3CCD9"), darkModeColor: .clear),
+            color: .dynamicColor(defaultColor: .sardine, darkModeColor: .clear),
             opacity: 0.3,
             offset: CGSize(width: 0, height: 8),
             radius: 8

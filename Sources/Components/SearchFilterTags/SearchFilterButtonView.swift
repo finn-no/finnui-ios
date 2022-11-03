@@ -1,8 +1,4 @@
-//
-//  Copyright © FINN.no AS, Inc. All rights reserved.
-//
-
-import UIKit
+import FinniversKit
 
 protocol SearchFilterButtonViewDelegate: AnyObject {
     func searchFilterButtonViewDidSelectFilter(_ searchFilterButtonView: SearchFilterButtonView)
@@ -68,7 +64,7 @@ final class SearchFilterButtonView: UIView {
 
     public override func layoutSubviews() {
         super.layoutSubviews()
-        layer.borderColor = .borderColor
+        layer.borderColor = UIColor.borderDefault.cgColor
     }
 
     // MARK: - Setup
@@ -80,7 +76,7 @@ final class SearchFilterButtonView: UIView {
         backgroundColor = .bgPrimary
 
         layer.cornerRadius = 8
-        layer.borderColor = .borderColor
+        layer.borderColor = UIColor.borderDefault.cgColor
         layer.borderWidth = 1
 
         addSubview(filterIcon)
@@ -110,14 +106,6 @@ final class SearchFilterButtonView: UIView {
 
     @objc private func filterButtonTapped() {
         delegate?.searchFilterButtonViewDidSelectFilter(self)
-    }
-}
-
-// MARK: - Private extensions
-
-private extension CGColor {
-    class var borderColor: CGColor {
-        UIColor.dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine).cgColor
     }
 }
 

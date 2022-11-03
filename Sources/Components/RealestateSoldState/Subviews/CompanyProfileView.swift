@@ -58,7 +58,7 @@ class CompanyProfileView: UIView {
     private func setup(remoteImageViewDataSource: RemoteImageViewDataSource?) {
         clipsToBounds = true
         backgroundColor = style.backgroundColor
-        layer.borderColor = UIColor.companyProfileBorder.cgColor
+        layer.borderColor = UIColor.borderDefault.cgColor
 
         addSubview(logoHeaderView)
         addSubview(sloganLabel)
@@ -97,7 +97,7 @@ class CompanyProfileView: UIView {
         super.layoutSubviews()
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = UIColor.companyProfileBorder.cgColor
+        layer.borderColor = UIColor.borderDefault.cgColor
     }
 
     // MARK: - Actions
@@ -116,10 +116,6 @@ extension CompanyProfileView: LinkButtonListViewDelegate {
 }
 
 // MARK: - Private extensions
-
-private extension UIColor {
-    static var companyProfileBorder = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
-}
 
 private extension LinkButtonViewModel {
     func overrideStyle(using profileStyle: CompanyProfile.ProfileStyle) -> LinkButtonViewModel {

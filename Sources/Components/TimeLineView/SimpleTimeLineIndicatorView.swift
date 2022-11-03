@@ -1,4 +1,4 @@
-import UIKit
+import FinniversKit
 
 final class SimpleTimeLineIndicatorView: UIView {
     static var indicatorDotSize: CGFloat = 8
@@ -17,7 +17,7 @@ final class SimpleTimeLineIndicatorView: UIView {
                 y: indicatorDotY
             ),
             radius: DottedTimeLineIndicatorView.indicatorDotSize / 2,
-            color: .timelineIndicator
+            color: .borderDefault
         )
     }
 
@@ -27,10 +27,4 @@ final class SimpleTimeLineIndicatorView: UIView {
             height: UIView.noIntrinsicMetric
         )
     }
-}
-
-// MARK: - Private extensions
-
-private extension UIColor {
-    static var timelineIndicator = dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
 }

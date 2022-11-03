@@ -1,9 +1,4 @@
-//
-//  Copyright © FINN.no AS, Inc. All rights reserved.
-//
-
-import Foundation
-import UIKit
+import FinniversKit
 
 public protocol SearchDisplayMenuViewDelegate: AnyObject {
     func searchDisplayMenuViewDidSelectSort()
@@ -103,7 +98,7 @@ public class SearchDisplayMenuView: UIView {
 
     public override func layoutSubviews() {
         super.layoutSubviews()
-        layer.borderColor = .borderColor
+        layer.borderColor = UIColor.borderDefault.cgColor
     }
 
     // MARK: - Actions
@@ -114,13 +109,5 @@ public class SearchDisplayMenuView: UIView {
 
     @objc private func changeDisplayTypeButtonTapped() {
         delegate?.searchDisplayMenuViewDidSelectChangeDisplayType()
-    }
-}
-
-// MARK: - Private extensions
-
-private extension CGColor {
-    class var borderColor: CGColor {
-        UIColor.dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine).cgColor
     }
 }

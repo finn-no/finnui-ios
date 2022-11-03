@@ -97,7 +97,7 @@ public final class BasicProfileView: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
 
-        layer.borderColor = UIColor.borderColor.cgColor
+        layer.borderColor = UIColor.borderDefault.cgColor
     }
 }
 
@@ -118,13 +118,5 @@ extension BasicProfileView: BasicProfileContactPersonViewDelegate {
 extension BasicProfileView: LinkButtonListViewDelegate {
     public func linksListView(_ view: LinkButtonListView, didTapButtonWithIdentifier identifier: String?, url: URL) {
         delegate?.basicProfileView(self, didSelectButtonWithIdentifier: identifier, url: url)
-    }
-}
-
-// MARK: - Private extensions
-
-private extension UIColor {
-    static var borderColor: UIColor {
-        .dynamicColor(defaultColor: .sardine, darkModeColor: .darkSardine)
     }
 }
