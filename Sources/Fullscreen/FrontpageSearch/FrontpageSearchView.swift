@@ -26,12 +26,7 @@ public final class FrontpageSearchView: UIView {
         return collectionView
     }()
 
-    private lazy var collectionViewLayout: UICollectionViewLayout = {
-        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection in
-            return Self.createFullWidthSection()
-        }
-        return layout
-    }()
+    private lazy var collectionViewLayout = UICollectionViewCompositionalLayout { _,_ in Self.createFullWidthSection() }
 
     private static func createFullWidthSection() -> NSCollectionLayoutSection {
         let size = NSCollectionLayoutSize(
@@ -66,7 +61,8 @@ public final class FrontpageSearchView: UIView {
     private lazy var dataSource: DataSource = {
         let dataSource = DataSource(
             collectionView: collectionView,
-            cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
+            cellProvider: { [weak self] (collectionView, indexPath, item) -> UICollectionViewCell? in
+                guard let self = self else { return UICollectionViewCell() }
                 switch item.groupType {
                 case .searchResult:
                     switch item.displayType {
@@ -99,7 +95,7 @@ public final class FrontpageSearchView: UIView {
         )
 
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            if kind == "UICollectionElementKindSectionHeader" {
+            if kind == UICollectionView.elementKindSectionHeader {
 
                 let view = collectionView.dequeue(
                     FrontpageSearchSectionHeader.self,
@@ -123,7 +119,7 @@ public final class FrontpageSearchView: UIView {
                     view.configure()
                 }
                 return view
-            } else if kind == "UICollectionElementKindSectionFooter" {
+            } else if kind == UICollectionView.elementKindSectionFooter {
                 let view = collectionView.dequeue(
                     FrontpageSearchSectionFooter.self,
                     for: indexPath,
