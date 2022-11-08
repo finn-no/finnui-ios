@@ -17,7 +17,7 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
 
     private lazy var remoteImageView: RemoteImageView = {
         let imageView = RemoteImageView(withAutoLayout: true)
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = .imageBorder
         imageView.layer.cornerRadius = .spacingS
@@ -98,7 +98,6 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
     ) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
-
         remoteImageView.dataSource = remoteImageViewDataSource
         setup()
     }
@@ -176,9 +175,13 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
             return
         }
         contentStackView.insertArrangedSubview(remoteImageView, at: 0)
+        if item.imageContentModeFill == false {
+            remoteImageView.contentMode = .scaleAspectFit
+        }
         remoteImageView.isHidden = false
         remoteImageView.dataSource = remoteImageViewDataSource
         remoteImageView.loadImage(for: imageUrl, imageWidth: imageAndButtonWidth)
+        remoteImageView.layer.backgroundColor = .milk
     }
 
     private func configureTrailingIcon(for displayType: FrontpageSearchGroupItem.FrontpageResultItemType) {
@@ -233,6 +236,7 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
 
     private func clearLeadingImages() {
         iconImageView.isHidden = true
+        remoteImageView.contentMode = .scaleAspectFill
         remoteImageView.isHidden = true
         contentStackView.removeArrangedSubview(iconImageView)
         contentStackView.removeArrangedSubview(remoteImageView)
