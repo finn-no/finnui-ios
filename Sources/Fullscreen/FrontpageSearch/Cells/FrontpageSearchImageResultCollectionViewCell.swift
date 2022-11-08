@@ -72,6 +72,7 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
         let favorited = UIImage(named: .favorited).withRenderingMode(.alwaysTemplate)
         button.setImage(favorited, for: .normal)
         button.imageView?.tintColor = .textAction
+        button.imageEdgeInsets = UIEdgeInsets(vertical: 3 * .spacingXS, horizontal: 3 * .spacingXS)
         button.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -145,8 +146,8 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
             removeButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth),
             removeButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
 
-            favoriteButton.heightAnchor.constraint(equalToConstant: 14),
-            favoriteButton.widthAnchor.constraint(equalToConstant: 14),
+            favoriteButton.heightAnchor.constraint(equalToConstant: imageAndButtonWidth),
+            favoriteButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth),
             favoriteButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
 
             trailingIconImageView.heightAnchor.constraint(equalToConstant: 14),
