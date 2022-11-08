@@ -169,8 +169,7 @@ public final class FrontpageSearchView: UIView {
 
     // MARK: - Snapshot management
 
-    public func configure(with sections: [FrontpageSearchSection], delegate: FrontpageSearchViewDelegate?) {
-        self.delegate = delegate
+    public func configure(with sections: [FrontpageSearchSection]) {
         self.sections = sections
         var snapshot = Snapshot()
         snapshot.appendSections(sections)

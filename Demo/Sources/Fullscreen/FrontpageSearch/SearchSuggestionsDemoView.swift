@@ -5,16 +5,16 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
 
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Search suggestions", description: "With location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .suggestions(withLocationPermission: true), delegate: self)
+            self?.searchLandingView.configure(with: .suggestions(withLocationPermission: true))
         },
         TweakingOption(title: "Search suggestions", description: "Without location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .suggestions(), delegate: self)
+            self?.searchLandingView.configure(with: .suggestions())
         },
         TweakingOption(title: "Search landingpage", description: "With location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .landingPage(withLocationPermission: true), delegate: self)
+            self?.searchLandingView.configure(with: .landingPage(withLocationPermission: true))
         },
         TweakingOption(title: "Search landingpage", description: "Without location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .landingPage(), delegate: self)
+            self?.searchLandingView.configure(with: .landingPage())
         }
     ]
 

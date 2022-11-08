@@ -2,7 +2,6 @@ import UIKit
 import FinniversKit
 
 class FrontpageSearchSectionHeader: UICollectionReusableView {
-    public var kind = "SearchSuggestionsSectionHeader"
 
     private lazy var titleLabel = Label(style: .bodyStrong, withAutoLayout: true)
 
@@ -21,7 +20,6 @@ class FrontpageSearchSectionHeader: UICollectionReusableView {
         titleLabel.textColor = .textPrimary
         
     }
-
 
     func configure() {
         titleLabel.removeFromSuperview()
