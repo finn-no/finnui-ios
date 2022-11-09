@@ -181,7 +181,6 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
         remoteImageView.isHidden = false
         remoteImageView.dataSource = remoteImageViewDataSource
         remoteImageView.loadImage(for: imageUrl, imageWidth: imageAndButtonWidth)
-        remoteImageView.layer.backgroundColor = .milk
     }
 
     private func configureTrailingIcon(for displayType: FrontpageSearchGroupItem.FrontpageResultItemType) {
