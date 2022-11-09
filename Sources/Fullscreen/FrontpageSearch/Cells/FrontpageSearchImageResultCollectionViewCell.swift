@@ -175,7 +175,7 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
             return
         }
         contentStackView.insertArrangedSubview(remoteImageView, at: 0)
-        if item.imageContentModeFill == false {
+        if !item.imageContentModeFill {
             remoteImageView.contentMode = .scaleAspectFit
         }
         remoteImageView.isHidden = false
