@@ -11,6 +11,7 @@ public enum FullscreenDemoViews: String, DemoViews {
     case searchDisplayTypeSelectionView
     case favoriteAdSortingView
     case searchDropdown
+    case searchSuggestions
     case exploreView
     case exploreDetailView
     case stories
@@ -31,6 +32,8 @@ public enum FullscreenDemoViews: String, DemoViews {
             return DemoViewController<SearchDisplayTypeSelectionDemoView>()
         case .searchDropdown:
             return DemoViewController<SearchDropdownDemoView>()
+        case .searchSuggestions:
+            return DemoViewController<SearchSuggestionsDemoView>()
         case .exploreView:
             return makeExploreView()
         case .exploreDetailView:

@@ -71,6 +71,8 @@ enum ImageAsset: String {
     case repair
     case republish
     case schibstedFooter
+    case searchBig
+    case searchSmall
     case share
     case shipWithHelthjem
     case shipWithHelthjemDarkmode
@@ -136,6 +138,8 @@ enum ImageAsset: String {
             .repair,
             .republish,
             .schibstedFooter,
+            .searchBig,
+            .searchSmall,
             .share,
             .shipWithHelthjem,
             .shipWithHelthjemDarkmode,

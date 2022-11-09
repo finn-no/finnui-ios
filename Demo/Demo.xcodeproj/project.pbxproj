@@ -54,6 +54,8 @@
 		8D680B94EF5A2484F34CE9AB /* SearchDropdownGroupDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D680D09AE93C13B7B20F08E /* SearchDropdownGroupDemoView.swift */; };
 		9BA6C4A224336B9A009D417B /* DemoWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA6C4A124336B9A009D417B /* DemoWrapperView.swift */; };
 		9BBC904024FD252B0003D2D8 /* UITraitCollection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBC903F24FD252B0003D2D8 /* UITraitCollection+Extensions.swift */; };
+		9F11791E290FB5B100C7FA90 /* SearchSuggestionsDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F11791C290FB5B100C7FA90 /* SearchSuggestionsDemoView.swift */; };
+		9F11791F290FB5B100C7FA90 /* SearchLandingDemoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F11791D290FB5B100C7FA90 /* SearchLandingDemoModels.swift */; };
 		ADC5C001F9CB596AAA8A6766 /* AdTipsCollapsibleDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5C5356934C46CBC60D68A /* AdTipsCollapsibleDemoView.swift */; };
 		ADC5CBBC2AE659F8B588F876 /* NumberedAdTipsCollapsibleDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5C7228914271986E032E4 /* NumberedAdTipsCollapsibleDemoView.swift */; };
 		D61E2C3825C0157600FA8F16 /* FinnUI in Frameworks */ = {isa = PBXBuildFile; productRef = D61E2C3725C0157600FA8F16 /* FinnUI */; };
@@ -205,6 +207,8 @@
 		9BA6C4A124336B9A009D417B /* DemoWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoWrapperView.swift; sourceTree = "<group>"; };
 		9BBC903F24FD252B0003D2D8 /* UITraitCollection+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+Extensions.swift"; sourceTree = "<group>"; };
 		9BE474C824979816009620A5 /* BapAdView+Previews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BapAdView+Previews.swift"; sourceTree = "<group>"; };
+		9F11791C290FB5B100C7FA90 /* SearchSuggestionsDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSuggestionsDemoView.swift; sourceTree = "<group>"; };
+		9F11791D290FB5B100C7FA90 /* SearchLandingDemoModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLandingDemoModels.swift; sourceTree = "<group>"; };
 		ADC5C5356934C46CBC60D68A /* AdTipsCollapsibleDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdTipsCollapsibleDemoView.swift; sourceTree = "<group>"; };
 		ADC5C7228914271986E032E4 /* NumberedAdTipsCollapsibleDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberedAdTipsCollapsibleDemoView.swift; sourceTree = "<group>"; };
 		D6242CF625CD84A9001999CE /* libGenerateAssetsScriptRunner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGenerateAssetsScriptRunner.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -352,6 +356,7 @@
 		46E7726A242CEF09008A5E93 /* Fullscreen */ = {
 			isa = PBXGroup;
 			children = (
+				9F117917290FB2A100C7FA90 /* FrontpageSearch */,
 				4D2A37FC2730244100D09D73 /* Stories */,
 				DA3E1B0D2673B4DF001B7730 /* ExploreDetail */,
 				DA7B29F02670CAEA0018B11C /* Explore */,
@@ -693,6 +698,15 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
+		9F117917290FB2A100C7FA90 /* FrontpageSearch */ = {
+			isa = PBXGroup;
+			children = (
+				9F11791D290FB5B100C7FA90 /* SearchLandingDemoModels.swift */,
+				9F11791C290FB5B100C7FA90 /* SearchSuggestionsDemoView.swift */,
+			);
+			path = FrontpageSearch;
+			sourceTree = "<group>";
+		};
 		ADC5C709E0338FF2B7D08358 /* AdTipsCollapsibleView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1012,6 +1026,7 @@
 				DA083C2E2462BCA800B26235 /* SwiftUIDemoViews.swift in Sources */,
 				46E77452242CEF0A008A5E93 /* ScrollViewController.swift in Sources */,
 				46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */,
+				9F11791F290FB5B100C7FA90 /* SearchLandingDemoModels.swift in Sources */,
 				D6D43CF125BF2FA900234AC2 /* SavedSearchSortingDemoView.swift in Sources */,
 				E640432428B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift in Sources */,
 				46E77456242CEF0A008A5E93 /* TweakableDemoView.swift in Sources */,
@@ -1027,6 +1042,7 @@
 				D6D43CE425BF2F4D00234AC2 /* SaveSearchViewDemoView.swift in Sources */,
 				D6D43CF025BF2FA900234AC2 /* SnowGlobeDemoView.swift in Sources */,
 				46E773AF242CEF0A008A5E93 /* DemoViewController.swift in Sources */,
+				9F11791E290FB5B100C7FA90 /* SearchSuggestionsDemoView.swift in Sources */,
 				E4DBDD972762335200BE21D8 /* ShippingAlternativesDemoView.swift in Sources */,
 				46E77453242CEF0A008A5E93 /* CornerAnchoringViewController.swift in Sources */,
 				DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */,
