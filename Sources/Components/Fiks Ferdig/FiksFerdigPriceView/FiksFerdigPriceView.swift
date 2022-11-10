@@ -73,11 +73,23 @@ public final class FiksFerdigPriceView: UIView {
         priceLabel.text = viewModel.priceString
         updateShippingLabel()
 
-        if case .noPrice = viewModel.priceText {
-            priceLabel.font = .title2Strong
-        } else {
-            priceLabel.font = .title1
+        var hasPrice: Bool {
+            if case .setPrice = viewModel.priceText {
+                return true
+            } else {
+                return false
+            }
         }
+
+        if hasPrice {
+            priceLabel.font = .title1
+        } else {
+            priceLabel.font = .title2Strong
+        }
+
+        tradeTypeLabel.isHidden = !hasPrice
+        shippingLabel.isHidden = !hasPrice
+
         paymentLabel.attributedText = viewModel.payment.text
         priceLabel.accessibilityLabel = viewModel.shippingAccessibilityLabel
         paymentLabel.accessibilityLabel = viewModel.payment.accessibilityText
