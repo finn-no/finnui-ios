@@ -31,7 +31,7 @@ public final class FrontpageSearchView: UIView {
     private static func createFullWidthSection() -> NSCollectionLayoutSection {
         let size = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(78)
+            heightDimension: .estimated(36)
         )
         let item = NSCollectionLayoutItem(layoutSize: size)
 
@@ -50,10 +50,6 @@ public final class FrontpageSearchView: UIView {
         )
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [header, footer]
-        section.contentInsets = NSDirectionalEdgeInsets(
-            vertical: 0,
-            horizontal: Self.horizontalSpacing
-        )
         return section
     }
 

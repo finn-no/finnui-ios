@@ -9,6 +9,7 @@ final class FrontpageSearchResultCell: UICollectionViewCell {
         let label = Label(style: .body, withAutoLayout: true)
         label.numberOfLines = 1
         label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         return label
     }()
 
