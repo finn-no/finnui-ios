@@ -106,6 +106,7 @@ public class FiksFerdigAccordionView: UIStackView {
         separatorStackView.addArrangedSubview(separatorView)
         addArrangedSubview(separatorStackView)
 
+        containerEnclosingView.spacing = .spacingS
         containerEnclosingView.addArrangedSubviews([
             separatorStackView,
             contentContainerView
@@ -144,8 +145,6 @@ public class FiksFerdigAccordionView: UIStackView {
             chevron.transform = transform
         }
 
-        contentContainerView.alpha = isExpanded ? 1 : 0
-        separatorStackView.alpha = isExpanded ? 1 : 0
         contentContainerView.isHidden = !isExpanded
         separatorStackView.isHidden = !isExpanded
         containerEnclosingView.layoutIfNeeded()

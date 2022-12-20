@@ -19,9 +19,23 @@ final class FiksFerdigInfoDemoView: UIView, Tweakable {
 
     let shippingInfoViewModel = FiksFerdigShippingInfoViewModel(
         headerTitle: "Varen sendes med",
-        provider: .heltHjem,
-        providerName: "Helthjem",
-        message: "Du betaler 60 kr for frakten",
+        providers: [
+        .init(
+            provider: .postnord,
+            providerName: "Postnord",
+            message: "Du betaler 60 kr for frakten"
+        ),
+        .init(
+            provider: .posten,
+            providerName: "Posten",
+            message: "Du betaler 60 kr for frakten"
+        ),
+        .init(
+            provider: .heltHjem,
+            providerName: "Helthjem idjaisj daj id aisdijasid as asduhsahdahsd daijsidj asja",
+            message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias"
+        )
+        ],
         isExpanded: true
     )
 
