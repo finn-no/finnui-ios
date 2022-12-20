@@ -58,6 +58,7 @@ public final class ExploreView: UIView {
         collectionView.contentInset.bottom = .spacingXL
         collectionView.register(ExploreCollectionCell.self)
         collectionView.register(ExploreTagCloudGridCell.self)
+        collectionView.register(ExploreBrazeBannerCell.self)
         collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         collectionView.refreshControl = refreshControl
         return collectionView
@@ -73,7 +74,7 @@ public final class ExploreView: UIView {
         let dataSource = UICollectionViewDiffableDataSource<ExploreSectionViewModel, Item>(
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, item in
-                guard let self = self else { return nil }
+                guard let self = self else { return UICollectionViewCell() }
 
                 switch item {
                 case .regular(let viewModel, let cellKind):
@@ -87,6 +88,11 @@ public final class ExploreView: UIView {
                     cell.gridView.delegate = self
                     cell.gridView.remoteImageViewDataSource = self
                     cell.gridView.configure(withItems: viewModels)
+                    return cell
+                case .brazeBanner(let viewModel):
+                    guard let banner = viewModel.banner else { return UICollectionViewCell() }
+                    let cell = collectionView.dequeue(ExploreBrazeBannerCell.self, for: indexPath)
+                    cell.configure(banner: banner)
                     return cell
                 }
             })
@@ -131,11 +137,16 @@ public final class ExploreView: UIView {
                     Item.regular($0, section.layout == .hero ? .big : .regular)
                 }
                 snapshot.appendItems(items, toSection: section)
-            case .tagCloud:
+            case .tagCloud: 
                 let items = section.items.map {
                     TagCloudCellViewModel(title: $0.title, iconUrl: $0.iconUrl)
                 }
                 snapshot.appendItems([Item.tagCloud(items)], toSection: section)
+            case .banner:
+                let item = section.items.map {
+                    ExploreCollectionViewModel(title: "braze", banner: $0.banner)
+                }
+                snapshot.appendItems([Item.brazeBanner(item.first!)], toSection: section)
             }
         }
 
@@ -222,4 +233,5 @@ extension ExploreView: RemoteImageViewDataSource {
 private enum Item: Equatable, Hashable {
     case regular(ExploreCollectionViewModel, ExploreCollectionCell.Kind)
     case tagCloud([TagCloudCellViewModel])
+    case brazeBanner(ExploreCollectionViewModel)
 }

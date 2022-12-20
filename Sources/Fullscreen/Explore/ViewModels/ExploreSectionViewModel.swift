@@ -10,6 +10,7 @@ public class ExploreSectionViewModel: UniqueHashableItem {
         case tagCloud
         case squares
         case twoRowsGrid
+        case banner
     }
 
     public let layout: Layout
