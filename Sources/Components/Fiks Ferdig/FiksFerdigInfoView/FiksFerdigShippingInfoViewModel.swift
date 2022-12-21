@@ -1,16 +1,12 @@
 import UIKit
 
 public class FiksFerdigShippingInfoViewModel {
-    public let provider: ShippingProvider
-    public let providerName: String
-    public let message: String
+    public let providers: [FiksFerdigShippingInfoCellViewModel]
     public let headerViewModel: FiksFerdigAccordionViewModel
 
     public init(
         headerTitle: String,
-        provider: ShippingProvider,
-        providerName: String,
-        message: String,
+        providers: [FiksFerdigShippingInfoCellViewModel],
         isExpanded: Bool = false
     ) {
         self.headerViewModel = FiksFerdigAccordionViewModel(
@@ -18,16 +14,6 @@ public class FiksFerdigShippingInfoViewModel {
             icon: UIImage(named: .tjtShipmentInTransit),
             isExpanded: isExpanded
         )
-        self.provider = provider
-        self.providerName = providerName
-        self.message = message
-    }
-}
-
-extension FiksFerdigShippingInfoViewModel {
-    public enum ShippingProvider {
-        case heltHjem
-        case postnord
-        case posten
+        self.providers = providers
     }
 }
