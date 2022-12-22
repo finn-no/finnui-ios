@@ -5,43 +5,19 @@ import UIKit
 public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
     private let viewModel: FiksFerdigShippingInfoViewModel
 
-    private let providerLabel: Label = {
-        let label = Label(style: .captionStrong, withAutoLayout: true)
-        label.numberOfLines = 0
-        return label
+    private let cellsContainerStackView = UIStackView(axis: .vertical, spacing: .spacingM)
+
+    private lazy var separatorStackView: UIStackView = {
+        let separatorStackView = UIStackView(axis: .horizontal)
+        separatorStackView.directionalLayoutMargins = .init(
+            top: .zero,
+            leading: .spacingM + 24 + .spacingM,
+            bottom: .zero,
+            trailing: .zero
+        )
+        separatorStackView.isLayoutMarginsRelativeArrangement = true
+        return separatorStackView
     }()
-
-    private let messageLabel: Label = {
-        let label = Label(style: .caption, withAutoLayout: true)
-        label.numberOfLines = 0
-        return label
-    }()
-
-    private let containerStackView: UIStackView = {
-        let stackView = UIStackView(axis: .horizontal)
-        stackView.alignment = .center
-        stackView.spacing = .spacingS + .spacingXS
-        return stackView
-    }()
-
-    private var providerIcon: UIImage {
-        switch viewModel.provider {
-        case .heltHjem:
-            return UIImage(named: .tjtHelthjemIcon)
-        case .postnord:
-            return UIImage(named: .tjtPostnordIcon)
-        case .posten:
-            return UIImage(named: .tjtPostenIcon)
-        }
-    }
-
-    private let providerIconView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-
-    private let textContainerStackView = UIStackView(axis: .vertical)
 
     public init(viewModel: FiksFerdigShippingInfoViewModel, withAutoLayout: Bool = false) {
         self.viewModel = viewModel
@@ -54,25 +30,19 @@ public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
     }
 
     private func setup() {
-        providerIconView.image = providerIcon
-        providerLabel.text = viewModel.providerName
-        messageLabel.text = viewModel.message
+        cellsContainerStackView.alignment = .leading
+        
+        for provider in viewModel.providers {
+            cellsContainerStackView.addArrangedSubview(
+                FiksFerdigShippingInfoCell(viewModel: .init(
+                    provider: provider.provider,
+                    providerName: provider.providerName,
+                    message: provider.message
+                ))
+            )
+        }
 
-        providerLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        providerIconView.setContentHuggingPriority(.required, for: .horizontal)
-        providerIconView.setContentCompressionResistancePriority(.required, for: .horizontal)
-
-        textContainerStackView.addArrangedSubviews([
-            providerLabel,
-            messageLabel
-        ])
-
-        containerStackView.addArrangedSubviews([
-            providerIconView,
-            textContainerStackView
-        ])
-
-        addViewToContentView(containerStackView)
+        addViewToContentView(cellsContainerStackView)
     }
 }
 

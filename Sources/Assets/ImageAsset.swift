@@ -41,6 +41,7 @@ enum ImageAsset: String {
     case balloon0
     case balloon2
     case balloon2Red
+    case balloon3
     case blinkRocket
     case checkMark
     case checkMarkCircle
@@ -108,6 +109,7 @@ enum ImageAsset: String {
             .balloon0,
             .balloon2,
             .balloon2Red,
+            .balloon3,
             .blinkRocket,
             .checkMark,
             .checkMarkCircle,
