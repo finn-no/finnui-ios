@@ -137,7 +137,7 @@ public final class ExploreView: UIView {
                     Item.regular($0, section.layout == .hero ? .big : .regular)
                 }
                 snapshot.appendItems(items, toSection: section)
-            case .tagCloud: 
+            case .tagCloud:
                 let items = section.items.map {
                     TagCloudCellViewModel(title: $0.title, iconUrl: $0.iconUrl)
                 }
@@ -151,16 +151,16 @@ public final class ExploreView: UIView {
         }
 
         refreshControl.endRefreshing()
-        // Support compiling on both Xcode 12 and Xcode 13 (and above)
-        #if swift(>=5.5)
-            if #available(iOS 15.0, *) {
-                collectionViewDataSource.applySnapshotUsingReloadData(snapshot)
-            } else {
-                collectionViewDataSource.apply(snapshot, animatingDifferences: false)
-            }
-        #else
+
+        if #available(iOS 16, *) {
+            // animation added due to dismissable promotion banner
+            collectionViewDataSource.apply(snapshot, animatingDifferences: true)
+        } else if #available(iOS 15.0, *) {
+            // struggles to correctly update the images in iOS 15 when using apply, so we have to force the whole collectionView to update
+            collectionViewDataSource.applySnapshotUsingReloadData(snapshot)
+        } else {
             collectionViewDataSource.apply(snapshot, animatingDifferences: false)
-        #endif
+        }
     }
 
     private func setup() {

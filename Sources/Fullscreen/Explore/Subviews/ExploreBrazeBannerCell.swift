@@ -2,9 +2,6 @@ import UIKit
 import FinniversKit
 
 final class ExploreBrazeBannerCell: UICollectionViewCell {
-    var section: Int?
-    private weak var banner: BrazePromotionView?
-
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,8 +14,6 @@ final class ExploreBrazeBannerCell: UICollectionViewCell {
     // MARK: - Configure
     public func configure(banner: BrazePromotionView) {
         contentView.addSubview(banner)
-        banner.layoutSubviews()
-        banner.sizeToFit()
 
         NSLayoutConstraint.activate([
             banner.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .spacingM),
@@ -26,5 +21,9 @@ final class ExploreBrazeBannerCell: UICollectionViewCell {
             banner.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             banner.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+
+    override func prepareForReuse() {
+        contentView.subviews.forEach { $0.removeFromSuperview() }
     }
 }
