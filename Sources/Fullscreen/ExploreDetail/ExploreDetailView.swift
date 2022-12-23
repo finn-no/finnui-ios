@@ -59,6 +59,7 @@ public final class ExploreDetailView: UIView {
     }
     private let imageCache = ImageMemoryCache()
     private let layoutBuilder = ExploreDetailLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
+    private let heroViewHeight: CGFloat = 220
 
     // MARK: - Subviews
 
@@ -82,6 +83,7 @@ public final class ExploreDetailView: UIView {
         collectionView.backgroundColor = .bgPrimary
         collectionView.contentInset.bottom = 100
         collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.contentInset.top = heroViewHeight
         collectionView.register(ExploreCollectionCell.self)
         collectionView.register(ExploreSelectedCategoryCell.self)
         collectionView.register(ExploreAdCell.self)
@@ -92,9 +94,7 @@ public final class ExploreDetailView: UIView {
     // MARK: - Other lazy properties
 
     private lazy var heroViewTopConstraint = heroView.topAnchor.constraint(equalTo: topAnchor)
-    private lazy var heroViewHeightConstraint = heroView.heightAnchor.constraint(
-        equalToConstant: collectionView.contentInset.top
-    )
+    private lazy var heroViewHeightConstraint = heroView.heightAnchor.constraint(equalToConstant: heroViewHeight)
 
     private lazy var collectionDataSource: UICollectionViewDiffableDataSource<Section, Item> = {
         let dataSource = UICollectionViewDiffableDataSource<Section, Item>(
@@ -155,8 +155,6 @@ public final class ExploreDetailView: UIView {
 
     public func configure(with viewModel: ExploreDetailViewModel) {
         heroView.configure(withTitle: viewModel.title, subtitle: viewModel.subtitle, imageUrl: viewModel.imageUrl)
-        heroView.isHidden = !viewModel.showHeroView
-        collectionView.contentInset.top = viewModel.showHeroView ? 220 : 0
     }
 
     public func reloadSections() {
