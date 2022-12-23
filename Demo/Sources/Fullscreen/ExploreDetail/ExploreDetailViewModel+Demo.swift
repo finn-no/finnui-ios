@@ -9,18 +9,10 @@ import FinniversKit
 // MARK: - View model
 
 extension ExploreDetailViewModel {
-    static let selectedCategoryDetail = ExploreDetailViewModel(
-        title: "Barnerom",
-        subtitle: "KOLLEKSJON",
-        imageUrl: nil,
-        showHeroView: false
-    )
-
     static let collectionDetail = ExploreDetailViewModel(
         title: "Barnerom",
         subtitle: "KOLLEKSJON",
-        imageUrl: nil,
-        showHeroView: true
+        imageUrl: nil
     )
 }
 
@@ -32,14 +24,6 @@ extension ExploreDetailSection {
             favorites: favorites,
             topSection: .init(title: "Gå dypere til verks", items: .collections(collections)),
             adsSectionTitle: "Eller rett på sak"
-        )
-    }
-
-    static func selectedCategorySections(favorites: Set<Int>) -> [ExploreDetailSection] {
-        sections(
-            favorites: favorites,
-            topSection: .init(title: nil, items: .selectedCategories(collections)),
-            adsSectionTitle: "874 gjenstander"
         )
     }
 

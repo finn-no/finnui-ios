@@ -6,23 +6,12 @@ import FinnUI
 import UIKit
 
 final class ExploreDetailDemoView: UIView, Tweakable {
-    private enum Kind {
-        case collection
-        case selectedCategory
-    }
-
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Collection Detail", action: { [weak self] in
-            self?.kind = .collection
-            self?.reload()
-        }),
-        TweakingOption(title: "Selected Category Detail", action: { [weak self] in
-            self?.kind = .selectedCategory
             self?.reload()
         })
     ]
 
-    private var kind: Kind = .collection
     private var sections = [ExploreDetailSection]()
     private var favorites = Set<Int>()
 
@@ -52,24 +41,14 @@ final class ExploreDetailDemoView: UIView, Tweakable {
     }
 
     private func reload() {
-        switch kind {
-        case .collection:
-            view.configure(with: .collectionDetail)
-        case .selectedCategory:
-            view.configure(with: .selectedCategoryDetail)
-        }
+        view.configure(with: .collectionDetail)
 
         syncFavorites()
         view.reloadSections()
     }
 
     private func syncFavorites() {
-        switch kind {
-        case .collection:
-            sections = ExploreDetailSection.collectionDetailSections(favorites: favorites)
-        case .selectedCategory:
-            sections = ExploreDetailSection.selectedCategorySections(favorites: favorites)
-        }
+        sections = ExploreDetailSection.collectionDetailSections(favorites: favorites)
     }
 }
 
