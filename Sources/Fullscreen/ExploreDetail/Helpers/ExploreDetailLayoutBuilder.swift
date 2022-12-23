@@ -24,13 +24,6 @@ struct ExploreDetailLayoutBuilder {
                 layoutSection.boundarySupplementaryItems = [.header(with: headerId, height: .absolute(49))]
             }
             return layoutSection
-        case .selectedCategories:
-            let layoutSection: NSCollectionLayoutSection = .carouselSection(itemSize: CGSize(width: 104, height: 88))
-            layoutSection.contentInsets.top = .spacingM
-            if section.title != nil {
-                layoutSection.boundarySupplementaryItems = [.header(with: headerId, height: .absolute(49))]
-            }
-            return layoutSection
         case .ads(let ads):
             let layoutSection = NSCollectionLayoutSection.staggered(with: ads, traitCollection: traitCollection)
 

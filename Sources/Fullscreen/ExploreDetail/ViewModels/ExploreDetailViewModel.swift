@@ -26,7 +26,6 @@ public struct ExploreDetailViewModel: Hashable {
 
 public class ExploreDetailSection: UniqueHashableItem {
     public enum Items: Hashable {
-        case selectedCategories([ExploreCollectionViewModel]) // todo: remove
         case collections([ExploreCollectionViewModel])
         case ads([ExploreAdCellViewModel])
     }
