@@ -94,11 +94,11 @@ private extension NSCollectionLayoutSection {
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(10)
+                heightDimension: .estimated(140)
             ),
             subitem: NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(10))
+                heightDimension: .estimated(140))
             ),
             count: 1
         )
