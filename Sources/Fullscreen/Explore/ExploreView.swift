@@ -90,7 +90,7 @@ public final class ExploreView: UIView {
                     cell.gridView.configure(withItems: viewModels)
                     return cell
                 case .brazeBanner(let viewModel):
-                    guard let banner = viewModel.banner else { return UICollectionViewCell() }
+                    guard let banner = viewModel.brazePromo else { return UICollectionViewCell() }
                     let cell = collectionView.dequeue(ExploreBrazeBannerCell.self, for: indexPath)
                     cell.configure(banner: banner)
                     return cell
@@ -144,9 +144,10 @@ public final class ExploreView: UIView {
                 snapshot.appendItems([Item.tagCloud(items)], toSection: section)
             case .banner:
                 let item = section.items.map {
-                    ExploreCollectionViewModel(title: "braze", banner: $0.banner)
+                    BrazeBannerViewModel(brazePromo: $0.banner)
                 }
-                snapshot.appendItems([Item.brazeBanner(item.first!)], toSection: section)
+                guard let banner = item.first else { return }
+                snapshot.appendItems([Item.brazeBanner(banner)], toSection: section)
             }
         }
 
@@ -233,5 +234,5 @@ extension ExploreView: RemoteImageViewDataSource {
 private enum Item: Equatable, Hashable {
     case regular(ExploreCollectionViewModel, ExploreCollectionCell.Kind)
     case tagCloud([TagCloudCellViewModel])
-    case brazeBanner(ExploreCollectionViewModel)
+    case brazeBanner(BrazeBannerViewModel)
 }
