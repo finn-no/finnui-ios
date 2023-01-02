@@ -59,6 +59,7 @@ public final class ExploreView: UIView {
         collectionView.register(ExploreCollectionCell.self)
         collectionView.register(ExploreTagCloudGridCell.self)
         collectionView.register(ExploreBrazeBannerCell.self)
+        collectionView.register(EmptyCell.self)
         collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         collectionView.refreshControl = refreshControl
         return collectionView
@@ -90,7 +91,7 @@ public final class ExploreView: UIView {
                     cell.gridView.configure(withItems: viewModels)
                     return cell
                 case .brazeBanner(let viewModel):
-                    guard let banner = viewModel.brazePromo else { return UICollectionViewCell() }
+                    guard let banner = viewModel.brazePromo else { return EmptyCell() }
                     let cell = collectionView.dequeue(ExploreBrazeBannerCell.self, for: indexPath)
                     cell.configure(banner: banner)
                     return cell

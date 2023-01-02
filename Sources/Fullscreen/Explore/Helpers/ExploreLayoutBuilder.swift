@@ -104,7 +104,6 @@ private extension NSCollectionLayoutSection {
         )
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = .spacingM
-        section.orthogonalScrollingBehavior = .none
         return section
     }()
 
