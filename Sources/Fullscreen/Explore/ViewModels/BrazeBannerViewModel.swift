@@ -1,9 +1,9 @@
 import FinniversKit
 
 class BrazeBannerViewModel: UniqueHashableItem {
-    let brazePromo: BrazePromotionView?
+    let brazePromo: BrazePromotionView
 
-    public init(brazePromo: BrazePromotionView?) {
+    public init(brazePromo: BrazePromotionView) {
         self.brazePromo = brazePromo
     }
 }

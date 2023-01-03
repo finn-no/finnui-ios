@@ -59,7 +59,6 @@ public final class ExploreView: UIView {
         collectionView.register(ExploreCollectionCell.self)
         collectionView.register(ExploreTagCloudGridCell.self)
         collectionView.register(ExploreBrazeBannerCell.self)
-        collectionView.register(EmptyCell.self)
         collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         collectionView.refreshControl = refreshControl
         return collectionView
@@ -91,9 +90,8 @@ public final class ExploreView: UIView {
                     cell.gridView.configure(withItems: viewModels)
                     return cell
                 case .brazeBanner(let viewModel):
-                    guard let banner = viewModel.brazePromo else { return EmptyCell() }
                     let cell = collectionView.dequeue(ExploreBrazeBannerCell.self, for: indexPath)
-                    cell.configure(banner: banner)
+                    cell.configure(banner: viewModel.brazePromo)
                     return cell
                 }
             })
@@ -144,10 +142,8 @@ public final class ExploreView: UIView {
                 }
                 snapshot.appendItems([Item.tagCloud(items)], toSection: section)
             case .banner:
-                let item = section.items.map {
-                    BrazeBannerViewModel(brazePromo: $0.banner)
-                }
-                guard let banner = item.first else { return }
+                guard let item = section.items.first(where: {$0.banner != nil}), let viewModel = item.banner else { return }
+                let banner = BrazeBannerViewModel(brazePromo: viewModel)
                 snapshot.appendItems([Item.brazeBanner(banner)], toSection: section)
             }
         }
