@@ -20,6 +20,8 @@ struct ExploreLayoutBuilder {
             case .tagCloud:
                 let group = TagCloudGridView.collectionLayoutGroup(with: section.items)
                 return NSCollectionLayoutSection(group: group)
+            case .banner:
+                return .banner
             }
         }()
 
@@ -87,6 +89,24 @@ private extension NSCollectionLayoutSection {
         ),
         scrollingBehavior: .continuous
     )
+    
+    static let banner = {
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(140)
+            ),
+            subitem: NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(140))
+            ),
+            count: 1
+        )
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = .spacingM
+        return section
+    }()
+
 
     static func horizontalLayout(
         size: NSCollectionLayoutSize,

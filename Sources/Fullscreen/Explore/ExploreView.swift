@@ -58,6 +58,7 @@ public final class ExploreView: UIView {
         collectionView.contentInset.bottom = .spacingXL
         collectionView.register(ExploreCollectionCell.self)
         collectionView.register(ExploreTagCloudGridCell.self)
+        collectionView.register(ExploreBrazeBannerCell.self)
         collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         collectionView.refreshControl = refreshControl
         return collectionView
@@ -73,7 +74,7 @@ public final class ExploreView: UIView {
         let dataSource = UICollectionViewDiffableDataSource<ExploreSectionViewModel, Item>(
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, item in
-                guard let self = self else { return nil }
+                guard let self = self else { return UICollectionViewCell() }
 
                 switch item {
                 case .regular(let viewModel, let cellKind):
@@ -87,6 +88,10 @@ public final class ExploreView: UIView {
                     cell.gridView.delegate = self
                     cell.gridView.remoteImageViewDataSource = self
                     cell.gridView.configure(withItems: viewModels)
+                    return cell
+                case .brazeBanner(let viewModel):
+                    let cell = collectionView.dequeue(ExploreBrazeBannerCell.self, for: indexPath)
+                    cell.configure(banner: viewModel.brazePromo)
                     return cell
                 }
             })
@@ -136,20 +141,24 @@ public final class ExploreView: UIView {
                     TagCloudCellViewModel(title: $0.title, iconUrl: $0.iconUrl)
                 }
                 snapshot.appendItems([Item.tagCloud(items)], toSection: section)
+            case .banner:
+                guard let item = section.items.first(where: {$0.banner != nil}), let viewModel = item.banner else { return }
+                let banner = BrazeBannerViewModel(brazePromo: viewModel)
+                snapshot.appendItems([Item.brazeBanner(banner)], toSection: section)
             }
         }
 
         refreshControl.endRefreshing()
-        // Support compiling on both Xcode 12 and Xcode 13 (and above)
-        #if swift(>=5.5)
-            if #available(iOS 15.0, *) {
-                collectionViewDataSource.applySnapshotUsingReloadData(snapshot)
-            } else {
-                collectionViewDataSource.apply(snapshot, animatingDifferences: false)
-            }
-        #else
+
+        if #available(iOS 16, *) {
+            // animation added due to dismissable promotion banner
+            collectionViewDataSource.apply(snapshot, animatingDifferences: true)
+        } else if #available(iOS 15.0, *) {
+            // struggles to correctly update the images in iOS 15 when using apply, so we have to force the whole collectionView to update
+            collectionViewDataSource.applySnapshotUsingReloadData(snapshot)
+        } else {
             collectionViewDataSource.apply(snapshot, animatingDifferences: false)
-        #endif
+        }
     }
 
     private func setup() {
@@ -222,4 +231,5 @@ extension ExploreView: RemoteImageViewDataSource {
 private enum Item: Equatable, Hashable {
     case regular(ExploreCollectionViewModel, ExploreCollectionCell.Kind)
     case tagCloud([TagCloudCellViewModel])
+    case brazeBanner(BrazeBannerViewModel)
 }

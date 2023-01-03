@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "FinnUI",
-    platforms: [.iOS(.v13)],
+    platforms: [.iOS(.v14)],
     products: [
         .library(
             name: "FinnUI",
@@ -12,7 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", .upToNextMajor(from: "95.0.2"))
+        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", .upToNextMajor(from: "98.0.0"))
     ],
     targets: [
     	.target(
