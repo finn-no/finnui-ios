@@ -59,6 +59,7 @@ public final class ExploreDetailView: UIView {
     }
     private let imageCache = ImageMemoryCache()
     private let layoutBuilder = ExploreDetailLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
+    private let heroViewHeight: CGFloat = 220
 
     // MARK: - Subviews
 
@@ -82,8 +83,8 @@ public final class ExploreDetailView: UIView {
         collectionView.backgroundColor = .bgPrimary
         collectionView.contentInset.bottom = 100
         collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.contentInset.top = heroViewHeight
         collectionView.register(ExploreCollectionCell.self)
-        collectionView.register(ExploreSelectedCategoryCell.self)
         collectionView.register(ExploreAdCell.self)
         collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         return collectionView
@@ -92,9 +93,7 @@ public final class ExploreDetailView: UIView {
     // MARK: - Other lazy properties
 
     private lazy var heroViewTopConstraint = heroView.topAnchor.constraint(equalTo: topAnchor)
-    private lazy var heroViewHeightConstraint = heroView.heightAnchor.constraint(
-        equalToConstant: collectionView.contentInset.top
-    )
+    private lazy var heroViewHeightConstraint = heroView.heightAnchor.constraint(equalToConstant: heroViewHeight)
 
     private lazy var collectionDataSource: UICollectionViewDiffableDataSource<Section, Item> = {
         let dataSource = UICollectionViewDiffableDataSource<Section, Item>(
@@ -105,11 +104,6 @@ public final class ExploreDetailView: UIView {
                     let cell = collectionView.dequeue(ExploreCollectionCell.self, for: indexPath)
                     cell.remoteImageViewDataSource = self
                     cell.configure(with: viewModel, kind: .narrow)
-                    return cell
-                case .selectedCategory(let viewModel):
-                    let cell = collectionView.dequeue(ExploreSelectedCategoryCell.self, for: indexPath)
-                    cell.remoteImageViewDataSource = self
-                    cell.configure(with: viewModel)
                     return cell
                 case .ad(let viewModel):
                     let cell = collectionView.dequeue(ExploreAdCell.self, for: indexPath)
@@ -155,8 +149,6 @@ public final class ExploreDetailView: UIView {
 
     public func configure(with viewModel: ExploreDetailViewModel) {
         heroView.configure(withTitle: viewModel.title, subtitle: viewModel.subtitle, imageUrl: viewModel.imageUrl)
-        heroView.isHidden = !viewModel.showHeroView
-        collectionView.contentInset.top = viewModel.showHeroView ? 220 : 0
     }
 
     public func reloadSections() {
@@ -167,8 +159,6 @@ public final class ExploreDetailView: UIView {
             switch section.items {
             case .collections(let collections):
                 snapshot.appendItems(collections.map(Item.collection), toSection: section)
-            case .selectedCategories(let collections):
-                snapshot.appendItems(collections.map(Item.selectedCategory), toSection: section)
             case .ads(let ads):
                 snapshot.appendItems(ads.map(Item.ad), toSection: section)
             }
@@ -186,7 +176,7 @@ public final class ExploreDetailView: UIView {
             let section = sections[indexPath.section]
 
             switch section.items {
-            case .collections, .selectedCategories:
+            case .collections:
                 break
             case .ads(let items):
                 if let cell = collectionView.cellForItem(at: indexPath) as? ExploreAdCell, indexPath.item < items.count {
@@ -223,7 +213,7 @@ extension ExploreDetailView: UICollectionViewDelegate {
         }
 
         switch item {
-        case .collection(let viewModel), .selectedCategory(let viewModel):
+        case .collection(let viewModel):
             delegate?.exploreDetailView(self, didSelectCollection: viewModel, at: indexPath)
         case .ad(let viewModel):
             delegate?.exploreDetailView(self, didSelectAd: viewModel, at: indexPath)
@@ -306,7 +296,6 @@ extension ExploreDetailView: RemoteImageViewDataSource {
 private extension ExploreDetailView {
     enum Item: Hashable {
         case collection(ExploreCollectionViewModel)
-        case selectedCategory(ExploreCollectionViewModel)
         case ad(ExploreAdCellViewModel)
     }
 }
@@ -314,7 +303,7 @@ private extension ExploreDetailView {
 private extension ExploreDetailSection {
     var headerFont: UIFont {
         switch items {
-        case .collections, .selectedCategories:
+        case .collections:
             return .bodyStrong
         case .ads:
             return .title3Strong
