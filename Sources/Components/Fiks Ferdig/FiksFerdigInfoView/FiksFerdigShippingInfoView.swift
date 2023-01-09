@@ -48,8 +48,8 @@ public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
                     ))
                 )
             }
-        } else if let noProviderText = viewModel.noProviderText {
-            noProviderLabel.text = noProviderText
+        } else {
+            noProviderLabel.text = viewModel.noProviderText
             cellsContainerStackView.addArrangedSubview(noProviderLabel)
         }
 
