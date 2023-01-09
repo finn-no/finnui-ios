@@ -36,6 +36,7 @@ final class FiksFerdigInfoDemoView: UIView, Tweakable {
             message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias"
         )
         ],
+        noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel.",
         isExpanded: true
     )
 
