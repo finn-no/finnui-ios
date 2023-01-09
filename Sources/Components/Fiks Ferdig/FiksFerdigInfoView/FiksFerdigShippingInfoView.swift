@@ -5,6 +5,12 @@ import UIKit
 public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
     private let viewModel: FiksFerdigShippingInfoViewModel
 
+    private let noProviderLabel: Label = {
+        let label = Label(style: .caption, withAutoLayout: true)
+        label.numberOfLines = 0
+        return label
+    }()
+
     private let cellsContainerStackView = UIStackView(axis: .vertical, spacing: .spacingM)
 
     private lazy var separatorStackView: UIStackView = {
@@ -31,15 +37,20 @@ public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
 
     private func setup() {
         cellsContainerStackView.alignment = .leading
-        
-        for provider in viewModel.providers {
-            cellsContainerStackView.addArrangedSubview(
-                FiksFerdigShippingInfoCell(viewModel: .init(
-                    provider: provider.provider,
-                    providerName: provider.providerName,
-                    message: provider.message
-                ))
-            )
+
+        if viewModel.providers.isEmpty == false {
+            for provider in viewModel.providers {
+                cellsContainerStackView.addArrangedSubview(
+                    FiksFerdigShippingInfoCell(viewModel: .init(
+                        provider: provider.provider,
+                        providerName: provider.providerName,
+                        message: provider.message
+                    ))
+                )
+            }
+        } else if let noProviderText = viewModel.noProviderText {
+            noProviderLabel.text = noProviderText
+            cellsContainerStackView.addArrangedSubview(noProviderLabel)
         }
 
         addViewToContentView(cellsContainerStackView)
