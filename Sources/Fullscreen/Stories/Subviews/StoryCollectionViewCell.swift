@@ -145,7 +145,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     private static var swipeUpIconSize: CGFloat = 16
     private static var swipeUpIconVerticalSpacing: CGFloat = .spacingXS
     private typealias Style = StoriesStyling
-    private var slidesCompletion: StorySlidesCompletion?
 
     private var nextIndex: Int? {
         currentIndex + 1 < slides.count ? currentIndex + 1 : nil
@@ -298,6 +297,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }
 
     func configue(with slides: [StorySlideViewModel], startIndex: Int) {
+        errorView.removeFromSuperview()
         self.slides = slides
 
         showSlide(at: startIndex)
