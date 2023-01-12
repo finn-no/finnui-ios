@@ -93,9 +93,14 @@ public extension NSCollectionLayoutSection {
 
 private struct GridLayoutConfiguration {
     init(traitCollection: UITraitCollection) {
-        numberOfColumns = traitCollection.horizontalSizeClass == .regular ? 3 : 2
+        if (traitCollection.preferredContentSizeCategory.isAccessibilityCategory){
+            numberOfColumns = traitCollection.horizontalSizeClass == .regular ? 2 : 1
+        }
+        else {
+            numberOfColumns = traitCollection.horizontalSizeClass == .regular ? 3 : 2
+        }
     }
-
+    
     let numberOfColumns: Int
     let sidePadding: CGFloat = .spacingM
     let lineSpacing: CGFloat = .spacingM
