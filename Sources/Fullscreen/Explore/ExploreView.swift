@@ -36,8 +36,12 @@ public final class ExploreView: UIView {
     public weak var dataSource: ExploreViewDataSource?
 
     // MARK: - Private properties
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
+    private lazy var collectionViewDataSource: DataSource = configureCollectionViewDataSource()
 
-    private var sections = [ExploreSectionViewModel]()
+    private var sections = [Section]()
+    private var exploreSections = [ExploreSectionViewModel]()
+    private var recommendationsSection = [ExploreRecommendationAdViewModel]()
     private let imageCache = ImageMemoryCache()
     private let layoutBuilder = ExploreLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
 
@@ -59,6 +63,7 @@ public final class ExploreView: UIView {
         collectionView.register(ExploreCollectionCell.self)
         collectionView.register(ExploreTagCloudGridCell.self)
         collectionView.register(ExploreBrazeBannerCell.self)
+        collectionView.register(StandardAdRecommendationCell.self)
         collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         collectionView.refreshControl = refreshControl
         return collectionView
@@ -70,8 +75,8 @@ public final class ExploreView: UIView {
         return refreshControl
     }()
 
-    private lazy var collectionViewDataSource: UICollectionViewDiffableDataSource<ExploreSectionViewModel, Item> = {
-        let dataSource = UICollectionViewDiffableDataSource<ExploreSectionViewModel, Item>(
+    private func configureCollectionViewDataSource() -> DataSource {
+        let ds = DataSource(
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, item in
                 guard let self = self else { return UICollectionViewCell() }
@@ -93,22 +98,33 @@ public final class ExploreView: UIView {
                     let cell = collectionView.dequeue(ExploreBrazeBannerCell.self, for: indexPath)
                     cell.configure(banner: viewModel.brazePromo)
                     return cell
+                case .recommendation(let viewModel):
+                    let cell = collectionView.dequeue(StandardAdRecommendationCell.self, for: indexPath)
+                    cell.configure(with: viewModel, atIndex: indexPath.row)
+                    return cell
                 }
             })
 
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let section = self?.sections[safe: indexPath.section], let title = section.title else { return nil }
+        ds.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let section = self?.sections[safe: indexPath.section] else { return nil }
             let view = collectionView.dequeue(
                 ExploreSectionHeaderView.self,
                 for: indexPath,
                 ofKind: UICollectionView.elementKindSectionHeader
             )
-            view.configure(withText: title)
+            switch section {
+            case .main(let viewModel):
+                guard let title = viewModel.title else { return nil }
+                view.configure(withText: title)
+            case .recommendations(let viewModel):
+                let title = viewModel.title
+                view.configure(withText: title)
+            }
             return view
         }
 
-        return dataSource
-    }()
+        return ds
+    }
 
     // MARK: - Init
 
@@ -123,28 +139,36 @@ public final class ExploreView: UIView {
 
     // MARK: - Setup
 
-    public func configure(with sections: [ExploreSectionViewModel]) {
+    public func configure(with sections: [Section]) {
         self.sections = sections
-
-        var snapshot = NSDiffableDataSourceSnapshot<ExploreSectionViewModel, Item>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections(sections)
 
         for section in sections {
-            switch section.layout {
-            case .hero, .squares, .twoRowsGrid:
-                let items = section.items.map {
-                    Item.regular($0, section.layout == .hero ? .big : .regular)
+            switch section {
+            case .main(let viewModel):
+                switch viewModel.layout {
+                case .hero, .squares, .twoRowsGrid:
+                    let items = viewModel.items.map {
+                        Item.regular($0, viewModel.layout == .hero ? .big : .regular)
+                    }
+                    snapshot.appendItems(items, toSection: section)
+                case .tagCloud:
+                    let items = viewModel.items.map {
+                        TagCloudCellViewModel(title: $0.title, iconUrl: $0.iconUrl)
+                    }
+                    snapshot.appendItems([Item.tagCloud(items)], toSection: section)
+                case .banner:
+                    guard let item = viewModel.items.first(where: {$0.banner != nil}), let viewModel = item.banner else { return }
+                    let banner = BrazeBannerViewModel(brazePromo: viewModel)
+                    snapshot.appendItems([Item.brazeBanner(banner)], toSection: section)
+                default: break
+                }
+            case .recommendations(let viewModels):
+                let items = viewModels.items.map {
+                    Item.recommendation($0.self)
                 }
                 snapshot.appendItems(items, toSection: section)
-            case .tagCloud:
-                let items = section.items.map {
-                    TagCloudCellViewModel(title: $0.title, iconUrl: $0.iconUrl)
-                }
-                snapshot.appendItems([Item.tagCloud(items)], toSection: section)
-            case .banner:
-                guard let item = section.items.first(where: {$0.banner != nil}), let viewModel = item.banner else { return }
-                let banner = BrazeBannerViewModel(brazePromo: viewModel)
-                snapshot.appendItems([Item.brazeBanner(banner)], toSection: section)
             }
         }
 
@@ -177,7 +201,7 @@ public final class ExploreView: UIView {
 
 extension ExploreView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = sections[indexPath.section].items[indexPath.item]
+        let item = exploreSections[indexPath.section].items[indexPath.item]
         delegate?.exploreView(self, didSelectItem: item, at: indexPath)
     }
 }
@@ -187,7 +211,7 @@ extension ExploreView: UICollectionViewDelegate {
 extension ExploreView: TagCloudGridViewDelegate {
     public func tagCloudGridView(_ view: TagCloudGridView, didSelectItem item: TagCloudCellViewModel, at indexPath: IndexPath) {
         let indexPath = IndexPath(item: indexPath.item, section: view.tag)
-        let item = sections[indexPath.section].items[indexPath.item]
+        let item = exploreSections[indexPath.section].items[indexPath.item]
         delegate?.exploreView(self, didSelectItem: item, at: indexPath)
     }
 }
@@ -227,9 +251,17 @@ extension ExploreView: RemoteImageViewDataSource {
 }
 
 // MARK: - Private types
+extension ExploreView {
+    enum Item: Hashable {
+        case regular(ExploreCollectionViewModel, ExploreCollectionCell.Kind)
+        case tagCloud([TagCloudCellViewModel])
+        case brazeBanner(BrazeBannerViewModel)
+        case recommendation(ExploreRecommendationAdViewModel)
+    }
 
-private enum Item: Equatable, Hashable {
-    case regular(ExploreCollectionViewModel, ExploreCollectionCell.Kind)
-    case tagCloud([TagCloudCellViewModel])
-    case brazeBanner(BrazeBannerViewModel)
+    public enum Section: Hashable {
+        case main(ExploreSectionViewModel)
+        case recommendations(RecommendationsViewModel)
+    }
 }
+
