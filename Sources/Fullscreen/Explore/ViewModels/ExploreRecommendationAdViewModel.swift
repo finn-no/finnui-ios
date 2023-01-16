@@ -13,9 +13,13 @@ final public class ExploreRecommendationAdViewModel: StandardAdRecommendationVie
     public var scaleImageToFillView: Bool
     public var sponsoredAdData: FinniversKit.SponsoredAdData?
     public var favoriteButtonAccessibilityLabel: String
-    public var hideImageOverlay: Bool
 
-    public init(imagePath: String? = nil, imageSize: CGSize, iconImage: UIImage? = nil, title: String, subtitle: String? = nil, accessory: String? = nil, imageText: String? = nil, isFavorite: Bool, scaleImageToFillView: Bool, sponsoredAdData: SponsoredAdData? = nil, favoriteButtonAccessibilityLabel: String, hideImageOverlay: Bool, id: String) {
+    public var hideImageOverlay: Bool {
+        guard let imageText else { return true }
+        return imageText.isEmpty
+    }
+
+    public init(imagePath: String? = nil, imageSize: CGSize, iconImage: UIImage? = nil, title: String, subtitle: String? = nil, accessory: String? = nil, imageText: String? = nil, isFavorite: Bool, scaleImageToFillView: Bool, sponsoredAdData: SponsoredAdData? = nil, favoriteButtonAccessibilityLabel: String, id: String) {
         self.imagePath = imagePath
         self.imageSize = imageSize
         self.iconImage = iconImage
@@ -27,7 +31,6 @@ final public class ExploreRecommendationAdViewModel: StandardAdRecommendationVie
         self.scaleImageToFillView = scaleImageToFillView
         self.sponsoredAdData = sponsoredAdData
         self.favoriteButtonAccessibilityLabel = favoriteButtonAccessibilityLabel
-        self.hideImageOverlay = hideImageOverlay
         self.id = id
     }
 

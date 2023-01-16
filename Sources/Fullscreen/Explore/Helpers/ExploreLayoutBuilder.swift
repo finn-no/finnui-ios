@@ -29,13 +29,13 @@ struct ExploreLayoutBuilder {
                     return .banner
                 }
             }()
+            layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM)
         case .recommendations(let viewModel):
-            layoutSection = NSCollectionLayoutSection.staggered(with: viewModel.items, traitCollection: .init())
+            layoutSection = NSCollectionLayoutSection.staggered(with: viewModel.items, traitCollection: .current)
             title = viewModel.title
+            layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         }
 
-
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM)
         layoutSection.supplementariesFollowContentInsets = false
 
         let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -143,8 +143,9 @@ extension ExploreRecommendationAdViewModel: StaggeredLayoutItem {
     public var staggeredLayoutItemKind: StaggeredLayoutItemKind { .compact }
 
     public func staggeredLayoutItemHeight(forWidth width: CGFloat) -> StaggeredLayoutItemHeight {
-        .dynamic(
-            aspectRatio: 1.5,
+        print("🕵️‍♀️", #function, imageSize.height/imageSize.width)
+        return .dynamic(
+            aspectRatio: imageSize.height/imageSize.width,
             extraHeight: StandardAdRecommendationCell.nonImageHeight
         )
     }

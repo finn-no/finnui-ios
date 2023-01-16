@@ -3,6 +3,7 @@
 //
 
 import FinnUI
+import FinniversKit
 import UIKit
 
 final class ExploreDemoView: UIView {
@@ -59,10 +60,10 @@ final class ExploreDemoView: UIView {
             ExploreCollectionViewModel(title: "Analoge kameraer")
         ])),
         .recommendations(RecommendationsViewModel(title: "Anbefalt", items: [
-            ExploreRecommendationAdViewModel(imageSize: CGSize(width: 50, height: 100), title: "Malekost", isFavorite: false, scaleImageToFillView: true, favoriteButtonAccessibilityLabel: "Liker", hideImageOverlay: false, id: "YOLO"),
-            ExploreRecommendationAdViewModel(imageSize: CGSize(width: 200, height: 100), title: "Kostebrett", isFavorite: true, scaleImageToFillView: true, favoriteButtonAccessibilityLabel: "Liker", hideImageOverlay: false, id: "YOLO1"),
-            ExploreRecommendationAdViewModel(imageSize: CGSize(width: 50, height: 100), title: "Katt", isFavorite: false, scaleImageToFillView: true, favoriteButtonAccessibilityLabel: "Liker", hideImageOverlay: false, id: "YOLO2"),
-            ExploreRecommendationAdViewModel(imageSize: CGSize(width: 50, height: 100), title: "Hund", isFavorite: false, scaleImageToFillView: true, favoriteButtonAccessibilityLabel: "Liker", hideImageOverlay: false, id: "YOLO3")
+            ExploreRecommendationAdViewModel(imageSize: CGSize(width: 50, height: 100), title: "Malekost", isFavorite: false, scaleImageToFillView: true, favoriteButtonAccessibilityLabel: "Liker", id: "YOLO"),
+            ExploreRecommendationAdViewModel(imageSize: CGSize(width: 200, height: 100), title: "Kostebrett", isFavorite: true, scaleImageToFillView: true, favoriteButtonAccessibilityLabel: "Liker", id: "YOLO1"),
+            ExploreRecommendationAdViewModel(imageSize: CGSize(width: 50, height: 100), title: "Katt", isFavorite: false, scaleImageToFillView: true, favoriteButtonAccessibilityLabel: "Liker", id: "YOLO2"),
+            ExploreRecommendationAdViewModel(imageSize: CGSize(width: 50, height: 100), title: "Hund", isFavorite: false, scaleImageToFillView: true, favoriteButtonAccessibilityLabel: "Liker", id: "YOLO3")
         ]))
     ]
 
@@ -128,6 +129,22 @@ extension ExploreDemoView: ExploreViewDataSource {
 // MARK: - ExploreViewDelegate
 
 extension ExploreDemoView: ExploreViewDelegate {
+    func exploreViewRecommendations(_ adRecommendationsGridView: FinnUI.ExploreView, didSelectItemAtIndex index: Int, withId: String) {
+        print("🕵️‍♀️", #function)
+    }
+
+    func exploreViewRecommendations(_ adRecommendationsGridView: FinnUI.ExploreView, willDisplayItemAtIndex index: Int) {
+        print("🕵️‍♀️", #function)
+    }
+
+    func exploreViewRecommendations(_ adRecommendationsGridView: FinnUI.ExploreView, didScrollInScrollView scrollView: UIScrollView) {
+        print("🕵️‍♀️", #function)
+    }
+
+    func exploreViewRecommendations(_ adRecommendationsGridView: FinnUI.ExploreView, didSelectFavoriteButton button: UIButton, on cell: FinniversKit.StandardAdRecommendationCell, at index: Int) {
+        print("🕵️‍♀️", #function)
+    }
+
     func exploreViewDidRefresh(_ view: ExploreView) {
         print("Did refresh")
         view.configure(with: sections)
