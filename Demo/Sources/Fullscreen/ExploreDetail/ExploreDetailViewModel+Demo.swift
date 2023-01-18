@@ -41,7 +41,7 @@ extension ExploreDetailSection {
                     price: "850 kr",
                     time: "2 timer siden",
                     aspectRatio: 1,
-                    badgeViewModel: BadgeViewModel(style: .default, title: "Fiks ferdig", icon: UIImage(named: .bapShippable)),
+                    badgeViewModel: BadgeViewModel(style: .warning, title: "Fiks ferdig", icon: UIImage(named: .bapShippable)),
                     isFavorite: favorites.contains(0)
                 ),
                 ExploreAdCellViewModel(

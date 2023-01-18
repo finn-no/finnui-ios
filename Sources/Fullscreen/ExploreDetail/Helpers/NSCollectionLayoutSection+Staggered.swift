@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import FinniversKit
 
 // MARK: - Protocols
 
@@ -93,9 +94,13 @@ public extension NSCollectionLayoutSection {
 
 private struct GridLayoutConfiguration {
     init(traitCollection: UITraitCollection) {
-        numberOfColumns = traitCollection.horizontalSizeClass == .regular ? 3 : 2
+        var columns = traitCollection.horizontalSizeClass == .regular ? 3 : 2
+        if (traitCollection.preferredContentSizeCategory.isAccessibilityCategory && Config.isDynamicTypeEnabled){
+            columns -= 1
+        }
+        numberOfColumns = columns
     }
-
+    
     let numberOfColumns: Int
     let sidePadding: CGFloat = .spacingM
     let lineSpacing: CGFloat = .spacingM

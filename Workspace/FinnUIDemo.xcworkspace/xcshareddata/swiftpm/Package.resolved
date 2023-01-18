@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "FinniversKit",
+        "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
+        "state": {
+          "branch": "APPS-4524-recommendations-torget",
+          "revision": "76fc5c549efd32665d7be5a7fe9253a72452cda4",
+          "version": null
+        }
+      },
+      {
         "package": "swift-snapshot-testing",
         "repositoryURL": "https://github.com/pimms/swift-snapshot-testing.git",
         "state": {
