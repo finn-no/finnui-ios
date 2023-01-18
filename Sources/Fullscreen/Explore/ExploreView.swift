@@ -197,6 +197,11 @@ public final class ExploreView: UIView {
         }
     }
 
+    private func setup() {
+        addSubview(collectionView)
+        collectionView.fillInSuperview()
+    }
+
     // MARK: - Public methods for recommendation handling
 
     public func loadMoreRecommendations(recommendations: [ExploreRecommendationAdViewModel]) {
@@ -210,9 +215,16 @@ public final class ExploreView: UIView {
         collectionViewDataSource.apply(snapshot, animatingDifferences: true)
     }
 
-    private func setup() {
-        addSubview(collectionView)
-        collectionView.fillInSuperview()
+    // MARK: - Favorite button handling
+    public func updateFavoriteStateForAd(id: String, at index: Int, isFavorite: Bool) {
+        let item = recommendationsSection[index]
+        item.isFavorite = isFavorite
+
+        let sectionIndex = sections.count - 1
+        if case .recommendations(_) = sections[sectionIndex] {
+            let cell = collectionView.cellForItem(at: IndexPath(row: index, section: sectionIndex)) as? StandardAdRecommendationCell
+            cell?.isFavorite = isFavorite
+        }
     }
 
     // MARK: - Actions
