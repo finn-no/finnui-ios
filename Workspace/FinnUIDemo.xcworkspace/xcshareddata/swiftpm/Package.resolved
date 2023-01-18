@@ -5,9 +5,9 @@
         "package": "FinniversKit",
         "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
         "state": {
-          "branch": "APPS-4524-recommendations-torget",
-          "revision": "76fc5c549efd32665d7be5a7fe9253a72452cda4",
-          "version": null
+          "branch": null,
+          "revision": "3790eff1d06cd0125fb0d5c26a70e5d7670ca515",
+          "version": "105.1.0"
         }
       },
       {
