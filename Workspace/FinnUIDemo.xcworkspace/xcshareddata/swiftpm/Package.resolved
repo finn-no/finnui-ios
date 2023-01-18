@@ -5,9 +5,9 @@
         "package": "FinniversKit",
         "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
         "state": {
-          "branch": "stories-updates",
-          "revision": "abf47cebaa754f3a91c2a1d2dcf3e81958a3fd34",
-          "version": null
+          "branch": null,
+          "revision": "3790eff1d06cd0125fb0d5c26a70e5d7670ca515",
+          "version": "105.1.0"
         }
       },
       {

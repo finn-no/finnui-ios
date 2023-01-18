@@ -8,24 +8,34 @@ import FinniversKit
 struct ExploreLayoutBuilder {
     let elementKind: String
 
-    func collectionLayoutSection(for section: ExploreSectionViewModel) -> NSCollectionLayoutSection {
-        let layoutSection: NSCollectionLayoutSection = {
-            switch section.layout {
-            case .hero:
-                return .hero
-            case .squares:
-                return .squares
-            case .twoRowsGrid:
-                return .twoRowsGrid
-            case .tagCloud:
-                let group = TagCloudGridView.collectionLayoutGroup(with: section.items)
-                return NSCollectionLayoutSection(group: group)
-            case .banner:
-                return .banner
-            }
-        }()
+    func collectionLayoutSection(for section: ExploreView.Section) -> NSCollectionLayoutSection {
+        let layoutSection: NSCollectionLayoutSection
+        var title: String? = nil
+        switch section {
+        case .main(let viewModel):
+            title = viewModel.title
+            layoutSection = {
+                switch viewModel.layout {
+                case .hero:
+                    return .hero
+                case .squares:
+                    return .squares
+                case .twoRowsGrid:
+                    return .twoRowsGrid
+                case .tagCloud:
+                    let group = TagCloudGridView.collectionLayoutGroup(with: viewModel.items)
+                    return NSCollectionLayoutSection(group: group)
+                case .banner:
+                    return .banner
+                }
+            }()
+            layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM)
+        case .recommendations(let viewModel):
+            layoutSection = NSCollectionLayoutSection.staggered(with: viewModel.items, traitCollection: .current)
+            title = viewModel.title
+            layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        }
 
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM)
         layoutSection.supplementariesFollowContentInsets = false
 
         let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -38,7 +48,7 @@ struct ExploreLayoutBuilder {
         )
         header.contentInsets.leading = .spacingM
 
-        if section.title != nil {
+        if title != nil {
             layoutSection.boundarySupplementaryItems = [header]
         }
 
@@ -124,5 +134,18 @@ private extension NSCollectionLayoutSection {
         section.interGroupSpacing = .spacingM
         section.orthogonalScrollingBehavior = scrollingBehavior
         return section
+    }
+}
+
+// MARK: - Private extensions
+
+extension ExploreRecommendationAdViewModel: StaggeredLayoutItem {
+    public var staggeredLayoutItemKind: StaggeredLayoutItemKind { .compact }
+
+    public func staggeredLayoutItemHeight(forWidth width: CGFloat) -> StaggeredLayoutItemHeight {
+        return .dynamic(
+            aspectRatio: imageSize.height/imageSize.width,
+            extraHeight: StandardAdRecommendationCell.extraHeight()
+        )
     }
 }
