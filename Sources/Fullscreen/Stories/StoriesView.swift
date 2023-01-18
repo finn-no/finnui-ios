@@ -7,7 +7,7 @@ public protocol StoriesViewDataSource: AnyObject {
     var cachesLoadedImages: Bool { get }
     func storiesView(_ storiesView: StoriesView, loadImageWithPath imagePath: String, imageWidth: CGFloat, completion: @escaping ((UIImage?) -> Void))
     func storiesView(_ storiesView: StoriesView, storySlideAtIndexIsFavorite index: StorySlideIndex) -> Bool
-    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel], Int) -> Void))
+    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping StorySlidesCompletion)
 }
 
 public protocol StoriesViewDelegate: AnyObject {
@@ -18,6 +18,7 @@ public protocol StoriesViewDelegate: AnyObject {
 }
 
 public typealias StorySlideIndex = (storyIndex: Int, slideIndex: Int)
+public typealias StorySlidesCompletion = (([StorySlideViewModel]?, Int) -> Void)
 
 public class StoriesView: UIView {
     public enum Section: Int, CaseIterable {
@@ -63,6 +64,7 @@ public class StoriesView: UIView {
     private var didSwipeToDismiss: Bool = false
     private var feedbackViewModel: StoryFeedbackViewModel?
     private var startIndex: Int?
+    private let errorViewModel: StoryErrorViewModel
 
     private var isFeedbackEnabled: Bool {
         feedbackViewModel != nil
@@ -75,9 +77,15 @@ public class StoriesView: UIView {
 
     // MARK: - Init
 
-    public init(dataSource: StoriesViewDataSource, delegate: StoriesViewDelegate, withAutoLayout: Bool) {
+    public init(
+        dataSource: StoriesViewDataSource,
+        delegate: StoriesViewDelegate,
+        errorViewModel: StoryErrorViewModel,
+        withAutoLayout: Bool
+    ) {
         self.dataSource = dataSource
         self.delegate = delegate
+        self.errorViewModel = errorViewModel
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
@@ -191,8 +199,12 @@ extension StoriesView: UICollectionViewDataSource {
         cell.dataSource = self
         cell.configure(with: story, indexPath: indexPath)
 
-        dataSource?.storiesView(self, slidesForStoryWithIndex: indexPath.item, completion: { [weak cell] slides, slideStartIndex in
-            guard !slides.isEmpty, cell?.indexPath == indexPath else { return }
+        dataSource?.storiesView(self, slidesForStoryWithIndex: indexPath.item, completion: { [weak cell, weak self] slides, slideStartIndex in
+            guard cell?.indexPath == indexPath, let self else { return }
+            guard let slides, !slides.isEmpty else {
+                cell?.showErrorView(self.errorViewModel)
+                return
+            }
             cell?.configue(with: slides, startIndex: slideStartIndex)
         })
         return cell

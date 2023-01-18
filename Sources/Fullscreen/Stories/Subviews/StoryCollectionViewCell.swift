@@ -130,6 +130,8 @@ class StoryCollectionViewCell: UICollectionViewCell {
         return button
     }()
 
+    private lazy var errorView = ResultView(withAutoLayout: true)
+
     // MARK: - Private properties
 
     private var slides = [StorySlideViewModel]()
@@ -273,6 +275,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
         delegate = nil
         dataSource = nil
         currentImageUrl = nil
+        errorView.removeFromSuperview()
     }
 
     // MARK: - Internal methods
@@ -294,6 +297,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }
 
     func configue(with slides: [StorySlideViewModel], startIndex: Int) {
+        errorView.removeFromSuperview()
         self.slides = slides
 
         showSlide(at: startIndex)
@@ -325,6 +329,19 @@ class StoryCollectionViewCell: UICollectionViewCell {
         guard let isFavorite = dataSource?.storyCollectionViewCell(self, slideAtIndexIsFavorite: currentIndex) else { return }
         let favoriteImage = isFavorite ? UIImage(named: .favoriteActive) : UIImage(named: .favoriteDefault)
         favoriteButton.setImage(favoriteImage.withRenderingMode(.alwaysTemplate), for: .normal)
+    }
+
+    func showErrorView(_ viewModel: StoryErrorViewModel) {
+        errorView.configure(
+            title: viewModel.title,
+            titleColor: .white,
+            description: viewModel.description,
+            descriptionColor: .white,
+            backgroundColor: .clear,
+            titleBottomSpacing: .spacingS
+        )
+        contentView.addSubview(errorView)
+        errorView.centerInSuperview()
     }
 
     // MARK: - Private methods
