@@ -10,9 +10,8 @@ import FinniversKit
 public protocol ExploreViewDelegate: AnyObject {
     func exploreViewDidRefresh(_ view: ExploreView)
     func exploreView(_ view: ExploreView, didSelectItem item: ExploreCollectionViewModel, at indexPath: IndexPath)
-    func exploreViewRecommendations(_ adRecommendationsGridView: ExploreView, didSelectItemAtIndex index: Int, withId: String)
-    func exploreViewRecommendations(_ adRecommendationsGridView: ExploreView, willDisplayItemAtIndex index: Int)
-    func exploreViewRecommendations(_ adRecommendationsGridView: ExploreView, didScrollInScrollView scrollView: UIScrollView)
+    func exploreViewRecommendations(_ adRecommendationsGridView: ExploreView, didSelectRecommendationItemAtIndex index: Int, withId: String)
+    func exploreViewRecommendations(_ adRecommendationsGridView: ExploreView, willDisplayRecommendationItemAtIndex index: Int)
     func exploreViewRecommendations(_ adRecommendationsGridView: ExploreView, didSelectFavoriteButton button: UIButton, on cell: AdRecommendationCell, at index: Int)
 }
 
@@ -80,7 +79,7 @@ public final class ExploreView: UIView {
     }()
 
     private func configureCollectionViewDataSource() -> DataSource {
-        let ds = DataSource(
+        let dataSource = DataSource(
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, item in
                 guard let self = self else { return UICollectionViewCell() }
@@ -106,14 +105,13 @@ public final class ExploreView: UIView {
                     let cell = collectionView.dequeue(StandardAdRecommendationCell.self, for: indexPath)
                     cell.imageDataSource = self
                     cell.configure(with: viewModel, atIndex: indexPath.row)
-                    cell.index = indexPath.row
                     cell.delegate = self
                     cell.loadImage()
                     return cell
                 }
             })
 
-        ds.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let section = self?.sections[safe: indexPath.section] else { return nil }
             let view = collectionView.dequeue(
                 ExploreSectionHeaderView.self,
@@ -131,7 +129,7 @@ public final class ExploreView: UIView {
             return view
         }
 
-        return ds
+        return dataSource
     }
 
     // MARK: - Init
@@ -170,13 +168,16 @@ public final class ExploreView: UIView {
                     }
                     snapshot.appendItems([Item.tagCloud(items)], toSection: section)
                 case .banner:
-                    guard let item = viewModel.items.first(where: {$0.banner != nil}), let viewModel = item.banner else { return }
+                    guard
+                        let item = viewModel.items.first(where: {$0.banner != nil}),
+                        let viewModel = item.banner
+                    else { return }
                     let banner = BrazeBannerViewModel(brazePromo: viewModel)
                     snapshot.appendItems([Item.brazeBanner(banner)], toSection: section)
                 }
-            case .recommendations(let viewModels):
-                recommendationsSection.append(contentsOf: viewModels.items)
-                let items = viewModels.items.map {
+            case .recommendations(let viewModel):
+                recommendationsSection.append(contentsOf: viewModel.items)
+                let items = viewModel.items.map {
                     Item.recommendation($0.self)
                 }
                 snapshot.appendItems(items, toSection: section)
@@ -202,32 +203,12 @@ public final class ExploreView: UIView {
         var snapshot = collectionViewDataSource.snapshot()
 
         recommendationsSection = recommendations
-        let items = recommendations.map {
-            Item.recommendation($0.self)
-        }
+        let items = recommendations.map(Item.recommendation)
+
         snapshot.appendItems(items)
 
         collectionViewDataSource.apply(snapshot, animatingDifferences: true)
     }
-//
-//    public func updateFavoriteStatusForVisibleItems() {
-//        for indexPath in collectionView.indexPathsForVisibleItems {
-//            guard indexPath.section < sections.count else {
-//                continue
-//            }
-//
-//            let section = sections[indexPath.section]
-//
-//            switch section {
-//            case .main(_):
-//                break
-//            case .recommendations(let viewModel):
-//                if let cell = collectionView.cellForItem(at: indexPath) as? AdRecommendationCell, indexPath.item < recommendationsSection.count {
-//                    cell.isFavorite = viewModel.items[indexPath.item].isFavorite
-//                }
-//            }
-//        }
-//    }
 
     private func setup() {
         addSubview(collectionView)
@@ -244,19 +225,24 @@ public final class ExploreView: UIView {
 // MARK: - UICollectionViewDelegate
 
 extension ExploreView: UICollectionViewDelegate {
+    // selection of brazeBanner items are handled by BrazePromotionView itself
+    // selection in tagCloudGridView is handled in TagCloudGridViewDelegate
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section < exploreSections.count {
-            let item = exploreSections[indexPath.section].items[indexPath.item]
-            delegate?.exploreView(self, didSelectItem: item, at: indexPath)
-        } else {
-            let item = recommendationsSection[indexPath.row]
-            delegate?.exploreViewRecommendations(self, didSelectItemAtIndex: indexPath.row, withId: item.id)
+        let item = collectionViewDataSource.itemIdentifier(for: indexPath)
+        switch item {
+        case .recommendation(let viewModel):
+            delegate?.exploreViewRecommendations(self, didSelectRecommendationItemAtIndex: indexPath.row, withId: viewModel.id)
+        case .regular(let viewModel, _):
+            delegate?.exploreView(self, didSelectItem: viewModel, at: indexPath)
+        default:
+            break
         }
     }
 
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.section == exploreSections.count {
-            delegate?.exploreViewRecommendations(self, willDisplayItemAtIndex: indexPath.row)
+        let item = collectionViewDataSource.itemIdentifier(for: indexPath)
+        if case .recommendation(_) = item {
+            delegate?.exploreViewRecommendations(self, willDisplayRecommendationItemAtIndex: indexPath.row)
         }
     }
 }
@@ -264,6 +250,7 @@ extension ExploreView: UICollectionViewDelegate {
 // MARK: - TagCloudGridViewDelegate
 
 extension ExploreView: TagCloudGridViewDelegate {
+    // tagCloudGridView is always in the main section and can be selected from the exploreSections array
     public func tagCloudGridView(_ view: TagCloudGridView, didSelectItem item: TagCloudCellViewModel, at indexPath: IndexPath) {
         let indexPath = IndexPath(item: indexPath.item, section: view.tag)
         let item = exploreSections[indexPath.section].items[indexPath.item]
@@ -305,7 +292,7 @@ extension ExploreView: RemoteImageViewDataSource {
     }
 }
 
-// MARK: - Private types
+// MARK: - Nested types
 extension ExploreView {
     enum Item: Hashable {
         case regular(ExploreCollectionViewModel, ExploreCollectionCell.Kind)

@@ -133,15 +133,11 @@ extension ExploreDemoView: ExploreViewDelegate {
         print("🕵️‍♀️", #function)
     }
 
-    func exploreViewRecommendations(_ adRecommendationsGridView: FinnUI.ExploreView, didSelectItemAtIndex index: Int, withId: String) {
+    func exploreViewRecommendations(_ adRecommendationsGridView: FinnUI.ExploreView, didSelectRecommendationItemAtIndex index: Int, withId: String) {
         print("🕵️‍♀️", #function)
     }
 
-    func exploreViewRecommendations(_ adRecommendationsGridView: FinnUI.ExploreView, willDisplayItemAtIndex index: Int) {
-        print("🕵️‍♀️", #function)
-    }
-
-    func exploreViewRecommendations(_ adRecommendationsGridView: FinnUI.ExploreView, didScrollInScrollView scrollView: UIScrollView) {
+    func exploreViewRecommendations(_ adRecommendationsGridView: FinnUI.ExploreView, willDisplayRecommendationItemAtIndex index: Int) {
         print("🕵️‍♀️", #function)
     }
 

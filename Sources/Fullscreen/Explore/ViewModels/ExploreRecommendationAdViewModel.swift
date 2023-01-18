@@ -19,7 +19,19 @@ final public class ExploreRecommendationAdViewModel: StandardAdRecommendationVie
         return imageText.isEmpty
     }
 
-    public init(imagePath: String? = nil, imageSize: CGSize, iconImage: UIImage? = nil, title: String, subtitle: String? = nil, accessory: String? = nil, imageText: String? = nil, isFavorite: Bool, scaleImageToFillView: Bool, sponsoredAdData: SponsoredAdData? = nil, favoriteButtonAccessibilityLabel: String, id: String) {
+    public init(
+        imagePath: String? = nil,
+        imageSize: CGSize,
+        iconImage: UIImage? = nil,
+        title: String,
+        subtitle: String? = nil,
+        accessory: String? = nil,
+        imageText: String? = nil,
+        isFavorite: Bool,
+        scaleImageToFillView: Bool,
+        sponsoredAdData: SponsoredAdData? = nil,
+        favoriteButtonAccessibilityLabel: String, id: String
+    ) {
         self.imagePath = imagePath
         self.imageSize = imageSize
         self.iconImage = iconImage
