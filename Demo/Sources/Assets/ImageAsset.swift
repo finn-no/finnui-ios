@@ -81,6 +81,7 @@ enum ImageAsset: String {
     case npWalk
     case nyhetsbrevFraFinn
     case okonomi
+    case pin
     case playVideo
     case plus
     case primingFavoritesComments
@@ -154,6 +155,7 @@ enum ImageAsset: String {
             .npWalk,
             .nyhetsbrevFraFinn,
             .okonomi,
+            .pin,
             .playVideo,
             .plus,
             .primingFavoritesComments,
