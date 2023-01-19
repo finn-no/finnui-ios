@@ -39,14 +39,6 @@ class ComponentViewTests: XCTestCase {
         snapshot(.iconLinkListView)
     }
 
-    func testSearchFilterTags() {
-        snapshot(.searchFilterTags)
-    }
-
-    func testSearchDisplayMenuView() {
-        snapshot(.searchDisplayMenuView)
-    }
-
     func testExpandCollapseButton() {
         snapshot(.expandCollapseButton)
     }
