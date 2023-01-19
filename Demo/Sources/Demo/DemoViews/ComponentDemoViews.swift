@@ -8,7 +8,6 @@ import FinniversKit
 public enum ComponentDemoViews: String, DemoViews {
     case saveSearchView
     case saveSearchPromptView
-    case searchListEmptyView
     case expandCollapseButton
     case objectPageBlinkView
     case chatAvailabilityView
@@ -48,8 +47,6 @@ public enum ComponentDemoViews: String, DemoViews {
             return BottomSheet(rootViewController: demoViewController)
         case .saveSearchPromptView:
             return DemoViewController<SaveSearchPromptViewDemoView>()
-        case .searchListEmptyView:
-            return DemoViewController<SearchListEmptyDemoView>()
         case .chatAvailabilityView:
             return DemoViewController<ChatAvailabilityDemoView>(dismissType: .dismissButton)
         case .iconLinkListView:

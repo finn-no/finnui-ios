@@ -27,10 +27,6 @@ class ComponentViewTests: XCTestCase {
         snapshot(.saveSearchView)
     }
 
-    func testSearchListEmptyView() {
-        snapshot(.searchListEmptyView)
-    }
-
     func testChatAvailabilityView() {
         snapshot(.chatAvailabilityView)
     }
