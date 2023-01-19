@@ -7,7 +7,6 @@ import FinniversKit
 
 public enum ComponentDemoViews: String, DemoViews {
     case saveSearchView
-    case saveSearchPromptView
     case expandCollapseButton
     case objectPageBlinkView
     case chatAvailabilityView
@@ -45,8 +44,6 @@ public enum ComponentDemoViews: String, DemoViews {
             let demoViewController = DemoViewController<SaveSearchViewDemoView>()
             demoViewController.view.backgroundColor = .bgPrimary
             return BottomSheet(rootViewController: demoViewController)
-        case .saveSearchPromptView:
-            return DemoViewController<SaveSearchPromptViewDemoView>()
         case .chatAvailabilityView:
             return DemoViewController<ChatAvailabilityDemoView>(dismissType: .dismissButton)
         case .iconLinkListView:

@@ -19,10 +19,6 @@ class ComponentViewTests: XCTestCase {
         }
     }
 
-    func testSaveSearchPromptView() {
-        snapshot(.saveSearchPromptView)
-    }
-
     func testSaveSearchView() {
         snapshot(.saveSearchView)
     }
