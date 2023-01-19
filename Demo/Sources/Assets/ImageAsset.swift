@@ -46,8 +46,6 @@ enum ImageAsset: String {
     case classifieds
     case consentTransparencyImage
     case cross
-    case displayTypeGrid
-    case displayTypeList
     case dissatisfiedFace
     case distance
     case emptyStateSaveSearch
@@ -83,7 +81,6 @@ enum ImageAsset: String {
     case npWalk
     case nyhetsbrevFraFinn
     case okonomi
-    case pin
     case playVideo
     case plus
     case primingFavoritesComments
@@ -122,8 +119,6 @@ enum ImageAsset: String {
             .classifieds,
             .consentTransparencyImage,
             .cross,
-            .displayTypeGrid,
-            .displayTypeList,
             .dissatisfiedFace,
             .distance,
             .emptyStateSaveSearch,
@@ -159,7 +154,6 @@ enum ImageAsset: String {
             .npWalk,
             .nyhetsbrevFraFinn,
             .okonomi,
-            .pin,
             .playVideo,
             .plus,
             .primingFavoritesComments,
