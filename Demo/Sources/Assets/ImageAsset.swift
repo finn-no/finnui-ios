@@ -93,7 +93,6 @@ enum ImageAsset: String {
     case ratings
     case realestate
     case remove
-    case removeFilterTag
     case savedSearches
     case search
     case service
@@ -170,7 +169,6 @@ enum ImageAsset: String {
             .ratings,
             .realestate,
             .remove,
-            .removeFilterTag,
             .savedSearches,
             .search,
             .service,

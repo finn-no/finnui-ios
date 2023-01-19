@@ -9,7 +9,6 @@ public enum ComponentDemoViews: String, DemoViews {
     case saveSearchView
     case saveSearchPromptView
     case searchDisplayMenuView
-    case searchFilterTags
     case searchListEmptyView
     case expandCollapseButton
     case objectPageBlinkView
@@ -52,8 +51,6 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<SearchDisplayMenuDemoView>()
         case .saveSearchPromptView:
             return DemoViewController<SaveSearchPromptViewDemoView>()
-        case .searchFilterTags:
-            return DemoViewController<SearchFilterTagsDemoView>()
         case .searchListEmptyView:
             return DemoViewController<SearchListEmptyDemoView>()
         case .chatAvailabilityView:
