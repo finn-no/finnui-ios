@@ -22,8 +22,4 @@ class RecyclingViewTests: XCTestCase {
     func testProjectUnitsView() {
         snapshot(.projectUnitsView)
     }
-
-    func testPromotedRealestateCell() {
-        snapshot(.promotedRealestateCell)
-    }
 }

@@ -46,8 +46,6 @@ enum ImageAsset: String {
     case classifieds
     case consentTransparencyImage
     case cross
-    case displayTypeGrid
-    case displayTypeList
     case dissatisfiedFace
     case distance
     case emptyStateSaveSearch
@@ -93,7 +91,6 @@ enum ImageAsset: String {
     case ratings
     case realestate
     case remove
-    case removeFilterTag
     case savedSearches
     case search
     case service
@@ -123,8 +120,6 @@ enum ImageAsset: String {
             .classifieds,
             .consentTransparencyImage,
             .cross,
-            .displayTypeGrid,
-            .displayTypeList,
             .dissatisfiedFace,
             .distance,
             .emptyStateSaveSearch,
@@ -170,7 +165,6 @@ enum ImageAsset: String {
             .ratings,
             .realestate,
             .remove,
-            .removeFilterTag,
             .savedSearches,
             .search,
             .service,

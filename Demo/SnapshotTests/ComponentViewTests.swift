@@ -19,16 +19,8 @@ class ComponentViewTests: XCTestCase {
         }
     }
 
-    func testSaveSearchPromptView() {
-        snapshot(.saveSearchPromptView)
-    }
-
     func testSaveSearchView() {
         snapshot(.saveSearchView)
-    }
-
-    func testSearchListEmptyView() {
-        snapshot(.searchListEmptyView)
     }
 
     func testChatAvailabilityView() {
@@ -37,14 +29,6 @@ class ComponentViewTests: XCTestCase {
 
     func testIconLinkListView() {
         snapshot(.iconLinkListView)
-    }
-
-    func testSearchFilterTags() {
-        snapshot(.searchFilterTags)
-    }
-
-    func testSearchDisplayMenuView() {
-        snapshot(.searchDisplayMenuView)
     }
 
     func testExpandCollapseButton() {
