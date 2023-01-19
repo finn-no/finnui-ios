@@ -47,7 +47,6 @@ enum ImageAsset: String {
     case checkMarkCircle
     case chevronDown
     case chevronUp
-    case clockSmall
     case close
     case emptyPersonalNotificationsIcon
     case emptySavedSearchNotificationsIcon
@@ -114,7 +113,6 @@ enum ImageAsset: String {
             .checkMarkCircle,
             .chevronDown,
             .chevronUp,
-            .clockSmall,
             .close,
             .emptyPersonalNotificationsIcon,
             .emptySavedSearchNotificationsIcon,
