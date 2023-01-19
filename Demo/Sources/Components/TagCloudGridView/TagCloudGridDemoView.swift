@@ -15,14 +15,14 @@ final class TagCloudGridDemoView: UIView {
     }()
 
     private var items: [TagCloudCellViewModel] = [
-        TagCloudCellViewModel(title: "Brettspill", iconUrl: "displayTypeGrid"),
+        TagCloudCellViewModel(title: "Brettspill", iconUrl: "notifications"),
         TagCloudCellViewModel(title: "Foto", iconUrl: nil),
         TagCloudCellViewModel(title: "Gaming", iconUrl: nil),
         TagCloudCellViewModel(title: "Hjemmekontor", iconUrl: nil),
         TagCloudCellViewModel(title: "Planter", iconUrl: nil),
         TagCloudCellViewModel(title: "Puslespill", iconUrl: nil),
         TagCloudCellViewModel(title: "Spillkonsoller", iconUrl: nil),
-        TagCloudCellViewModel(title: "Studentlivet", iconUrl: "displayTypeGrid"),
+        TagCloudCellViewModel(title: "Studentlivet", iconUrl: "notifications"),
         TagCloudCellViewModel(title: "Søte dyr", iconUrl: nil),
         TagCloudCellViewModel(title: "Vintersport", iconUrl: nil)
     ]
