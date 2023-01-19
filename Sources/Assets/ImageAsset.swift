@@ -79,7 +79,6 @@ enum ImageAsset: String {
     case shipWithHelthjemDarkmode
     case shippingTruck
     case snowflake
-    case sort
     case spark
     case splashLetters1
     case splashLetters2
@@ -147,7 +146,6 @@ enum ImageAsset: String {
             .shipWithHelthjemDarkmode,
             .shippingTruck,
             .snowflake,
-            .sort,
             .spark,
             .splashLetters1,
             .splashLetters2,

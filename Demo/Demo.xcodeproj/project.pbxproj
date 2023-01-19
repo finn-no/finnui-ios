@@ -59,7 +59,6 @@
 		ADC5C001F9CB596AAA8A6766 /* AdTipsCollapsibleDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5C5356934C46CBC60D68A /* AdTipsCollapsibleDemoView.swift */; };
 		ADC5CBBC2AE659F8B588F876 /* NumberedAdTipsCollapsibleDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5C7228914271986E032E4 /* NumberedAdTipsCollapsibleDemoView.swift */; };
 		D61E2C3825C0157600FA8F16 /* FinnUI in Frameworks */ = {isa = PBXBuildFile; productRef = D61E2C3725C0157600FA8F16 /* FinnUI */; };
-		D6D43CE325BF2F4D00234AC2 /* SearchDisplayMenuDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDD45AB250FA7E1007DBDD5 /* SearchDisplayMenuDemoView.swift */; };
 		D6D43CE425BF2F4D00234AC2 /* SaveSearchViewDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E772EB242CEF09008A5E93 /* SaveSearchViewDemoView.swift */; };
 		D6D43CE525BF2F4D00234AC2 /* IconLinkListViewDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6800F29F72B6957F2BE564 /* IconLinkListViewDemo.swift */; };
 		D6D43CE625BF2F4D00234AC2 /* SearchListEmptyDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E772ED242CEF09008A5E93 /* SearchListEmptyDemoView.swift */; };
@@ -181,7 +180,6 @@
 		4DBC039A250A4A38004E8044 /* ExpandCollapseButtonDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandCollapseButtonDemoView.swift; sourceTree = "<group>"; };
 		4DCC6BAA252B312900F69B30 /* SearchDisplayTypeSelectionDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchDisplayTypeSelectionDemoView.swift; sourceTree = "<group>"; };
 		4DD84281254828910058D6BB /* ProjectUnitsDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectUnitsDemoView.swift; sourceTree = "<group>"; };
-		4DDD45AB250FA7E1007DBDD5 /* SearchDisplayMenuDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchDisplayMenuDemoView.swift; sourceTree = "<group>"; };
 		5B9590A6804FB7A84BDE1926 /* ExtendedProfileDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedProfileDemoView.swift; sourceTree = "<group>"; };
 		5B9591016C346EF4BB044C96 /* RealestateSoldStateDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealestateSoldStateDemoView.swift; sourceTree = "<group>"; };
 		5B95919B9CFD316597FE1169 /* IPadSnapshotWrapperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPadSnapshotWrapperViewController.swift; sourceTree = "<group>"; };
@@ -416,7 +414,6 @@
 				5D1224BF27BF872400A2AD97 /* RecommendationConsentView */,
 				5DE2A0AA27C4DB63002E2EDA /* RecommendationEmptyView */,
 				46E772EA242CEF09008A5E93 /* SaveSearch */,
-				4DDD45AA250FA7E1007DBDD5 /* SearchDisplayMenu */,
 				8D680CEAEE8620B4DD78D96C /* SearchDropdownGroup */,
 				E4DBDD952762332300BE21D8 /* ShippingAlternativesView */,
 				E68E2D0B283E6B77009C5792 /* SuggestShipping */,
@@ -530,14 +527,6 @@
 				4DD84281254828910058D6BB /* ProjectUnitsDemoView.swift */,
 			);
 			path = ProjectUnits;
-			sourceTree = "<group>";
-		};
-		4DDD45AA250FA7E1007DBDD5 /* SearchDisplayMenu */ = {
-			isa = PBXGroup;
-			children = (
-				4DDD45AB250FA7E1007DBDD5 /* SearchDisplayMenuDemoView.swift */,
-			);
-			path = SearchDisplayMenu;
 			sourceTree = "<group>";
 		};
 		5B959225F96A844EB3287ECD /* RealestateAgencyBannerView */ = {
@@ -1048,7 +1037,6 @@
 				46E773AE242CEF0A008A5E93 /* Helpers.swift in Sources */,
 				D6D43CF325BF2FA900234AC2 /* SplashDemoView.swift in Sources */,
 				46E773B1242CEF0A008A5E93 /* UIDevice.swift in Sources */,
-				D6D43CE325BF2F4D00234AC2 /* SearchDisplayMenuDemoView.swift in Sources */,
 				5D1224C127BF875600A2AD97 /* RecommendationConsentDemoView.swift in Sources */,
 				46E773AB242CEF0A008A5E93 /* SplitViewController.swift in Sources */,
 				46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */,
