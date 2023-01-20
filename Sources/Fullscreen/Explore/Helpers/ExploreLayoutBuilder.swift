@@ -144,7 +144,7 @@ extension ExploreRecommendationAdViewModel: StaggeredLayoutItem {
 
     public func staggeredLayoutItemHeight(forWidth width: CGFloat) -> StaggeredLayoutItemHeight {
         return .dynamic(
-            aspectRatio: imageSize.height/imageSize.width,
+            aspectRatio: imageSize.width / imageSize.height,
             extraHeight: StandardAdRecommendationCell.extraHeight()
         )
     }
