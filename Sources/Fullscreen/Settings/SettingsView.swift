@@ -8,6 +8,7 @@ import FinniversKit
 // MARK: - View Model
 
 public protocol SettingsViewModel: ObservableObject {
+    var viewTitle: String? { get }
     var sections: [SettingsSection] { get }
     var versionText: String? { get }
 }
@@ -32,11 +33,15 @@ public struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     public var body: some View {
         List {
+            if let title = viewModel.viewTitle {
+                TitleView(text: title)
+            }
             rows
             if let versionText = viewModel.versionText {
                 VersionView(text: versionText)
             }
         }
+        .listStyle(.plain)
         .appearance { (view: UITableView) in
             view.separatorStyle = .none
             view.backgroundColor = .bgTertiary
@@ -96,8 +101,6 @@ private struct Header: View {
                     Text(title)
                         .finnFont(.bodyStrong)
                         .foregroundColor(.textPrimary)
-                        .padding(.top, .spacingM)
-                        .padding(.bottom, .spacingS)
                     Spacer()
                 }
             case .complex(title: let title, subtitle: let subtitle, image: let image):
@@ -106,7 +109,6 @@ private struct Header: View {
                         Text(title)
                             .finnFont(.bodyStrong)
                             .foregroundColor(.textPrimary)
-                            .padding(.top, .spacingS)
                         Spacer()
                         Image(uiImage: image)
                             .aspectRatio(contentMode: .fit)
@@ -117,14 +119,12 @@ private struct Header: View {
                         Text(subtitle)
                             .finnFont(.caption)
                             .foregroundColor(.textPrimary)
-                            .padding(.bottom, .spacingS)
-                            .padding(.leading)
                         Spacer()
                     }
                 }
-
             }
         }
+        .padding(EdgeInsets(top: .spacingM, leading: .spacingM, bottom: .spacingM, trailing: .spacingM))
         .background(Color.bgTertiary)
         .listRowInsets(EdgeInsets())
     }
@@ -191,6 +191,16 @@ private extension BasicListCell {
     }
 }
 
+private struct TitleView: View {
+    let text: String
+
+    var body: some View {
+        Text(text)
+            .finnFont(.body)
+            .foregroundColor(.textPrimary)
+    }
+}
+
 private struct VersionView: View {
     let text: String
 
@@ -228,6 +238,7 @@ struct SettingsView_Previews: PreviewProvider {
 }
 
 private final class PreviewViewModel: SettingsViewModel {
+    let viewTitle: String? = "FinnUI Demo"
     let versionText: String? = "FinnUI Demo"
 
     @Published private(set) var sections = [
