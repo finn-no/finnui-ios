@@ -31,7 +31,8 @@ final public class ExploreRecommendationAdViewModel: StandardAdRecommendationVie
         isFavorite: Bool,
         scaleImageToFillView: Bool,
         sponsoredAdData: SponsoredAdData? = nil,
-        favoriteButtonAccessibilityLabel: String, id: String,
+        favoriteButtonAccessibilityLabel: String,
+        id: String,
         badgeViewModel: BadgeViewModel? = nil
     ) {
         self.imagePath = imagePath
