@@ -13,6 +13,7 @@ final public class ExploreRecommendationAdViewModel: StandardAdRecommendationVie
     public var scaleImageToFillView: Bool
     public var sponsoredAdData: FinniversKit.SponsoredAdData?
     public var favoriteButtonAccessibilityLabel: String
+    public let badgeViewModel: BadgeViewModel?
 
     public var hideImageOverlay: Bool {
         guard let imageText else { return true }
@@ -30,7 +31,9 @@ final public class ExploreRecommendationAdViewModel: StandardAdRecommendationVie
         isFavorite: Bool,
         scaleImageToFillView: Bool,
         sponsoredAdData: SponsoredAdData? = nil,
-        favoriteButtonAccessibilityLabel: String, id: String
+        favoriteButtonAccessibilityLabel: String,
+        id: String,
+        badgeViewModel: BadgeViewModel? = nil
     ) {
         self.imagePath = imagePath
         self.imageSize = imageSize
@@ -44,6 +47,7 @@ final public class ExploreRecommendationAdViewModel: StandardAdRecommendationVie
         self.sponsoredAdData = sponsoredAdData
         self.favoriteButtonAccessibilityLabel = favoriteButtonAccessibilityLabel
         self.id = id
+        self.badgeViewModel = badgeViewModel
     }
 
     public func hash(into hasher: inout Hasher) {
