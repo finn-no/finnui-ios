@@ -9,7 +9,7 @@ import FinniversKit
 
 public protocol SettingsViewModel: ObservableObject {
     var sections: [SettingsSection] { get }
-    var versionText: String { get }
+    var versionText: String? { get }
 }
 
 // MARK: - View
@@ -33,7 +33,9 @@ public struct SettingsView<ViewModel: SettingsViewModel>: View {
     public var body: some View {
         List {
             rows
-            VersionView(text: viewModel.versionText)
+            if let versionText = viewModel.versionText {
+                VersionView(text: versionText)
+            }
         }
         .appearance { (view: UITableView) in
             view.separatorStyle = .none
@@ -45,7 +47,7 @@ public struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     private var rows: some View {
         ForEach(0..<sections.count) { section in
-            self.sections[section].title.map(Header.init)
+            self.sections[section].header.map(Header.init)
 
             ForEach(0..<self.sections[section].items.count) { row in
                 self.cell(at: row, in: section)
@@ -84,18 +86,43 @@ public struct SettingsView<ViewModel: SettingsViewModel>: View {
 // MARK: - Cells
 
 private struct Header: View {
-    let text: String
+    let type: SettingsHeaderType
 
     var body: some View {
         VStack {
-            Spacer()
-            HStack {
-                Text(text.uppercased())
-                    .finnFont(.detailStrong)
-                    .foregroundColor(.textSecondary)
-                    .padding(.horizontal, .spacingM)
-                    .padding(.bottom, .spacingS)
-                Spacer()
+            switch type {
+            case .plain(title: let title):
+                HStack {
+                    Text(title)
+                        .finnFont(.bodyStrong)
+                        .foregroundColor(.textPrimary)
+                        .padding(.top, .spacingM)
+                        .padding(.bottom, .spacingS)
+                    Spacer()
+                }
+            case .complex(title: let title, subtitle: let subtitle, image: let image):
+                VStack {
+                    HStack {
+                        Text(title)
+                            .finnFont(.bodyStrong)
+                            .foregroundColor(.textPrimary)
+                            .padding(.top, .spacingS)
+                        Spacer()
+                        Image(uiImage: image)
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.textPrimary)
+                            .accessibilityHidden(true)
+                    }
+                    HStack {
+                        Text(subtitle)
+                            .finnFont(.caption)
+                            .foregroundColor(.textPrimary)
+                            .padding(.bottom, .spacingS)
+                            .padding(.leading)
+                        Spacer()
+                    }
+                }
+
             }
         }
         .background(Color.bgTertiary)
@@ -201,11 +228,11 @@ struct SettingsView_Previews: PreviewProvider {
 }
 
 private final class PreviewViewModel: SettingsViewModel {
-    let versionText = "FinnUI Demo"
+    let versionText: String? = "FinnUI Demo"
 
     @Published private(set) var sections = [
         SettingsSection(
-            title: "Varslinger",
+            header: .plain(title: "Varslinger"),
             items: [
                 ToggleRow(
                     id: "priceChange",
@@ -216,13 +243,13 @@ private final class PreviewViewModel: SettingsViewModel {
             footerTitle: "FINN varsler deg når prisen på en av dine favoritter på Torget blir satt ned."
         ),
         SettingsSection(
-            title: "Meldinger",
+            header: .plain(title: "Meldinger"),
             items: [
                 ConsentRow(title: "Meldinger til e-post", status: "Av"),
             ]
         ),
         SettingsSection(
-            title: "Personvern",
+            header: .plain(title: "Personvern"),
             items: [
                 ConsentRow(title: "Få nyhetsbrev fra FINN", status: "Av"),
                 ConsentRow(title: "Personlig tilpasset FINN", status: "På"),
