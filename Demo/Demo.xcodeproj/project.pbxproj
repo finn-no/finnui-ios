@@ -254,13 +254,6 @@
 			path = FiksFerdigPriceView;
 			sourceTree = "<group>";
 		};
-		2748FA68297EBF4400928808 /* SavedSearches */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SavedSearches;
-			sourceTree = "<group>";
-		};
 		46AE6FB7242BADC9007BB005 = {
 			isa = PBXGroup;
 			children = (
@@ -349,7 +342,6 @@
 		46E7726A242CEF09008A5E93 /* Fullscreen */ = {
 			isa = PBXGroup;
 			children = (
-				2748FA68297EBF4400928808 /* SavedSearches */,
 				9F117917290FB2A100C7FA90 /* FrontpageSearch */,
 				4D2A37FC2730244100D09D73 /* Stories */,
 				DA3E1B0D2673B4DF001B7730 /* ExploreDetail */,
