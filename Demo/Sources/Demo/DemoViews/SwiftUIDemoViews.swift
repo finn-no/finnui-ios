@@ -10,6 +10,7 @@ public enum SwiftUIDemoViews: String, DemoViews {
     case settings
     case basicCellVariations
     case bapAdView
+    case savedSearches
 
     public var viewController: UIViewController {
         PreviewController(hostingController: hostingController)
@@ -29,6 +30,8 @@ public enum SwiftUIDemoViews: String, DemoViews {
             BasicListCell_Previews.previews
         case .bapAdView:
             BapAdView_Previews.previews
+        case .savedSearches:
+            SavedSearchesView_Previews.previews
         }
     }
 }
