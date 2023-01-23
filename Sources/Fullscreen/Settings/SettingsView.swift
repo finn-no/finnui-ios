@@ -94,33 +94,30 @@ private struct Header: View {
     let type: SettingsHeaderType
 
     var body: some View {
-        VStack {
+        HStack {
             switch type {
             case .plain(title: let title):
-                HStack {
+                Text(title)
+                    .finnFont(.bodyStrong)
+                    .foregroundColor(.textPrimary)
+                Spacer()
+            case .complex(title: let title, subtitle: let subtitle, image: let image):
+                VStack(alignment: .leading) {
                     Text(title)
                         .finnFont(.bodyStrong)
                         .foregroundColor(.textPrimary)
                     Spacer()
+                    Text(subtitle)
+                        .finnFont(.caption)
+                        .foregroundColor(.textPrimary)
                 }
-            case .complex(title: let title, subtitle: let subtitle, image: let image):
+                Spacer()
                 VStack {
-                    HStack {
-                        Text(title)
-                            .finnFont(.bodyStrong)
-                            .foregroundColor(.textPrimary)
-                        Spacer()
-                        Image(uiImage: image)
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.textPrimary)
-                            .accessibilityHidden(true)
-                    }
-                    HStack {
-                        Text(subtitle)
-                            .finnFont(.caption)
-                            .foregroundColor(.textPrimary)
-                        Spacer()
-                    }
+                    Image(uiImage: image)
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.textPrimary)
+                        .accessibilityHidden(true)
+                    Spacer()
                 }
             }
         }
