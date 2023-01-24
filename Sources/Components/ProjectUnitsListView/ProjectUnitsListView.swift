@@ -6,15 +6,18 @@ public class ProjectUnitsListView: UIView {
     // MARK: - Public properties
 
     public var sorting: Column = .bedrooms {
-        didSet { refreshUnits() }
+        didSet { refreshContent() }
     }
 
     // MARK: - Private properties
 
     private var viewModel: ViewModel?
     private var sortedUnits = [UnitItem]()
+    private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
     private lazy var titleLabel = Label(style: .title3, numberOfLines: 0, withAutoLayout: true)
+    private lazy var sortingStackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
     private lazy var sortingLabel = Label(style: .body, numberOfLines: 0, withAutoLayout: true)
+    private lazy var sortingIndicator = SortingIndicator(withAutoLayout: true)
     private lazy var unitsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
 
     // MARK: - Init
@@ -29,19 +32,12 @@ public class ProjectUnitsListView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        addSubview(titleLabel)
-        addSubview(unitsStackView)
+        sortingStackView.addArrangedSubviews([sortingLabel, sortingIndicator])
+        stackView.addArrangedSubviews([titleLabel, sortingStackView, unitsStackView])
+        stackView.setCustomSpacing(.spacingM, after: sortingStackView)
 
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-            unitsStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: .spacingM),
-            unitsStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            unitsStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            unitsStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
+        addSubview(stackView)
+        stackView.fillInSuperview()
     }
 
     // MARK: - Public methods
@@ -52,15 +48,17 @@ public class ProjectUnitsListView: UIView {
         sortingLabel.text = viewModel.titles.sortingTitle
 
         sortedUnits = sortUnits(units: viewModel.units, sorting: sorting)
-        refreshUnits()
+        refreshContent()
     }
 
     // MARK: - Private methods
 
-    private func refreshUnits() {
+    private func refreshContent() {
         unitsStackView.removeArrangedSubviews()
 
         guard let viewModel = viewModel else { return }
+
+        sortingIndicator.configure(with: viewModel.columnHeadings.title(for: sorting))
 
         let headerRow = RowView(kind: .header, addSeparator: true, labelValue: { viewModel.columnHeadings.title(for: $0) })
         unitsStackView.addArrangedSubview(headerRow)
