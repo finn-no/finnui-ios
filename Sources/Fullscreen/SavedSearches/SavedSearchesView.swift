@@ -20,7 +20,9 @@ struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button(viewModel.sortButtonTitle, action: {
-                    viewModel.sort()
+                    withAnimation {
+                        viewModel.sort()
+                    }
                 })
             }
         }
