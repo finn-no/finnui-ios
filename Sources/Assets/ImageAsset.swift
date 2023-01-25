@@ -47,7 +47,6 @@ enum ImageAsset: String {
     case checkMarkCircle
     case chevronDown
     case chevronUp
-    case clockSmall
     case close
     case emptyPersonalNotificationsIcon
     case emptySavedSearchNotificationsIcon
@@ -79,7 +78,6 @@ enum ImageAsset: String {
     case shipWithHelthjemDarkmode
     case shippingTruck
     case snowflake
-    case sort
     case spark
     case splashLetters1
     case splashLetters2
@@ -115,7 +113,6 @@ enum ImageAsset: String {
             .checkMarkCircle,
             .chevronDown,
             .chevronUp,
-            .clockSmall,
             .close,
             .emptyPersonalNotificationsIcon,
             .emptySavedSearchNotificationsIcon,
@@ -147,7 +144,6 @@ enum ImageAsset: String {
             .shipWithHelthjemDarkmode,
             .shippingTruck,
             .snowflake,
-            .sort,
             .spark,
             .splashLetters1,
             .splashLetters2,

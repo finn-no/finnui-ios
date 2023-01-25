@@ -8,7 +8,6 @@ public enum FullscreenDemoViews: String, DemoViews {
     case newYearsView
     case splashView
     case savedSearchSortingView
-    case searchDisplayTypeSelectionView
     case favoriteAdSortingView
     case searchDropdown
     case searchSuggestions
@@ -28,8 +27,6 @@ public enum FullscreenDemoViews: String, DemoViews {
             return DemoViewController<FavoriteAdSortingDemoView>()
         case .savedSearchSortingView:
             return DemoViewController<SavedSearchSortingDemoView>()
-        case .searchDisplayTypeSelectionView:
-            return DemoViewController<SearchDisplayTypeSelectionDemoView>()
         case .searchDropdown:
             return DemoViewController<SearchDropdownDemoView>()
         case .searchSuggestions:

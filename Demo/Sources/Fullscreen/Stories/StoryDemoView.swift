@@ -3,7 +3,13 @@ import UIKit
 import FinnUI
 
 class StoryDemoView: UIView {
-    private lazy var storiesView: StoriesView = StoriesView(dataSource: self, delegate: self, withAutoLayout: true)
+    private lazy var storiesView: StoriesView = StoriesView(
+        dataSource: self,
+        delegate: self,
+        errorViewModel: errorViewModel,
+        withAutoLayout: true
+    )
+    private let errorViewModel: StoryErrorViewModel = .init(title: "Usjda", description: "Noe gikk galt")
     private var favoriteIndexes = [StorySlideIndex]()
     private var imageCache = [String: UIImage]()
 
@@ -70,7 +76,7 @@ extension StoryDemoView: StoriesViewDataSource {
         true
     }
 
-    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping (([StorySlideViewModel], Int) -> Void)) {
+    func storiesView(_ storiesView: StoriesView, slidesForStoryWithIndex index: Int, completion: @escaping StorySlidesCompletion) {
         completion(Self.slides[index], 0)
     }
 
