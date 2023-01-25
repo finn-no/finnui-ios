@@ -8,7 +8,6 @@ extension ProjectUnitsListView {
         public let bedrooms: String
         public let area: String
         public let totalPrice: String
-        public let isSold: Bool
 
         public init(
             identifier: Int,
@@ -16,8 +15,7 @@ extension ProjectUnitsListView {
             floor: String,
             bedrooms: String,
             area: String,
-            totalPrice: String,
-            isSold: Bool
+            totalPrice: String
         ) {
             self.identifier = identifier
             self.name = name
@@ -25,7 +23,6 @@ extension ProjectUnitsListView {
             self.bedrooms = bedrooms
             self.area = area
             self.totalPrice = totalPrice
-            self.isSold = isSold
         }
 
         func value(for column: Column) -> String {
