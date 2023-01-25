@@ -18,7 +18,7 @@ public class ProjectUnitsListView: UIView {
 
     // MARK: - Public properties
 
-    public var sorting: Column = .bedrooms {
+    public var sorting: Column = .name {
         didSet { refreshContent() }
     }
 
