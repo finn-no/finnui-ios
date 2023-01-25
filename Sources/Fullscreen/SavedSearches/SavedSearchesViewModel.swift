@@ -28,9 +28,9 @@ public class SavedSearchViewModel: Identifiable, ObservableObject, Equatable {
     }
 
     public let id = UUID()
-    public let title: String
-    public let text: String
-    public let textStyle: TextStyle
+    @Published public var title: String
+    @Published public var text: String
+    @Published public var textStyle: TextStyle
 
     init(title: String, text: String, textStyle: TextStyle) {
         self.title = title
