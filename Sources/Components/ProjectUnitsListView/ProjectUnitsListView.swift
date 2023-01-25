@@ -12,6 +12,10 @@ public protocol ProjectUnitsListViewDelegate: AnyObject {
         _ view: ProjectUnitsListView,
         didSelectSortOption sortOption: ProjectUnitsListView.Column
     )
+
+    func projectUnitsListViewDidToggleSoldUnitsVisibility(
+        _ view: ProjectUnitsListView
+    )
 }
 
 public class ProjectUnitsListView: UIView {
@@ -34,6 +38,13 @@ public class ProjectUnitsListView: UIView {
         return view
     }()
 
+    private lazy var soldUnitsVisibilityButton: Button = {
+        let button = Button(style: .default, size: .small, withAutoLayout: true)
+        button.addTarget(self, action: #selector(didSelectSoldUnitsVisibilityButton), for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+
     // MARK: - Init
 
     public init(viewModel: ViewModel, delegate: ProjectUnitsListViewDelegate, withAutoLayout: Bool) {
@@ -52,7 +63,7 @@ public class ProjectUnitsListView: UIView {
         titleLabel.text = viewModel.titles.title
         sortingLabel.text = viewModel.titles.sortingTitle
 
-        sortingStackView.addArrangedSubviews([sortingLabel, sortingIndicator])
+        sortingStackView.addArrangedSubviews([sortingLabel, sortingIndicator, UIView(withAutoLayout: true), soldUnitsVisibilityButton])
         stackView.addArrangedSubviews([titleLabel, sortingStackView, unitsStackView])
         stackView.setCustomSpacing(.spacingM, after: sortingStackView)
 
@@ -79,6 +90,11 @@ public class ProjectUnitsListView: UIView {
         unitsStackView.addArrangedSubviews(unitRows)
     }
 
+    public func configure(soldUnitsVisibilityButtonTitle title: String) {
+        soldUnitsVisibilityButton.setTitle(title, for: .normal)
+        soldUnitsVisibilityButton.isHidden = false
+    }
+
     // MARK: - Actions
 
     @objc private func didSelectSorting() {
@@ -88,6 +104,10 @@ public class ProjectUnitsListView: UIView {
 
         let sortView = SortView(delegate: self, sortOptions: sortOptions)
         delegate?.projectUnitsListView(self, wantsToPresentSortView: sortView, fromSource: sortingIndicator)
+    }
+
+    @objc private func didSelectSoldUnitsVisibilityButton() {
+        delegate?.projectUnitsListViewDidToggleSoldUnitsVisibility(self)
     }
 }
 
