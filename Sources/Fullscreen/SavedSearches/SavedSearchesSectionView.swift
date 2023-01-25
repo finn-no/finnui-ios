@@ -21,6 +21,13 @@ struct SavedSearchesSectionView: View {
 
 struct SavedSearchSectionView_Previews: PreviewProvider {
     static var previews: some View {
-        SavedSearchesSectionView(section: .init(title: "Save", searches: []), searchOverflowButtonAction: { _ in }, searchSelectedAction: { _ in })
+        SavedSearchesSectionView(
+            section: .init(
+                title: "JOBB",
+                searches: [.init(title: "Utvikler", text: "På FINN.no")]
+            ),
+            searchOverflowButtonAction: { _ in },
+            searchSelectedAction: { _ in }
+        )
     }
 }
