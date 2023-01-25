@@ -10,7 +10,11 @@ struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
                     ForEach(viewModel.sections) { section in
                         SavedSearchesSectionView(
                             section: section,
-                            searchOverflowButtonAction: { viewModel.overflowAction(search: $0) }
+                            searchOverflowButtonAction: { viewModel.overflowAction(search: $0)
+                            },
+                            searchSelectedAction: {
+                                viewModel.searchSelectedAction(search: $0)
+                            }
                         )
                     }
                 }

@@ -7,6 +7,7 @@ public protocol SavedSearchesViewModel: ObservableObject {
     func load()
     func sort()
     func overflowAction(search: SavedSearchViewModel)
+    func searchSelectedAction(search: SavedSearchViewModel)
 }
 
 public class SavedSearchesSection: Identifiable, ObservableObject {

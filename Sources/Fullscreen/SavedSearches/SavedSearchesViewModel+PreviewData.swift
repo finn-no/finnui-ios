@@ -48,4 +48,8 @@ class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
     func overflowAction(search: SavedSearchViewModel) {
         print("Did tap overflow menu for search with title", search.title)
     }
+
+    func searchSelectedAction(search: SavedSearchViewModel) {
+        print("Did tap search with title", search.title)
+    }
 }
