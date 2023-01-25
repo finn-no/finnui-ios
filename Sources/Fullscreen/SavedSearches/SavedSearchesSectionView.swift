@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SavedSearchesSectionView: View {
-    @ObservedObject var section: SavedSearchesSection
+    @ObservedObject var section: SavedSearchesSectionViewModel
     var searchOverflowButtonAction: (SavedSearchViewModel) -> Void
     var searchSelectedAction: (SavedSearchViewModel) -> Void
 

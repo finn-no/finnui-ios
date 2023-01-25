@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
+public struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
     @StateObject public var viewModel: ViewModel
 
-    var body: some View {
+    public var body: some View {
         NavigationView {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 0) {

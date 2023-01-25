@@ -4,8 +4,8 @@ class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
     let title: String = "Lagrede søk"
     let sortButtonTitle: String = "Sortering"
 
-    @Published var sections: [SavedSearchesSection] = [
-        SavedSearchesSection(
+    @Published var sections: [SavedSearchesSectionViewModel] = [
+        SavedSearchesSectionViewModel(
             title: "TORGET",
             searches: [
                 .init(title: "iPod Classic", text: "På FINN.no, E-post og Push varsling", textStyle: .active),
@@ -15,20 +15,20 @@ class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
                 .init(title: "OP-1 Syntesizer", text: "På FINN.no, E-post og Push varsling", textStyle: .active)
             ]
         ),
-        SavedSearchesSection(
+        SavedSearchesSectionViewModel(
             title: "EIENDOM",
             searches: [
                 .init(title: "Valdresgata", text: "Ingen aktive varslinger", textStyle: .inactive),
                 .init(title: "Bolig til salgs - 'Strandlinje med Jacuzzi', Fra 250 m², Eiendom", text: "På FINN.no, E-post og Push varsling", textStyle: .active)
             ]
         ),
-        SavedSearchesSection(
+        SavedSearchesSectionViewModel(
             title: "JOBB",
             searches: [
                 .init(title: "UX designer - Oslo", text: "Kun på FINN.no", textStyle: .active)
             ]
         ),
-        SavedSearchesSection(
+        SavedSearchesSectionViewModel(
             title: "BIL",
             searches: [
                 .init(title: "Volvo", text: "Ingen aktive varsler", textStyle: .inactive),
