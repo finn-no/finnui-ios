@@ -11,8 +11,8 @@ class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
 
     private lazy var projectUnitsListView: ProjectUnitsListView = {
-        let view = ProjectUnitsListView(delegate: self, withAutoLayout: true)
-        view.configure(with: .demoModel)
+        let view = ProjectUnitsListView(viewModel: .demoModel, delegate: self, withAutoLayout: true)
+        view.configure(with: .demoModels, sorting: .name)
         return view
     }()
 
@@ -43,6 +43,29 @@ class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
             projectUnitsListView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -.spacingM)
         ])
     }
+
+    // MARK: - Private methods
+
+    private func sortUnits(
+        units: [ProjectUnitsListView.UnitItem],
+        sorting: ProjectUnitsListView.Column
+    ) -> [ProjectUnitsListView.UnitItem] {
+        // The units should be sorted by the selected column, and then by name for units with equal values.
+        let sortedByName = units.sorted(by: { $0.name < $1.name })
+
+        switch sorting {
+        case .area:
+            return sortedByName.sorted(by: { $0.area < $1.area })
+        case .bedrooms:
+            return sortedByName.sorted(by: { $0.bedrooms < $1.bedrooms })
+        case .floor:
+            return sortedByName.sorted(by: { $0.floor < $1.floor })
+        case .totalPrice:
+            return sortedByName.sorted(by: { $0.totalPrice < $1.totalPrice })
+        case .name:
+            return sortedByName
+        }
+    }
 }
 
 // MARK: - ProjectUnitsListViewDelegate
@@ -63,7 +86,10 @@ extension ProjectUnitsListDemoView: ProjectUnitsListViewDelegate {
         _ view: ProjectUnitsListView,
         didSelectSortOption sortOption: ProjectUnitsListView.Column
     ) {
-        projectUnitsListView.sorting = sortOption
+        view.configure(
+            with: sortUnits(units: .demoModels, sorting: sortOption),
+            sorting: sortOption
+        )
         bottomSheet?.state = .dismissed
     }
 }
@@ -74,8 +100,7 @@ private extension ProjectUnitsListView.ViewModel {
     static var demoModel: ProjectUnitsListView.ViewModel {
         Self.init(
             titles: .demoModel,
-            columnHeadings: .demoModel,
-            units: .demoModels
+            columnHeadings: .demoModel
         )
     }
 }
