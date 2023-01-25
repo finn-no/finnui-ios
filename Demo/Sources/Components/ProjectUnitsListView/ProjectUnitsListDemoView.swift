@@ -128,9 +128,7 @@ private extension ProjectUnitsListView.Titles {
     static var demoModel: Self {
         Self.init(
             title: "Enheter i prosjektet",
-            sortingTitle: "Sorter etter",
-            hideSoldUnitsButtonTitle: "Skjul solgte enheter",
-            showSoldUnitsButtonTitle: "Vis solgte enheter"
+            sortingTitle: "Sorter etter"
         )
     }
 }
