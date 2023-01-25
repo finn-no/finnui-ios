@@ -47,7 +47,6 @@ public class ProjectUnitsListView: UIView {
         titleLabel.text = viewModel.titles.title
         sortingLabel.text = viewModel.titles.sortingTitle
 
-        sortedUnits = sortUnits(units: viewModel.units, sorting: sorting)
         refreshContent()
     }
 
@@ -58,6 +57,7 @@ public class ProjectUnitsListView: UIView {
 
         guard let viewModel = viewModel else { return }
 
+        sortedUnits = sortUnits(units: viewModel.units, sorting: sorting)
         sortingIndicator.configure(with: viewModel.columnHeadings.title(for: sorting))
 
         let headerRow = RowView(kind: .header, addSeparator: true, labelValue: { viewModel.columnHeadings.title(for: $0) })
@@ -70,17 +70,20 @@ public class ProjectUnitsListView: UIView {
     }
 
     private func sortUnits(units: [UnitItem], sorting: Column) -> [UnitItem] {
+        // The units should be sorted by the selected column, and then by name for units with equal values. 
+        let sortedByName = units.sorted(by: { $0.name < $1.name })
+
         switch sorting {
         case .area:
-            return units.sorted(by: { $0.area < $1.area })
+            return sortedByName.sorted(by: { $0.area < $1.area })
         case .bedrooms:
-            return units.sorted(by: { $0.bedrooms < $1.bedrooms })
+            return sortedByName.sorted(by: { $0.bedrooms < $1.bedrooms })
         case .floor:
-            return units.sorted(by: { $0.floor < $1.floor })
-        case .name:
-            return units.sorted(by: { $0.name < $1.name })
+            return sortedByName.sorted(by: { $0.floor < $1.floor })
         case .totalPrice:
-            return units.sorted(by: { $0.totalPrice < $1.totalPrice })
+            return sortedByName.sorted(by: { $0.totalPrice < $1.totalPrice })
+        case .name:
+            return sortedByName
         }
     }
 
