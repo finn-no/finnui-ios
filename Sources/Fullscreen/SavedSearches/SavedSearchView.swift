@@ -24,8 +24,9 @@ struct SavedSearchView: View {
                 overflowButtonAction()
             } label: {
                 Image(uiImage: UIImage(named: .overflowMenuHorizontal))
+                    .frame(width: .minimumTargetSize, height: .minimumTargetSize)
             }
-            .padding([.trailing], .spacingM)
+            .padding([.trailing], .spacingS)
         }
         .background(Color.bgPrimary)
     }
