@@ -28,7 +28,7 @@ struct SavedSearchSectionView_Previews: PreviewProvider {
         SavedSearchesSectionView(
             section: .init(
                 title: "JOBB",
-                searches: [.init(title: "Utvikler", text: "På FINN.no")]
+                searches: [.init(title: "Utvikler", text: "På FINN.no", textStyle: .active)]
             ),
             searchOverflowButtonAction: { _ in },
             searchSelectedAction: { _ in }

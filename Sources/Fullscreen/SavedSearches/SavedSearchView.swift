@@ -1,4 +1,5 @@
 import SwiftUI
+import FinniversKit
 
 struct SavedSearchView: View {
     @ObservedObject var savedSearch: SavedSearchViewModel
@@ -12,8 +13,8 @@ struct SavedSearchView: View {
                     .foregroundColor(.textPrimary)
                     .lineLimit(1)
                 Text(savedSearch.text)
-                    .finnFont(.detailStrong)
-                    .foregroundColor(.btnAction)
+                    .finnFont(textStyle)
+                    .foregroundColor(textColor)
                     .lineLimit(1)
             }
             .padding(.spacingM)
@@ -30,10 +31,24 @@ struct SavedSearchView: View {
         }
         .background(Color.bgPrimary)
     }
+
+    private var textStyle: FinniversKit.Label.Style {
+        switch savedSearch.textStyle {
+        case .active: return .detailStrong
+        case .inactive: return .detail
+        }
+    }
+
+    private var textColor: Color {
+        switch savedSearch.textStyle {
+        case .active: return .btnAction
+        case .inactive: return .textSecondary
+        }
+    }
 }
 
 struct SavedSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SavedSearchView(savedSearch: .init(title: "iPod classic", text: "På FINN.no, E-post og Push-varsling"), overflowButtonAction: {})
+        SavedSearchView(savedSearch: .init(title: "iPod classic", text: "På FINN.no, E-post og Push-varsling", textStyle: .active), overflowButtonAction: {})
     }
 }

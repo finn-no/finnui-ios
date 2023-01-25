@@ -8,31 +8,31 @@ class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
         SavedSearchesSection(
             title: "TORGET",
             searches: [
-                .init(title: "iPod Classic", text: "På FINN.no, E-post og Push varsling"),
-                .init(title: "Skinnsofa", text: "Kun Push-varsling"),
-                .init(title: "Hipster DBS sykkel", text: "Ingen aktive varsler"),
-                .init(title: "Fender Jaguar", text: "Kun på FINN.no"),
-                .init(title: "OP-1 Syntesizer", text: "På FINN.no, E-post og Push varsling")
+                .init(title: "iPod Classic", text: "På FINN.no, E-post og Push varsling", textStyle: .active),
+                .init(title: "Skinnsofa", text: "Kun Push-varsling", textStyle: .active),
+                .init(title: "Hipster DBS sykkel", text: "Ingen aktive varsler", textStyle: .inactive),
+                .init(title: "Fender Jaguar", text: "Kun på FINN.no", textStyle: .active),
+                .init(title: "OP-1 Syntesizer", text: "På FINN.no, E-post og Push varsling", textStyle: .active)
             ]
         ),
         SavedSearchesSection(
             title: "EIENDOM",
             searches: [
-                .init(title: "Valdresgata", text: "Ingen aktive varslinger"),
-                .init(title: "Bolig til salgs - 'Strandlinje med Jacuzzi', Fra 250 m², Eiendom", text: "På FINN.no, E-post og Push varsling")
+                .init(title: "Valdresgata", text: "Ingen aktive varslinger", textStyle: .inactive),
+                .init(title: "Bolig til salgs - 'Strandlinje med Jacuzzi', Fra 250 m², Eiendom", text: "På FINN.no, E-post og Push varsling", textStyle: .active)
             ]
         ),
         SavedSearchesSection(
             title: "JOBB",
             searches: [
-                .init(title: "UX designer - Oslo", text: "Kun på FINN.no")
+                .init(title: "UX designer - Oslo", text: "Kun på FINN.no", textStyle: .active)
             ]
         ),
         SavedSearchesSection(
             title: "BIL",
             searches: [
-                .init(title: "Volvo", text: "Ingen aktive varsler"),
-                .init(title: "Lastebil, fra 800 000 kr", text: "Ingen aktive varsler")
+                .init(title: "Volvo", text: "Ingen aktive varsler", textStyle: .inactive),
+                .init(title: "Lastebil, fra 800 000 kr", text: "Ingen aktive varsler", textStyle: .inactive)
             ]
         )
     ]

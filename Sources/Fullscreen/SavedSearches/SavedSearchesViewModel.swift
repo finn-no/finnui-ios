@@ -22,13 +22,20 @@ public class SavedSearchesSection: Identifiable, ObservableObject {
 }
 
 public class SavedSearchViewModel: Identifiable, ObservableObject, Equatable {
+    public enum TextStyle {
+        case active
+        case inactive
+    }
+
     public let id = UUID()
     public let title: String
     public let text: String
+    public let textStyle: TextStyle
 
-    init(title: String, text: String) {
+    init(title: String, text: String, textStyle: TextStyle) {
         self.title = title
         self.text = text
+        self.textStyle = textStyle
     }
 
     public func hash(into hasher: inout Hasher) {
