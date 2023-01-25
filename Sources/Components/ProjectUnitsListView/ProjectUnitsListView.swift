@@ -83,4 +83,10 @@ public class ProjectUnitsListView: UIView {
             return units.sorted(by: { $0.totalPrice < $1.totalPrice })
         }
     }
+
+// MARK: - ProjectUnitsSortViewDelegate
+
+extension ProjectUnitsListView: ProjectUnitsSortViewDelegate {
+    func sortView(_ view: SortView, didSelectSortOption sortOption: Column) {
+    }
 }
