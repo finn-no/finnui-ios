@@ -1,19 +1,21 @@
 import Foundation
 
-protocol SavedSearchesViewModel {
+public protocol SavedSearchesViewModel: ObservableObject {
+    var title: String { get }
+    var sortButtonTitle: String { get }
     var sections: [SavedSearchesSection] { get }
     func load()
-    func reorder()
+    func sort()
 }
 
-struct SavedSearchesSection: Identifiable {
-    let id = UUID()
-    let title: String
-    let searches: [SavedSearchViewModel]
+public struct SavedSearchesSection: Identifiable {
+    public let id = UUID()
+    public let title: String
+    public let searches: [SavedSearchViewModel]
 }
 
-struct SavedSearchViewModel: Identifiable {
-    let id = UUID()
-    let title: String
-    let text: String
+public struct SavedSearchViewModel: Identifiable {
+    public let id = UUID()
+    public let title: String
+    public let text: String
 }

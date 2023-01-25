@@ -1,7 +1,10 @@
 import Foundation
 
-struct SavedSearchesPreviewData: SavedSearchesViewModel {
-    let sections: [SavedSearchesSection] = [
+class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
+    let title: String = "Lagrede søk"
+    let sortButtonTitle: String = "Sortering"
+
+    @Published var sections: [SavedSearchesSection] = [
         SavedSearchesSection(
             title: "TORGET",
             searches: [
@@ -35,5 +38,8 @@ struct SavedSearchesPreviewData: SavedSearchesViewModel {
     ]
 
     func load() {}
-    func reorder() {}
+
+    func sort() {
+        sections.shuffle()
+    }
 }

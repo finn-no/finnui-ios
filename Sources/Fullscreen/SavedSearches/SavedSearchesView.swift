@@ -1,18 +1,27 @@
 import SwiftUI
 
-struct SavedSearchesView: View {
-    public var viewModel: SavedSearchesViewModel
+struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
+    @StateObject public var viewModel: ViewModel
 
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 0) {
-                ForEach(viewModel.sections) { section in
-                    Section(header: SearchSectionHeaderView(text: section.title)) {
-                        ForEach(section.searches) { search in
-                            Text(search.title)
+        NavigationView {
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    ForEach(viewModel.sections) { section in
+                        Section(header: SearchSectionHeaderView(text: section.title)) {
+                            ForEach(section.searches) { search in
+                                Text(search.title)
+                            }
                         }
                     }
                 }
+            }
+            .navigationTitle(viewModel.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Button(viewModel.sortButtonTitle, action: {
+                    viewModel.sort()
+                })
             }
         }
     }
