@@ -14,7 +14,9 @@ struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
                         )
                     }
                 }
+                .padding([.top], .spacingM)
             }
+            .background(Color.bgSecondary)
             .navigationTitle(viewModel.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
