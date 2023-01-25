@@ -7,6 +7,12 @@ protocol ProjectUnitsSortViewDelegate: AnyObject {
 extension ProjectUnitsListView {
     class SortView: UIView {
 
+        // MARK: - Internal properties
+
+        override var intrinsicContentSize: CGSize {
+            CGSize(width: .greatestFiniteMagnitude, height: Double(sortOptions.count * 48))
+        }
+
         // MARK: - Private Properties
 
         private weak var delegate: ProjectUnitsSortViewDelegate?
