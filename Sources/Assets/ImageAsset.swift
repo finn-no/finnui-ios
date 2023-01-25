@@ -64,6 +64,7 @@ enum ImageAsset: String {
     case mapPin
     case noImage
     case notFavorited
+    case overflowMenuHorizontal
     case pin
     case plus
     case profile
@@ -130,6 +131,7 @@ enum ImageAsset: String {
             .mapPin,
             .noImage,
             .notFavorited,
+            .overflowMenuHorizontal,
             .pin,
             .plus,
             .profile,

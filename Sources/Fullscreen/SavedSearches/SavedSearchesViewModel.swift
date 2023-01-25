@@ -19,8 +19,13 @@ public class SavedSearchesSection: Identifiable, ObservableObject {
     }
 }
 
-public struct SavedSearchViewModel: Identifiable {
+public class SavedSearchViewModel: Identifiable, ObservableObject {
     public let id = UUID()
     public let title: String
     public let text: String
+
+    init(title: String, text: String) {
+        self.title = title
+        self.text = text
+    }
 }

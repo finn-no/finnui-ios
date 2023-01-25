@@ -6,7 +6,7 @@ struct SavedSearchesSectionView: View {
     var body: some View {
         Section(header: SearchSectionHeaderView(text: section.title)) {
             ForEach(section.searches) { search in
-                Text(search.title)
+                SavedSearchView(savedSearch: search)
             }
         }
     }
