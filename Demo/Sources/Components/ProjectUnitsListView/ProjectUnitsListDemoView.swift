@@ -2,10 +2,11 @@ import UIKit
 import FinniversKit
 import FinnUI
 
-class ProjectUnitsListDemoView: UIView {
+class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
 
     // MARK: - Private properties
 
+    weak var demoViewController: UIViewController?
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
 
     private lazy var projectUnitsListView: ProjectUnitsListView = {
