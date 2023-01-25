@@ -8,15 +8,26 @@ struct SavedSearchView: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(savedSearch.title)
+                    .finnFont(.bodyStrong)
+                    .foregroundColor(.textPrimary)
+                    .lineLimit(1)
                 Text(savedSearch.text)
+                    .finnFont(.detailStrong)
+                    .foregroundColor(.btnAction)
+                    .lineLimit(1)
             }
+            .padding(.spacingM)
+
             Spacer()
+
             Button {
                 overflowButtonAction()
             } label: {
                 Image(uiImage: UIImage(named: .overflowMenuHorizontal))
             }
+            .padding([.trailing], .spacingM)
         }
+        .background(Color.bgPrimary)
     }
 }
 
