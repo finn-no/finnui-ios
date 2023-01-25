@@ -44,4 +44,8 @@ class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
             $0.searches.shuffle()
         })
     }
+
+    func overflowAction(search: SavedSearchViewModel) {
+        print("Did tap overflow menu for search with title", search.title)
+    }
 }
