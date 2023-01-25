@@ -1,6 +1,19 @@
 import UIKit
 import FinniversKit
 
+public protocol ProjectUnitsListViewDelegate: AnyObject {
+    func projectUnitsListView(
+        _ view: ProjectUnitsListView,
+        wantsToPresentSortView sortView: UIView,
+        fromSource source: UIView
+    )
+
+    func projectUnitsListView(
+        _ view: ProjectUnitsListView,
+        didSelectSortOption sortOption: ProjectUnitsListView.Column
+    )
+}
+
 public class ProjectUnitsListView: UIView {
 
     // MARK: - Public properties
@@ -11,6 +24,7 @@ public class ProjectUnitsListView: UIView {
 
     // MARK: - Private properties
 
+    private weak var delegate: ProjectUnitsListViewDelegate?
     private var viewModel: ViewModel?
     private var sortedUnits = [UnitItem]()
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
@@ -27,8 +41,10 @@ public class ProjectUnitsListView: UIView {
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(delegate: ProjectUnitsListViewDelegate, withAutoLayout: Bool) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
@@ -95,6 +111,14 @@ public class ProjectUnitsListView: UIView {
     // MARK: - Actions
 
     @objc private func didSelectSorting() {
+        guard let viewModel = viewModel else { return }
+
+        let sortOptions = Column.allCases.map {
+            SortView.SortOption(title: viewModel.columnHeadings.title(for: $0), column: $0, isSelected: sorting == $0)
+        }
+
+        let sortView = SortView(delegate: self, sortOptions: sortOptions)
+        delegate?.projectUnitsListView(self, wantsToPresentSortView: sortView, fromSource: sortingIndicator)
     }
 }
 
@@ -102,5 +126,6 @@ public class ProjectUnitsListView: UIView {
 
 extension ProjectUnitsListView: ProjectUnitsSortViewDelegate {
     func sortView(_ view: SortView, didSelectSortOption sortOption: Column) {
+        delegate?.projectUnitsListView(self, didSelectSortOption: sortOption)
     }
 }
