@@ -1,15 +1,19 @@
 import Foundation
 
-struct SavedSearchesViewModel {
-    let sections: [SavedSearchesSection]
+protocol SavedSearchesViewModel {
+    var sections: [SavedSearchesSection] { get }
+    func load()
+    func reorder()
 }
 
-struct SavedSearchesSection {
+struct SavedSearchesSection: Identifiable {
+    let id = UUID()
     let title: String
     let searches: [SavedSearchViewModel]
 }
 
-struct SavedSearchViewModel {
+struct SavedSearchViewModel: Identifiable {
+    let id = UUID()
     let title: String
     let text: String
 }
