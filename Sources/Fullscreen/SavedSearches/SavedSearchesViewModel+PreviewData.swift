@@ -40,6 +40,8 @@ class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
     func load() {}
 
     func sort() {
-        sections.shuffle()
+        sections.forEach({
+            $0.searches.shuffle()
+        })
     }
 }

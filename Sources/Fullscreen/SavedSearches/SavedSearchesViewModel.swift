@@ -8,10 +8,15 @@ public protocol SavedSearchesViewModel: ObservableObject {
     func sort()
 }
 
-public struct SavedSearchesSection: Identifiable {
+public class SavedSearchesSection: Identifiable, ObservableObject {
     public let id = UUID()
     public let title: String
-    public let searches: [SavedSearchViewModel]
+    @Published public var searches: [SavedSearchViewModel]
+
+    init(title: String, searches: [SavedSearchViewModel]) {
+        self.title = title
+        self.searches = searches
+    }
 }
 
 public struct SavedSearchViewModel: Identifiable {

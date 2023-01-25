@@ -13,7 +13,7 @@ struct SearchSectionHeaderView: View {
     }
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
+struct SearchSectionHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         SearchSectionHeaderView(text: "EIENDOM")
     }

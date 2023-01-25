@@ -8,11 +8,7 @@ struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     ForEach(viewModel.sections) { section in
-                        Section(header: SearchSectionHeaderView(text: section.title)) {
-                            ForEach(section.searches) { search in
-                                Text(search.title)
-                            }
-                        }
+                        SavedSearchesSectionView(section: section)
                     }
                 }
             }
