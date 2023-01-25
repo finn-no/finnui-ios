@@ -4,14 +4,15 @@ struct SavedSearchesView: View {
     public var viewModel: SavedSearchesViewModel
 
     var body: some View {
-        List {
-            ForEach(viewModel.sections) { section in
-                Section(header: Text(section.title)) {
-                    ForEach(section.searches) { search in
-                        Text(search.title)
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(viewModel.sections) { section in
+                    Section(header: SearchSectionHeaderView(text: section.title)) {
+                        ForEach(section.searches) { search in
+                            Text(search.title)
+                        }
                     }
                 }
-
             }
         }
     }

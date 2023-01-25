@@ -3,7 +3,7 @@ import Foundation
 struct SavedSearchesPreviewData: SavedSearchesViewModel {
     let sections: [SavedSearchesSection] = [
         SavedSearchesSection(
-            title: "Torget",
+            title: "TORGET",
             searches: [
                 .init(title: "iPod Classic", text: "På FINN.no, E-post og Push varsling"),
                 .init(title: "Skinnsofa", text: "Kun Push-varsling"),
@@ -13,20 +13,20 @@ struct SavedSearchesPreviewData: SavedSearchesViewModel {
             ]
         ),
         SavedSearchesSection(
-            title: "Eiendom",
+            title: "EIENDOM",
             searches: [
                 .init(title: "Valdresgata", text: "Ingen aktive varslinger"),
                 .init(title: "Bolig til salgs - 'Strandlinje med Jacuzzi', Fra 250 m², Eiendom", text: "På FINN.no, E-post og Push varsling")
             ]
         ),
         SavedSearchesSection(
-            title: "Jobb",
+            title: "JOBB",
             searches: [
                 .init(title: "UX designer - Oslo", text: "Kun på FINN.no")
             ]
         ),
         SavedSearchesSection(
-            title: "Bil",
+            title: "BIL",
             searches: [
                 .init(title: "Volvo", text: "Ingen aktive varsler"),
                 .init(title: "Lastebil, fra 800 000 kr", text: "Ingen aktive varsler")
