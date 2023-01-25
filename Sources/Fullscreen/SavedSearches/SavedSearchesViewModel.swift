@@ -21,7 +21,7 @@ public class SavedSearchesSection: Identifiable, ObservableObject {
     }
 }
 
-public class SavedSearchViewModel: Identifiable, ObservableObject {
+public class SavedSearchViewModel: Identifiable, ObservableObject, Equatable {
     public let id = UUID()
     public let title: String
     public let text: String
@@ -29,5 +29,13 @@ public class SavedSearchViewModel: Identifiable, ObservableObject {
     init(title: String, text: String) {
         self.title = title
         self.text = text
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    public static func == (lhs: SavedSearchViewModel, rhs: SavedSearchViewModel) -> Bool {
+        lhs.id == rhs.id
     }
 }

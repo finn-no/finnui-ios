@@ -14,6 +14,10 @@ struct SavedSearchesSectionView: View {
                 ).onTapGesture {
                     searchSelectedAction(search)
                 }
+
+                if search != section.searches.last {
+                    Divider().padding(.leading, .spacingM)
+                }
             }
         }
     }
