@@ -106,7 +106,7 @@ public enum ComponentDemoViews: String, DemoViews {
         case .fiksFerdigContactSellerView:
             return DemoViewController<FiksFerdigContactSellerDemoView>()
         case .projectUnitsListView:
-            return DemoViewController<ProjectUnitsListDemoView>()
+            return DemoViewController<ProjectUnitsListDemoView>(dismissType: .dismissButton)
         }
     }
 }

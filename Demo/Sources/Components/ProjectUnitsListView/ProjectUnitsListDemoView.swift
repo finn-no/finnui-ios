@@ -8,11 +8,14 @@ class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
 
     weak var demoViewController: UIViewController?
     private var bottomSheet: BottomSheet?
+    private var showSoldUnits = false
+    private var sortOption = ProjectUnitsListView.Column.name
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
 
     private lazy var projectUnitsListView: ProjectUnitsListView = {
         let view = ProjectUnitsListView(viewModel: .demoModel, delegate: self, withAutoLayout: true)
-        view.configure(with: .demoModels, sorting: .name)
+        view.configure(with: .demoModels(showSoldUnits: showSoldUnits), sorting: sortOption)
+        view.configure(soldUnitsVisibilityButtonTitle: showSoldUnits.soldUnitsButtonTitle)
         return view
     }()
 
@@ -86,15 +89,31 @@ extension ProjectUnitsListDemoView: ProjectUnitsListViewDelegate {
         _ view: ProjectUnitsListView,
         didSelectSortOption sortOption: ProjectUnitsListView.Column
     ) {
+        self.sortOption = sortOption
         view.configure(
-            with: sortUnits(units: .demoModels, sorting: sortOption),
+            with: sortUnits(units: .demoModels(showSoldUnits: showSoldUnits), sorting: sortOption),
             sorting: sortOption
         )
         bottomSheet?.state = .dismissed
     }
+
+    func projectUnitsListViewDidToggleSoldUnitsVisibility(_ view: ProjectUnitsListView) {
+        showSoldUnits.toggle()
+        view.configure(soldUnitsVisibilityButtonTitle: showSoldUnits.soldUnitsButtonTitle)
+        view.configure(
+            with: sortUnits(units: .demoModels(showSoldUnits: showSoldUnits), sorting: sortOption),
+            sorting: sortOption
+        )
+    }
 }
 
 // MARK: - Private extensions
+
+private extension Bool {
+    var soldUnitsButtonTitle: String {
+        self ? "Skjul solgte enheter" : "Vis solgte enheter"
+    }
+}
 
 private extension ProjectUnitsListView.ViewModel {
     static var demoModel: ProjectUnitsListView.ViewModel {
@@ -129,21 +148,23 @@ private extension ProjectUnitsListView.ColumnHeadings {
 }
 
 private extension Array where Element == ProjectUnitsListView.UnitItem {
-    static var demoModels: [ProjectUnitsListView.UnitItem] {
+    static func demoModels(showSoldUnits: Bool) -> [ProjectUnitsListView.UnitItem] {
         let areas = [100, 40, 2500, 1337, ].map { "\($0) m²" }
         let totalPrices = [450_000, 1_300_000, 9_999_999, 50_000, 666_000, 3_700_000]
             .compactMap { NumberFormatter.priceFormatter.string(from: NSNumber(value: $0)) }
             .map { "\($0) kr" }
 
-        return (1...15).map {
-            ProjectUnitsListView.UnitItem(
+        return (1...15).compactMap {
+            let isSold = $0 % 2 == 0
+            if isSold, !showSoldUnits { return nil }
+
+            return ProjectUnitsListView.UnitItem(
                 identifier: $0,
                 name: "A \(100 + $0)",
                 floor: "\(($0 * 2 % 15) + 1)",
                 bedrooms: "\(($0 * 3 % 5) + 1)",
                 area: areas[$0 % areas.count],
-                totalPrice: totalPrices[$0 % totalPrices.count],
-                isSold: $0 % 2 == 0
+                totalPrice: isSold ? "Solgt" : totalPrices[$0 % totalPrices.count]
             )
         }
     }
