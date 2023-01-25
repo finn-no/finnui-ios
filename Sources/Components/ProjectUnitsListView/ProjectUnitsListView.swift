@@ -17,8 +17,13 @@ public class ProjectUnitsListView: UIView {
     private lazy var titleLabel = Label(style: .title3, numberOfLines: 0, withAutoLayout: true)
     private lazy var sortingStackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
     private lazy var sortingLabel = Label(style: .body, numberOfLines: 0, withAutoLayout: true)
-    private lazy var sortingIndicator = SortingIndicator(withAutoLayout: true)
     private lazy var unitsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+
+    private lazy var sortingIndicator: SortingIndicator = {
+        let view = SortingIndicator(withAutoLayout: true)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didSelectSorting)))
+        return view
+    }()
 
     // MARK: - Init
 
@@ -86,6 +91,12 @@ public class ProjectUnitsListView: UIView {
             return sortedByName
         }
     }
+
+    // MARK: - Actions
+
+    @objc private func didSelectSorting() {
+    }
+}
 
 // MARK: - ProjectUnitsSortViewDelegate
 
