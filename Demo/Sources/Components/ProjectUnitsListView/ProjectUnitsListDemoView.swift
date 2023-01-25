@@ -7,10 +7,11 @@ class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
     // MARK: - Private properties
 
     weak var demoViewController: UIViewController?
+    private var bottomSheet: BottomSheet?
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
 
     private lazy var projectUnitsListView: ProjectUnitsListView = {
-        let view = ProjectUnitsListView(withAutoLayout: true)
+        let view = ProjectUnitsListView(delegate: self, withAutoLayout: true)
         view.configure(with: .demoModel)
         return view
     }()
@@ -41,6 +42,29 @@ class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
             projectUnitsListView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor, constant: -.spacingM),
             projectUnitsListView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -.spacingM)
         ])
+    }
+}
+
+// MARK: - ProjectUnitsListViewDelegate
+
+extension ProjectUnitsListDemoView: ProjectUnitsListViewDelegate {
+    func projectUnitsListView(
+        _ view: ProjectUnitsListView,
+        wantsToPresentSortView sortView: UIView,
+        fromSource source: UIView
+    ) {
+        bottomSheet?.state = .dismissed
+        let bottomSheet = BottomSheet(view: sortView)
+        demoViewController?.present(bottomSheet, animated: true)
+        self.bottomSheet = bottomSheet
+    }
+
+    func projectUnitsListView(
+        _ view: ProjectUnitsListView,
+        didSelectSortOption sortOption: ProjectUnitsListView.Column
+    ) {
+        projectUnitsListView.sorting = sortOption
+        bottomSheet?.state = .dismissed
     }
 }
 
