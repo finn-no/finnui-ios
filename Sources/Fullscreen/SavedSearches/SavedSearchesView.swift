@@ -16,6 +16,7 @@ struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
                                 viewModel.searchSelectedAction(search: $0)
                             }
                         )
+                        Spacer().frame(height: .spacingXL)
                     }
                 }
                 .padding([.top], .spacingM)
