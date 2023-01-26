@@ -1,7 +1,11 @@
 import SwiftUI
 
 public struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
-    @StateObject public var viewModel: ViewModel
+    @ObservedObject var viewModel: ViewModel
+
+    public init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+    }
 
     public var body: some View {
         NavigationView {
