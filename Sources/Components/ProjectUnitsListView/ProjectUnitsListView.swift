@@ -63,8 +63,12 @@ public class ProjectUnitsListView: UIView {
         titleLabel.text = viewModel.titles.title
         sortingLabel.text = viewModel.titles.sortingTitle
 
+        let headerRow = RowView(kind: .header, addSeparator: true, labelValue: { column in
+            viewModel.columnHeadings.title(for: column)
+        })
+
         sortingStackView.addArrangedSubviews([sortingLabel, sortingIndicator, UIView(withAutoLayout: true), soldUnitsVisibilityButton])
-        stackView.addArrangedSubviews([titleLabel, sortingStackView, unitsStackView])
+        stackView.addArrangedSubviews([titleLabel, sortingStackView, headerRow, unitsStackView])
         stackView.setCustomSpacing(.spacingM, after: sortingStackView)
 
         addSubview(stackView)
@@ -77,16 +81,14 @@ public class ProjectUnitsListView: UIView {
         self.sorting = sorting
         self.units = units
 
-        unitsStackView.removeArrangedSubviews()
-
         sortingIndicator.configure(with: viewModel.columnHeadings.title(for: sorting))
 
-        let headerRow = RowView(kind: .header, addSeparator: true, labelValue: { viewModel.columnHeadings.title(for: $0) })
-        unitsStackView.addArrangedSubview(headerRow)
-
         let unitRows = units.enumerated().map { index, unit in
-            RowView(kind: .unit, addSeparator: true, labelValue: { unit.value(for: $0) })
+            RowView(kind: .unit, addSeparator: true, labelValue: { column in
+                unit.value(for: column)
+            })
         }
+        unitsStackView.removeArrangedSubviews()
         unitsStackView.addArrangedSubviews(unitRows)
     }
 
