@@ -26,15 +26,15 @@ public struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
                 .padding([.top], .spacingM)
             }
             .background(Color.bgSecondary)
-            .navigationTitle(viewModel.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                Button(viewModel.sortButtonTitle, action: {
-                    withAnimation {
-                        viewModel.sort()
-                    }
-                })
-            }
+        }
+        .navigationTitle(viewModel.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Button(viewModel.sortButtonTitle, action: {
+                withAnimation {
+                    viewModel.sort()
+                }
+            })
         }
         .onAppear {
             viewModel.load()
