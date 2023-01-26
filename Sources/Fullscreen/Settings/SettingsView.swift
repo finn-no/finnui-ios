@@ -115,7 +115,7 @@ private struct Header: View {
                 VStack {
                     Image(uiImage: image)
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.textPrimary)
+                        .foregroundColor(.bgPrimary)
                         .accessibilityHidden(true)
                     Spacer()
                 }
@@ -253,15 +253,15 @@ private final class PreviewViewModel: SettingsViewModel {
         SettingsSection(
             header: .plain(title: "Meldinger"),
             items: [
-                ConsentRow(title: "Meldinger til e-post", status: "Av"),
+                ConsentRow(id: UUID().uuidString, title: "Meldinger til e-post", status: "Av"),
             ]
         ),
         SettingsSection(
             header: .plain(title: "Personvern"),
             items: [
-                ConsentRow(title: "Få nyhetsbrev fra FINN", status: "Av"),
-                ConsentRow(title: "Personlig tilpasset FINN", status: "På"),
-                ConsentRow(title: "Motta viktig informasjon fra FINN", status: "På"),
+                ConsentRow(id: UUID().uuidString, title: "Få nyhetsbrev fra FINN", status: "Av"),
+                ConsentRow(id: UUID().uuidString, title: "Personlig tilpasset FINN", status: "På"),
+                ConsentRow(id: UUID().uuidString, title: "Motta viktig informasjon fra FINN", status: "På"),
                 TextRow(title: "Smart reklame"),
                 TextRow(title: "Last ned dine data"),
                 TextRow(title: "Slett meg som bruker")
@@ -280,6 +280,7 @@ private final class PreviewViewModel: SettingsViewModel {
     }
 
     private struct ConsentRow: SettingsViewConsentCellModel {
+        let id: String
         let title: String
         let status: String
     }
