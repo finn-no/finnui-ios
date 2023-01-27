@@ -26,7 +26,7 @@ extension ProjectUnitsListView {
 
         // MARK: - Init
 
-        init(kind: Kind, addSeparator: Bool, labelValue: (Column) -> String) {
+        init(kind: Kind, addSeparator: Bool = false, labelValue: (Column) -> String) {
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
             setup(kind: kind, addSeparator: addSeparator, labelValue: labelValue)
@@ -43,13 +43,12 @@ extension ProjectUnitsListView {
             verticalStackView.fillInSuperview()
 
             let labels = Column.allCases.map { column in
+                let text = labelValue(column)
                 switch kind {
                 case .header:
-                    return createLabel(style: .captionStrong, column: column, text: labelValue(column))
+                    return createLabel(style: .captionStrong, column: column, text: text)
                 case .unit:
-                    let style: Label.Style = column == .name ? .captionStrong : .caption
-                    let textColor: UIColor = column == .name ? .textAction : .textPrimary
-                    return createLabel(style: style, column: column, textColor: textColor, text: labelValue(column))
+                    return createLabel(style: column.unitLabelStyle, column: column, textColor: column.unitTextColor, text: text)
                 }
             }
             horizontalStackView.addArrangedSubviews(labels)
@@ -90,6 +89,24 @@ extension ProjectUnitsListView {
 // MARK: - Private extensions
 
 private extension ProjectUnitsListView.Column {
+    var unitLabelStyle: Label.Style {
+        switch self {
+        case .name:
+            return .captionStrong
+        case .floor, .area, .bedrooms, .totalPrice:
+            return .caption
+        }
+    }
+
+    var unitTextColor: UIColor {
+        switch self {
+        case .name:
+            return .textAction
+        case .floor, .area, .bedrooms, .totalPrice:
+            return .textPrimary
+        }
+    }
+
     var textAlignment: NSTextAlignment {
         switch self {
         case .name:
