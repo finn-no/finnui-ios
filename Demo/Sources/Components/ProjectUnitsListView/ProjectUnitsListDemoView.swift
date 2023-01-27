@@ -11,6 +11,7 @@ class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
     private var showSoldUnits = false
     private var sortOption = ProjectUnitsListView.Column.name
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
+    private lazy var projectUnitsListViewHeighConstraint = projectUnitsListView.heightAnchor.constraint(greaterThanOrEqualToConstant: 1)
 
     private lazy var projectUnitsListView: ProjectUnitsListView = {
         let view = ProjectUnitsListView(viewModel: .demoModel, delegate: self, withAutoLayout: true)
@@ -28,6 +29,19 @@ class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
 
+    // MARK: - Overrides
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        let size = projectUnitsListView.systemLayoutSizeFitting(
+            CGSize(width: bounds.width, height: 0),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+        projectUnitsListViewHeighConstraint.constant = size.height
+    }
+
     // MARK: - Setup
 
     private func setup() {
@@ -40,6 +54,7 @@ class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
         NSLayoutConstraint.activate([
             scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
 
+            projectUnitsListViewHeighConstraint,
             projectUnitsListView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: .spacingM),
             projectUnitsListView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: .spacingM),
             projectUnitsListView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor, constant: -.spacingM),
