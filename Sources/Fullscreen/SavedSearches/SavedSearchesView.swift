@@ -8,25 +8,23 @@ public struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
     }
 
     public var body: some View {
-        NavigationView {
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(viewModel.sections) { section in
-                        SavedSearchesSectionView(
-                            section: section,
-                            searchOverflowButtonAction: { viewModel.overflowAction(search: $0)
-                            },
-                            searchSelectedAction: {
-                                viewModel.searchSelectedAction(search: $0)
-                            }
-                        )
-                        Spacer().frame(height: .spacingXL)
-                    }
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(viewModel.sections) { section in
+                    SavedSearchesSectionView(
+                        section: section,
+                        searchOverflowButtonAction: { viewModel.overflowAction(search: $0)
+                        },
+                        searchSelectedAction: {
+                            viewModel.searchSelectedAction(search: $0)
+                        }
+                    )
+                    Spacer().frame(height: .spacingXL)
                 }
-                .padding([.top], .spacingM)
             }
-            .background(Color.bgSecondary)
+            .padding([.top], .spacingM)
         }
+        .background(Color.bgSecondary)
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
