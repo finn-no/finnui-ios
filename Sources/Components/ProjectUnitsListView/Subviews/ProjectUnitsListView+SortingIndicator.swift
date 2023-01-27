@@ -34,7 +34,7 @@ extension ProjectUnitsListView {
         // MARK: - Setup
 
         private func setup() {
-            stackView.addArrangedSubviews([sortingValueLabel, arrowImageView, UIView(withAutoLayout: true)])
+            stackView.addArrangedSubviews([sortingValueLabel, arrowImageView])
             addSubview(stackView)
             stackView.fillInSuperview()
         }
