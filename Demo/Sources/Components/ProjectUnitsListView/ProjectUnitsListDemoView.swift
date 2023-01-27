@@ -105,6 +105,14 @@ extension ProjectUnitsListDemoView: ProjectUnitsListViewDelegate {
             sorting: sortOption
         )
     }
+
+    func projectUnitsListViewDidToggleSoldUnitsVisibility(
+        _ view: ProjectUnitsListView,
+        didSelectUnitAtIndex index: Int,
+        withIdentifier unitIdentifier: Int
+    ) {
+        print("👉 Did select unit at index '\(index)', with identifier '\(unitIdentifier)'")
+    }
 }
 
 // MARK: - Private extensions

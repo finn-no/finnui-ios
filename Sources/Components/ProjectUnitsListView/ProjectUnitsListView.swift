@@ -16,6 +16,12 @@ public protocol ProjectUnitsListViewDelegate: AnyObject {
     func projectUnitsListViewDidToggleSoldUnitsVisibility(
         _ view: ProjectUnitsListView
     )
+
+    func projectUnitsListViewDidToggleSoldUnitsVisibility(
+        _ view: ProjectUnitsListView,
+        didSelectUnitAtIndex index: Int,
+        withIdentifier unitIdentifier: Int
+    )
 }
 
 public class ProjectUnitsListView: UIView {
@@ -178,6 +184,16 @@ extension ProjectUnitsListView: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension ProjectUnitsListView: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        let unit = units[indexPath.row]
+        delegate?.projectUnitsListViewDidToggleSoldUnitsVisibility(
+            self,
+            didSelectUnitAtIndex: indexPath.row,
+            withIdentifier: unit.identifier
+        )
+    }
 }
 
 // MARK: - ProjectUnitsSortViewDelegate
