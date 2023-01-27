@@ -37,7 +37,7 @@ class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
         )
     ]
 
-    func load() {}
+    func onAppear() {}
 
     func sort() {
         sections.forEach({

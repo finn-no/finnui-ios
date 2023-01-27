@@ -37,7 +37,7 @@ public struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
             })
         }
         .onAppear {
-            viewModel.load()
+            viewModel.onAppear()
         }
     }
 }
