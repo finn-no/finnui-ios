@@ -26,11 +26,21 @@ public class ProjectUnitsListView: UIView {
     private var viewModel: ViewModel
     private var units = [UnitItem]()
     private var sorting: Column = .name
-    private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
     private lazy var titleLabel = Label(style: .title3, numberOfLines: 0, withAutoLayout: true)
+    private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
     private lazy var sortingStackView = UIStackView(axis: .horizontal, spacing: .spacingS, withAutoLayout: true)
     private lazy var sortingLabel = Label(style: .body, numberOfLines: 0, withAutoLayout: true)
-    private lazy var unitsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(withAutoLayout: true)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .clear
+        tableView.separatorInset = .zero
+        tableView.isScrollEnabled = false
+        tableView.register(UnitItemTableViewCell.self)
+        return tableView
+    }()
 
     private lazy var sortingIndicator: SortingIndicator = {
         let view = SortingIndicator(withAutoLayout: true)
@@ -68,33 +78,60 @@ public class ProjectUnitsListView: UIView {
         })
 
         sortingStackView.addArrangedSubviews([sortingLabel, sortingIndicator, UIView(withAutoLayout: true), soldUnitsVisibilityButton])
-        stackView.addArrangedSubviews([titleLabel, sortingStackView, headerRow, unitsStackView])
+        stackView.addArrangedSubviews([titleLabel, sortingStackView, headerRow])
         stackView.setCustomSpacing(.spacingM, after: sortingStackView)
 
         addSubview(stackView)
-        stackView.fillInSuperview()
+        addSubview(tableView)
+
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            tableView.topAnchor.constraint(equalTo: stackView.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
     }
 
     // MARK: - Public methods
 
     public func configure(with units: [UnitItem], sorting: Column) {
         self.sorting = sorting
-        self.units = units
-
         sortingIndicator.configure(with: viewModel.columnHeadings.title(for: sorting))
 
-        let unitRows = units.enumerated().map { index, unit in
-            RowView(kind: .unit, addSeparator: true, labelValue: { column in
-                unit.value(for: column)
-            })
+        if units != self.units {
+            self.units = units
+            tableView.reloadData()
         }
-        unitsStackView.removeArrangedSubviews()
-        unitsStackView.addArrangedSubviews(unitRows)
     }
 
     public func configure(soldUnitsVisibilityButtonTitle title: String) {
         soldUnitsVisibilityButton.setTitle(title, for: .normal)
         soldUnitsVisibilityButton.isHidden = false
+    }
+
+    // MARK: - Overrides
+
+    public override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        let stackViewSize = stackView.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: horizontalFittingPriority, verticalFittingPriority: verticalFittingPriority)
+        let tableViewHeight = units
+            .map { unit -> CGFloat in
+                let rowView = RowView(kind: .unit, labelValue: { unit.value(for: $0) })
+                let size = rowView.systemLayoutSizeFitting(
+                    targetSize,
+                    withHorizontalFittingPriority: horizontalFittingPriority,
+                    verticalFittingPriority: verticalFittingPriority
+                )
+                return size.height + (UnitItemTableViewCell.verticalSpacing * 2)
+            }.reduce(0, +)
+
+        return CGSize(
+            width: targetSize.width,
+            height: stackViewSize.height + tableViewHeight
+        )
     }
 
     // MARK: - Actions
@@ -111,6 +148,27 @@ public class ProjectUnitsListView: UIView {
     @objc private func didSelectSoldUnitsVisibilityButton() {
         delegate?.projectUnitsListViewDidToggleSoldUnitsVisibility(self)
     }
+}
+
+// MARK: - UITableViewDataSource
+
+extension ProjectUnitsListView: UITableViewDataSource {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        units.count
+    }
+
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeue(UnitItemTableViewCell.self, for: indexPath)
+
+        let unit = units[indexPath.row]
+        cell.configure(with: unit)
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension ProjectUnitsListView: UITableViewDelegate {
 }
 
 // MARK: - ProjectUnitsSortViewDelegate
