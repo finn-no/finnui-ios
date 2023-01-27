@@ -1,7 +1,7 @@
 import Foundation
 
 extension ProjectUnitsListView {
-    public struct UnitItem {
+    public struct UnitItem: Hashable {
         public let identifier: Int
         public let name: String
         public let floor: String
