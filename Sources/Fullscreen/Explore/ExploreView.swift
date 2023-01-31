@@ -29,6 +29,11 @@ public protocol ExploreViewDataSource: AnyObject {
     )
 }
 
+public protocol ExploreViewRecommendationsDatasource: AnyObject {
+    func exploreViewRecommendations(_ exploreView: ExploreView, cellClassesIn collectionView: UICollectionView) -> [UICollectionViewCell.Type]
+    func exploreViewRecommendations(_ exploreView: ExploreView, collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+}
+
 // MARK: - View
 
 public final class ExploreView: UIView {
@@ -37,6 +42,7 @@ public final class ExploreView: UIView {
 
     public weak var delegate: ExploreViewDelegate?
     public weak var dataSource: ExploreViewDataSource?
+    public weak var recommendationsDataSource: ExploreViewRecommendationsDatasource?
 
     // MARK: - Private properties
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
@@ -101,12 +107,8 @@ public final class ExploreView: UIView {
                     let cell = collectionView.dequeue(ExploreBrazeBannerCell.self, for: indexPath)
                     cell.configure(banner: viewModel.brazePromo)
                     return cell
-                case .recommendation(let viewModel):
-                    let cell = collectionView.dequeue(StandardAdRecommendationCell.self, for: indexPath)
-                    cell.imageDataSource = self
-                    cell.configure(with: viewModel, atIndex: indexPath.row)
-                    cell.delegate = self
-                    cell.loadImage()
+                case .recommendation(_):
+                    let cell = self.recommendationsDataSource?.exploreViewRecommendations(self, collectionView: collectionView, cellForItemAt: indexPath)
                     return cell
                 }
             })
@@ -136,6 +138,12 @@ public final class ExploreView: UIView {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        setup()
+    }
+
+    public init(recommendationsDataSource: ExploreViewRecommendationsDatasource) {
+        self.recommendationsDataSource = recommendationsDataSource
+        super.init(frame: .zero)
         setup()
     }
 
@@ -198,6 +206,11 @@ public final class ExploreView: UIView {
     }
 
     private func setup() {
+        let cellClasses = recommendationsDataSource?.exploreViewRecommendations(self, cellClassesIn: collectionView) ?? []
+
+        cellClasses.forEach { cellClass in
+            collectionView.register(cellClass)
+        }
         addSubview(collectionView)
         collectionView.fillInSuperview()
     }
