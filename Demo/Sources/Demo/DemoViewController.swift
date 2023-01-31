@@ -1,6 +1,10 @@
 import FinniversKit
 import UIKit
 
+protocol DemoViewControllerSettable: UIView {
+    var demoViewController: UIViewController? { get set }
+}
+
 class DemoViewController<View: UIView>: UIViewController {
 
     private(set) var containmentOptions: ContainmentOptions
@@ -76,6 +80,10 @@ class DemoViewController<View: UIView>: UIViewController {
         view.fillInSuperview()
 
         if !TestCheck.isTesting {
+            if let playgroundView = playgroundView as? DemoViewControllerSettable {
+                playgroundView.demoViewController = self
+            }
+
             let tweakablePlaygroundView = (childViewController?.playgroundView as? Tweakable) ?? (self as? Tweakable)
             let options = tweakablePlaygroundView?.tweakingOptions ?? [TweakingOption]()
             let overlayView = CornerAnchoringView(withAutoLayout: true)
