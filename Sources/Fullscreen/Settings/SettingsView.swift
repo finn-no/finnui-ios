@@ -8,8 +8,9 @@ import FinniversKit
 // MARK: - View Model
 
 public protocol SettingsViewModel: ObservableObject {
+    var viewTitle: String? { get }
     var sections: [SettingsSection] { get }
-    var versionText: String { get }
+    var versionText: String? { get }
 }
 
 // MARK: - View
@@ -32,9 +33,15 @@ public struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     public var body: some View {
         List {
+            if let title = viewModel.viewTitle {
+                TitleView(text: title)
+            }
             rows
-            VersionView(text: viewModel.versionText)
+            if let versionText = viewModel.versionText {
+                VersionView(text: versionText)
+            }
         }
+        .listStyle(.plain)
         .appearance { (view: UITableView) in
             view.separatorStyle = .none
             view.backgroundColor = .bgTertiary
@@ -45,7 +52,7 @@ public struct SettingsView<ViewModel: SettingsViewModel>: View {
 
     private var rows: some View {
         ForEach(0..<sections.count) { section in
-            self.sections[section].title.map(Header.init)
+            self.sections[section].header.map(Header.init)
 
             ForEach(0..<self.sections[section].items.count) { row in
                 self.cell(at: row, in: section)
@@ -84,20 +91,37 @@ public struct SettingsView<ViewModel: SettingsViewModel>: View {
 // MARK: - Cells
 
 private struct Header: View {
-    let text: String
+    let type: SettingsHeaderType
 
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Text(text.uppercased())
-                    .finnFont(.detailStrong)
-                    .foregroundColor(.textSecondary)
-                    .padding(.horizontal, .spacingM)
-                    .padding(.bottom, .spacingS)
+        HStack {
+            switch type {
+            case .plain(title: let title):
+                Text(title)
+                    .finnFont(.bodyStrong)
+                    .foregroundColor(.textPrimary)
                 Spacer()
+            case .complex(title: let title, subtitle: let subtitle, image: let image):
+                VStack(alignment: .leading) {
+                    Text(title)
+                        .finnFont(.bodyStrong)
+                        .foregroundColor(.textPrimary)
+                    Spacer()
+                    Text(subtitle)
+                        .finnFont(.caption)
+                        .foregroundColor(.textPrimary)
+                }
+                Spacer()
+                VStack {
+                    Image(uiImage: image)
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.bgPrimary)
+                        .accessibilityHidden(true)
+                    Spacer()
+                }
             }
         }
+        .padding(EdgeInsets(top: .spacingM, leading: .spacingM, bottom: .spacingM, trailing: .spacingM))
         .background(Color.bgTertiary)
         .listRowInsets(EdgeInsets())
     }
@@ -164,6 +188,16 @@ private extension BasicListCell {
     }
 }
 
+private struct TitleView: View {
+    let text: String
+
+    var body: some View {
+        Text(text)
+            .finnFont(.body)
+            .foregroundColor(.textPrimary)
+    }
+}
+
 private struct VersionView: View {
     let text: String
 
@@ -201,11 +235,12 @@ struct SettingsView_Previews: PreviewProvider {
 }
 
 private final class PreviewViewModel: SettingsViewModel {
-    let versionText = "FinnUI Demo"
+    let viewTitle: String? = "FinnUI Demo"
+    let versionText: String? = "FinnUI Demo"
 
     @Published private(set) var sections = [
         SettingsSection(
-            title: "Varslinger",
+            header: .plain(title: "Varslinger"),
             items: [
                 ToggleRow(
                     id: "priceChange",
@@ -216,17 +251,17 @@ private final class PreviewViewModel: SettingsViewModel {
             footerTitle: "FINN varsler deg når prisen på en av dine favoritter på Torget blir satt ned."
         ),
         SettingsSection(
-            title: "Meldinger",
+            header: .plain(title: "Meldinger"),
             items: [
-                ConsentRow(title: "Meldinger til e-post", status: "Av"),
+                ConsentRow(id: UUID().uuidString, title: "Meldinger til e-post", status: "Av"),
             ]
         ),
         SettingsSection(
-            title: "Personvern",
+            header: .plain(title: "Personvern"),
             items: [
-                ConsentRow(title: "Få nyhetsbrev fra FINN", status: "Av"),
-                ConsentRow(title: "Personlig tilpasset FINN", status: "På"),
-                ConsentRow(title: "Motta viktig informasjon fra FINN", status: "På"),
+                ConsentRow(id: UUID().uuidString, title: "Få nyhetsbrev fra FINN", status: "Av"),
+                ConsentRow(id: UUID().uuidString, title: "Personlig tilpasset FINN", status: "På"),
+                ConsentRow(id: UUID().uuidString, title: "Motta viktig informasjon fra FINN", status: "På"),
                 TextRow(title: "Smart reklame"),
                 TextRow(title: "Last ned dine data"),
                 TextRow(title: "Slett meg som bruker")
@@ -245,6 +280,7 @@ private final class PreviewViewModel: SettingsViewModel {
     }
 
     private struct ConsentRow: SettingsViewConsentCellModel {
+        let id: String
         let title: String
         let status: String
     }
