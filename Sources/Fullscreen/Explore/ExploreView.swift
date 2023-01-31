@@ -50,16 +50,15 @@ public final class ExploreView: UIView {
 
     private var sections = [Section]()
     private var exploreSections = [ExploreSectionViewModel]()
-    private var recommendationsSection = [ExploreRecommendationAdViewModel]()
+    private(set) var recommendationsSection = [ExploreRecommendationAdViewModel]()
     private let imageCache = ImageMemoryCache()
-    private let layoutBuilder = ExploreLayoutBuilder(elementKind: UICollectionView.elementKindSectionHeader)
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: bounds,
             collectionViewLayout: UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
                 guard let self = self, let section = self.sections[safe: sectionIndex] else { return nil }
-                return self.layoutBuilder.collectionLayoutSection(for: section)
+                return self.collectionLayoutSection(for: section)
             }
         )
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -223,9 +222,11 @@ public final class ExploreView: UIView {
         recommendationsSection = recommendations
         let items = recommendations.map(Item.recommendation)
 
-        snapshot.appendItems(items)
-
-        collectionViewDataSource.apply(snapshot, animatingDifferences: false)
+        let section = sections.last
+        if case .recommendations = section {
+            snapshot.appendItems(items, toSection: section)
+            collectionViewDataSource.apply(snapshot, animatingDifferences: false)
+        }
     }
 
     // MARK: - Favorite button handling
@@ -234,7 +235,7 @@ public final class ExploreView: UIView {
         item.isFavorite = isFavorite
 
         let sectionIndex = sections.count - 1
-        if case .recommendations(_) = sections[sectionIndex] {
+        if case .recommendations = sections[sectionIndex] {
             let cell = collectionView.cellForItem(at: IndexPath(row: index, section: sectionIndex)) as? StandardAdRecommendationCell
             cell?.isFavorite = isFavorite
         }

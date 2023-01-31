@@ -54,6 +54,6 @@ final public class ExploreRecommendationAdViewModel: StandardAdRecommendationVie
         hasher.combine(id)
     }
     public static func == (lhs: ExploreRecommendationAdViewModel, rhs: ExploreRecommendationAdViewModel) -> Bool {
-        lhs.id == rhs.id
+        lhs.hashValue == rhs.hashValue
     }
 }
