@@ -28,9 +28,9 @@ extension ExploreView {
                 }
             }()
             layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM)
-        case .recommendations(let viewModel):
+        case .recommendations:
             layoutSection = NSCollectionLayoutSection.staggered(with: recommendationsSection, traitCollection: .current)
-            title = viewModel.title
+            title = recommendationsSectionTitle
             layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         }
 

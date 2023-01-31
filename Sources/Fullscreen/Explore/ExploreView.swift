@@ -34,6 +34,22 @@ public protocol ExploreViewRecommendationsDatasource: AnyObject {
     func exploreViewRecommendations(_ exploreView: ExploreView, collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
 }
 
+public struct ExploreViewModel {
+    public init(
+        exploreSections: [ExploreSectionViewModel],
+        recommendationsTitle: String,
+        recommendationItems: [ExploreRecommendationAdViewModel])
+    {
+        self.exploreSections = exploreSections
+        self.recommendationsTitle = recommendationsTitle
+        self.recommendationItems = recommendationItems
+    }
+
+    public let exploreSections: [ExploreSectionViewModel]
+    public let recommendationsTitle: String
+    public let recommendationItems: [ExploreRecommendationAdViewModel]
+}
+
 // MARK: - View
 
 public final class ExploreView: UIView {
@@ -51,6 +67,7 @@ public final class ExploreView: UIView {
     private var sections = [Section]()
     private var exploreSections = [ExploreSectionViewModel]()
     private(set) var recommendationsSection = [ExploreRecommendationAdViewModel]()
+    private(set) var recommendationsSectionTitle: String?
     private let imageCache = ImageMemoryCache()
 
     private lazy var collectionView: UICollectionView = {
@@ -123,7 +140,8 @@ public final class ExploreView: UIView {
             case .main(let viewModel):
                 guard let title = viewModel.title else { return nil }
                 view.configure(withText: title)
-            case .recommendations(let viewModel):
+            case .recommendations:
+                guard let viewModel = self?.recommendationsSection[safe: indexPath.item] else { return nil }
                 let title = viewModel.title
                 view.configure(withText: title)
             }
@@ -152,43 +170,46 @@ public final class ExploreView: UIView {
 
     // MARK: - Setup
 
-    public func configure(with sections: [Section]) {
-        self.sections = sections
+    public func configure(with viewModel: ExploreViewModel) {
+        self.sections = []
         self.exploreSections = []
         self.recommendationsSection = []
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections(sections)
-
-        for section in sections {
-            switch section {
-            case .main(let viewModel):
-                exploreSections.append(viewModel)
-                switch viewModel.layout {
-                case .hero, .squares, .twoRowsGrid:
-                    let items = viewModel.items.map {
-                        Item.regular($0, viewModel.layout == .hero ? .big : .regular)
-                    }
-                    snapshot.appendItems(items, toSection: section)
-                case .tagCloud:
-                    let items = viewModel.items.map {
-                        TagCloudCellViewModel(title: $0.title, iconUrl: $0.iconUrl)
-                    }
-                    snapshot.appendItems([Item.tagCloud(items)], toSection: section)
-                case .banner:
-                    guard
-                        let item = viewModel.items.first(where: {$0.banner != nil}),
-                        let viewModel = item.banner
-                    else { return }
-                    let banner = BrazeBannerViewModel(brazePromo: viewModel)
-                    snapshot.appendItems([Item.brazeBanner(banner)], toSection: section)
-                }
-            case .recommendations(let viewModel):
-                recommendationsSection.append(contentsOf: viewModel.items)
-                let items = viewModel.items.map {
-                    Item.recommendation($0.self)
+        for exploreSection in viewModel.exploreSections {
+            let section = Section.main(exploreSection)
+            sections.append(section)
+            snapshot.appendSections([section])
+            exploreSections.append(exploreSection)
+            switch exploreSection.layout {
+            case .hero, .squares, .twoRowsGrid:
+                let items = exploreSection.items.map {
+                    Item.regular($0, exploreSection.layout == .hero ? .big : .regular)
                 }
                 snapshot.appendItems(items, toSection: section)
+            case .tagCloud:
+                let items = exploreSection.items.map {
+                    TagCloudCellViewModel(title: $0.title, iconUrl: $0.iconUrl)
+                }
+                snapshot.appendItems([Item.tagCloud(items)], toSection: section)
+            case .banner:
+                guard
+                    let item = exploreSection.items.first(where: {$0.banner != nil}),
+                    let viewModel = item.banner
+                else { return }
+                let banner = BrazeBannerViewModel(brazePromo: viewModel)
+                snapshot.appendItems([Item.brazeBanner(banner)], toSection: section)
             }
+        }
+        if !viewModel.recommendationItems.isEmpty {
+            recommendationsSectionTitle = viewModel.recommendationsTitle
+            let section = Section.recommendations
+            sections.append(section)
+            snapshot.appendSections([section])
+            recommendationsSection = viewModel.recommendationItems
+            let items = viewModel.recommendationItems.map {
+                Item.recommendation($0.self)
+            }
+            snapshot.appendItems(items, toSection: section)
         }
 
         refreshControl.endRefreshing()
@@ -222,11 +243,8 @@ public final class ExploreView: UIView {
         recommendationsSection = recommendations
         let items = recommendations.map(Item.recommendation)
 
-        let section = sections.last
-        if case .recommendations = section {
-            snapshot.appendItems(items, toSection: section)
-            collectionViewDataSource.apply(snapshot, animatingDifferences: false)
-        }
+        snapshot.appendItems(items, toSection: .recommendations)
+        collectionViewDataSource.apply(snapshot, animatingDifferences: false)
     }
 
     // MARK: - Favorite button handling
@@ -234,8 +252,7 @@ public final class ExploreView: UIView {
         let item = recommendationsSection[index]
         item.isFavorite = isFavorite
 
-        let sectionIndex = sections.count - 1
-        if case .recommendations = sections[sectionIndex] {
+        if let sectionIndex = sections.firstIndex(of: .recommendations) {
             let cell = collectionView.cellForItem(at: IndexPath(row: index, section: sectionIndex)) as? StandardAdRecommendationCell
             cell?.isFavorite = isFavorite
         }
@@ -267,7 +284,7 @@ extension ExploreView: UICollectionViewDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let item = collectionViewDataSource.itemIdentifier(for: indexPath)
-        if case .recommendation(_) = item {
+        if case .recommendation = item {
             delegate?.exploreViewRecommendations(self, willDisplayRecommendationItemAtIndex: indexPath.row)
         }
     }
@@ -327,9 +344,9 @@ extension ExploreView {
         case recommendation(ExploreRecommendationAdViewModel)
     }
 
-    public enum Section: Hashable {
+    enum Section: Hashable {
         case main(ExploreSectionViewModel)
-        case recommendations(RecommendationsViewModel)
+        case recommendations
     }
 }
 

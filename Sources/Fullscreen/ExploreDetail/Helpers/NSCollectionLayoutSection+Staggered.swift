@@ -34,7 +34,6 @@ public extension NSCollectionLayoutSection {
         var columns = columnsRange.map { _ in 0 }
 
         for model in models {
-            print("🕵️‍♀️", #function)
             let frame: CGRect
 
             switch model.staggeredLayoutItemKind {
