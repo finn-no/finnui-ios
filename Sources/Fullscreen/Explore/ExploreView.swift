@@ -225,7 +225,7 @@ public final class ExploreView: UIView {
 
         snapshot.appendItems(items)
 
-        collectionViewDataSource.apply(snapshot, animatingDifferences: true)
+        collectionViewDataSource.apply(snapshot, animatingDifferences: false)
     }
 
     // MARK: - Favorite button handling
