@@ -5,9 +5,7 @@
 import UIKit
 import FinniversKit
 
-struct ExploreLayoutBuilder {
-    let elementKind: String
-
+extension ExploreView {
     func collectionLayoutSection(for section: ExploreView.Section) -> NSCollectionLayoutSection {
         let layoutSection: NSCollectionLayoutSection
         var title: String? = nil
@@ -30,9 +28,9 @@ struct ExploreLayoutBuilder {
                 }
             }()
             layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: .spacingM)
-        case .recommendations(let viewModel):
-            layoutSection = NSCollectionLayoutSection.staggered(with: viewModel.items, traitCollection: .current)
-            title = viewModel.title
+        case .recommendations:
+            layoutSection = NSCollectionLayoutSection.staggered(with: recommendationsSection, traitCollection: .current)
+            title = recommendationsSectionTitle
             layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         }
 
@@ -43,7 +41,7 @@ struct ExploreLayoutBuilder {
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .estimated(58)
             ),
-            elementKind: elementKind,
+            elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
         header.contentInsets.leading = .spacingM
