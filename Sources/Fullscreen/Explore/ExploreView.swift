@@ -58,7 +58,7 @@ public final class ExploreView: UIView {
 
     public weak var delegate: ExploreViewDelegate?
     public weak var dataSource: ExploreViewDataSource?
-    public weak var recommendationsDataSource: ExploreViewRecommendationsDatasource?
+    private weak var recommendationsDataSource: ExploreViewRecommendationsDatasource?
 
     // MARK: - Private properties
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
@@ -88,7 +88,6 @@ public final class ExploreView: UIView {
         collectionView.register(ExploreCollectionCell.self)
         collectionView.register(ExploreTagCloudGridCell.self)
         collectionView.register(ExploreBrazeBannerCell.self)
-        collectionView.register(StandardAdRecommendationCell.self)
         collectionView.register(ExploreSectionHeaderView.self, ofKind: UICollectionView.elementKindSectionHeader)
         collectionView.refreshControl = refreshControl
         return collectionView
@@ -153,14 +152,10 @@ public final class ExploreView: UIView {
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-
-    public init(recommendationsDataSource: ExploreViewRecommendationsDatasource) {
+    public init(withAutoLayout: Bool, recommendationsDataSource: ExploreViewRecommendationsDatasource) {
         self.recommendationsDataSource = recommendationsDataSource
         super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
     }
 
