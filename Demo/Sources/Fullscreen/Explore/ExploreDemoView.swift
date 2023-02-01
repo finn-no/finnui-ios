@@ -73,10 +73,9 @@ final class ExploreDemoView: UIView {
     )
 
     private lazy var view: ExploreView = {
-        let view = ExploreView(withAutoLayout: true)
+        let view = ExploreView(withAutoLayout: true, recommendationsDataSource: self)
         view.delegate = self
         view.dataSource = self
-        view.recommendationsDataSource = self
         return view
     }()
 
