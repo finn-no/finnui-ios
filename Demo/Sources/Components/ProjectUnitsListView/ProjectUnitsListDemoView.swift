@@ -60,6 +60,11 @@ class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
             projectUnitsListView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor, constant: -.spacingM),
             projectUnitsListView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -.spacingM)
         ])
+
+        let blackoutView = UIView(withAutoLayout: true)
+        blackoutView.backgroundColor = .black
+        addSubview(blackoutView)
+        blackoutView.fillInSuperview()
     }
 
     // MARK: - Private methods
