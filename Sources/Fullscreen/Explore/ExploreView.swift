@@ -140,8 +140,7 @@ public final class ExploreView: UIView {
                 guard let title = viewModel.title else { return nil }
                 view.configure(withText: title)
             case .recommendations:
-                guard let viewModel = self?.recommendationsSection[safe: indexPath.item] else { return nil }
-                let title = viewModel.title
+                guard let title = self?.recommendationsSectionTitle else { return nil }
                 view.configure(withText: title)
             }
             return view
