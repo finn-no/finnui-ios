@@ -38,6 +38,7 @@ public struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
         .onAppear {
             viewModel.onAppear()
         }
+        .toast(viewModel: $viewModel.toastViewModel)
     }
 }
 

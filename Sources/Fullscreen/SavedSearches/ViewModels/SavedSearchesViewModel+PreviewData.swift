@@ -1,8 +1,12 @@
 import Foundation
+import SwiftUI
+import FinniversKit
 
 class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
     let title: String = "Lagrede søk"
     let sortButtonTitle: String = "Sortering"
+
+    @Published var toastViewModel: Toast.ViewModel? = nil
 
     @Published var sections: [SavedSearchesSectionViewModel] = [
         SavedSearchesSectionViewModel(
@@ -46,10 +50,10 @@ class SavedSearchesPreviewData: SavedSearchesViewModel, ObservableObject {
     }
 
     func overflowAction(search: SavedSearchViewModel) {
-        print("Did tap overflow menu for search with title", search.title)
+        toastViewModel = Toast.ViewModel(text: "Did tap overflow action", style: .success)
     }
 
     func searchSelectedAction(search: SavedSearchViewModel) {
-        print("Did tap search with title", search.title)
+        toastViewModel = Toast.ViewModel(text: "Did tap saved search: \(search.title)", style: .success)
     }
 }
