@@ -9,7 +9,6 @@ struct SearchSectionHeaderView: View {
             .finnFont(.detailStrong)
             .padding([.leading], .spacingM)
             .padding([.bottom], .spacingS)
-
     }
 }
 

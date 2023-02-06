@@ -1,10 +1,18 @@
 import SwiftUI
 
-public struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
+public struct SavedSearchesListView<ViewModel: SavedSearchesListViewModel>: View {
     @ObservedObject var viewModel: ViewModel
+    var overflowAction: (SavedSearchViewModel) -> Void
+    var tapAction: (SavedSearchViewModel) -> Void
 
-    public init(viewModel: ViewModel) {
+    public init(
+        viewModel: ViewModel,
+        overflowAction: @escaping (SavedSearchViewModel) -> Void,
+        tapAction: @escaping (SavedSearchViewModel) -> Void
+    ) {
         self.viewModel = viewModel
+        self.overflowAction = overflowAction
+        self.tapAction = tapAction
     }
 
     public var body: some View {
@@ -14,10 +22,10 @@ public struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
                     SavedSearchesSectionView(
                         section: section,
                         searchOverflowButtonAction: {
-                            viewModel.overflowAction(search: $0)
+                            overflowAction($0)
                         },
-                        searchSelectedAction: {
-                            viewModel.searchSelectedAction(search: $0)
+                        searchTappedAction: {
+                            tapAction($0)
                         }
                     )
                     Spacer().frame(height: .spacingXL)
@@ -26,24 +34,11 @@ public struct SavedSearchesView<ViewModel: SavedSearchesViewModel>: View {
             .padding([.top], .spacingM)
         }
         .background(Color.bgSecondary)
-        .navigationTitle(viewModel.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            Button(viewModel.sortButtonTitle, action: {
-                withAnimation {
-                    viewModel.sort()
-                }
-            })
-        }
-        .onAppear {
-            viewModel.onAppear()
-        }
-        .toast(viewModel: $viewModel.toastViewModel)
     }
 }
 
 struct SavedSearchesView_Previews: PreviewProvider {
     static var previews: some View {
-        SavedSearchesView(viewModel: SavedSearchesPreviewData())
+        SavedSearchesListView(viewModel: SavedSearchesListPreviewData(), overflowAction: {_ in }, tapAction: {_ in })
     }
 }

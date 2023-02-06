@@ -3,7 +3,7 @@ import SwiftUI
 struct SavedSearchesSectionView: View {
     @ObservedObject var section: SavedSearchesSectionViewModel
     var searchOverflowButtonAction: (SavedSearchViewModel) -> Void
-    var searchSelectedAction: (SavedSearchViewModel) -> Void
+    var searchTappedAction: (SavedSearchViewModel) -> Void
 
     var body: some View {
         Section(header: SearchSectionHeaderView(text: section.title)) {
@@ -12,7 +12,7 @@ struct SavedSearchesSectionView: View {
                     savedSearch: search,
                     overflowButtonAction: { searchOverflowButtonAction(search) }
                 ).onTapGesture {
-                    searchSelectedAction(search)
+                    searchTappedAction(search)
                 }
 
                 if search != section.searches.last {
@@ -31,7 +31,7 @@ struct SavedSearchSectionView_Previews: PreviewProvider {
                 searches: [.init(title: "Utvikler", text: "På FINN.no", textStyle: .active)]
             ),
             searchOverflowButtonAction: { _ in },
-            searchSelectedAction: { _ in }
+            searchTappedAction: { _ in }
         )
     }
 }
