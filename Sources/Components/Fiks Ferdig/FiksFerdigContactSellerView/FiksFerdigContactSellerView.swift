@@ -2,6 +2,9 @@ import FinniversKit
 import Combine
 
 public final class FiksFerdigContactSellerView: UIView {
+
+    // MARK: - Private properties
+
     private let viewModel: FiksFerdigContactSellerViewModel
     private var cancellable: AnyCancellable?
 
@@ -49,6 +52,8 @@ public final class FiksFerdigContactSellerView: UIView {
         return button
     }()
 
+    // MARK: - Init
+
     public init(viewModel: FiksFerdigContactSellerViewModel, withAutoLayout: Bool) {
         self.viewModel = viewModel
         super.init(frame: .zero)
@@ -61,9 +66,10 @@ public final class FiksFerdigContactSellerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Setup
+
     private func setup() {
         layer.borderWidth = 1
-        layer.borderColor = UIColor.borderDefault.cgColor
         layer.cornerRadius = 3
 
         addSubview(containerView)
@@ -80,6 +86,15 @@ public final class FiksFerdigContactSellerView: UIView {
                 self?.viewModel.contactSeller()
             })
     }
+
+    // MARK: - Overrides
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.borderColor = UIColor.borderDefault.cgColor
+    }
+
+    // MARK: - Private methods
 
     private func decorate() {
         messageLabel.text = viewModel.message

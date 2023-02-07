@@ -37,6 +37,7 @@ public enum ComponentDemoViews: String, DemoViews {
     case fiksFerdigInfoView
     case fiksFerdigPriceView
     case fiksFerdigContactSellerView
+    case projectUnitsListView
 
     public var viewController: UIViewController {
         switch self {
@@ -104,6 +105,8 @@ public enum ComponentDemoViews: String, DemoViews {
             return DemoViewController<FiksFerdigPriceDemoView>()
         case .fiksFerdigContactSellerView:
             return DemoViewController<FiksFerdigContactSellerDemoView>()
+        case .projectUnitsListView:
+            return DemoViewController<ProjectUnitsListDemoView>(dismissType: .dismissButton)
         }
     }
 }

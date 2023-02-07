@@ -88,6 +88,7 @@
 		E6ADF8EB28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */; };
 		F023EAEE27B69AAE00F6286B /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F023EAED27B69AAE00F6286B /* SnapshotTesting */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
+		F0BBDB10297FE61800018B51 /* ProjectUnitsListDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BBDB0F297FE61800018B51 /* ProjectUnitsListDemoView.swift */; };
 		F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */; };
 /* End PBXBuildFile section */
 
@@ -216,6 +217,7 @@
 		E6ADF7F52862004F00EBCA5F /* SafePaymentAccordionDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafePaymentAccordionDemoView.swift; sourceTree = "<group>"; };
 		E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdingInfoDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
+		F0BBDB0F297FE61800018B51 /* ProjectUnitsListDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectUnitsListDemoView.swift; sourceTree = "<group>"; };
 		F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProfileDemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -400,6 +402,7 @@
 				8D680186E91B4FA9052BF60C /* IconLinkListView */,
 				8D680BBD858E71F3F90C6A1C /* ObjectPageBlinkView */,
 				8D680EE0BE80227384CFC7E3 /* PopularSearchesView */,
+				F0BBDB0E297FE5F400018B51 /* ProjectUnitsListView */,
 				5B9599023D2EDC40DD573783 /* RealestateAgencyContent */,
 				5B9596DA9EC0E8F60BDF82E9 /* RealestateSoldState */,
 				5D1224BF27BF872400A2AD97 /* RecommendationConsentView */,
@@ -763,6 +766,14 @@
 			path = Wrappers;
 			sourceTree = "<group>";
 		};
+		F0BBDB0E297FE5F400018B51 /* ProjectUnitsListView */ = {
+			isa = PBXGroup;
+			children = (
+				F0BBDB0F297FE61800018B51 /* ProjectUnitsListDemoView.swift */,
+			);
+			path = ProjectUnitsListView;
+			sourceTree = "<group>";
+		};
 		F0D8D382285788E300FADED2 /* BasicProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -1014,6 +1025,7 @@
 				F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */,
 				9BA6C4A224336B9A009D417B /* DemoWrapperView.swift in Sources */,
 				46E773A9242CEF0A008A5E93 /* RecyclingDemoViews.swift in Sources */,
+				F0BBDB10297FE61800018B51 /* ProjectUnitsListDemoView.swift in Sources */,
 				D6D43CEB25BF2F4D00234AC2 /* ExpandCollapseButtonDemoView.swift in Sources */,
 				46E77454242CEF0A008A5E93 /* Tweakable.swift in Sources */,
 				E640A7C8285B66C0002CA903 /* TimeLineDemoView.swift in Sources */,
