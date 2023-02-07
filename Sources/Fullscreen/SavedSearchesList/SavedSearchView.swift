@@ -12,6 +12,7 @@ struct SavedSearchView: View {
                     .finnFont(.bodyStrong)
                     .foregroundColor(.textPrimary)
                     .lineLimit(1)
+                    .accessibility(addTraits: .isButton)
                 Text(savedSearch.text)
                     .finnFont(textStyle)
                     .foregroundColor(textColor)

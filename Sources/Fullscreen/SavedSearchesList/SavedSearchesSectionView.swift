@@ -11,7 +11,8 @@ struct SavedSearchesSectionView: View {
                 SavedSearchView(
                     savedSearch: search,
                     overflowButtonAction: { searchOverflowButtonAction(search) }
-                ).onTapGesture {
+                )
+                .onTapGesture {
                     searchTappedAction(search)
                 }
 
