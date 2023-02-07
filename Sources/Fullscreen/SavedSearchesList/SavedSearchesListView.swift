@@ -37,6 +37,7 @@ public struct SavedSearchesListView<ViewModel: SavedSearchesListViewModel>: View
     }
 }
 
+//swiftlint:disable:next type_name superfluous_disable_command
 struct SavedSearchesView_Previews: PreviewProvider {
     static var previews: some View {
         SavedSearchesListView(viewModel: SavedSearchesListPreviewData(), overflowAction: {_ in }, tapAction: {_ in })

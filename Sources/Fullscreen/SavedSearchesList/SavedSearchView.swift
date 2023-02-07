@@ -48,6 +48,7 @@ struct SavedSearchView: View {
     }
 }
 
+//swiftlint:disable:next type_name superfluous_disable_command
 struct SavedSearchView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
