@@ -50,6 +50,12 @@ struct SavedSearchView: View {
 
 struct SavedSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SavedSearchView(savedSearch: .init(title: "iPod classic", text: "På FINN.no, E-post og Push-varsling", textStyle: .active), overflowButtonAction: {})
+        VStack {
+            Spacer()
+            SavedSearchView(savedSearch: .init(title: "iPod classic", text: "På FINN.no, E-post og Push-varsling", textStyle: .active), overflowButtonAction: {})
+            SavedSearchView(savedSearch: .init(title: "iPod classic", text: "Ingen aktive varslinger", textStyle: .inactive), overflowButtonAction: {})
+            Spacer()
+        }
+        .background(Color.bgSecondary)
     }
 }
