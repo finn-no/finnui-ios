@@ -26,7 +26,6 @@ public final class FiksFerdigPriceView: UIView {
 
     private lazy var shippingLabel: Label = {
         let label = Label(style: .bodyStrong, withAutoLayout: true)
-        label.isAccessibilityElement = false
         label.numberOfLines = 0
         label.textColor = .textPrimary
         return label
@@ -91,7 +90,8 @@ public final class FiksFerdigPriceView: UIView {
         shippingLabel.isHidden = !hasPrice
 
         paymentLabel.attributedText = viewModel.payment.text
-        priceLabel.accessibilityLabel = viewModel.shippingAccessibilityLabel
+        priceLabel.accessibilityLabel = viewModel.priceString
+        shippingLabel.accessibilityLabel = viewModel.shipping.accessibilityText
         paymentLabel.accessibilityLabel = viewModel.payment.accessibilityText
     }
 
