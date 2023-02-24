@@ -18,7 +18,7 @@ class FrontpageSearchSectionHeader: UICollectionReusableView {
         setContentHuggingPriority(.required, for: .horizontal)
         backgroundColor = .bgPrimary
         titleLabel.textColor = .textPrimary
-        
+        titleLabel.accessibilityTraits = .header
     }
 
     func configure() {
