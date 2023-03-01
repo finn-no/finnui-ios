@@ -180,7 +180,9 @@ public final class FrontpageSearchView: UIView {
                 snapshot.appendItems([item], toSection: section)
             }
         }
-        dataSource.apply(snapshot)
+        dataSource.apply(snapshot, completion: {
+            UIAccessibility.post(notification: .layoutChanged, argument: nil)
+        })
     }
 
     // MARK: - Favorite button handling
