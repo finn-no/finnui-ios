@@ -19,6 +19,7 @@ public final class FrontpageSearchView: UIView {
 
         collectionView.register(FrontpageSearchImageResultCollectionViewCell.self)
         collectionView.register(FrontpageSearchResultCell.self)
+        collectionView.register(FrontpageSearchExternalResultCell.self)
         collectionView.register(FrontpageSearchLocationPermissionCell.self)
         collectionView.register(FrontpageSearchMoreResultsCollectionViewCell.self)
         collectionView.register(FrontpageSearchSectionHeader.self, ofKind: UICollectionView.elementKindSectionHeader)
@@ -75,6 +76,10 @@ public final class FrontpageSearchView: UIView {
                         // should return an image cell with a circular image - not yet implemented
                         let cell = collectionView.dequeue(FrontpageSearchImageResultCollectionViewCell.self, for: indexPath)
                         cell.configure(with: item, remoteImageViewDataSource: self.remoteImageViewDataSource)
+                        return cell
+                    case .external:
+                        let cell = collectionView.dequeue(FrontpageSearchExternalResultCell.self, for: indexPath)
+                        cell.configure(with: item)
                         return cell
                     }
                 case .locationPermission:

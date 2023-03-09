@@ -7,6 +7,7 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
 
     private let imageAndButtonWidth: CGFloat = 40
     private lazy var highlightLayer = CALayer()
+    private let trailingIconSize: CGFloat = 14
 
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
@@ -149,8 +150,8 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
             favoriteButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth),
             favoriteButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
 
-            trailingIconImageView.heightAnchor.constraint(equalToConstant: 14),
-            trailingIconImageView.widthAnchor.constraint(equalToConstant: 14),
+            trailingIconImageView.heightAnchor.constraint(equalToConstant: trailingIconSize),
+            trailingIconImageView.widthAnchor.constraint(equalToConstant: trailingIconSize),
             trailingIconImageView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
         ])
 
