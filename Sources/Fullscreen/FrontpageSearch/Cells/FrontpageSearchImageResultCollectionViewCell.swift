@@ -216,6 +216,8 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
     public override func layoutSubviews() {
         super.layoutSubviews()
         highlightLayer.frame = bounds.insetBy(dx: -.spacingXS, dy: -.spacingXS)
+        remoteImageView.layer.cornerRadius = currentItem?.displayType == .myFindingsList ? imageAndButtonWidth/2 : .spacingS
+        remoteImageView.layer.borderColor = currentItem?.displayType == .myFindingsList ? UIColor.clear.cgColor : .imageBorder
     }
 
     // MARK: - Reuse
