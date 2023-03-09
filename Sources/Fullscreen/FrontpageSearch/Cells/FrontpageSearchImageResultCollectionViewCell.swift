@@ -18,6 +18,7 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
 
     private lazy var remoteImageView: RemoteImageView = {
         let imageView = RemoteImageView(withAutoLayout: true)
+        imageView.delegate = self
         imageView.contentMode = .scaleAspectFill
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = .imageBorder
@@ -252,3 +253,8 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
 
 }
 
+extension FrontpageSearchImageResultCollectionViewCell: RemoteImageViewDelegate {
+    public func remoteImageViewDidSetImage(_ view: FinniversKit.RemoteImageView) {
+        view.backgroundColor = .white
+    }
+}
