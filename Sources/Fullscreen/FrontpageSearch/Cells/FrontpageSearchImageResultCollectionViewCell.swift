@@ -7,6 +7,7 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
 
     private let imageAndButtonWidth: CGFloat = 40
     private lazy var highlightLayer = CALayer()
+    private let trailingIconSize: CGFloat = 14
 
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: .spacingM, withAutoLayout: true)
@@ -17,6 +18,7 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
 
     private lazy var remoteImageView: RemoteImageView = {
         let imageView = RemoteImageView(withAutoLayout: true)
+        imageView.delegate = self
         imageView.contentMode = .scaleAspectFill
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = .imageBorder
@@ -149,8 +151,8 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
             favoriteButton.widthAnchor.constraint(equalToConstant: imageAndButtonWidth),
             favoriteButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
 
-            trailingIconImageView.heightAnchor.constraint(equalToConstant: 14),
-            trailingIconImageView.widthAnchor.constraint(equalToConstant: 14),
+            trailingIconImageView.heightAnchor.constraint(equalToConstant: trailingIconSize),
+            trailingIconImageView.widthAnchor.constraint(equalToConstant: trailingIconSize),
             trailingIconImageView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor)
         ])
 
@@ -215,6 +217,8 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
     public override func layoutSubviews() {
         super.layoutSubviews()
         highlightLayer.frame = bounds.insetBy(dx: -.spacingXS, dy: -.spacingXS)
+        remoteImageView.layer.cornerRadius = currentItem?.displayType == .myFindingsList ? imageAndButtonWidth/2 : .spacingS
+        remoteImageView.layer.borderColor = currentItem?.displayType == .myFindingsList ? UIColor.clear.cgColor : .imageBorder
     }
 
     // MARK: - Reuse
@@ -249,3 +253,8 @@ final public class FrontpageSearchImageResultCollectionViewCell: UICollectionVie
 
 }
 
+extension FrontpageSearchImageResultCollectionViewCell: RemoteImageViewDelegate {
+    public func remoteImageViewDidSetImage(_ view: FinniversKit.RemoteImageView) {
+        view.backgroundColor = .white
+    }
+}

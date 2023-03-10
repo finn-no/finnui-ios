@@ -12,7 +12,8 @@ public class FrontpageSearchGroup: UniqueHashableItem {
 }
 
 public enum SearchDisplayType {
-    case image
     case circularImage
+    case external
+    case image
     case regular
 }

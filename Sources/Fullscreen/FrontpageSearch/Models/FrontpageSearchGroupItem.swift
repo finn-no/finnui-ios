@@ -22,6 +22,7 @@ public struct FrontpageSearchGroupItem: Hashable {
 
     public enum FrontpageResultItemType {
         case companyProfile
+        case external
         case geo
         case myFindings
         case myFindingsList

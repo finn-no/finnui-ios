@@ -41,6 +41,14 @@ extension Array where Element == FrontpageSearchSection {
                 groupType: .regular
             )),
             .group(FrontpageSearchGroup(
+                title: "Feriehus og hytter",
+                items: [
+                    FrontpageSearchGroupItem(title: "Hytte".attributed, detail: "(6 073 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .external),
+                    FrontpageSearchGroupItem(title: "Oslo strandhytte".attributed, detail: "(6 treff)", imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .external)
+                ],
+                groupType: .external
+            )),
+            .group(FrontpageSearchGroup(
                 title: "Båt",
                 items: [
                     FrontpageSearchGroupItem(title: "Båter til salgs".attributed, detail: "(6 073 treff)",imageUrl: .demoImageUrl, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
@@ -106,7 +114,7 @@ private extension FrontpageSearchGroup {
             FrontpageSearchGroupItem(title: "sykkelvogn".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
             FrontpageSearchGroupItem(title: "sykkelstativ".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
             FrontpageSearchGroupItem(title: "hundebur".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
-            FrontpageSearchGroupItem(title: "dører".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
+            FrontpageSearchGroupItem(title: "dører".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .external),
             FrontpageSearchGroupItem(title: "playstation 5".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard),
             FrontpageSearchGroupItem(title: "veldig veldig veldig lang tekst som sikkert bruker flere linjer. Hvem vet når denne ender?".attributed, imageUrl: nil, uuid: UUID(), groupType:  .searchResult, displayType: .standard)
         ]
