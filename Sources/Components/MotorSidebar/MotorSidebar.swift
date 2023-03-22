@@ -110,7 +110,7 @@ extension MotorSidebar {
 
         // MARK: - Private properties
 
-        private var header: InnerSectionHeader?
+        private var headerView: InnerSectionHeader?
         private var ribbonView: RibbonView?
         private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bodyStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
@@ -143,6 +143,24 @@ extension MotorSidebar {
                 ])
             }
 
+            if let header = section.header {
+                let headerView = InnerSectionHeader(
+                    title: header.title,
+                    icon: header.icon,
+                    isExpandable: section.isExpandable,
+                    isExpanded: section.isExpanded ?? true
+                )
+                self.headerView = headerView
+
+                addSubview(headerView)
+                NSLayoutConstraint.activate([
+                    headerView.topAnchor.constraint(equalTo: ribbonView?.bottomAnchor ?? topAnchor),
+                    headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                    headerView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
+                    headerView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
+                ])
+            }
+
             if !section.content.isEmpty {
                 let subviews = section.content.map { SectionBodyView(body: $0) }
                 bodyStackView.addArrangedSubviews(subviews)
@@ -164,11 +182,11 @@ extension MotorSidebar {
             addSubview(contentStackView)
             NSLayoutConstraint.activate([
                 contentStackView.topAnchor.constraint(
-                    equalTo: ribbonView?.bottomAnchor ?? topAnchor,
+                    equalTo: ribbonView?.bottomAnchor ?? headerView?.bottomAnchor ?? topAnchor,
                     constant: ribbonView != nil ? 0 : .spacingS
                 ),
-                contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
-                contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
+                contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
+                contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
                 contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingS),
             ])
         }
@@ -312,6 +330,7 @@ extension MotorSidebar {
 
         // MARK: - Private properties
 
+        private let isExpandable: Bool
         private var isExpanded: Bool
         private lazy var stackView = UIStackView(axis: .horizontal, spacing: .spacingS, alignment: .center, withAutoLayout: true)
         private lazy var titleLabel = Label(style: .body, numberOfLines: 0, withAutoLayout: true)
@@ -323,8 +342,9 @@ extension MotorSidebar {
             return view
         }()
 
-        private lazy var expandButton: UIView = {
+        private lazy var chevronImageView: UIView = {
             let view = UIImageView(withAutoLayout: true)
+            view.image = UIImage(systemName: "chevron.up")
             view.tintColor = .textPrimary
             view.contentMode = .scaleAspectFit
             return view
@@ -332,7 +352,8 @@ extension MotorSidebar {
 
         // MARK: - Init
 
-        init(title: String, icon: UIImage, isExpanded: Bool) {
+        init(title: String, icon: UIImage, isExpandable: Bool, isExpanded: Bool) {
+            self.isExpandable = isExpandable
             self.isExpanded = isExpanded
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
@@ -347,15 +368,20 @@ extension MotorSidebar {
             titleLabel.text = title
             iconImageView.image = icon
 
-            stackView.addArrangedSubviews([iconImageView, titleLabel, expandButton])
+            stackView.addArrangedSubviews([iconImageView, titleLabel, UIView()])
+
+            if isExpandable {
+                stackView.addArrangedSubview(chevronImageView)
+            }
+
             addSubview(stackView)
-            stackView.fillInSuperview(insets: UIEdgeInsets(vertical: .spacingS, horizontal: .spacingM))
+            stackView.fillInSuperview(insets: UIEdgeInsets(top: .spacingS, leading: .spacingM, bottom: -.spacingS, trailing: -.spacingM))
 
             NSLayoutConstraint.activate([
                 iconImageView.widthAnchor.constraint(equalToConstant: .spacingL),
                 iconImageView.heightAnchor.constraint(equalToConstant: .spacingL),
-                expandButton.widthAnchor.constraint(equalToConstant: .spacingL),
-                expandButton.heightAnchor.constraint(equalToConstant: .spacingL),
+                chevronImageView.widthAnchor.constraint(equalToConstant: .spacingL),
+                chevronImageView.heightAnchor.constraint(equalToConstant: .spacingL),
             ])
         }
     }
