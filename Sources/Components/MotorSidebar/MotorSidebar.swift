@@ -111,6 +111,7 @@ extension MotorSidebar {
         // MARK: - Private properties
 
         private var header: InnerSectionHeader?
+        private var ribbonView: RibbonView?
         private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bodyStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bulletPointsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
@@ -131,6 +132,7 @@ extension MotorSidebar {
         private func setup(section: ViewModel.Section) {
             if let ribbon = section.ribbon {
                 let ribbonView = RibbonView(ribbon: ribbon)
+                self.ribbonView = ribbonView
 
                 addSubview(ribbonView)
                 NSLayoutConstraint.activate([
@@ -160,7 +162,15 @@ extension MotorSidebar {
             }
 
             addSubview(contentStackView)
-            contentStackView.fillInSuperview(insets: .init(top: .spacingS, leading: .spacingS, bottom: -.spacingS, trailing: -.spacingS))
+            NSLayoutConstraint.activate([
+                contentStackView.topAnchor.constraint(
+                    equalTo: ribbonView?.bottomAnchor ?? topAnchor,
+                    constant: ribbonView != nil ? 0 : .spacingS
+                ),
+                contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingS),
+                contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingS),
+                contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingS),
+            ])
         }
     }
 }
