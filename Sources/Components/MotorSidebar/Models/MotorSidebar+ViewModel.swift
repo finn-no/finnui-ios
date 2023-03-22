@@ -77,11 +77,24 @@ extension MotorSidebar.ViewModel {
 
     public struct Body {
         public let text: String
-        public let iconAfterText: UIImage?
+        public let inlineImage: InlineImage?
 
-        public init(text: String, iconAfterText: UIImage? = nil) {
+        public init(text: String, inlineImage: InlineImage? = nil) {
             self.text = text
-            self.iconAfterText = iconAfterText
+            self.inlineImage = inlineImage
+        }
+
+        public struct InlineImage {
+            public let image: UIImage
+
+            // If you have an image with a baseline that *is not* the bottom of the image (i.e. an image with text),
+            // set this value equal to the amount of overflowing pixels from the bottom.
+            public let baselineOffset: CGFloat
+
+            public init(image: UIImage, baselineOffset: CGFloat = 0) {
+                self.image = image
+                self.baselineOffset = baselineOffset
+            }
         }
     }
 
