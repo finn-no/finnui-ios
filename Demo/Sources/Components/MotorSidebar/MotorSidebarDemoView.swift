@@ -71,7 +71,7 @@ extension MotorSidebar.ViewModel {
             mainSections: [
                 .init(
                     isExpandable: false,
-                    ribbon: .init(title: "Smidig handel", backgroundColor: .darkIce),
+                    ribbon: .init(title: "Smidig handel", backgroundColor: .aqua50),
                     price: .init(title: "Totalpris", value: "491 000 kr"),
                     content: [
                         .init(text: "Avgiftsfri betaling med", iconAfterText: UIImage(named: .blinkRocketMini))

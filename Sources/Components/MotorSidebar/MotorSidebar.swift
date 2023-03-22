@@ -128,6 +128,18 @@ extension MotorSidebar {
         // MARK: - Setup
 
         private func setup(section: ViewModel.Section) {
+            if let ribbon = section.ribbon {
+                let ribbonView = RibbonView(ribbon: ribbon)
+
+                addSubview(ribbonView)
+                NSLayoutConstraint.activate([
+                    ribbonView.topAnchor.constraint(equalTo: topAnchor),
+                    ribbonView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                    ribbonView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
+                    ribbonView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
+                ])
+            }
+
             if !section.bulletPoints.isEmpty {
                 let subviews = section.bulletPoints.map { BulletPoint(text: $0) }
                 bulletPointsStackView.addArrangedSubviews(subviews)
@@ -136,6 +148,38 @@ extension MotorSidebar {
 
             addSubview(contentStackView)
             contentStackView.fillInSuperview(insets: .init(top: .spacingS, leading: .spacingS, bottom: -.spacingS, trailing: -.spacingS))
+        }
+    }
+}
+
+extension MotorSidebar {
+    class RibbonView: UIView {
+
+        // MARK: - Private properties
+
+        private lazy var textLabel = Label(style: .captionStrong, numberOfLines: 0, textColor: .gray700, withAutoLayout: true)
+
+        // MARK: - Init
+
+        init(ribbon: ViewModel.Ribbon) {
+            super.init(frame: .zero)
+            translatesAutoresizingMaskIntoConstraints = false
+            setup(ribbon: ribbon)
+        }
+
+        required init?(coder: NSCoder) { fatalError() }
+
+        // MARK: - Setup
+
+        private func setup(ribbon: ViewModel.Ribbon) {
+            textLabel.text = ribbon.title
+            backgroundColor = ribbon.backgroundColor
+
+            addSubview(textLabel)
+            textLabel.fillInSuperview(insets: .init(top: .spacingS, leading: .spacingM, bottom: -.spacingS, trailing: -.spacingM))
+
+            layer.maskedCorners = [.layerMinXMaxYCorner]
+            layer.cornerRadius = 8
         }
     }
 }
