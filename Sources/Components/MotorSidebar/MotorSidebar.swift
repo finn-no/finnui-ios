@@ -113,7 +113,7 @@ extension MotorSidebar {
         private var header: InnerSectionHeader?
         private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bulletPointsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
-        private lazy var buttonStackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
+        private lazy var buttonStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
 
         // MARK: - Init
 
@@ -144,6 +144,12 @@ extension MotorSidebar {
                 let subviews = section.bulletPoints.map { BulletPoint(text: $0) }
                 bulletPointsStackView.addArrangedSubviews(subviews)
                 contentStackView.addArrangedSubview(bulletPointsStackView)
+            }
+
+            if !section.buttons.isEmpty {
+                let buttons = section.buttons.map { Button.create(from: $0) }
+                buttonStackView.addArrangedSubviews(buttons)
+                contentStackView.addArrangedSubview(buttonStackView)
             }
 
             addSubview(contentStackView)
@@ -278,5 +284,15 @@ extension MotorSidebar {
                 bulletImageView.heightAnchor.constraint(equalToConstant: 12),
             ])
         }
+    }
+}
+
+// MARK: - Private extension
+
+extension Button {
+    static func create(from viewModel: MotorSidebar.ViewModel.Button) -> Button {
+        let button = Button(style: viewModel.kind.buttonStyle, size: .normal, withAutoLayout: true)
+        button.setTitle(viewModel.text, for: .normal)
+        return button
     }
 }

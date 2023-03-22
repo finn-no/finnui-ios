@@ -1,4 +1,5 @@
 import UIKit
+import FinniversKit
 
 extension MotorSidebar {
     public struct ViewModel {
@@ -103,6 +104,17 @@ extension MotorSidebar.ViewModel {
             case primary
             case secondary
             case link
+
+            var buttonStyle: FinniversKit.Button.Style {
+                switch self {
+                case .link:
+                    return .flat
+                case .primary:
+                    return .callToAction
+                case .secondary:
+                    return .default
+                }
+            }
         }
     }
 }
