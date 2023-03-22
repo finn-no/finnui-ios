@@ -85,9 +85,11 @@ extension MotorSidebar.ViewModel {
         }
 
         public struct InlineImage {
+            // It's important that this image contains no padding.
+            // The calculation for placing/resizing it doesn't take padding into account.
             public let image: UIImage
 
-            // If you have an image with a baseline that *is not* the bottom of the image (i.e. an image with text),
+            // If you have an image with a baseline that *is not* the bottom of the image (i.e. a logo with text),
             // set this value equal to the amount of overflowing pixels from the bottom.
             public let baselineOffset: CGFloat
 
