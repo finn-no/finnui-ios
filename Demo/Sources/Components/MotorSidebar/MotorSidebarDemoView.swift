@@ -5,6 +5,9 @@ class MotorSidebarDemoView: UIView, Tweakable {
     lazy var tweakingOptions: [TweakingOption] = [
         TweakingOption(title: "Default") { [weak self] in
             self?.setupSidebar(with: .demoModel)
+        },
+        TweakingOption(title: "W/ secondary section") { [weak self] in
+            self?.setupSidebar(with: .withSecondarySection)
         }
     ]
 
@@ -137,6 +140,46 @@ extension MotorSidebarView.ViewModel {
                 )
             ],
             secondary: nil
+        )
+    }
+
+    static var withSecondarySection: Self {
+        Self.init(
+            mainSections: [
+                .init(
+                    isExpandable: false,
+                    price: .init(
+                        title: "Totalpris",
+                        value: "1 400 000 kr"
+                    ),
+                    content: [],
+                    buttons: [
+                        .init(
+                            kind: .primary,
+                            identifier: "send_message",
+                            text: "Send melding",
+                            urlString: nil,
+                            isExternal: false
+                        )
+                    ]
+                )
+            ],
+            secondary: .init(
+                isExpandable: false,
+                header: .init(title: "Smidig handel", icon: UIImage(named: .blinkRocketMini)),
+                content: [
+                    .init(text: "Vi hjelper deg gjennom alle stegene i kjøpet. Enkelt, trygt og effektivt.")
+                ],
+                buttons: [
+                    .init(
+                        kind: .link,
+                        identifier: "read_more",
+                        text: "Slik fungerer Smidig handel",
+                        urlString: "https://finn.no",
+                        isExternal: true
+                    )
+                ]
+            )
         )
     }
 }
