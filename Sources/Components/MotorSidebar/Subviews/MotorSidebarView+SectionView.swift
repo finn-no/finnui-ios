@@ -6,8 +6,7 @@ extension MotorSidebarView {
         // MARK: - Private properties
 
         private var isExpanded: Bool
-        private var headerView: SectionHeaderView?
-        private var ribbonView: RibbonView?
+        private var topView: UIView?
         private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bodyStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bulletPointsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
@@ -32,9 +31,10 @@ extension MotorSidebarView {
         private func setup(section: ViewModel.Section) {
             clipsToBounds = true
 
+            // We will only keep one view at the top. Either it'll have a ribbon, or it'll have a header.
             if let ribbon = section.ribbon {
                 let ribbonView = RibbonView(ribbon: ribbon)
-                self.ribbonView = ribbonView
+                topView = ribbonView
 
                 addSubview(ribbonView)
                 NSLayoutConstraint.activate([
@@ -43,9 +43,7 @@ extension MotorSidebarView {
                     ribbonView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
                     ribbonView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
                 ])
-            }
-
-            if let header = section.header {
+            } else if let header = section.header {
                 let headerView = SectionHeaderView(
                     title: header.title,
                     icon: header.icon,
@@ -53,11 +51,11 @@ extension MotorSidebarView {
                     isExpanded: section.isExpanded ?? true
                 )
                 headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(headerTapped)))
-                self.headerView = headerView
+                topView = headerView
 
                 addSubview(headerView)
                 NSLayoutConstraint.activate([
-                    headerView.topAnchor.constraint(equalTo: ribbonView?.bottomAnchor ?? topAnchor),
+                    headerView.topAnchor.constraint(equalTo: topAnchor),
                     headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
                     headerView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
                     headerView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
@@ -90,11 +88,11 @@ extension MotorSidebarView {
             addLayoutGuide(contentLayoutGuide)
             addSubview(contentStackView)
             NSLayoutConstraint.activate([
-                contentLayoutGuide.topAnchor.constraint(equalTo: ribbonView?.bottomAnchor ?? headerView?.bottomAnchor ?? topAnchor),
+                contentLayoutGuide.topAnchor.constraint(equalTo: topView?.bottomAnchor ?? topAnchor),
                 contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
                 contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
 
-                contentStackView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor, constant: ribbonView != nil ? 0 : .spacingS),
+                contentStackView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor, constant: topView != nil ? 0 : .spacingS),
                 contentStackView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
                 contentStackView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
                 contentStackView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor)
