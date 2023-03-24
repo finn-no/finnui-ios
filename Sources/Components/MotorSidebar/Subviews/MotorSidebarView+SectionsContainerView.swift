@@ -27,12 +27,13 @@ extension MotorSidebarView {
             addSubview(sectionsStackView)
             sectionsStackView.fillInSuperview()
 
+            let numberOfSections = sections.count
             sections.enumerated().forEach { index, section in
                 if index != 0 {
                     sectionsStackView.addArrangedSubview(.hairlineView())
                 }
 
-                sectionsStackView.addArrangedSubview(SectionView(section: section))
+                sectionsStackView.addArrangedSubview(SectionView(section: section, position: .init(index: index, numberOfSections: numberOfSections)))
             }
         }
 
