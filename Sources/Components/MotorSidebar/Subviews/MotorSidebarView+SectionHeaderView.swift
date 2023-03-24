@@ -41,7 +41,7 @@ extension MotorSidebarView {
 
         private func setup(title: String, icon: UIImage) {
             titleLabel.text = title
-            iconImageView.image = icon
+            iconImageView.image = icon.withRenderingMode(.alwaysTemplate)
 
             stackView.addArrangedSubviews([iconImageView, titleLabel, UIView()])
 
