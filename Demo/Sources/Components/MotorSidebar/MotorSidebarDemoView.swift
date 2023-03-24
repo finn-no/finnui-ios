@@ -10,7 +10,7 @@ class MotorSidebarDemoView: UIView, Tweakable {
 
     // MARK: - Private properties
 
-    private var motorSidebar: MotorSidebar?
+    private var motorSidebar: MotorSidebarView?
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
 
     // MARK: - Init
@@ -35,13 +35,13 @@ class MotorSidebarDemoView: UIView, Tweakable {
 
     // MARK: - Private methods
 
-    private func setupSidebar(with viewModel: MotorSidebar.ViewModel) {
+    private func setupSidebar(with viewModel: MotorSidebarView.ViewModel) {
         if let oldView = motorSidebar {
             oldView.removeFromSuperview()
             motorSidebar = nil
         }
 
-        let view = MotorSidebar(viewModel: viewModel, delegate: self, withAutoLayout: true)
+        let view = MotorSidebarView(viewModel: viewModel, delegate: self, withAutoLayout: true)
 
         scrollView.addSubview(view)
         NSLayoutConstraint.activate([
@@ -57,15 +57,15 @@ class MotorSidebarDemoView: UIView, Tweakable {
 
 // MARK: - MotorSidebarDelegate
 
-extension MotorSidebarDemoView: MotorSidebarDelegate {
-    func motorSidebar(_ view: MotorSidebar, didSelectButtonWithIdentifier identifier: String?, urlString: String?) {
+extension MotorSidebarDemoView: MotorSidebarViewDelegate {
+    func motorSidebarView(_ view: MotorSidebarView, didSelectButtonWithIdentifier identifier: String?, urlString: String?) {
     }
 
-    func motorSidebar(_ view: MotorSidebar, didToggleExpandOnSectionAt sectionIndex: Int, isExpanded: Bool) {
+    func motorSidebarView(_ view: MotorSidebarView, didToggleExpandOnSectionAt sectionIndex: Int, isExpanded: Bool) {
     }
 }
 
-extension MotorSidebar.ViewModel {
+extension MotorSidebarView.ViewModel {
     static var demoModel: Self {
         Self.init(
             mainSections: [

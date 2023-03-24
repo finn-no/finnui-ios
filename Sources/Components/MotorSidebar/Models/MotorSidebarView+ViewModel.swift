@@ -1,7 +1,7 @@
 import UIKit
 import FinniversKit
 
-extension MotorSidebar {
+extension MotorSidebarView {
     public struct ViewModel {
         public let mainSections: [Section]
         public let secondary: Section?
@@ -13,7 +13,7 @@ extension MotorSidebar {
     }
 }
 
-extension MotorSidebar.ViewModel {
+extension MotorSidebarView.ViewModel {
     public struct Section {
         public let isExpandable: Bool
         public let isExpanded: Bool?
