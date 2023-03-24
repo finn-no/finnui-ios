@@ -46,7 +46,7 @@ extension MotorSidebarView {
             }
 
             addSubview(stackView)
-            stackView.fillInSuperview(insets: UIEdgeInsets(top: .spacingS, leading: .spacingM, bottom: -.spacingS, trailing: -.spacingM))
+            stackView.fillInSuperview(margin: .spacingM)
 
             NSLayoutConstraint.activate([
                 iconImageView.widthAnchor.constraint(equalToConstant: .spacingL),
