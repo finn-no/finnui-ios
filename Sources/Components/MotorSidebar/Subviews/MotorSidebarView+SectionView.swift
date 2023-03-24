@@ -115,9 +115,13 @@ extension MotorSidebarView {
 
         // MARK: - Actions
 
-        @objc private func headerTapped() {
+        @objc private func headerTapped(sender: UITapGestureRecognizer) {
             isExpanded.toggle()
             updateStateConstraints()
+
+            if let headerView = sender.view as? SectionHeaderView {
+                headerView.updateExpandedState(isExpanded: isExpanded)
+            }
         }
     }
 }

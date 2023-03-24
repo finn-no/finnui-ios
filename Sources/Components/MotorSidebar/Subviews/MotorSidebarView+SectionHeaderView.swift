@@ -5,8 +5,6 @@ extension MotorSidebarView {
 
         // MARK: - Private properties
 
-        private let isExpandable: Bool
-        private var isExpanded: Bool
         private lazy var stackView = UIStackView(axis: .horizontal, spacing: .spacingS, alignment: .center, withAutoLayout: true)
         private lazy var titleLabel = Label(style: .body, numberOfLines: 0, withAutoLayout: true)
 
@@ -28,18 +26,16 @@ extension MotorSidebarView {
         // MARK: - Init
 
         init(title: String, icon: UIImage, isExpandable: Bool, isExpanded: Bool) {
-            self.isExpandable = isExpandable
-            self.isExpanded = isExpanded
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
-            setup(title: title, icon: icon)
+            setup(title: title, icon: icon, isExpandable: isExpandable, isExpanded: isExpanded)
         }
 
         required init?(coder: NSCoder) { fatalError() }
 
         // MARK: - Setup
 
-        private func setup(title: String, icon: UIImage) {
+        private func setup(title: String, icon: UIImage, isExpandable: Bool, isExpanded: Bool) {
             titleLabel.text = title
             iconImageView.image = icon.withRenderingMode(.alwaysTemplate)
 
@@ -59,18 +55,18 @@ extension MotorSidebarView {
                 chevronImageView.heightAnchor.constraint(equalToConstant: .spacingL),
             ])
 
-            updateExpandedState()
+            updateExpandedState(isExpanded: isExpanded)
         }
 
-        // MARK: - Private methods
+        // MARK: - Internal methods
 
-        private func updateExpandedState() {
+        func updateExpandedState(isExpanded: Bool) {
             let transform = CGAffineTransform.identity
             if isExpanded {
+                chevronImageView.transform = transform
+            } else {
                 chevronImageView.transform = transform.rotated(by: .pi * 180)
                 chevronImageView.transform = transform.rotated(by: .pi * -1)
-            } else {
-                chevronImageView.transform = transform
             }
         }
     }
