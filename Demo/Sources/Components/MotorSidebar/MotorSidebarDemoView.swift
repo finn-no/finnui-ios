@@ -62,6 +62,7 @@ class MotorSidebarDemoView: UIView, Tweakable {
 
 extension MotorSidebarDemoView: MotorSidebarViewDelegate {
     func motorSidebarView(_ view: MotorSidebarView, didSelectButtonWithIdentifier identifier: String?, urlString: String?) {
+        print("👉 Did tap button with identifier: '\(identifier ?? "[nil]")' and url: '\(urlString ?? "[nil]")'")
     }
 
     func motorSidebarView(_ view: MotorSidebarView, didToggleExpandOnSectionAt sectionIndex: Int, isExpanded: Bool) {
