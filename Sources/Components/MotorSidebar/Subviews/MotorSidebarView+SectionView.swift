@@ -5,16 +5,21 @@ extension MotorSidebarView {
 
         // MARK: - Private properties
 
+        private var isExpanded: Bool
         private var headerView: SectionHeaderView?
         private var ribbonView: RibbonView?
         private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bodyStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bulletPointsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var buttonStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+        private lazy var contentLayoutGuide = UILayoutGuide()
+        private lazy var bottomAnchorExpandedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: .spacingS)
+        private lazy var bottomAnchorCollapsedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.topAnchor)
 
         // MARK: - Init
 
         init(section: ViewModel.Section) {
+            isExpanded = section.isExpanded ?? true
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
             setup(section: section)
@@ -25,6 +30,8 @@ extension MotorSidebarView {
         // MARK: - Setup
 
         private func setup(section: ViewModel.Section) {
+            clipsToBounds = true
+
             if let ribbon = section.ribbon {
                 let ribbonView = RibbonView(ribbon: ribbon)
                 self.ribbonView = ribbonView
@@ -45,6 +52,7 @@ extension MotorSidebarView {
                     isExpandable: section.isExpandable,
                     isExpanded: section.isExpanded ?? true
                 )
+                headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(headerTapped)))
                 self.headerView = headerView
 
                 addSubview(headerView)
@@ -79,16 +87,39 @@ extension MotorSidebarView {
                 contentStackView.addArrangedSubview(buttonStackView)
             }
 
+            addLayoutGuide(contentLayoutGuide)
             addSubview(contentStackView)
             NSLayoutConstraint.activate([
-                contentStackView.topAnchor.constraint(
-                    equalTo: ribbonView?.bottomAnchor ?? headerView?.bottomAnchor ?? topAnchor,
-                    constant: ribbonView != nil ? 0 : .spacingS
-                ),
+                contentLayoutGuide.topAnchor.constraint(equalTo: ribbonView?.bottomAnchor ?? headerView?.bottomAnchor ?? topAnchor),
                 contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
                 contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
-                contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -.spacingS),
+
+                contentStackView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor, constant: ribbonView != nil ? 0 : .spacingS),
+                contentStackView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
+                contentStackView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
+                contentStackView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor)
             ])
+            updateStateConstraints()
+        }
+
+        // MARK: - Private methods
+
+        private func updateStateConstraints() {
+            if isExpanded {
+                bottomAnchorCollapsedConstraint.isActive = false
+                bottomAnchorExpandedConstraint.isActive = true
+            } else {
+                bottomAnchorExpandedConstraint.isActive = false
+                bottomAnchorCollapsedConstraint.isActive = true
+            }
+            layoutIfNeeded()
+        }
+
+        // MARK: - Actions
+
+        @objc private func headerTapped() {
+            isExpanded.toggle()
+            updateStateConstraints()
         }
     }
 }
