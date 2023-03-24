@@ -14,7 +14,7 @@ extension MotorSidebarView {
 
         private weak var delegate: MotorSidebarSectionViewDelegate?
         private let section: ViewModel.Section
-        private let position: SectionPosition
+        private let isOnlySection: Bool
         private var isExpanded: Bool
         private var topView: UIView?
         private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
@@ -22,15 +22,15 @@ extension MotorSidebarView {
         private lazy var bulletPointsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var buttonStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var contentLayoutGuide = UILayoutGuide()
-        private lazy var bottomAnchorExpandedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: position.bottomConstraintConstant)
+        private lazy var bottomAnchorExpandedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: .spacingM)
         private lazy var bottomAnchorCollapsedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.topAnchor)
 
         // MARK: - Init
 
-        init(section: ViewModel.Section, position: SectionPosition, delegate: MotorSidebarSectionViewDelegate) {
+        init(section: ViewModel.Section, isOnlySection: Bool, delegate: MotorSidebarSectionViewDelegate) {
             self.section = section
             isExpanded = section.isExpanded ?? true
-            self.position = position
+            self.isOnlySection = isOnlySection
             self.delegate = delegate
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
@@ -70,7 +70,7 @@ extension MotorSidebarView {
                 NSLayoutConstraint.activate([
                     headerView.topAnchor.constraint(
                         equalTo: topAnchor,
-                        constant: position == .onlySection ? position.topConstraintConstant : 0
+                        constant: isOnlySection ? .spacingM : 0
                     ),
                     headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
                     headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -111,7 +111,7 @@ extension MotorSidebarView {
 
                 contentStackView.topAnchor.constraint(
                     equalTo: contentLayoutGuide.topAnchor,
-                    constant: topView != nil ? 0 : position.topConstraintConstant
+                    constant: topView != nil ? 0 : .spacingM
                 ),
                 contentStackView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
                 contentStackView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
@@ -151,46 +151,6 @@ extension MotorSidebarView {
             else { return }
 
             delegate?.motorSidebarSectionView(self, didSelectButton: buttonViewModel)
-        }
-    }
-}
-
-extension MotorSidebarView.SectionView {
-    enum SectionPosition {
-        case first
-        case other
-        case last
-        case onlySection
-
-        fileprivate var topConstraintConstant: CGFloat {
-            switch self {
-            case .first, .onlySection:
-                return .spacingM
-            case .last, .other:
-                return .spacingS
-            }
-        }
-
-        fileprivate var bottomConstraintConstant: CGFloat {
-            switch self {
-            case .first, .other:
-                return .spacingS
-            case .last, .onlySection:
-                return .spacingM
-            }
-        }
-
-        /// `index` is expected to reference zero-based indexing.
-        init(index: Int, numberOfSections: Int) {
-            if numberOfSections == 1 {
-                self = .onlySection
-            } else if index == 0 {
-                self = .first
-            } else if index == (numberOfSections - 1) {
-                self = .last
-            } else {
-                self = .other
-            }
         }
     }
 }
