@@ -57,7 +57,7 @@ extension MotorSidebarView {
                 NSLayoutConstraint.activate([
                     headerView.topAnchor.constraint(equalTo: topAnchor),
                     headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-                    headerView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
+                    headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
                     headerView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
                 ])
             }
