@@ -1,13 +1,22 @@
 import FinniversKit
 
+protocol MotorSidebarSectionViewDelegate: AnyObject {
+    func motorSidebarSectionView(
+        _ sectionView: MotorSidebarView.SectionView,
+        didSelectButton viewModel: MotorSidebarView.ViewModel.Button
+    )
+}
+
 extension MotorSidebarView {
     class SectionView: UIView {
 
         // MARK: - Private properties
 
+        private weak var delegate: MotorSidebarSectionViewDelegate?
+        private let section: ViewModel.Section
+        private let position: SectionPosition
         private var isExpanded: Bool
         private var topView: UIView?
-        private let position: SectionPosition
         private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bodyStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bulletPointsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
@@ -18,19 +27,21 @@ extension MotorSidebarView {
 
         // MARK: - Init
 
-        init(section: ViewModel.Section, position: SectionPosition) {
+        init(section: ViewModel.Section, position: SectionPosition, delegate: MotorSidebarSectionViewDelegate) {
+            self.section = section
             isExpanded = section.isExpanded ?? true
             self.position = position
+            self.delegate = delegate
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
-            setup(section: section, position: position)
+            setup()
         }
 
         required init?(coder: NSCoder) { fatalError() }
 
         // MARK: - Setup
 
-        private func setup(section: ViewModel.Section, position: SectionPosition) {
+        private func setup() {
             clipsToBounds = true
 
             // We will only keep one view at the top. Either it'll have a ribbon, or it'll have a header.
@@ -85,7 +96,8 @@ extension MotorSidebarView {
             }
 
             if !section.buttons.isEmpty {
-                let buttons = section.buttons.map { Button.create(from: $0) }
+                let buttons = section.buttons.map(Button.create(from:))
+                buttons.forEach { $0.addTarget(self, action: #selector(buttonSelected(button:)), for: .touchUpInside) }
                 buttonStackView.addArrangedSubviews(buttons)
                 contentStackView.addArrangedSubview(buttonStackView)
             }
@@ -130,6 +142,15 @@ extension MotorSidebarView {
             if let headerView = sender.view as? SectionHeaderView {
                 headerView.updateExpandedState(isExpanded: isExpanded)
             }
+        }
+
+        @objc private func buttonSelected(button: UIButton) {
+            guard
+                let buttonIndex = buttonStackView.arrangedSubviews.firstIndex(of: button),
+                let buttonViewModel = section.buttons[safe: buttonIndex]
+            else { return }
+
+            delegate?.motorSidebarSectionView(self, didSelectButton: buttonViewModel)
         }
     }
 }

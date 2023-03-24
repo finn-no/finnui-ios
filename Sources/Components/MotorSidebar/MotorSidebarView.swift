@@ -8,13 +8,10 @@ public protocol MotorSidebarViewDelegate: AnyObject {
 
 public class MotorSidebarView: UIView {
 
-    // MARK: - Public properties
-
-    public weak var delegate: MotorSidebarViewDelegate?
-
     // MARK: - Private properties
 
     private let viewModel: ViewModel
+    private weak var delegate: MotorSidebarViewDelegate?
     private lazy var stackView = UIStackView(axis: .vertical, spacing: .spacingM, withAutoLayout: true)
 
     // MARK: - Init
@@ -25,6 +22,7 @@ public class MotorSidebarView: UIView {
         withAutoLayout: Bool = false
     ) {
         self.viewModel = viewModel
+        self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = !withAutoLayout
         setup()
@@ -35,13 +33,21 @@ public class MotorSidebarView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        stackView.addArrangedSubview(SectionsContainerView(sections: viewModel.mainSections))
+        stackView.addArrangedSubview(SectionsContainerView(sections: viewModel.mainSections, sectionDelegate: self))
 
         if let secondarySection = viewModel.secondary {
-            stackView.addArrangedSubview(SectionsContainerView(sections: [secondarySection]))
+            stackView.addArrangedSubview(SectionsContainerView(sections: [secondarySection], sectionDelegate: self))
         }
 
         addSubview(stackView)
         stackView.fillInSuperview()
+    }
+}
+
+// MARK: - MotorSidebarSectionViewDelegate
+
+extension MotorSidebarView: MotorSidebarSectionViewDelegate {
+    func motorSidebarSectionView(_ sectionView: SectionView, didSelectButton viewModel: ViewModel.Button) {
+        delegate?.motorSidebarView(self, didSelectButtonWithIdentifier: viewModel.identifier, urlString: viewModel.urlString)
     }
 }

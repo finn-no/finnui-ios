@@ -9,17 +9,17 @@ extension MotorSidebarView {
 
         // MARK: - Init
 
-        init(sections: [ViewModel.Section]) {
+        init(sections: [ViewModel.Section], sectionDelegate: MotorSidebarSectionViewDelegate) {
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
-            setup(sections: sections)
+            setup(sections: sections, sectionDelegate: sectionDelegate)
         }
 
         required init?(coder: NSCoder) { fatalError() }
 
         // MARK: - Setup
 
-        private func setup(sections: [ViewModel.Section]) {
+        private func setup(sections: [ViewModel.Section], sectionDelegate: MotorSidebarSectionViewDelegate) {
             clipsToBounds = true
             layer.borderWidth = 1
             layer.cornerRadius = 8
@@ -33,7 +33,12 @@ extension MotorSidebarView {
                     sectionsStackView.addArrangedSubview(.hairlineView())
                 }
 
-                sectionsStackView.addArrangedSubview(SectionView(section: section, position: .init(index: index, numberOfSections: numberOfSections)))
+                let sectionView = SectionView(
+                    section: section,
+                    position: .init(index: index, numberOfSections: numberOfSections),
+                    delegate: sectionDelegate
+                )
+                sectionsStackView.addArrangedSubview(sectionView)
             }
         }
 
