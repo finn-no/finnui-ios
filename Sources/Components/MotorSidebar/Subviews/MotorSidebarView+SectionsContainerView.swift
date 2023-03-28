@@ -27,8 +27,6 @@ extension MotorSidebarView {
 
         private func setup(sections: [ViewModel.Section], sectionDelegate: MotorSidebarSectionViewDelegate) {
             clipsToBounds = true
-            layer.borderWidth = 1
-            layer.cornerRadius = 8
 
             addSubview(sectionsStackView)
             sectionsStackView.fillInSuperview()
@@ -55,9 +53,16 @@ extension MotorSidebarView {
             layer.borderColor = .borderDefault
             switch traitCollection.horizontalSizeClass {
             case .regular:
+                layer.cornerRadius = 8
                 layer.borderWidth = 1
             default:
-                layer.borderWidth = shouldChangeLayoutWhenCompact ? 0 : 1
+                if shouldChangeLayoutWhenCompact {
+                    layer.cornerRadius = 0
+                    layer.borderWidth = 0
+                } else {
+                    layer.cornerRadius = 8
+                    layer.borderWidth = 1
+                }
             }
         }
     }
