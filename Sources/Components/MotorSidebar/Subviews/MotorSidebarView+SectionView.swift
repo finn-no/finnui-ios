@@ -19,40 +19,27 @@ extension MotorSidebarView {
 
         private weak var delegate: MotorSidebarSectionViewDelegate?
         private let section: ViewModel.Section
-        private let isOnlySection: Bool
         private let shouldChangeLayoutWhenCompact: Bool
         private var isExpanded: Bool
         private var topViewKind = TopViewKind.none
-        private lazy var topView = UIView(withAutoLayout: true)
-        private lazy var bodyStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
-        private lazy var bulletPointsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
-        private lazy var buttonStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+        private lazy var contentView = SectionContentView(section: section, delegate: self)
         private lazy var contentLayoutGuide = UILayoutGuide()
         private lazy var topStackView = UIStackView(axis: .horizontal, spacing: 0, withAutoLayout: true)
 
         // Constraints.
         private lazy var bottomAnchorExpandedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: .spacingM)
         private lazy var bottomAnchorCollapsedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.topAnchor)
-        private lazy var layoutGuideTopAnchorRibbonConstraint = contentLayoutGuide.topAnchor.constraint(equalTo: topView.bottomAnchor)
-
-        private lazy var contentStackView: UIStackView = {
-            let view = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
-            view.isLayoutMarginsRelativeArrangement = true
-            return view
-        }()
 
         // MARK: - Init
 
         init(
             section: ViewModel.Section,
             shouldChangeLayoutWhenCompact: Bool,
-            isOnlySection: Bool,
             delegate: MotorSidebarSectionViewDelegate
         ) {
             self.section = section
             isExpanded = section.isExpanded ?? true
             self.shouldChangeLayoutWhenCompact = shouldChangeLayoutWhenCompact
-            self.isOnlySection = isOnlySection
             self.delegate = delegate
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
@@ -87,14 +74,9 @@ extension MotorSidebarView {
                 topStackView.addArrangedSubview(headerView)
             }
 
-            insertPriceIfNeeded()
-            insertBodyIfNeeded()
-            insertBulletPointsIfNeeded()
-            insertButtonsIfNeeded()
-
             addLayoutGuide(contentLayoutGuide)
             addSubview(topStackView)
-            addSubview(contentStackView)
+            addSubview(contentView)
 
             NSLayoutConstraint.activate([
                 topStackView.topAnchor.constraint(equalTo: topAnchor),
@@ -105,10 +87,10 @@ extension MotorSidebarView {
                 contentLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor),
                 contentLayoutGuide.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-                contentStackView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor),
-                contentStackView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
-                contentStackView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
-                contentStackView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor)
+                contentView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor),
+                contentView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
+                contentView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
+                contentView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor)
             ])
 
             configurePresentation()
@@ -134,7 +116,7 @@ extension MotorSidebarView {
                     topStackView.arrangedSubviews.forEach { $0.isHidden = false }
                 }
 
-                contentStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
+                contentView.directionalLayoutMargins = NSDirectionalEdgeInsets(
                     top: topViewKind == .none ? .spacingM : 0,
                     leading: .spacingM,
                     bottom: 0,
@@ -146,9 +128,9 @@ extension MotorSidebarView {
                 }
 
                 if shouldChangeLayoutWhenCompact {
-                    contentStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(all: 0)
+                    contentView.directionalLayoutMargins = NSDirectionalEdgeInsets(all: 0)
                 } else {
-                    contentStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
+                    contentView.directionalLayoutMargins = NSDirectionalEdgeInsets(
                         top: topViewKind == .header ? .spacingM : 0,
                         leading: .spacingM,
                         bottom: 0,
@@ -170,38 +152,6 @@ extension MotorSidebarView {
             layoutIfNeeded()
         }
 
-        private func insertPriceIfNeeded() {
-            if let price = section.price {
-                let priceView = PriceView(price: price)
-                contentStackView.addArrangedSubview(priceView)
-            }
-        }
-
-        private func insertBodyIfNeeded() {
-            if !section.content.isEmpty {
-                let subviews = section.content.map { SectionBodyView(body: $0) }
-                bodyStackView.addArrangedSubviews(subviews)
-                contentStackView.addArrangedSubview(bodyStackView)
-            }
-        }
-
-        private func insertBulletPointsIfNeeded() {
-            if !section.bulletPoints.isEmpty {
-                let subviews = section.bulletPoints.map { BulletPointView(text: $0) }
-                bulletPointsStackView.addArrangedSubviews(subviews)
-                contentStackView.addArrangedSubview(bulletPointsStackView)
-            }
-        }
-
-        private func insertButtonsIfNeeded() {
-            if !section.buttons.isEmpty {
-                let buttons = section.buttons.map(Button.create(from:))
-                buttons.forEach { $0.addTarget(self, action: #selector(buttonSelected(button:)), for: .touchUpInside) }
-                buttonStackView.addArrangedSubviews(buttons)
-                contentStackView.addArrangedSubview(buttonStackView)
-            }
-        }
-
         // MARK: - Actions
 
         @objc private func headerTapped(sender: UITapGestureRecognizer) {
@@ -212,24 +162,16 @@ extension MotorSidebarView {
                 headerView.updateExpandedState(isExpanded: isExpanded)
             }
         }
-
-        @objc private func buttonSelected(button: UIButton) {
-            guard
-                let buttonIndex = buttonStackView.arrangedSubviews.firstIndex(of: button),
-                let buttonViewModel = section.buttons[safe: buttonIndex]
-            else { return }
-
-            delegate?.motorSidebarSectionView(self, didSelectButton: buttonViewModel)
-        }
     }
 }
 
-// MARK: - Private extension
+// MARK: - MotorSidebarSectionContentViewDelegate
 
-private extension Button {
-    static func create(from viewModel: MotorSidebarView.ViewModel.Button) -> Button {
-        let button = Button(style: viewModel.kind.buttonStyle, size: .normal, withAutoLayout: true)
-        button.setTitle(viewModel.text, for: .normal)
-        return button
+extension MotorSidebarView.SectionView: MotorSidebarSectionContentViewDelegate {
+    func motorSidebarSectionContentView(
+        _ sectionView: MotorSidebarView.SectionContentView,
+        didSelectButton viewModel: MotorSidebarView.ViewModel.Button
+    ) {
+        delegate?.motorSidebarSectionView(self, didSelectButton: viewModel)
     }
 }

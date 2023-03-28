@@ -33,7 +33,6 @@ extension MotorSidebarView {
             addSubview(sectionsStackView)
             sectionsStackView.fillInSuperview()
 
-            let isOnlySection = sections.count == 1
             sections.enumerated().forEach { index, section in
                 if index != 0 {
                     sectionsStackView.addArrangedSubview(.hairlineView())
@@ -42,7 +41,6 @@ extension MotorSidebarView {
                 let sectionView = SectionView(
                     section: section,
                     shouldChangeLayoutWhenCompact: shouldChangeLayoutWhenCompact,
-                    isOnlySection: isOnlySection,
                     delegate: sectionDelegate
                 )
                 sectionsStackView.addArrangedSubview(sectionView)
