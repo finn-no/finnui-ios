@@ -173,7 +173,7 @@ extension MotorSidebarView.ViewModel {
                 ],
                 buttons: [
                     .init(
-                        kind: .link,
+                        kind: .secondary,
                         identifier: "read_more",
                         text: "Slik fungerer Smidig handel",
                         urlString: "https://finn.no",
