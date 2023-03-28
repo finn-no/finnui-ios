@@ -5,8 +5,13 @@ extension MotorSidebarView {
 
         // MARK: - Private properties
 
-        private lazy var stackView = UIStackView(axis: .horizontal, spacing: .spacingS, alignment: .center, withAutoLayout: true)
         private lazy var titleLabel = Label(style: .body, numberOfLines: 0, withAutoLayout: true)
+
+        private lazy var stackView: UIStackView = {
+            let view = UIStackView(axis: .horizontal, spacing: .spacingS, alignment: .center, withAutoLayout: true)
+            view.isLayoutMarginsRelativeArrangement = true
+            return view
+        }()
 
         private lazy var iconImageView: UIImageView = {
             let view = UIImageView(withAutoLayout: true)
@@ -46,7 +51,7 @@ extension MotorSidebarView {
             }
 
             addSubview(stackView)
-            stackView.fillInSuperview(margin: .spacingM)
+            stackView.fillInSuperview()
 
             NSLayoutConstraint.activate([
                 iconImageView.widthAnchor.constraint(equalToConstant: .spacingL),
@@ -55,6 +60,7 @@ extension MotorSidebarView {
                 chevronImageView.heightAnchor.constraint(equalToConstant: .spacingL),
             ])
 
+            configurePresentation()
             updateExpandedState(isExpanded: isExpanded)
         }
 
@@ -67,6 +73,27 @@ extension MotorSidebarView {
             } else {
                 chevronImageView.transform = transform.rotated(by: .pi * 180)
                 chevronImageView.transform = transform.rotated(by: .pi * -1)
+            }
+        }
+
+        // MARK: - Overrides
+
+        public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+            super.traitCollectionDidChange(previousTraitCollection)
+
+            if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+                configurePresentation()
+            }
+        }
+
+        // MARK: - Private methods
+
+        private func configurePresentation() {
+            switch traitCollection.horizontalSizeClass {
+            case .regular:
+                stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(all: .spacingM)
+            default:
+                stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(vertical: .spacingM, horizontal: 0)
             }
         }
     }
