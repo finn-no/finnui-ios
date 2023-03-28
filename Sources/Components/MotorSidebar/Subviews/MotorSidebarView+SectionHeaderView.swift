@@ -5,6 +5,7 @@ extension MotorSidebarView {
 
         // MARK: - Private properties
 
+        private let shouldChangeLayoutWhenCompact: Bool
         private lazy var titleLabel = Label(style: .body, numberOfLines: 0, withAutoLayout: true)
 
         private lazy var stackView: UIStackView = {
@@ -30,7 +31,14 @@ extension MotorSidebarView {
 
         // MARK: - Init
 
-        init(title: String, icon: UIImage, isExpandable: Bool, isExpanded: Bool) {
+        init(
+            title: String,
+            icon: UIImage,
+            shouldChangeLayoutWhenCompact: Bool,
+            isExpandable: Bool,
+            isExpanded: Bool
+        ) {
+            self.shouldChangeLayoutWhenCompact = shouldChangeLayoutWhenCompact
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
             setup(title: title, icon: icon, isExpandable: isExpandable, isExpanded: isExpanded)
@@ -89,11 +97,16 @@ extension MotorSidebarView {
         // MARK: - Private methods
 
         private func configurePresentation() {
+            let regularInsets = NSDirectionalEdgeInsets(all: .spacingM)
             switch traitCollection.horizontalSizeClass {
             case .regular:
-                stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(all: .spacingM)
+                stackView.directionalLayoutMargins = regularInsets
             default:
-                stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(vertical: .spacingM, horizontal: 0)
+                if shouldChangeLayoutWhenCompact {
+                    stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(vertical: .spacingM, horizontal: 0)
+                } else {
+                    stackView.directionalLayoutMargins = regularInsets
+                }
             }
         }
     }

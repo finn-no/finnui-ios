@@ -5,11 +5,17 @@ extension MotorSidebarView {
 
         // MARK: - Private properties
 
+        private let shouldChangeLayoutWhenCompact: Bool
         private lazy var sectionsStackView = UIStackView(axis: .vertical, spacing: 0, withAutoLayout: true)
 
         // MARK: - Init
 
-        init(sections: [ViewModel.Section], sectionDelegate: MotorSidebarSectionViewDelegate) {
+        init(
+            sections: [ViewModel.Section],
+            shouldChangeLayoutWhenCompact: Bool,
+            sectionDelegate: MotorSidebarSectionViewDelegate
+        ) {
+            self.shouldChangeLayoutWhenCompact = shouldChangeLayoutWhenCompact
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
             setup(sections: sections, sectionDelegate: sectionDelegate)
@@ -35,6 +41,7 @@ extension MotorSidebarView {
 
                 let sectionView = SectionView(
                     section: section,
+                    shouldChangeLayoutWhenCompact: shouldChangeLayoutWhenCompact,
                     isOnlySection: isOnlySection,
                     delegate: sectionDelegate
                 )
@@ -52,7 +59,7 @@ extension MotorSidebarView {
             case .regular:
                 layer.borderWidth = 1
             default:
-                layer.borderWidth = 0
+                layer.borderWidth = shouldChangeLayoutWhenCompact ? 0 : 1
             }
         }
     }

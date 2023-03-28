@@ -33,14 +33,46 @@ public class MotorSidebarView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        stackView.addArrangedSubview(SectionsContainerView(sections: viewModel.mainSections, sectionDelegate: self))
+        let mainSection = SectionsContainerView(
+            sections: viewModel.mainSections,
+            shouldChangeLayoutWhenCompact: true,
+            sectionDelegate: self
+        )
+        stackView.addArrangedSubview(mainSection)
 
-        if let secondarySection = viewModel.secondary {
-            stackView.addArrangedSubview(SectionsContainerView(sections: [secondarySection], sectionDelegate: self))
+        if let secondarySectionModel = viewModel.secondary {
+            let secondarySection = SectionsContainerView(
+                sections: [secondarySectionModel],
+                shouldChangeLayoutWhenCompact: false,
+                sectionDelegate: self
+            )
+            stackView.addArrangedSubview(secondarySection)
         }
 
         addSubview(stackView)
         stackView.fillInSuperview()
+        configurePresentation()
+    }
+
+    // MARK: - Overrides
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+            configurePresentation()
+        }
+    }
+
+    // MARK: - Private methods
+
+    private func configurePresentation() {
+        switch traitCollection.horizontalSizeClass {
+        case .regular:
+            stackView.spacing = .spacingM
+        default:
+            stackView.spacing = 0
+        }
     }
 }
 

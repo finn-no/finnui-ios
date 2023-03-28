@@ -15,6 +15,7 @@ extension MotorSidebarView {
         private weak var delegate: MotorSidebarSectionViewDelegate?
         private let section: ViewModel.Section
         private let isOnlySection: Bool
+        private let shouldChangeLayoutWhenCompact: Bool
         private var isExpanded: Bool
         private var topView: UIView?
         private lazy var bodyStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
@@ -32,9 +33,15 @@ extension MotorSidebarView {
 
         // MARK: - Init
 
-        init(section: ViewModel.Section, isOnlySection: Bool, delegate: MotorSidebarSectionViewDelegate) {
+        init(
+            section: ViewModel.Section,
+            shouldChangeLayoutWhenCompact: Bool,
+            isOnlySection: Bool,
+            delegate: MotorSidebarSectionViewDelegate
+        ) {
             self.section = section
             isExpanded = section.isExpanded ?? true
+            self.shouldChangeLayoutWhenCompact = shouldChangeLayoutWhenCompact
             self.isOnlySection = isOnlySection
             self.delegate = delegate
             super.init(frame: .zero)
@@ -65,6 +72,7 @@ extension MotorSidebarView {
                 let headerView = SectionHeaderView(
                     title: header.title,
                     icon: header.icon,
+                    shouldChangeLayoutWhenCompact: shouldChangeLayoutWhenCompact,
                     isExpandable: section.isExpandable,
                     isExpanded: section.isExpanded ?? true
                 )
@@ -140,16 +148,22 @@ extension MotorSidebarView {
         // MARK: - Private methods
 
         private func configurePresentation() {
+            let regularInsets = NSDirectionalEdgeInsets(
+                top: topView != nil ? 0 : .spacingM,
+                leading: .spacingM,
+                bottom: 0,
+                trailing: .spacingM
+            )
+
             switch traitCollection.horizontalSizeClass {
             case .regular:
-                contentStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
-                    top: topView != nil ? 0 : .spacingM,
-                    leading: .spacingM,
-                    bottom: 0,
-                    trailing: .spacingM
-                )
+                contentStackView.directionalLayoutMargins = regularInsets
             default:
-                contentStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(all: 0)
+                if shouldChangeLayoutWhenCompact {
+                    contentStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(all: 0)
+                } else {
+                    contentStackView.directionalLayoutMargins = regularInsets
+                }
             }
         }
 
