@@ -47,11 +47,12 @@ extension MotorSidebarView {
         override func layoutSubviews() {
             super.layoutSubviews()
 
+            layer.borderColor = .borderDefault
             switch traitCollection.horizontalSizeClass {
             case .regular:
-                layer.borderColor = .borderDefault
+                layer.borderWidth = 1
             default:
-                layer.borderColor = .none
+                layer.borderWidth = 0
             }
         }
     }
