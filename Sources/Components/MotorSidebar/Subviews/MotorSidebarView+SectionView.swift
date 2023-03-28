@@ -17,13 +17,18 @@ extension MotorSidebarView {
         private let isOnlySection: Bool
         private var isExpanded: Bool
         private var topView: UIView?
-        private lazy var contentStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bodyStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var bulletPointsStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var buttonStackView = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
         private lazy var contentLayoutGuide = UILayoutGuide()
         private lazy var bottomAnchorExpandedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: .spacingM)
         private lazy var bottomAnchorCollapsedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.topAnchor)
+
+        private lazy var contentStackView: UIStackView = {
+            let view = UIStackView(axis: .vertical, spacing: .spacingS, withAutoLayout: true)
+            view.isLayoutMarginsRelativeArrangement = true
+            return view
+        }()
 
         // MARK: - Init
 
@@ -106,8 +111,8 @@ extension MotorSidebarView {
             addSubview(contentStackView)
             NSLayoutConstraint.activate([
                 contentLayoutGuide.topAnchor.constraint(equalTo: topView?.bottomAnchor ?? topAnchor),
-                contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: .spacingM),
-                contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -.spacingM),
+                contentLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor),
+                contentLayoutGuide.trailingAnchor.constraint(equalTo: trailingAnchor),
 
                 contentStackView.topAnchor.constraint(
                     equalTo: contentLayoutGuide.topAnchor,
@@ -117,10 +122,36 @@ extension MotorSidebarView {
                 contentStackView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
                 contentStackView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor)
             ])
+
+            configurePresentation()
             updateStateConstraints()
         }
 
+        // MARK: - Overrides
+
+        public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+            super.traitCollectionDidChange(previousTraitCollection)
+
+            if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+                configurePresentation()
+            }
+        }
+
         // MARK: - Private methods
+
+        private func configurePresentation() {
+            switch traitCollection.horizontalSizeClass {
+            case .regular:
+                contentStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
+                    top: topView != nil ? 0 : .spacingM,
+                    leading: .spacingM,
+                    bottom: 0,
+                    trailing: .spacingM
+                )
+            default:
+                contentStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(all: 0)
+            }
+        }
 
         private func updateStateConstraints() {
             if isExpanded {
