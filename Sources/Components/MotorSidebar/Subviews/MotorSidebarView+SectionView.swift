@@ -132,12 +132,7 @@ extension MotorSidebarView {
                 if shouldChangeLayoutWhenCompact {
                     contentView.directionalLayoutMargins = NSDirectionalEdgeInsets(all: 0)
                 } else {
-                    contentView.directionalLayoutMargins = NSDirectionalEdgeInsets(
-                        top: topViewKind == .header ? .spacingM : 0,
-                        leading: .spacingM,
-                        bottom: 0,
-                        trailing: .spacingM
-                    )
+                    contentView.directionalLayoutMargins = NSDirectionalEdgeInsets(vertical: 0, horizontal: .spacingM)
                 }
             }
             layoutIfNeeded()
