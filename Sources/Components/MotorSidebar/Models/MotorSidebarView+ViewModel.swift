@@ -2,7 +2,7 @@ import UIKit
 import FinniversKit
 
 extension MotorSidebarView {
-    public struct ViewModel {
+    public class ViewModel {
         public let mainSections: [Section]
         public let secondary: Section?
 
@@ -14,9 +14,9 @@ extension MotorSidebarView {
 }
 
 extension MotorSidebarView.ViewModel {
-    public struct Section {
+    public class Section {
+        public var isExpanded: Bool
         public let isExpandable: Bool
-        public let isExpanded: Bool?
         public let ribbon: Ribbon?
         public let price: Price?
         public let header: Header?
@@ -26,7 +26,7 @@ extension MotorSidebarView.ViewModel {
 
         public init(
             isExpandable: Bool,
-            isExpanded: Bool? = nil,
+            isExpanded: Bool = true,
             ribbon: Ribbon? = nil,
             price: Price? = nil,
             header: Header? = nil,

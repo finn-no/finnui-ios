@@ -22,7 +22,6 @@ extension MotorSidebarView {
         private weak var delegate: MotorSidebarSectionViewDelegate?
         private let section: ViewModel.Section
         private let shouldChangeLayoutWhenCompact: Bool
-        private var isExpanded: Bool
         private var topViewKind = TopViewKind.none
         private lazy var contentView = SectionContentView(section: section, delegate: self)
         private lazy var contentLayoutGuide = UILayoutGuide()
@@ -40,7 +39,6 @@ extension MotorSidebarView {
             delegate: MotorSidebarSectionViewDelegate
         ) {
             self.section = section
-            isExpanded = section.isExpanded ?? true
             self.shouldChangeLayoutWhenCompact = shouldChangeLayoutWhenCompact
             self.delegate = delegate
             super.init(frame: .zero)
@@ -67,7 +65,7 @@ extension MotorSidebarView {
                     icon: header.icon,
                     shouldChangeLayoutWhenCompact: shouldChangeLayoutWhenCompact,
                     isExpandable: section.isExpandable,
-                    isExpanded: section.isExpanded ?? true
+                    isExpanded: section.isExpanded
                 )
                 headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(headerTapped)))
 
@@ -143,7 +141,7 @@ extension MotorSidebarView {
         }
 
         private func updateStateConstraints() {
-            if isExpanded {
+            if section.isExpanded {
                 bottomAnchorCollapsedConstraint.isActive = false
                 bottomAnchorExpandedConstraint.isActive = true
             } else {
@@ -156,14 +154,14 @@ extension MotorSidebarView {
         // MARK: - Actions
 
         @objc private func headerTapped(sender: UITapGestureRecognizer) {
-            isExpanded.toggle()
+            section.isExpanded.toggle()
             updateStateConstraints()
 
             if let headerView = sender.view as? SectionHeaderView {
-                headerView.updateExpandedState(isExpanded: isExpanded)
+                headerView.updateExpandedState(isExpanded: section.isExpanded)
             }
 
-            delegate?.motorSidebarSectionViewDidToggleExpand(self, isExpanded: isExpanded)
+            delegate?.motorSidebarSectionViewDidToggleExpand(self, isExpanded: section.isExpanded)
         }
     }
 }
