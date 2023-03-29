@@ -67,7 +67,10 @@ extension MotorSidebarView {
                     isExpandable: section.isExpandable,
                     isExpanded: section.isExpanded
                 )
-                headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(headerTapped)))
+
+                if section.isExpandable {
+                    headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(headerTapped)))
+                }
 
                 topViewKind = .header
                 topStackView.addArrangedSubview(headerView)
