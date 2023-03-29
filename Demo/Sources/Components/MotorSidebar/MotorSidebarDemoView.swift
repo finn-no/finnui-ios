@@ -71,8 +71,8 @@ extension MotorSidebarDemoView: MotorSidebarViewDelegate {
 }
 
 extension MotorSidebarView.ViewModel {
-    static var demoModel: Self {
-        Self.init(
+    static var demoModel: MotorSidebarView.ViewModel {
+        MotorSidebarView.ViewModel(
             mainSections: [
                 .init(
                     isExpandable: false,
@@ -145,8 +145,8 @@ extension MotorSidebarView.ViewModel {
         )
     }
 
-    static var withSecondarySection: Self {
-        Self.init(
+    static var withSecondarySection: MotorSidebarView.ViewModel {
+        MotorSidebarView.ViewModel(
             mainSections: [
                 .init(
                     isExpandable: false,
