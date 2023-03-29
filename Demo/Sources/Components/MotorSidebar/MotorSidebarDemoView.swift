@@ -66,6 +66,7 @@ extension MotorSidebarDemoView: MotorSidebarViewDelegate {
     }
 
     func motorSidebarView(_ view: MotorSidebarView, didToggleExpandOnSectionAt sectionIndex: Int, isExpanded: Bool) {
+        print("👉 Did toggle expand on section at index: '\(sectionIndex)' to '\(isExpanded)'")
     }
 }
 

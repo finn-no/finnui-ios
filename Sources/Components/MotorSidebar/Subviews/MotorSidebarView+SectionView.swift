@@ -5,6 +5,8 @@ protocol MotorSidebarSectionViewDelegate: AnyObject {
         _ sectionView: MotorSidebarView.SectionView,
         didSelectButton viewModel: MotorSidebarView.ViewModel.Button
     )
+
+    func motorSidebarSectionViewDidToggleExpand(_ sectionView: MotorSidebarView.SectionView, isExpanded: Bool)
 }
 
 extension MotorSidebarView {
@@ -160,6 +162,8 @@ extension MotorSidebarView {
             if let headerView = sender.view as? SectionHeaderView {
                 headerView.updateExpandedState(isExpanded: isExpanded)
             }
+
+            delegate?.motorSidebarSectionViewDidToggleExpand(self, isExpanded: isExpanded)
         }
     }
 }

@@ -45,6 +45,12 @@ extension MotorSidebarView {
             }
         }
 
+        // MARK: - Internal methods
+
+        func index(for sectionView: SectionView) -> Int? {
+            sectionsStackView.arrangedSubviews.compactMap { $0 as? SectionView }.firstIndex(of: sectionView)
+        }
+
         // MARK: - Overrides
 
         override func layoutSubviews() {

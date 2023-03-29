@@ -82,4 +82,13 @@ extension MotorSidebarView: MotorSidebarSectionViewDelegate {
     func motorSidebarSectionView(_ sectionView: SectionView, didSelectButton viewModel: ViewModel.Button) {
         delegate?.motorSidebarView(self, didSelectButtonWithIdentifier: viewModel.identifier, urlString: viewModel.urlString)
     }
+
+    func motorSidebarSectionViewDidToggleExpand(_ sectionView: MotorSidebarView.SectionView, isExpanded: Bool) {
+        let containerViews = stackView.arrangedSubviews.compactMap { $0 as? SectionsContainerView }
+        let sectionIndex = containerViews.compactMap { $0.index(for: sectionView) }.first
+
+        if let sectionIndex = sectionIndex {
+            delegate?.motorSidebarView(self, didToggleExpandOnSectionAt: sectionIndex, isExpanded: isExpanded)
+        }
+    }
 }
