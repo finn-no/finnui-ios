@@ -51,7 +51,6 @@ extension MotorSidebarView {
         // MARK: - Setup
 
         private func setup() {
-            backgroundColor = .red100
             clipsToBounds = true
 
             // We will only keep one view at the top. Either it'll have a ribbon, or it'll have a header.
