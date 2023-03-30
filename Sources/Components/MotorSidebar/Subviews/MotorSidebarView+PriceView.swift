@@ -22,6 +22,10 @@ extension MotorSidebarView {
         // MARK: - Setup
 
         private func setup(price: ViewModel.Price) {
+            isAccessibilityElement = true
+            accessibilityTraits = .staticText
+            accessibilityLabel = [price.title, price.value].joined(separator: " ")
+
             titleLabel.text = price.title
             valueLabel.text = price.value
 
