@@ -77,10 +77,12 @@ extension MotorSidebarView.ViewModel {
 
     public struct Body {
         public let text: String
+        public let accessibilityLabel: String
         public let inlineImage: InlineImage?
 
-        public init(text: String, inlineImage: InlineImage? = nil) {
+        public init(text: String, accessibilityLabel: String? = nil, inlineImage: InlineImage? = nil) {
             self.text = text
+            self.accessibilityLabel = accessibilityLabel ?? text
             self.inlineImage = inlineImage
         }
 

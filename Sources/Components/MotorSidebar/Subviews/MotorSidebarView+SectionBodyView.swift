@@ -32,6 +32,8 @@ extension MotorSidebarView {
             }
 
             textLabel.attributedText = attributedString
+            textLabel.accessibilityLabel = body.accessibilityLabel
+
             addSubview(textLabel)
             textLabel.fillInSuperview()
         }

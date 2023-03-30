@@ -81,6 +81,7 @@ extension MotorSidebarView.ViewModel {
                     content: [
                         .init(
                             text: "Avgiftsfri betaling med ",
+                            accessibilityLabel: "Avgiftsfri betaling med Blink",
                             inlineImage: .init(
                                 image: UIImage(named: .blinkRocketMini),
                                 baselineOffset: 0
