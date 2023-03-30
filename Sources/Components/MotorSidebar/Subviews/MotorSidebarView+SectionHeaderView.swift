@@ -49,6 +49,10 @@ extension MotorSidebarView {
         // MARK: - Setup
 
         private func setup(title: String, icon: UIImage, isExpandable: Bool, isExpanded: Bool) {
+            isAccessibilityElement = true
+            accessibilityTraits = .header
+            accessibilityLabel = title
+
             titleLabel.text = title
             iconImageView.image = icon.withRenderingMode(.alwaysTemplate)
 
