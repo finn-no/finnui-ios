@@ -27,6 +27,10 @@ extension MotorSidebarView {
         private lazy var contentLayoutGuide = UILayoutGuide()
         private lazy var topStackView = UIStackView(axis: .horizontal, spacing: 0, withAutoLayout: true)
 
+        private var shouldExpansionStateBeTogglable: Bool {
+            section.isExpandable && !UIAccessibility.isVoiceOverRunning
+        }
+
         // Constraints.
         private lazy var bottomAnchorExpandedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: .spacingM)
         private lazy var bottomAnchorCollapsedConstraint = bottomAnchor.constraint(equalTo: contentLayoutGuide.topAnchor)
@@ -64,11 +68,11 @@ extension MotorSidebarView {
                     title: header.title,
                     icon: header.icon,
                     shouldChangeLayoutWhenCompact: shouldChangeLayoutWhenCompact,
-                    isExpandable: section.isExpandable,
+                    isExpandable: shouldExpansionStateBeTogglable,
                     isExpanded: section.isExpanded
                 )
 
-                if section.isExpandable {
+                if shouldExpansionStateBeTogglable {
                     headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(headerTapped)))
                 }
 
@@ -139,12 +143,17 @@ extension MotorSidebarView {
         }
 
         private func updateStateConstraints() {
-            if section.isExpanded {
+            if shouldExpansionStateBeTogglable {
+                if section.isExpanded {
+                    bottomAnchorCollapsedConstraint.isActive = false
+                    bottomAnchorExpandedConstraint.isActive = true
+                } else {
+                    bottomAnchorExpandedConstraint.isActive = false
+                    bottomAnchorCollapsedConstraint.isActive = true
+                }
+            } else {
                 bottomAnchorCollapsedConstraint.isActive = false
                 bottomAnchorExpandedConstraint.isActive = true
-            } else {
-                bottomAnchorExpandedConstraint.isActive = false
-                bottomAnchorCollapsedConstraint.isActive = true
             }
             layoutIfNeeded()
         }
