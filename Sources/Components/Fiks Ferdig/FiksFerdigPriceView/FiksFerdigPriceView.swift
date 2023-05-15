@@ -58,6 +58,7 @@ public final class FiksFerdigPriceView: UIView {
 
         contentStackView.addArrangedSubview(priceStackView)
         priceStackView.addArrangedSubviews([priceLabel, shippingLabel])
+        contentStackView.setCustomSpacing(.spacingXS, after: priceStackView)
 
         contentStackView.addArrangedSubview(paymentLabel)
 
