@@ -41,9 +41,8 @@ public final class FiksFerdigPriceView: UIView {
     private lazy var contentStackView = UIStackView(axis: .vertical, withAutoLayout: true)
 
     private lazy var priceStackView: UIStackView = {
-        let stackView = UIStackView(axis: .horizontal, withAutoLayout: true)
-        stackView.spacing = .spacingS
-        stackView.alignment = .firstBaseline
+        let stackView = UIStackView(axis: .vertical, withAutoLayout: true)
+        stackView.alignment = .leading
         return stackView
     }()
 
@@ -59,6 +58,7 @@ public final class FiksFerdigPriceView: UIView {
 
         contentStackView.addArrangedSubview(priceStackView)
         priceStackView.addArrangedSubviews([priceLabel, shippingLabel])
+        contentStackView.setCustomSpacing(.spacingXS, after: priceStackView)
 
         contentStackView.addArrangedSubview(paymentLabel)
 
