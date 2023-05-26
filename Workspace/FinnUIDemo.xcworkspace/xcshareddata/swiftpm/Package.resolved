@@ -1,25 +1,22 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "FinniversKit",
-        "repositoryURL": "https://github.com/finn-no/FinniversKit.git",
-        "state": {
-          "branch": null,
-          "revision": "1a416e813f8de31428f5b52c2ac51a5ff3c56dbd",
-          "version": "106.1.0"
-        }
-      },
-      {
-        "package": "swift-snapshot-testing",
-        "repositoryURL": "https://github.com/pimms/swift-snapshot-testing.git",
-        "state": {
-          "branch": null,
-          "revision": "0efeef44df913fe60ea868f037f271ac927a8e8c",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "finniverskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/finn-no/FinniversKit.git",
+      "state" : {
+        "revision" : "e1e1df3749728149269efc0e9384baa2bfa2cd67",
+        "version" : "111.4.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "swift-snapshot-testing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pimms/swift-snapshot-testing.git",
+      "state" : {
+        "revision" : "0efeef44df913fe60ea868f037f271ac927a8e8c"
+      }
+    }
+  ],
+  "version" : 2
 }

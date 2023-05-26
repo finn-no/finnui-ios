@@ -1,5 +1,5 @@
-// swift-tools-version:5.5
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version:5.7
+
 import PackageDescription
 
 let package = Package(
@@ -12,7 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "FinniversKit", url: "https://github.com/finn-no/FinniversKit.git", "106.1.0"..."999.0.0")
+        .package(url: "https://github.com/finn-no/FinniversKit.git", "111.4.0"..."999.0.0")
     ],
     targets: [
     	.target(

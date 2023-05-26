@@ -146,4 +146,8 @@ class ComponentViewTests: XCTestCase {
     func testProjectUnitsListView() {
         snapshot(.projectUnitsListView, includeIPad: true)
     }
+
+    func testMotorSidebar() {
+        snapshot(.motorSidebar, includeIPad: true)
+    }
 }
