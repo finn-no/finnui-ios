@@ -16,7 +16,7 @@ public final class FiksFerdigShippingInfoCell: UIStackView {
         return label
     }()
 
-    private var providerIcon: UIImage {
+    private var providerIcon: UIImage? {
         switch viewModel.provider {
         case .heltHjem:
             return UIImage(named: .tjtHelthjemIcon)
@@ -24,6 +24,8 @@ public final class FiksFerdigShippingInfoCell: UIStackView {
             return UIImage(named: .tjtPostnordIcon)
         case .posten:
             return UIImage(named: .tjtPostenIcon)
+        default:
+            return nil
         }
     }
 

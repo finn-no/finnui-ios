@@ -1,8 +1,14 @@
 public class FiksFerdigShippingInfoCellViewModel {
-    public enum ShippingProvider {
-        case heltHjem
-        case postnord
-        case posten
+    public struct ShippingProvider: RawRepresentable, Hashable {
+        public let rawValue: String
+
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+
+        public static var heltHjem: Self { Self(rawValue: "HELTHJEM") }
+        public static var posten: Self { Self(rawValue: "POSTEN") }
+        public static var postnord: Self { Self(rawValue: "POSTNORD") }
     }
 
     public let provider: ShippingProvider
