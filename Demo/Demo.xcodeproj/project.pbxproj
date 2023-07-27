@@ -250,11 +250,11 @@
 				4D529E1625835A23007AE5B6 /* Assets */,
 				46E772CB242CEF09008A5E93 /* Components */,
 				46E77257242CEF09008A5E93 /* Demo */,
-				46E77266242CEF09008A5E93 /* Extensions */,
 				46E7726A242CEF09008A5E93 /* Fullscreen */,
 				46E77381242CEF09008A5E93 /* Recycling */,
 				9BE474C724979816009620A5 /* SwiftUI */,
 				46AE6FC3242BADC9007BB005 /* AppDelegate.swift */,
+				46E77269242CEF09008A5E93 /* TestCheck.swift */,
 				46AE6FD1242BADCD007BB005 /* Info.plist */,
 				46E77377242CEF09008A5E93 /* LaunchScreen.storyboard */,
 			);
@@ -270,14 +270,6 @@
 				DA083C2D2462BCA800B26235 /* SwiftUIDemoViews.swift */,
 			);
 			path = Demo;
-			sourceTree = "<group>";
-		};
-		46E77266242CEF09008A5E93 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				46E77269242CEF09008A5E93 /* TestCheck.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		46E7726A242CEF09008A5E93 /* Fullscreen */ = {
