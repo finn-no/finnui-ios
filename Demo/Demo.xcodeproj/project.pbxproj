@@ -270,20 +270,12 @@
 		46E77257242CEF09008A5E93 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				46E77259242CEF09008A5E93 /* DemoViews */,
-			);
-			path = Demo;
-			sourceTree = "<group>";
-		};
-		46E77259242CEF09008A5E93 /* DemoViews */ = {
-			isa = PBXGroup;
-			children = (
 				46E7725D242CEF09008A5E93 /* ComponentDemoViews.swift */,
 				46E7725B242CEF09008A5E93 /* FullscreenDemoViews.swift */,
 				46E7725E242CEF09008A5E93 /* RecyclingDemoViews.swift */,
 				DA083C2D2462BCA800B26235 /* SwiftUIDemoViews.swift */,
 			);
-			path = DemoViews;
+			path = Demo;
 			sourceTree = "<group>";
 		};
 		46E77266242CEF09008A5E93 /* Extensions */ = {
