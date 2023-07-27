@@ -4,8 +4,9 @@
 
 import FinniversKit
 import FinnUI
+import DemoKit
 
-final class ProjectUnitsDemoView: UIView {
+final class ProjectUnitsDemoView: UIView, Demoable {
     private lazy var view: ProjectUnitsView = {
         let view = ProjectUnitsView(title: "Utvalgte boliger i prosjektet")
         view.translatesAutoresizingMaskIntoConstraints = false
