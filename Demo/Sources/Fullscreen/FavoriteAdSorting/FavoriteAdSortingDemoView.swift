@@ -4,8 +4,9 @@
 
 import FinniversKit
 import FinnUI
+import DemoKit
 
-final class FavoriteAdSortingDemoView: UIView {
+final class FavoriteAdSortingDemoView: UIView, Demoable {
     private(set) lazy var view: FavoriteAdSortingView = {
         let view = FavoriteAdSortingView(viewModel: .default, selectedSortOption: .lastAdded)
         view.delegate = self

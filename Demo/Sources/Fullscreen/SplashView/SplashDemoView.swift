@@ -4,18 +4,19 @@
 
 import FinnUI
 import UIKit
+import DemoKit
 
-public class SplashDemoView: UIView {
+class SplashDemoView: UIView, Demoable {
     private lazy var view = SplashView(withAutoLayout: true)
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -26,7 +27,7 @@ public class SplashDemoView: UIView {
         view.fillInSuperview()
     }
 
-    public override func didMoveToSuperview() {
+    override func didMoveToSuperview() {
         super.didMoveToSuperview()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {

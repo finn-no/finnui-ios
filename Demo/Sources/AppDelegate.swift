@@ -13,7 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        let demoKitViewController = DemoKitViewController(demoGroups: [ComponentDemoViews.self])
+        let demoKitViewController = DemoKitViewController(
+            demoGroups: [
+                ComponentDemoViews.self,
+                FullscreenDemoViews.self,
+            ]
+        )
         window?.rootViewController = UINavigationController(rootViewController: demoKitViewController)
         window?.makeKeyAndVisible()
 

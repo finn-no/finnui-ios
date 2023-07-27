@@ -4,8 +4,9 @@
 
 import FinniversKit
 import FinnUI
+import DemoKit
 
-final class SavedSearchSortingDemoView: UIView {
+final class SavedSearchSortingDemoView: UIView, Demoable {
     private(set) lazy var view: SavedSearchSortingView = {
         let view = SavedSearchSortingView(viewModel: .default, selectedSortOption: .lastChanged)
         view.delegate = self

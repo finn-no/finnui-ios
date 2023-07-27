@@ -2,8 +2,9 @@
 //  Copyright © FINN.no AS, Inc. All rights reserved.
 //
 import FinniversKit
+import DemoKit
 
-public enum FullscreenDemoViews: String, DemoViews {
+enum FullscreenDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
     case snowGlobeView
     case newYearsView
     case splashView
@@ -15,30 +16,39 @@ public enum FullscreenDemoViews: String, DemoViews {
     case exploreDetailView
     case stories
 
-    public var viewController: UIViewController {
+    static var groupTitle: String { "Fullscreen" }
+    static var numberOfDemos: Int { allCases.count }
+
+    static func demoGroupItem(for index: Int) -> any DemoGroupItem {
+        allCases[index]
+    }
+
+    static func demoable(for index: Int) -> any Demoable {
+        Self.allCases[index].demoable
+    }
+
+    var demoable: any Demoable {
         switch self {
         case .snowGlobeView:
-            return DemoViewController<SnowGlobeDemoView>()
+            return SnowGlobeDemoView()
         case .newYearsView:
-            return DemoViewController<NewYearsDemoView>()
+            return NewYearsDemoView()
         case .splashView:
-            return DemoViewController<SplashDemoView>(constrainToTopSafeArea: false, constrainToBottomSafeArea: false)
+            return SplashDemoView()
         case .favoriteAdSortingView:
-            return DemoViewController<FavoriteAdSortingDemoView>()
+            return FavoriteAdSortingDemoView()
         case .savedSearchSortingView:
-            return DemoViewController<SavedSearchSortingDemoView>()
+            return SavedSearchSortingDemoView()
         case .searchDropdown:
-            return DemoViewController<SearchDropdownDemoView>()
+            return SearchDropdownDemoView()
         case .searchSuggestions:
-            return DemoViewController<SearchSuggestionsDemoView>()
+            return SearchSuggestionsDemoView()
         case .exploreView:
-            return makeExploreView()
+            return ExploreDemoViewController()
         case .exploreDetailView:
-            return DemoViewController<ExploreDetailDemoView>(constrainToTopSafeArea: true, constrainToBottomSafeArea: false)
+            return ExploreDetailDemoView()
         case .stories:
-            let storyDemoViewController = DemoViewController<StoryDemoView>()
-            storyDemoViewController.backgroundColor = .black
-            return storyDemoViewController
+            return StoryDemoView()
         }
     }
 }

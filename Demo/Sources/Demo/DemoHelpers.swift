@@ -13,7 +13,7 @@ enum TabletDisplayMode {
 enum Sections: String, CaseIterable {
 //    case components
     case recycling
-    case fullscreen
+//    case fullscreen
     case swiftui
 
     var numberOfItems: Int {
@@ -22,8 +22,8 @@ enum Sections: String, CaseIterable {
 //            return ComponentDemoViews.items.count
         case .recycling:
             return RecyclingDemoViews.items.count
-        case .fullscreen:
-            return FullscreenDemoViews.items.count
+//        case .fullscreen:
+//            return FullscreenDemoViews.items.count
         case .swiftui:
             return SwiftUIDemoViews.items.count
         }
@@ -43,8 +43,8 @@ enum Sections: String, CaseIterable {
 //            names = ComponentDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         case .recycling:
             names = RecyclingDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
-        case .fullscreen:
-            names = FullscreenDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
+//        case .fullscreen:
+//            names = FullscreenDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         case .swiftui:
             names = SwiftUIDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         }
@@ -59,8 +59,8 @@ enum Sections: String, CaseIterable {
 //            rawClassName = ComponentDemoViews.items[indexPath.row].rawValue
         case .recycling:
             rawClassName = RecyclingDemoViews.items[indexPath.row].rawValue
-        case .fullscreen:
-            rawClassName = FullscreenDemoViews.items[indexPath.row].rawValue
+//        case .fullscreen:
+//            rawClassName = FullscreenDemoViews.items[indexPath.row].rawValue
         case .swiftui:
             rawClassName = SwiftUIDemoViews.items[indexPath.row].rawValue
         }
@@ -85,9 +85,9 @@ enum Sections: String, CaseIterable {
         case .recycling:
             let selectedView = RecyclingDemoViews.items[safe: indexPath.row]
             viewController = selectedView?.viewController
-        case .fullscreen:
-            let selectedView = FullscreenDemoViews.items[safe: indexPath.row]
-            viewController = selectedView?.viewController
+//        case .fullscreen:
+//            let selectedView = FullscreenDemoViews.items[safe: indexPath.row]
+//            viewController = selectedView?.viewController
         case .swiftui:
             let selectedView = SwiftUIDemoViews.items[safe: indexPath.row]
             viewController = selectedView?.viewController

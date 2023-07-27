@@ -1,8 +1,9 @@
 import Foundation
 import UIKit
 import FinnUI
+import DemoKit
 
-class StoryDemoView: UIView {
+class StoryDemoView: UIView, Demoable {
     private lazy var storiesView: StoriesView = StoriesView(
         dataSource: self,
         delegate: self,

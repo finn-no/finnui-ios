@@ -4,8 +4,11 @@
 
 import FinniversKit
 import FinnUI
+import DemoKit
 
-public class SnowGlobeDemoView: UIView {
+class SnowGlobeDemoView: UIView, Demoable {
+    var shouldSnapshotTest: Bool { false }
+
     private lazy var label: UILabel = {
         let label = Label(style: .title1)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -16,24 +19,24 @@ public class SnowGlobeDemoView: UIView {
 
     private lazy var snowGlobeView = SnowGlobeView()
 
-    public override var canBecomeFirstResponder: Bool {
+    override var canBecomeFirstResponder: Bool {
         return true
     }
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Lifecycle
 
-    public override func didMoveToSuperview() {
+    override func didMoveToSuperview() {
         super.didMoveToSuperview()
         if superview == nil {
             snowGlobeView.stop(animated: false)
@@ -42,7 +45,7 @@ public class SnowGlobeDemoView: UIView {
         }
     }
 
-    public override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         super.motionEnded(motion, with: event)
 
         if event?.subtype == .motionShake {

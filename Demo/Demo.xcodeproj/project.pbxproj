@@ -90,6 +90,7 @@
 		F0941B6C29CAEDBD005E72AA /* MotorSidebarDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0941B6B29CAEDBD005E72AA /* MotorSidebarDemoView.swift */; };
 		F09FBC2A2A72AEFB005C334B /* DemoKit in Frameworks */ = {isa = PBXBuildFile; productRef = F09FBC292A72AEFB005C334B /* DemoKit */; };
 		F09FBC2C2A72AEFB005C334B /* DemoKitSnapshot in Frameworks */ = {isa = PBXBuildFile; productRef = F09FBC2B2A72AEFB005C334B /* DemoKitSnapshot */; };
+		F09FBC2E2A72CE87005C334B /* ExploreDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FBC2D2A72CE87005C334B /* ExploreDemoViewController.swift */; };
 		F0BBDB10297FE61800018B51 /* ProjectUnitsListDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BBDB0F297FE61800018B51 /* ProjectUnitsListDemoView.swift */; };
 		F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */; };
 /* End PBXBuildFile section */
@@ -220,6 +221,7 @@
 		E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiksFerdingInfoDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
 		F0941B6B29CAEDBD005E72AA /* MotorSidebarDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotorSidebarDemoView.swift; sourceTree = "<group>"; };
+		F09FBC2D2A72CE87005C334B /* ExploreDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDemoViewController.swift; sourceTree = "<group>"; };
 		F0BBDB0F297FE61800018B51 /* ProjectUnitsListDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectUnitsListDemoView.swift; sourceTree = "<group>"; };
 		F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProfileDemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -701,6 +703,7 @@
 			isa = PBXGroup;
 			children = (
 				DA7B29F12670CAFE0018B11C /* ExploreDemoView.swift */,
+				F09FBC2D2A72CE87005C334B /* ExploreDemoViewController.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -998,6 +1001,7 @@
 				DA083C2E2462BCA800B26235 /* SwiftUIDemoViews.swift in Sources */,
 				46E77452242CEF0A008A5E93 /* ScrollViewController.swift in Sources */,
 				46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */,
+				F09FBC2E2A72CE87005C334B /* ExploreDemoViewController.swift in Sources */,
 				9F11791F290FB5B100C7FA90 /* SearchLandingDemoModels.swift in Sources */,
 				D6D43CF125BF2FA900234AC2 /* SavedSearchSortingDemoView.swift in Sources */,
 				E640432428B4CFA30061EB8D /* FiksFerdigContactSellerDemoView.swift in Sources */,

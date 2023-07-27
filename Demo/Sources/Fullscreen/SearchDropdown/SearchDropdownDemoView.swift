@@ -1,7 +1,8 @@
 import FinnUI
 import FinniversKit
+import DemoKit
 
-final class SearchDropdownDemoView: UIView, Tweakable {
+final class SearchDropdownDemoView: UIView {
     private lazy var searchDropdownView: SearchDropdownView = {
         let view = SearchDropdownView(withAutoLayout: true)
         view.delegate = self
@@ -16,30 +17,12 @@ final class SearchDropdownDemoView: UIView, Tweakable {
         return scrollView
     }()
 
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Recent, saved and popular", action: { [weak self] in
-            self?.configure(recentSearches: true, savedSearches: true, popularSearches: true)
-        }),
-
-        TweakingOption(title: "Recent and saved", action: { [weak self] in
-            self?.configure(recentSearches: true, savedSearches: true, popularSearches: false)
-        }),
-
-        TweakingOption(title: "Recent and popular", action: { [weak self] in
-            self?.configure(recentSearches: true, savedSearches: false, popularSearches: true)
-        }),
-
-        TweakingOption(title: "Saved and popular", action: { [weak self] in
-            self?.configure(recentSearches: false, savedSearches: true, popularSearches: true)
-        }),
-    ]
-
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -68,6 +51,36 @@ final class SearchDropdownDemoView: UIView, Tweakable {
             popularSearches: popularSearches ? .popularSearches : [],
             remoteImageViewDataSource: self
         )
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension SearchDropdownDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+        case recentSavedAndPopular
+        case recentAndSaved
+        case recentAndPopular
+        case savedAndPopular
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .recentSavedAndPopular:
+            configure(recentSearches: true, savedSearches: true, popularSearches: true)
+        case .recentAndSaved:
+            configure(recentSearches: true, savedSearches: true, popularSearches: false)
+        case .recentAndPopular:
+            configure(recentSearches: true, savedSearches: false, popularSearches: true)
+        case .savedAndPopular:
+            configure(recentSearches: false, savedSearches: true, popularSearches: true)
+        }
     }
 }
 
