@@ -18,7 +18,6 @@
 		46E773AC242CEF0A008A5E93 /* DemoViewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77261242CEF09008A5E93 /* DemoViewsTableViewController.swift */; };
 		46E773AD242CEF0A008A5E93 /* BaseDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77262242CEF09008A5E93 /* BaseDemoViewController.swift */; };
 		46E773AE242CEF0A008A5E93 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77263242CEF09008A5E93 /* Helpers.swift */; };
-		46E773AF242CEF0A008A5E93 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77264242CEF09008A5E93 /* DemoViewController.swift */; };
 		46E773B0242CEF0A008A5E93 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77265242CEF09008A5E93 /* NavigationController.swift */; };
 		46E773B1242CEF0A008A5E93 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77268242CEF09008A5E93 /* UIDevice.swift */; };
 		46E773B2242CEF0A008A5E93 /* TestCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77269242CEF09008A5E93 /* TestCheck.swift */; };
@@ -148,7 +147,6 @@
 		46E77261242CEF09008A5E93 /* DemoViewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoViewsTableViewController.swift; sourceTree = "<group>"; };
 		46E77262242CEF09008A5E93 /* BaseDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDemoViewController.swift; sourceTree = "<group>"; };
 		46E77263242CEF09008A5E93 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		46E77264242CEF09008A5E93 /* DemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 		46E77265242CEF09008A5E93 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		46E77268242CEF09008A5E93 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		46E77269242CEF09008A5E93 /* TestCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCheck.swift; sourceTree = "<group>"; };
@@ -305,7 +303,6 @@
 			children = (
 				46E77262242CEF09008A5E93 /* BaseDemoViewController.swift */,
 				46E77258242CEF09008A5E93 /* DemoHelpers.swift */,
-				46E77264242CEF09008A5E93 /* DemoViewController.swift */,
 				46E77259242CEF09008A5E93 /* DemoViews */,
 				46E77261242CEF09008A5E93 /* DemoViewsTableViewController.swift */,
 				46E77263242CEF09008A5E93 /* Helpers.swift */,
@@ -1017,7 +1014,6 @@
 				46E773A8242CEF0A008A5E93 /* ComponentDemoViews.swift in Sources */,
 				D6D43CE425BF2F4D00234AC2 /* SaveSearchViewDemoView.swift in Sources */,
 				D6D43CF025BF2FA900234AC2 /* SnowGlobeDemoView.swift in Sources */,
-				46E773AF242CEF0A008A5E93 /* DemoViewController.swift in Sources */,
 				9F11791E290FB5B100C7FA90 /* SearchSuggestionsDemoView.swift in Sources */,
 				E4DBDD972762335200BE21D8 /* ShippingAlternativesDemoView.swift in Sources */,
 				46E77453242CEF0A008A5E93 /* CornerAnchoringViewController.swift in Sources */,
