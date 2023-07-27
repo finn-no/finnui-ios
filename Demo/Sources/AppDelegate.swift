@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 ComponentDemoViews.self,
                 FullscreenDemoViews.self,
                 RecyclingDemoViews.self,
+                SwiftUIDemoViews.self
             ]
         )
         window?.rootViewController = UINavigationController(rootViewController: demoKitViewController)

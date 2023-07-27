@@ -4,61 +4,46 @@
 
 import SwiftUI
 @testable import FinnUI
+import DemoKit
 
-public enum SwiftUIDemoViews: String, DemoViews {
+enum SwiftUIDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
     case buttons
     case settings
     case basicCellVariations
     case bapAdView
     case savedSearches
 
-    public var viewController: UIViewController {
-        PreviewController(hostingController: hostingController)
+    static var groupTitle: String { "SwiftUI" }
+    static var numberOfDemos: Int { allCases.count }
+
+    static func demoGroupItem(for index: Int) -> any DemoGroupItem {
+        allCases[index]
     }
 
-    private var hostingController: UIViewController {
-        UIHostingController(rootView: previews)
+    static func demoable(for index: Int) -> any Demoable {
+        Self.allCases[index].demoable
     }
 
-    @ViewBuilder private var previews: some View {
+    var demoable: any Demoable {
         switch self {
         case .buttons:
-            ButtonStyleUsageDemoView_Previews.previews
+            return ButtonStyleUsageDemoView_Previews()
         case .settings:
-            SettingsView_Previews.previews
+            return SettingsView_Previews()
         case .basicCellVariations:
-            BasicListCell_Previews.previews
+            return BasicListCell_Previews()
         case .bapAdView:
-            BapAdView_Previews.previews
+            return BapAdView_Previews()
         case .savedSearches:
-            SavedSearchesView_Previews.previews
+            return SavedSearchesView_Previews()
         }
     }
 }
 
-private final class PreviewController: DemoViewController<UIView> {
-    var hostingController: UIViewController
+// MARK: - PreviewProvider conformances
 
-    init(hostingController: UIViewController) {
-        self.hostingController = hostingController
-        super.init()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        guard let childViewController = childViewController else {
-            return
-        }
-
-        childViewController.addChild(hostingController)
-        hostingController.view.frame = childViewController.view.bounds
-        hostingController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        childViewController.view.addSubview(hostingController.view)
-        hostingController.didMove(toParent: childViewController)
-    }
-}
+extension ButtonStyleUsageDemoView_Previews: Demoable {}
+extension SettingsView_Previews: Demoable {}
+extension BasicListCell_Previews: Demoable {}
+extension BapAdView_Previews: Demoable {}
+extension SavedSearchesView_Previews: Demoable {}
