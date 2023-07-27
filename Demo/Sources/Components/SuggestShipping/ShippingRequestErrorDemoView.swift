@@ -1,8 +1,9 @@
 import UIKit
 import FinnUI
 import FinniversKit
+import DemoKit
 
-final class ShippingRequestErrorDemoView: UIView {
+final class ShippingRequestErrorDemoView: UIView, Demoable {
     private let viewModelDelegate = ErrorButtonHandler()
 
     private lazy var shippingRequestErrorView: ShippingRequestErrorView = {

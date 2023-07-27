@@ -1,7 +1,8 @@
 import FinnUI
 import UIKit
+import DemoKit
 
-public class ShippingAlternativesDemoView: UIView {
+class ShippingAlternativesDemoView: UIView, Demoable {
 
     private lazy var shippingAlternativesView: ShippingAlternativesView = {
         let view = ShippingAlternativesView()
@@ -14,7 +15,7 @@ public class ShippingAlternativesDemoView: UIView {
         setup()
     }
 
-    public required init?(coder aDecoder: NSCoder) { fatalError() }
+    required init?(coder aDecoder: NSCoder) { fatalError() }
 
     // MARK: - Setup
 
@@ -33,7 +34,7 @@ public class ShippingAlternativesDemoView: UIView {
 }
 
 extension ShippingAlternativesDemoView: ShippingAlternativesViewDelegate {
-    public func didSelectShippingAlternativesView(with link: String) {
+    func didSelectShippingAlternativesView(with link: String) {
         print("did tap button with link: \(link)")
     }
 }

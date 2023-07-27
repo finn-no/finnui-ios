@@ -4,8 +4,9 @@
 import FinnUI
 import UIKit
 import FinniversKit
+import DemoKit
 
-public enum ComponentDemoViews: String, DemoViews {
+enum ComponentDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
     case saveSearchView
     case expandCollapseButton
     case objectPageBlinkView
@@ -40,76 +41,85 @@ public enum ComponentDemoViews: String, DemoViews {
     case projectUnitsListView
     case motorSidebar
 
-    public var viewController: UIViewController {
+    static var groupTitle: String { "Components" }
+    static var numberOfDemos: Int { allCases.count }
+
+    static func demoGroupItem(for index: Int) -> any DemoGroupItem {
+        allCases[index]
+    }
+
+    static func demoable(for index: Int) -> any Demoable {
+        Self.allCases[index].demoable
+    }
+
+    var demoable: any Demoable {
         switch self {
         case .saveSearchView:
-            let demoViewController = DemoViewController<SaveSearchViewDemoView>()
-            demoViewController.view.backgroundColor = .bgPrimary
-            return BottomSheet(rootViewController: demoViewController)
+            return SaveSearchViewDemoView()
         case .chatAvailabilityView:
-            return DemoViewController<ChatAvailabilityDemoView>(dismissType: .dismissButton)
+            return ChatAvailabilityDemoView()
         case .iconLinkListView:
-            return DemoViewController<IconLinkListViewDemo>()
+            return IconLinkListViewDemo()
         case .expandCollapseButton:
-            return DemoViewController<ExpandCollapseButtonDemoView>()
+            return ExpandCollapseButtonDemoView()
         case .objectPageBlinkView:
-            return DemoViewController<ObjectPageBlinkDemoView>()
+            return ObjectPageBlinkDemoView()
         case .searchDropdownGroupView:
-            return DemoViewController<SearchDropdownGroupDemoView>(dismissType: .dismissButton)
+            return SearchDropdownGroupDemoView()
         case .popularSearchesView:
-            return DemoViewController<PopularSearchesDemoView>(dismissType: .dismissButton)
+            return PopularSearchesDemoView()
         case .tagCloudGridView:
-            return DemoViewController<TagCloudGridDemoView>()
+            return TagCloudGridDemoView()
         case .adTipsCollapsibleView:
-            return DemoViewController<AdTipsCollapsibleDemoView>()
+            return AdTipsCollapsibleDemoView()
         case .numberedAdTipsCollapsibleView:
-            return DemoViewController<NumberedAdTipsCollapsibleDemoView>()
+            return NumberedAdTipsCollapsibleDemoView()
         case .helthjemView:
-            return DemoViewController<HelthjemDemoView>()
+            return HelthjemDemoView()
         case .shippingAlternativesView:
-            return DemoViewController<ShippingAlternativesDemoView>()
+            return ShippingAlternativesDemoView()
         case .realestateAgencyBanner:
-            return DemoViewController<RealestateAgencyBannerDemoView>()
+            return RealestateAgencyBannerDemoView()
         case .realestateSoldState:
-            return DemoViewController<RealestateSoldStateDemoView>(dismissType: .dismissButton)
+            return RealestateSoldStateDemoView()
         case .realestateAgencyContent:
-            return DemoViewController<RealestateAgencyContentDemoView>()
+            return RealestateAgencyContentDemoView()
         case .recommendationConsentView:
-            return DemoViewController<RecommendationConsentDemoView>()
+            return RecommendationConsentDemoView()
         case .recommendationEmptyView:
-            return DemoViewController<RecommendationEmptyDemoView>()
+            return RecommendationEmptyDemoView()
         case .fadedExpandableView:
-            return DemoViewController<FadedExpandableDemoView>()
+            return FadedExpandableDemoView()
         case .extendedProfileView:
-            return DemoViewController<ExtendedProfileDemoView>()
+            return ExtendedProfileDemoView()
         case .basicProfileView:
-            return DemoViewController<BasicProfileDemoView>()
+            return BasicProfileDemoView()
         case .fiksFerdigAccordionView:
-            return DemoViewController<FiksFerdigAccordionDemoView>()
+            return FiksFerdigAccordionDemoView()
         case .suggestShippingView:
-            return DemoViewController<SuggestShippingDemoView>()
+            return SuggestShippingDemoView()
         case .shippingRequestedView:
-            return DemoViewController<ShippingRequestedDemoView>()
+            return ShippingRequestedDemoView()
         case .shippingRequestErrorView:
-            return DemoViewController<ShippingRequestErrorDemoView>()
+            return ShippingRequestErrorDemoView()
         case .timeLineView:
-            return DemoViewController<TimeLineDemoView>()
+            return TimeLineDemoView()
         case .fiksFerdigServiceInfoView:
-            return DemoViewController<FiksFerdigServiceInfoDemoView>()
+            return FiksFerdigServiceInfoDemoView()
         case .fiksFerdigShippingInfoView:
-            return DemoViewController<FiksFerdigShippingInfoDemoView>()
+            return FiksFerdigShippingInfoDemoView()
         case .fiksFerdigSafePaymentInfoView:
-            return DemoViewController<FiksFerdigShippingInfoDemoView>()
+            return FiksFerdigSafePaymentInfoDemoView()
         case .fiksFerdigInfoView:
-            return DemoViewController<FiksFerdigInfoDemoView>()
+            return FiksFerdigInfoDemoView()
         case .fiksFerdigPriceView:
-            return DemoViewController<FiksFerdigPriceDemoView>()
+            return FiksFerdigPriceDemoView()
         case .fiksFerdigContactSellerView:
-            return DemoViewController<FiksFerdigContactSellerDemoView>()
+            return FiksFerdigContactSellerDemoView()
         case .projectUnitsListView:
-            return DemoViewController<ProjectUnitsListDemoView>(dismissType: .dismissButton)
+            return ProjectUnitsListDemoView()
         case .motorSidebar:
-            return DemoViewController<MotorSidebarDemoView>(dismissType: .dismissButton)
+            return MotorSidebarDemoView()
         }
     }
 }

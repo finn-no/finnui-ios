@@ -1,36 +1,9 @@
 import FinniversKit
 import FinnUI
+import DemoKit
 
-final class FiksFerdigPriceDemoView: UIView, Tweakable {
+final class FiksFerdigPriceDemoView: UIView {
     let priceView: FiksFerdigPriceView
-
-    lazy var tweakingOptions: [TweakingOption] = [
-        .init(title: "Normal shipping", description: nil, action: { [weak self] in
-            var builder = FiksFerdigPriceViewModelBuilder()
-            builder.shippingText = "+ frakt 80 kr"
-            self?.priceView.viewModel = builder.build()
-        }),
-        .init(title: "Discounted shipping", description: nil, action: { [weak self] in
-            var builder = FiksFerdigPriceViewModelBuilder()
-            builder.priceText = .setPrice("80 Kr")
-            self?.priceView.viewModel = builder.build()
-        }),
-        .init(title: "Price not set", description: nil, action: { [weak self] in
-            var builder = FiksFerdigPriceViewModelBuilder()
-            builder.priceText = .noPrice("Pris ikke satt")
-            self?.priceView.viewModel = builder.build()
-        }),
-        .init(title: "Long shipping text", description: nil, action: { [weak self] in
-            var builder = FiksFerdigPriceViewModelBuilder()
-            builder.shippingText = "+ frakt <del>80</del> <span style=\"color:tjt-price-highlight\">60 kr</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis."
-            self?.priceView.viewModel = builder.build()
-        }),
-        .init(title: "Long payment info", description: nil, action: { [weak self] in
-            var builder = FiksFerdigPriceViewModelBuilder()
-            builder.paymentText = "Betal med kort eller Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis."
-            self?.priceView.viewModel = builder.build()
-        }),
-    ]
 
     override init(frame: CGRect) {
         self.priceView = FiksFerdigPriceView(
@@ -53,6 +26,49 @@ final class FiksFerdigPriceDemoView: UIView, Tweakable {
             priceView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: .spacingM),
             priceView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -.spacingM)
         ])
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension FiksFerdigPriceDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+        case normalShipping
+        case discountedShipping
+        case priceNotSet
+        case longShippingText
+        case longPaymentInfo
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .normalShipping:
+            var builder = FiksFerdigPriceViewModelBuilder()
+            builder.shippingText = "+ frakt 80 kr"
+            priceView.viewModel = builder.build()
+        case .discountedShipping:
+            var builder = FiksFerdigPriceViewModelBuilder()
+            builder.priceText = .setPrice("80 Kr")
+            priceView.viewModel = builder.build()
+        case .priceNotSet:
+            var builder = FiksFerdigPriceViewModelBuilder()
+            builder.priceText = .noPrice("Pris ikke satt")
+            priceView.viewModel = builder.build()
+        case .longShippingText:
+            var builder = FiksFerdigPriceViewModelBuilder()
+            builder.shippingText = "+ frakt <del>80</del> <span style=\"color:tjt-price-highlight\">60 kr</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis."
+            priceView.viewModel = builder.build()
+        case .longPaymentInfo:
+            var builder = FiksFerdigPriceViewModelBuilder()
+            builder.paymentText = "Betal med kort eller Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nullam eget felis eget nunc lobortis."
+            priceView.viewModel = builder.build()
+        }
     }
 }
 

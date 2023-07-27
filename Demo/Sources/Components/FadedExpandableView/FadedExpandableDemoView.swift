@@ -1,19 +1,9 @@
 import UIKit
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class FadedExpandableDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Short view", action: { [weak self] in
-            self?.configure(contentView: .shortView, buttonVerticalMargin: .spacingM)
-        }),
-        TweakingOption(title: "Tall view", action: { [weak self] in
-            self?.configure(contentView: .tallView, buttonVerticalMargin: .spacingM)
-        }),
-        TweakingOption(title: "Title view", action: { [weak self] in
-            self?.configure(contentView: .titleView, contentViewVerticalMargin: .spacingM, buttonVerticalMargin: .spacingM)
-        }),
-    ]
+class FadedExpandableDemoView: UIView {
 
     // MARK: - Private properties
 
@@ -23,7 +13,7 @@ class FadedExpandableDemoView: UIView, Tweakable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -52,6 +42,33 @@ class FadedExpandableDemoView: UIView, Tweakable {
         ])
 
         fadedExpandableView = view
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension FadedExpandableDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+        case shortView
+        case tallView
+        case titleView
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .shortView:
+            configure(contentView: .shortView, buttonVerticalMargin: .spacingM)
+        case .tallView:
+            configure(contentView: .tallView, buttonVerticalMargin: .spacingM)
+        case .titleView:
+            configure(contentView: .titleView, contentViewVerticalMargin: .spacingM, buttonVerticalMargin: .spacingM)
+        }
     }
 }
 

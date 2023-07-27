@@ -1,5 +1,6 @@
 import FinnUI
 import UIKit
+import DemoKit
 
 extension HelthjemViewModel {
     static var AdsWithoutOptIn: HelthjemViewModel = .init(
@@ -21,16 +22,7 @@ extension HelthjemViewModel {
     )
 }
 
-public class HelthjemDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption]  = [
-        TweakingOption(title: "Ads without opt in", action: { [weak self] in
-            self?.helthjemView.configure(HelthjemViewModel.AdsWithoutOptIn)
-        }),
-        TweakingOption(title: "Ads with opt in", action: { [weak self] in
-            self?.helthjemView.configure(HelthjemViewModel.AdsWithOptIn)
-        }),
-    ]
-
+class HelthjemDemoView: UIView {
     private lazy var helthjemView: HelthjemView = {
         let view = HelthjemView()
         view.delegate = self
@@ -42,7 +34,7 @@ public class HelthjemDemoView: UIView, Tweakable {
         setup()
     }
 
-    public required init?(coder aDecoder: NSCoder) { fatalError() }
+    required init?(coder aDecoder: NSCoder) { fatalError() }
 
     // MARK: - Setup
 
@@ -57,16 +49,43 @@ public class HelthjemDemoView: UIView, Tweakable {
         helthjemView.configure(HelthjemViewModel.AdsWithoutOptIn)
     }
 }
+// MARK: - TweakableDemo
+
+extension HelthjemDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+        case adsWithoutOptIn
+        case adsWithOptIn
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .adsWithoutOptIn:
+            helthjemView.configure(HelthjemViewModel.AdsWithoutOptIn)
+        case .adsWithOptIn:
+            helthjemView.configure(HelthjemViewModel.AdsWithOptIn)
+        }
+    }
+}
+
+// MARK: - HelthjemViewDelegate
 
 extension HelthjemDemoView: HelthjemViewDelegate {
-    public func helthjemViewDidSelectPrimaryButton(_ view: HelthjemView) {
+    func helthjemViewDidSelectPrimaryButton(_ view: HelthjemView) {
         print("Did tap primary button")
     }
 
-    public func helthjemViewDidSelectSecondaryButton(_ view: HelthjemView) {
+    func helthjemViewDidSelectSecondaryButton(_ view: HelthjemView) {
         print("Did tap secondary button")
     }
 }
+
+// MARK: - Private extensions
 
 private extension NumberFormatter {
     static var spokenFormatter: NumberFormatter = {

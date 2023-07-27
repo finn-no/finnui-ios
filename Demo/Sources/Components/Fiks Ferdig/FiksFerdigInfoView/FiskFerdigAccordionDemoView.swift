@@ -1,7 +1,8 @@
 import FinniversKit
 import FinnUI
+import DemoKit
 
-final class FiksFerdigAccordionDemoView: UIView {
+final class FiksFerdigAccordionDemoView: UIView, Demoable {
     var viewModel: FiksFerdigAccordionViewModel
     let accordionView: FiksFerdigAccordionView
 

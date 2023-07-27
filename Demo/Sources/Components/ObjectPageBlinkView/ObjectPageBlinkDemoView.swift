@@ -1,24 +1,13 @@
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class ObjectPageBlinkDemoView: UIView, Tweakable {
+class ObjectPageBlinkDemoView: UIView {
 
     private lazy var blinkView: ObjectPageBlinkView = {
         let view = ObjectPageBlinkView(withAutoLayout: true)
         view.delegate = self
         return view
-    }()
-
-    lazy var tweakingOptions: [TweakingOption] = {
-        [
-            TweakingOption(title: "Default", action: { [weak self] in
-                self?.blinkView.configure(with: .default)
-            }),
-
-            TweakingOption(title: "Without increased click percentage", action: { [weak self] in
-                self?.blinkView.configure(with: .withoutIncreasedClickPercentage)
-            }),
-        ]
     }()
 
     // MARK: - Init
@@ -33,7 +22,7 @@ class ObjectPageBlinkDemoView: UIView, Tweakable {
     // MARK: - Setup
 
     private func setup() {
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
 
         addSubview(blinkView)
         NSLayoutConstraint.activate([
@@ -43,6 +32,32 @@ class ObjectPageBlinkDemoView: UIView, Tweakable {
         ])
     }
 }
+
+// MARK: - TweakableDemo
+
+extension ObjectPageBlinkDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+        case `default`
+        case withoutIncreasedClickPercentage
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .default:
+            blinkView.configure(with: .default)
+        case .withoutIncreasedClickPercentage:
+            blinkView.configure(with: .withoutIncreasedClickPercentage)
+        }
+    }
+}
+
+// MARK: - ObjectPageBlinkViewDelegate
 
 extension ObjectPageBlinkDemoView: ObjectPageBlinkViewDelegate {
     func objectPageBlinkViewDidSelectReadMoreButton(view: ObjectPageBlinkView) {

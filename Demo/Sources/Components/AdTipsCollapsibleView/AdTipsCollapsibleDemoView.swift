@@ -1,8 +1,9 @@
 import FinnUI
 import FinniversKit
 import UIKit
+import DemoKit
 
-class AdTipsCollapsibleDemoView: UIView, Tweakable {
+class AdTipsCollapsibleDemoView: UIView, Demoable {
 
     // MARK: - Private properties
 
@@ -30,18 +31,12 @@ class AdTipsCollapsibleDemoView: UIView, Tweakable {
         return button
     }()
 
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Plain style", action: { [weak self] in
-            self?.configureCollapsibleContentView(title: "Spesifikasjoner")
-        }),
-    ]
-
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configureCollapsibleContentView(title: "Spesifikasjoner")
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }

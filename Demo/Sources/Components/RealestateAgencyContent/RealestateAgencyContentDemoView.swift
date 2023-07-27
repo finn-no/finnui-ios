@@ -1,23 +1,9 @@
 import UIKit
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class RealestateAgencyContentDemoView: UIView, Tweakable {
-
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "3 articles", action: { [weak self] in
-            self?.configure(numberOfArticles: 3)
-        }),
-        TweakingOption(title: "2 articles", action: { [weak self] in
-            self?.configure(numberOfArticles: 2)
-        }),
-        TweakingOption(title: "1 article", action: { [weak self] in
-            self?.configure(numberOfArticles: 1)
-        }),
-        TweakingOption(title: "0 articles", action: { [weak self] in
-            self?.configure(numberOfArticles: 0)
-        })
-    ]
+class RealestateAgencyContentDemoView: UIView {
 
     // MARK: - Private properties
 
@@ -29,7 +15,7 @@ class RealestateAgencyContentDemoView: UIView, Tweakable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -69,6 +55,36 @@ class RealestateAgencyContentDemoView: UIView, Tweakable {
         ])
 
         agencyContentView = view
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension RealestateAgencyContentDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+        case threeArticles
+        case twoArticles
+        case oneArticle
+        case zeroArticles
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .threeArticles:
+            configure(numberOfArticles: 3)
+        case .twoArticles:
+            configure(numberOfArticles: 2)
+        case .oneArticle:
+            configure(numberOfArticles: 1)
+        case .zeroArticles:
+            configure(numberOfArticles: 0)
+        }
     }
 }
 

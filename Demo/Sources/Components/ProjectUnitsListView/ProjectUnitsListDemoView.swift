@@ -1,12 +1,17 @@
 import UIKit
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class ProjectUnitsListDemoView: UIView, DemoViewControllerSettable {
+class ProjectUnitsListDemoView: UIView, Demoable, ViewControllerAccessor {
+
+    // MARK: - Internal properties
+
+    var dismissKind: DismissKind { .button }
+    weak var viewController: UIViewController?
 
     // MARK: - Private properties
 
-    weak var demoViewController: UIViewController?
     private var bottomSheet: BottomSheet?
     private var showSoldUnits = false
     private var sortOption = ProjectUnitsListView.Column.name
@@ -96,7 +101,7 @@ extension ProjectUnitsListDemoView: ProjectUnitsListViewDelegate {
     ) {
         bottomSheet?.state = .dismissed
         let bottomSheet = BottomSheet(view: sortView)
-        demoViewController?.present(bottomSheet, animated: true)
+        viewController?.present(bottomSheet, animated: true)
         self.bottomSheet = bottomSheet
     }
 

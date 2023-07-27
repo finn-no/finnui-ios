@@ -1,8 +1,9 @@
 import Foundation
 import UIKit
 import FinnUI
+import DemoKit
 
-final class ShippingRequestedDemoView: UIView {
+final class ShippingRequestedDemoView: UIView, Demoable {
     private lazy var shippingRequestedView: ShippingRequestedView = {
         let viewModel = ShippingRequestedViewModel(
             title: "Snart kan du gi bud!",

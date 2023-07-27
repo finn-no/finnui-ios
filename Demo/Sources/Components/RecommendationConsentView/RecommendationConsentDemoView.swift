@@ -5,8 +5,9 @@
 import FinnUI
 import FinniversKit
 import UIKit
+import DemoKit
 
-final class RecommendationConsentDemoView: UIView {
+final class RecommendationConsentDemoView: UIView, Demoable {
     private lazy var viewModel = RecommendationConsentViewModel(
         titleText: "Du må tillate personlig tilpasset FINN",
         detailText: "For å vise deg relevante FINN-annonser må vi lagre søkehistorikken din hos oss. Dataene blir ikke delt med andre. Du kan endre innstillingene senere på Min FINN.",

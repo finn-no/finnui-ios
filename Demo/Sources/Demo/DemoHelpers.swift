@@ -11,15 +11,15 @@ enum TabletDisplayMode {
 }
 
 enum Sections: String, CaseIterable {
-    case components
+//    case components
     case recycling
     case fullscreen
     case swiftui
 
     var numberOfItems: Int {
         switch self {
-        case .components:
-            return ComponentDemoViews.items.count
+//        case .components:
+//            return ComponentDemoViews.items.count
         case .recycling:
             return RecyclingDemoViews.items.count
         case .fullscreen:
@@ -39,8 +39,8 @@ enum Sections: String, CaseIterable {
         let section = Sections.allCases[section]
         let names: [String]
         switch section {
-        case .components:
-            names = ComponentDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
+//        case .components:
+//            names = ComponentDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         case .recycling:
             names = RecyclingDemoViews.items.map { $0.rawValue.capitalizingFirstLetter }
         case .fullscreen:
@@ -55,8 +55,8 @@ enum Sections: String, CaseIterable {
         let section = Sections.allCases[indexPath.section]
         var rawClassName: String
         switch section {
-        case .components:
-            rawClassName = ComponentDemoViews.items[indexPath.row].rawValue
+//        case .components:
+//            rawClassName = ComponentDemoViews.items[indexPath.row].rawValue
         case .recycling:
             rawClassName = RecyclingDemoViews.items[indexPath.row].rawValue
         case .fullscreen:
@@ -79,9 +79,9 @@ enum Sections: String, CaseIterable {
         }
         var viewController: UIViewController?
         switch section {
-        case .components:
-            let selectedView = ComponentDemoViews.items[safe: indexPath.row]
-            viewController = selectedView?.viewController
+//        case .components:
+//            let selectedView = ComponentDemoViews.items[safe: indexPath.row]
+//            viewController = selectedView?.viewController
         case .recycling:
             let selectedView = RecyclingDemoViews.items[safe: indexPath.row]
             viewController = selectedView?.viewController

@@ -1,8 +1,9 @@
 import UIKit
 import FinnUI
 import FinniversKit
+import DemoKit
 
-final class SuggestShippingDemoView: UIView {
+final class SuggestShippingDemoView: UIView, Demoable {
     private lazy var suggestShippingView: SuggestShippingView = {
         let actionModels = [
             AlertModel<Bool>.ActionModel(

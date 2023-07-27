@@ -1,8 +1,9 @@
 import UIKit
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class SearchDropdownGroupDemoView: UIView, Tweakable {
+class SearchDropdownGroupDemoView: UIView {
 
     // MARK: - Private properties
 
@@ -20,24 +21,12 @@ class SearchDropdownGroupDemoView: UIView, Tweakable {
         return scrollView
     }()
 
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Recent searches", action: { [weak self] in
-            self?.configureView(title: "Siste søk", buttonTitle: "Fjern alle", items: .recentSearches)
-        }),
-        TweakingOption(title: "Saved searches", action: { [weak self] in
-            self?.configureView(title: "Lagrede søk", buttonTitle: "Se alle dine lagrede søk", items: .savedSearches)
-        }),
-        TweakingOption(title: "Recent searches", description: "No subtitles", action: { [weak self] in
-            self?.configureView(title: "Siste søk", buttonTitle: "Fjern alle", items: .recentSearchesNoSubtitles)
-        }),
-    ]
-
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -58,6 +47,34 @@ class SearchDropdownGroupDemoView: UIView, Tweakable {
     private func configureView(title: String, buttonTitle: String? = nil, items: [SearchDropdownGroupItem]) {
         groupView.configure(title: title, buttonTitle: buttonTitle)
         groupView.configure(with: items, remoteImageViewDataSource: self)
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension SearchDropdownGroupDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+        case recentSearches
+        case savedSearches
+        case recentSearchesNoSubtitles
+    }
+
+    var dismissKind: DismissKind { .button }
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .recentSearches:
+            configureView(title: "Siste søk", buttonTitle: "Fjern alle", items: .recentSearches)
+        case .savedSearches:
+            configureView(title: "Lagrede søk", buttonTitle: "Se alle dine lagrede søk", items: .savedSearches)
+        case .recentSearchesNoSubtitles:
+            configureView(title: "Siste søk", buttonTitle: "Fjern alle", items: .recentSearchesNoSubtitles)
+        }
     }
 }
 

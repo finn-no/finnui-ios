@@ -4,8 +4,9 @@
 
 import FinnUI
 import UIKit
+import DemoKit
 
-public class ExpandCollapseButtonDemoView: UIView {
+class ExpandCollapseButtonDemoView: UIView, Demoable {
 
     private lazy var expandCollapseButton: ExpandCollapseButton = {
         let button = ExpandCollapseButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -18,12 +19,12 @@ public class ExpandCollapseButtonDemoView: UIView {
 
     // MARK: - Init
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

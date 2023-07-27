@@ -1,8 +1,9 @@
 import UIKit
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class RealestateAgencyBannerDemoView: UIView {
+class RealestateAgencyBannerDemoView: UIView, Demoable {
 
     // MARK: - Private properties
 

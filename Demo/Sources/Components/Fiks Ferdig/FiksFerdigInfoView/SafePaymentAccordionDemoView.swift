@@ -1,39 +1,13 @@
 import FinniversKit
 @testable import FinnUI
+import DemoKit
 
-final class FiksFerdigSafePaymentInfoDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Single lined text") { [unowned self] in
-            let viewModel = FiksFerdigSafePaymentInfoViewModel(
-                headerTitle: "Trygg betaling",
-                timeLineItems: [
-                    TimeLineItem(title: "Betal med Vipps eller kort"),
-                    TimeLineItem(title: "Varen leveres hjem til deg"),
-                    TimeLineItem(title: "Du har 24 timer til å sjekke varen")
-                ],
-                isExpanded: true
-            )
-            setup(with: viewModel)
-        },
-        TweakingOption(title: "Multilined text") { [unowned self] in
-            let viewModel = FiksFerdigSafePaymentInfoViewModel(
-                headerTitle: "Trygg betaling",
-                timeLineItems: [
-                    TimeLineItem(title: "Betal med Vipps eller kort Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
-                    TimeLineItem(title: "Varen leveres hjem til deg"),
-                    TimeLineItem(title: "Du har 24 timer til å sjekke varen Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor")
-                ],
-                isExpanded: true
-            )
-            setup(with: viewModel)
-        }
-    ]
-
+final class FiksFerdigSafePaymentInfoDemoView: UIView {
     var accordionView: FiksFerdigSafePaymentInfoView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        tweakingOptions.first?.action!()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -62,6 +36,50 @@ final class FiksFerdigSafePaymentInfoDemoView: UIView, Tweakable {
         viewModel.headerViewModel.delegate = self
     }
 }
+
+// MARK: - TweakableDemo
+
+extension FiksFerdigSafePaymentInfoDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+        case singleLinedText
+        case multilinedText
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .singleLinedText:
+            let viewModel = FiksFerdigSafePaymentInfoViewModel(
+                headerTitle: "Trygg betaling",
+                timeLineItems: [
+                    TimeLineItem(title: "Betal med Vipps eller kort"),
+                    TimeLineItem(title: "Varen leveres hjem til deg"),
+                    TimeLineItem(title: "Du har 24 timer til å sjekke varen")
+                ],
+                isExpanded: true
+            )
+            setup(with: viewModel)
+        case .multilinedText:
+            let viewModel = FiksFerdigSafePaymentInfoViewModel(
+                headerTitle: "Trygg betaling",
+                timeLineItems: [
+                    TimeLineItem(title: "Betal med Vipps eller kort Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
+                    TimeLineItem(title: "Varen leveres hjem til deg"),
+                    TimeLineItem(title: "Du har 24 timer til å sjekke varen Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor")
+                ],
+                isExpanded: true
+            )
+            setup(with: viewModel)
+        }
+    }
+}
+
+// MARK: - FiksFerdigAccordionViewModelDelegate
 
 extension FiksFerdigSafePaymentInfoDemoView: FiksFerdigAccordionViewModelDelegate {
     func didChangeExpandedState(isExpanded: Bool) {

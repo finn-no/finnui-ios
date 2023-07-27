@@ -1,7 +1,8 @@
 import FinniversKit
 import FinnUI
+import DemoKit
 
-final class FiksFerdigServiceInfoDemoView: UIView {
+final class FiksFerdigServiceInfoDemoView: UIView, Demoable {
     var viewModel: FiksFerdigServiceInfoViewModel
     let accordionView: FiksFerdigServiceInfoView
 

@@ -1,31 +1,20 @@
 @testable import FinnUI
 import FinniversKit
 import UIKit
+import DemoKit
 
-class NumberedAdTipsCollapsibleDemoView: UIView, Tweakable {
+class NumberedAdTipsCollapsibleDemoView: UIView {
     // MARK: - Private properties
 
     private lazy var demoView = NumberedAdTipsCollapsibleView(identifier: "cat-dog-tips", delegate: self, withAutoLayout: true)
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
-
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Cat buying tips", action: { [weak self] in
-            self?.configure(for: .cat)
-        }),
-        TweakingOption(title: "Dog buying tips", action: { [weak self] in
-            self?.configure(for: .dog)
-        }),
-        TweakingOption(title: "\"Unknown\" tips – aka. without image", action: { [weak self] in
-            self?.configure(for: .unknown)
-        }),
-    ]
 
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -51,6 +40,33 @@ class NumberedAdTipsCollapsibleDemoView: UIView, Tweakable {
             headerImage: kind.image,
             items: BuyingTips.demoItems
         )
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension NumberedAdTipsCollapsibleDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+        case catBuyingTips
+        case dogBuyingTips
+        case unknownTips
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .catBuyingTips:
+            configure(for: .cat)
+        case .dogBuyingTips:
+            configure(for: .dog)
+        case .unknownTips:
+            configure(for: .unknown)
+        }
     }
 }
 
