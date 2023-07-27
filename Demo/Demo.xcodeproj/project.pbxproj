@@ -12,10 +12,6 @@
 		46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725B242CEF09008A5E93 /* FullscreenDemoViews.swift */; };
 		46E773A8242CEF0A008A5E93 /* ComponentDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725D242CEF09008A5E93 /* ComponentDemoViews.swift */; };
 		46E773A9242CEF0A008A5E93 /* RecyclingDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725E242CEF09008A5E93 /* RecyclingDemoViews.swift */; };
-		46E773AA242CEF0A008A5E93 /* MiniToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725F242CEF09008A5E93 /* MiniToastView.swift */; };
-		46E773AB242CEF0A008A5E93 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77260242CEF09008A5E93 /* SplitViewController.swift */; };
-		46E773AE242CEF0A008A5E93 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77263242CEF09008A5E93 /* Helpers.swift */; };
-		46E773B0242CEF0A008A5E93 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77265242CEF09008A5E93 /* NavigationController.swift */; };
 		46E773B1242CEF0A008A5E93 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77268242CEF09008A5E93 /* UIDevice.swift */; };
 		46E773B2242CEF0A008A5E93 /* TestCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E77269242CEF09008A5E93 /* TestCheck.swift */; };
 		46E7744F242CEF0A008A5E93 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46E77377242CEF09008A5E93 /* LaunchScreen.storyboard */; };
@@ -131,10 +127,6 @@
 		46E7725B242CEF09008A5E93 /* FullscreenDemoViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenDemoViews.swift; sourceTree = "<group>"; };
 		46E7725D242CEF09008A5E93 /* ComponentDemoViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentDemoViews.swift; sourceTree = "<group>"; };
 		46E7725E242CEF09008A5E93 /* RecyclingDemoViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecyclingDemoViews.swift; sourceTree = "<group>"; };
-		46E7725F242CEF09008A5E93 /* MiniToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniToastView.swift; sourceTree = "<group>"; };
-		46E77260242CEF09008A5E93 /* SplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
-		46E77263242CEF09008A5E93 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		46E77265242CEF09008A5E93 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		46E77268242CEF09008A5E93 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		46E77269242CEF09008A5E93 /* TestCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCheck.swift; sourceTree = "<group>"; };
 		46E77275242CEF09008A5E93 /* SnowGlobeDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnowGlobeDemoView.swift; sourceTree = "<group>"; };
@@ -281,10 +273,6 @@
 			isa = PBXGroup;
 			children = (
 				46E77259242CEF09008A5E93 /* DemoViews */,
-				46E77263242CEF09008A5E93 /* Helpers.swift */,
-				46E7725F242CEF09008A5E93 /* MiniToastView.swift */,
-				46E77265242CEF09008A5E93 /* NavigationController.swift */,
-				46E77260242CEF09008A5E93 /* SplitViewController.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -954,7 +942,6 @@
 			files = (
 				D6D43CF725BF2FA900234AC2 /* NewYearsDemoView.swift in Sources */,
 				4D529E2125837087007AE5B6 /* ImageAsset.swift in Sources */,
-				46E773AA242CEF0A008A5E93 /* MiniToastView.swift in Sources */,
 				9BBC904024FD252B0003D2D8 /* UITraitCollection+Extensions.swift in Sources */,
 				DA083C2E2462BCA800B26235 /* SwiftUIDemoViews.swift in Sources */,
 				46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */,
@@ -966,7 +953,6 @@
 				E640A7C42858B0E1002CA903 /* FiskFerdigAccordionDemoView.swift in Sources */,
 				E6ADF8EB28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift in Sources */,
 				D6D43CEA25BF2F4D00234AC2 /* ObjectPageBlinkDemoView.swift in Sources */,
-				46E773B0242CEF0A008A5E93 /* NavigationController.swift in Sources */,
 				4D2A37FE2730245600D09D73 /* StoryDemoView.swift in Sources */,
 				5D62FD7025B03B4800EB882D /* DemoViews.swift in Sources */,
 				46E773A8242CEF0A008A5E93 /* ComponentDemoViews.swift in Sources */,
@@ -984,11 +970,9 @@
 				E6AD7E61283FDD8E00C6D1CA /* ShippingRequestedDemoView.swift in Sources */,
 				DA7B29F22670CAFE0018B11C /* ExploreDemoView.swift in Sources */,
 				D6D43CF625BF2FA900234AC2 /* FavoriteAdSortingDemoView.swift in Sources */,
-				46E773AE242CEF0A008A5E93 /* Helpers.swift in Sources */,
 				D6D43CF325BF2FA900234AC2 /* SplashDemoView.swift in Sources */,
 				46E773B1242CEF0A008A5E93 /* UIDevice.swift in Sources */,
 				5D1224C127BF875600A2AD97 /* RecommendationConsentDemoView.swift in Sources */,
-				46E773AB242CEF0A008A5E93 /* SplitViewController.swift in Sources */,
 				46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */,
 				F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */,
 				9BA6C4A224336B9A009D417B /* DemoWrapperView.swift in Sources */,
