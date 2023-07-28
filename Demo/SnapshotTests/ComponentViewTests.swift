@@ -4,20 +4,15 @@
 
 import XCTest
 import FinniversKit
-import Demo
+@testable import Demo
+import DemoKitSnapshot
 
 class ComponentViewTests: XCTestCase {
-    private func snapshot(_ component: ComponentDemoViews, includeIPad: Bool = false, delay: TimeInterval? = nil, record recording: Bool = false, testName: String = #function) {
-        assertSnapshots(matching: component.viewController, includeDarkMode: true, includeIPad: includeIPad, delay: delay, record: recording, testName: testName)
+    private func snapshot(_ component: ComponentDemoViews, record: Bool = false, line: UInt = #line) {
+        snapshotTest(demoable: component.demoable, record: record, line: line)
     }
 
     // MARK: - Tests
-
-    func testMissingSnapshotTests() {
-        for element in elementWithoutTests(for: ComponentDemoViews.self) {
-            XCTFail("Not all elements were implemented, missing: \(element.rawValue)")
-        }
-    }
 
     func testSaveSearchView() {
         snapshot(.saveSearchView)
@@ -68,15 +63,15 @@ class ComponentViewTests: XCTestCase {
     }
 
     func testRealestateAgencyBanner() {
-        snapshot(.realestateAgencyBanner, includeIPad: true)
+        snapshot(.realestateAgencyBanner)
     }
 
     func testRealestateSoldState() {
-        snapshot(.realestateSoldState, includeIPad: true)
+        snapshot(.realestateSoldState)
     }
 
     func testRealestateAgencyContent() {
-        snapshot(.realestateAgencyContent, includeIPad: true)
+        snapshot(.realestateAgencyContent)
     }
 
     func testRecommendationConsentView() {
@@ -144,10 +139,10 @@ class ComponentViewTests: XCTestCase {
     }
 
     func testProjectUnitsListView() {
-        snapshot(.projectUnitsListView, includeIPad: true)
+        snapshot(.projectUnitsListView)
     }
 
     func testMotorSidebar() {
-        snapshot(.motorSidebar, includeIPad: true)
+        snapshot(.motorSidebar)
     }
 }

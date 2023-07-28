@@ -2,29 +2,18 @@
 //  Copyright © 2018 FINN AS. All rights reserved.
 //
 
-import Demo
+@testable import Demo
+@testable import FinnUI
 import XCTest
 import SwiftUI
-@testable import FinnUI
+import DemoKitSnapshot
 
 class SwiftUIViewTests: XCTestCase {
-    private func snapshot(
-        _ component: SwiftUIDemoViews,
-        includeIPad: Bool = false,
-        delay: TimeInterval? = nil,
-        record: Bool = false,
-        testName: String = #function
-    ) {
-        assertSnapshots(matching: component.viewController, includeDarkMode: true, includeIPad: includeIPad, delay: delay, record: record, testName: testName)
+    private func snapshot(_ component: SwiftUIDemoViews, record: Bool = false, line: UInt = #line) {
+        snapshotTest(demoable: component.demoable, record: record, line: line)
     }
 
     // MARK: - Tests
-
-    func testMissingSnapshotTests() {
-        for element in elementWithoutTests(for: SwiftUIDemoViews.self) {
-            XCTFail("Not all elements were implemented, missing: \(element.rawValue)")
-        }
-    }
 
     func testButtons() {
         snapshot(.buttons)
