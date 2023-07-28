@@ -36,7 +36,7 @@ class ChatAvailabilityDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension ChatAvailabilityDemoView: TweakableDemo {
-    enum ChatStatus: String, CaseIterable, DemoKit.TweakingOption {
+    enum ChatStatus: String, CaseIterable, TweakingOption {
         case online
         case offline
         case loading
@@ -45,7 +45,7 @@ extension ChatAvailabilityDemoView: TweakableDemo {
     var dismissKind: DismissKind { .button }
     var numberOfTweaks: Int { ChatStatus.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         ChatStatus.allCases[index]
     }
 

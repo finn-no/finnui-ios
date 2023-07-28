@@ -36,7 +36,7 @@ class IconLinkListViewDemo: UIView {
 // MARK: - TweakableDemo
 
 extension IconLinkListViewDemo: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case twoItems
         case threeItems
         case singleItem
@@ -44,7 +44,7 @@ extension IconLinkListViewDemo: TweakableDemo {
 
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

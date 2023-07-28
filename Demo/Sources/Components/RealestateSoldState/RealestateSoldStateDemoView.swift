@@ -58,7 +58,7 @@ class RealestateSoldStateDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension RealestateSoldStateDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case defaultExpanded
         case defaultCollapsed
         case collapsedWithPhoneNumbers
@@ -73,7 +73,7 @@ extension RealestateSoldStateDemoView: TweakableDemo {
     var dismissKind: DismissKind { .button }
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

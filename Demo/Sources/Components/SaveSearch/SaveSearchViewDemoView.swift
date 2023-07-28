@@ -30,7 +30,7 @@ class SaveSearchViewDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension SaveSearchViewDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case createANewSearch
         case editingAnExistingSearch
     }
@@ -38,7 +38,7 @@ extension SaveSearchViewDemoView: TweakableDemo {
     var presentation: DemoablePresentation { .sheet(detents: [.medium(), .large()]) }
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

@@ -53,7 +53,7 @@ class SearchDropdownGroupDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension SearchDropdownGroupDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case recentSearches
         case savedSearches
         case recentSearchesNoSubtitles
@@ -62,7 +62,7 @@ extension SearchDropdownGroupDemoView: TweakableDemo {
     var dismissKind: DismissKind { .button }
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

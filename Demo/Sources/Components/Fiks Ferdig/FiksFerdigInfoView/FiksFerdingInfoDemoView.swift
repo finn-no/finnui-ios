@@ -79,14 +79,14 @@ final class FiksFerdigInfoDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension FiksFerdigInfoDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case fullInfoWithHeltHjem
         case missingShippingInfo
     }
 
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

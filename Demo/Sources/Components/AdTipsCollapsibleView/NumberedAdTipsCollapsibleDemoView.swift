@@ -46,7 +46,7 @@ class NumberedAdTipsCollapsibleDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension NumberedAdTipsCollapsibleDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case catBuyingTips
         case dogBuyingTips
         case unknownTips
@@ -54,7 +54,7 @@ extension NumberedAdTipsCollapsibleDemoView: TweakableDemo {
 
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

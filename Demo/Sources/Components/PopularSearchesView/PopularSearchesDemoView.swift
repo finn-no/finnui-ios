@@ -45,7 +45,7 @@ class PopularSearchesDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension PopularSearchesDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case fiveSearches
         case fourSearches
         case oneSearch
@@ -55,7 +55,7 @@ extension PopularSearchesDemoView: TweakableDemo {
     var dismissKind: DismissKind { .button }
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

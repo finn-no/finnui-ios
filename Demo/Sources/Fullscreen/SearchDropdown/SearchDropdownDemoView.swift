@@ -57,7 +57,7 @@ final class SearchDropdownDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension SearchDropdownDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case recentSavedAndPopular
         case recentAndSaved
         case recentAndPopular
@@ -66,7 +66,7 @@ extension SearchDropdownDemoView: TweakableDemo {
 
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

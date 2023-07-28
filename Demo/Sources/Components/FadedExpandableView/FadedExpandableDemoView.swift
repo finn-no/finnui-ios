@@ -48,7 +48,7 @@ class FadedExpandableDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension FadedExpandableDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case shortView
         case tallView
         case titleView
@@ -56,7 +56,7 @@ extension FadedExpandableDemoView: TweakableDemo {
 
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

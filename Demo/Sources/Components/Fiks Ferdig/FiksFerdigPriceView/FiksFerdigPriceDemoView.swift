@@ -32,7 +32,7 @@ final class FiksFerdigPriceDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension FiksFerdigPriceDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case normalShipping
         case discountedShipping
         case priceNotSet
@@ -42,7 +42,7 @@ extension FiksFerdigPriceDemoView: TweakableDemo {
 
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

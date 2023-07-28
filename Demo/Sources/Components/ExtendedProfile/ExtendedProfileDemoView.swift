@@ -60,7 +60,7 @@ class ExtendedProfileDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension ExtendedProfileDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case isExpandableAndExpanded
         case isExpandableAndCollapsed
         case isNotExpandableAndExpanded
@@ -69,7 +69,7 @@ extension ExtendedProfileDemoView: TweakableDemo {
 
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

@@ -54,7 +54,7 @@ class MotorSidebarDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension MotorSidebarDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case `default`
         case withSecondarySection
     }
@@ -62,7 +62,7 @@ extension MotorSidebarDemoView: TweakableDemo {
     var dismissKind: DismissKind { .button }
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 

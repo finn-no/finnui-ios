@@ -61,7 +61,7 @@ class RealestateAgencyContentDemoView: UIView {
 // MARK: - TweakableDemo
 
 extension RealestateAgencyContentDemoView: TweakableDemo {
-    enum Tweaks: String, CaseIterable, DemoKit.TweakingOption {
+    enum Tweaks: String, CaseIterable, TweakingOption {
         case threeArticles
         case twoArticles
         case oneArticle
@@ -70,7 +70,7 @@ extension RealestateAgencyContentDemoView: TweakableDemo {
 
     var numberOfTweaks: Int { Tweaks.allCases.count }
 
-    func tweak(for index: Int) -> any DemoKit.TweakingOption {
+    func tweak(for index: Int) -> any TweakingOption {
         Tweaks.allCases[index]
     }
 
