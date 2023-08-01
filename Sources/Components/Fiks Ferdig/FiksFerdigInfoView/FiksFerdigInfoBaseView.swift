@@ -10,7 +10,7 @@ public class FiksFerdigInfoBaseView: UIStackView {
         header.directionalLayoutMargins = .init(
             top: .spacingM,
             leading: .spacingM,
-            bottom: .spacingM,
+            bottom: .spacingL,
             trailing: .spacingM
         )
         header.alignment = .center
@@ -34,7 +34,7 @@ public class FiksFerdigInfoBaseView: UIStackView {
     private lazy var contentContainerView: UIStackView = {
         let stackView = UIStackView(axis: .vertical)
         stackView.directionalLayoutMargins = .init(
-            top: .spacingM,
+            top: 0,
             leading: .spacingM,
             bottom: .spacingM,
             trailing: .spacingM
@@ -42,8 +42,6 @@ public class FiksFerdigInfoBaseView: UIStackView {
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
-
-    private lazy var containerEnclosingView = UIStackView(axis: .vertical)
 
     public init(
         viewModel: FiksFerdigInfoBaseViewModel,
@@ -76,11 +74,7 @@ public class FiksFerdigInfoBaseView: UIStackView {
         ])
         addArrangedSubview(headerStackView)
 
-        containerEnclosingView.spacing = .spacingS
-        containerEnclosingView.addArrangedSubviews([
-            contentContainerView
-        ])
-        addArrangedSubview(containerEnclosingView)
+        addArrangedSubview(contentContainerView)
 
         NSLayoutConstraint.activate([
             headerIcon.widthAnchor.constraint(equalToConstant: 24),
