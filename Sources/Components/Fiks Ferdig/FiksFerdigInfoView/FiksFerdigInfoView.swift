@@ -10,9 +10,7 @@ public final class FiksFerdigInfoView: UIView {
     )
 
     private lazy var shippingInfoView: FiksFerdigShippingInfoView? = {
-        guard
-            let shippingInfoViewModel = viewModel.shippingInfoViewModel
-        else {
+        guard let shippingInfoViewModel = viewModel.shippingInfoViewModel else {
             return nil
         }
 
@@ -43,22 +41,16 @@ public final class FiksFerdigInfoView: UIView {
         containerView.fillInSuperview()
 
         var subViews: [UIView] = [
-            createSeparatorView(),
             serviceInfoView,
-            createSeparatorView()
-        ]
+            shippingInfoView,
+            safePaymentInfoView
+        ].compactMap { $0 }
 
-        if let shippingInfoView = shippingInfoView {
-            subViews.append(contentsOf: [
-                shippingInfoView,
-                createSeparatorView(),
-            ])
+        if subViews.count > 1 {
+            let separatorCount = subViews.count - 1
+            let separators: [UIView] = (0..<separatorCount).map { _ in createSeparatorView() }
+            subViews = zip(subViews, separators).flatMap { [$0.0, $0.1] } + subViews.suffix(1)
         }
-
-        subViews.append(contentsOf: [
-            safePaymentInfoView,
-            createSeparatorView()
-        ])
 
         containerView.addArrangedSubviews(subViews)
     }
