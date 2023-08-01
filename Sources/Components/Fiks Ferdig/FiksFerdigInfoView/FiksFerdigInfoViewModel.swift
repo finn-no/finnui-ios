@@ -16,7 +16,6 @@ public final class FiksFerdigInfoViewModel {
 
         serviceInfoViewModel.headerViewModel.delegate = self
         shippingInfoViewModel?.headerViewModel.delegate = self
-        safePaymentInfoViewModel.headerViewModel.delegate = self
     }
 }
 

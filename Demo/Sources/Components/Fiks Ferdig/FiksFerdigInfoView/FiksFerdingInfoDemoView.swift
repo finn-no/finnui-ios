@@ -46,8 +46,7 @@ final class FiksFerdigInfoDemoView: UIView, Tweakable {
             TimeLineItem(title: "Betal med Vipps eller kort"),
             TimeLineItem(title: "Varen leveres hjem til deg"),
             TimeLineItem(title: "Du har 24 timer til å sjekke varen")
-        ],
-        isExpanded: true
+        ]
     )
 
     lazy var tweakingOptions: [TweakingOption] = [
