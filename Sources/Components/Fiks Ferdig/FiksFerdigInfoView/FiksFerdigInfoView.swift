@@ -38,6 +38,7 @@ public final class FiksFerdigInfoView: UIScrollView {
     }
 
     private func setup() {
+        backgroundColor = .bgPrimary
         addSubview(containerView)
 
         var subViews: [UIView] = [
