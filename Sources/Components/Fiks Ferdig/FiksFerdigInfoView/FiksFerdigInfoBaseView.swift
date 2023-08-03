@@ -59,7 +59,6 @@ public class FiksFerdigInfoBaseView: UIStackView {
     }
 
     public func addViewToContentView(_ view: UIView, withSpacing spacing: CGFloat = 0) {
-        view.setContentCompressionResistancePriority(.required, for: .horizontal)
         contentContainerView.addArrangedSubview(view)
         contentContainerView.setCustomSpacing(spacing, after: view)
     }

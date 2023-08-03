@@ -87,7 +87,8 @@ final class FiksFerdigInfoDemoView: UIView, Tweakable {
         NSLayoutConstraint.activate([
             sidebar.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             sidebar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: .spacingM),
-            sidebar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
+            sidebar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            sidebar.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

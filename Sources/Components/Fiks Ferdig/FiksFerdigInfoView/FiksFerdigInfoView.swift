@@ -1,9 +1,10 @@
 import FinniversKit
 
-public final class FiksFerdigInfoView: UIView {
-    private let viewModel: FiksFerdigInfoViewModel
+public final class FiksFerdigInfoView: UIScrollView {
+    let viewModel: FiksFerdigInfoViewModel
 
-    private let containerView = UIStackView(axis: .vertical, withAutoLayout: true)
+    private lazy var containerView = UIStackView(axis: .vertical, withAutoLayout: true)
+
     private lazy var serviceInfoView = FiksFerdigServiceInfoView(
         viewModel: viewModel.serviceInfoViewModel,
         withAutoLayout: true
@@ -38,7 +39,6 @@ public final class FiksFerdigInfoView: UIView {
 
     private func setup() {
         addSubview(containerView)
-        containerView.fillInSuperview()
 
         var subViews: [UIView] = [
             serviceInfoView,
@@ -46,19 +46,33 @@ public final class FiksFerdigInfoView: UIView {
             safePaymentInfoView
         ].compactMap { $0 }
 
+        var separators: [UIView] = []
         if subViews.count > 1 {
             let separatorCount = subViews.count - 1
-            let separators: [UIView] = (0..<separatorCount).map { _ in createSeparatorView() }
+            separators = (0..<separatorCount).map { _ in createSeparatorView() }
             subViews = zip(subViews, separators).flatMap { [$0.0, $0.1] } + subViews.suffix(1)
         }
 
         containerView.addArrangedSubviews(subViews)
+
+        var constraints: [NSLayoutConstraint] = [
+            containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.widthAnchor.constraint(equalTo: widthAnchor, constant: -.spacingM * 2),
+            containerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ]
+        constraints += separators.flatMap { separator in
+            return [
+                separator.widthAnchor.constraint(equalTo: contentLayoutGuide.widthAnchor),
+                separator.heightAnchor.constraint(equalToConstant: 1)
+            ]
+        }
+        NSLayoutConstraint.activate(constraints)
     }
 
     private func createSeparatorView() -> UIView {
         let separatorView = UIView(withAutoLayout: true)
         separatorView.backgroundColor = .borderDefault
-        separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return separatorView
     }
 }
