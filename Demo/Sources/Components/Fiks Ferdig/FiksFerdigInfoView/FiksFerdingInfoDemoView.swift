@@ -36,8 +36,7 @@ final class FiksFerdigInfoDemoView: UIView, Tweakable {
             message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias"
         )
         ],
-        noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel.",
-        isExpanded: true
+        noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel."
     )
 
     let safePaymentInfoViewModel = FiksFerdigSafePaymentInfoViewModel(
@@ -46,8 +45,7 @@ final class FiksFerdigInfoDemoView: UIView, Tweakable {
             TimeLineItem(title: "Betal med Vipps eller kort"),
             TimeLineItem(title: "Varen leveres hjem til deg"),
             TimeLineItem(title: "Du har 24 timer til å sjekke varen")
-        ],
-        isExpanded: true
+        ]
     )
 
     lazy var tweakingOptions: [TweakingOption] = [
@@ -89,7 +87,8 @@ final class FiksFerdigInfoDemoView: UIView, Tweakable {
         NSLayoutConstraint.activate([
             sidebar.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             sidebar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: .spacingM),
-            sidebar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
+            sidebar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            sidebar.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

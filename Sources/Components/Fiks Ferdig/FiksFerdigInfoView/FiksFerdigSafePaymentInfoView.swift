@@ -2,7 +2,7 @@ import Combine
 import FinniversKit
 import UIKit
 
-public final class FiksFerdigSafePaymentInfoView: FiksFerdigAccordionView {
+public final class FiksFerdigSafePaymentInfoView: FiksFerdigInfoBaseView {
     private let viewModel: FiksFerdigSafePaymentInfoViewModel
     private let simpleIndicatorProvider = SimpleTimeLineIndicatorProvider(font: .caption)
 

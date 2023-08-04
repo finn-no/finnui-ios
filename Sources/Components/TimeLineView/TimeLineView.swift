@@ -2,7 +2,6 @@ import FinniversKit
 import UIKit
 
 public final class TimeLineView: UIStackView {
-    private var processedSubViews = false
     private let items: [TimeLineItem]
     private let itemIndicatorProvider: TimeLineIndicatorProvider
 

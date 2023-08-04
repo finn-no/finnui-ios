@@ -2,14 +2,16 @@ import UIKit
 
 public final class FiksFerdigSafePaymentInfoViewModel {
     public let timeLineItems: [TimeLineItem]
-    public let headerViewModel: FiksFerdigAccordionViewModel
+    public let headerViewModel: FiksFerdigInfoBaseViewModel
 
-    public init(headerTitle: String, timeLineItems: [TimeLineItem], isExpanded: Bool = false) {
+    public init(
+        headerTitle: String,
+        timeLineItems: [TimeLineItem]
+    ) {
         self.timeLineItems = timeLineItems
-        self.headerViewModel = FiksFerdigAccordionViewModel(
+        self.headerViewModel = FiksFerdigInfoBaseViewModel(
             title: headerTitle,
-            icon: UIImage(named: .tjtLockShield),
-            isExpanded: isExpanded
+            icon: UIImage(named: .tjtLockShield)
         )
     }
 }

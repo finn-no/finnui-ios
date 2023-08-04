@@ -23,8 +23,7 @@ final class FiksFerdigShippingInfoDemoView: UIView, Tweakable {
                     message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias"
                 )
                 ],
-                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel.",
-                isExpanded: true
+                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel."
             )
             setup(with: viewModel)
         },
@@ -32,8 +31,7 @@ final class FiksFerdigShippingInfoDemoView: UIView, Tweakable {
             let viewModel = FiksFerdigShippingInfoViewModel(
                 headerTitle: "Varen sendes med",
                 providers: [],
-                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel.",
-                isExpanded: true
+                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel."
             )
             setup(with: viewModel)
         }
@@ -71,7 +69,6 @@ final class FiksFerdigShippingInfoDemoView: UIView, Tweakable {
 
         self.viewModel = viewModel
         self.accordionView = accordionView
-        viewModel.headerViewModel.delegate = self
     }
 }
 
