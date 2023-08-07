@@ -200,9 +200,9 @@ public final class ExploreView: UIView {
             sections.append(section)
             snapshot.appendSections([section])
             recommendationsSection = viewModel.recommendationItems
-            let items = viewModel.recommendationItems.map {
-                Item.recommendation($0.self)
-            }
+            let items = viewModel.recommendationItems
+                .map { Item.recommendation($0.self) }
+                .unique()
             snapshot.appendItems(items, toSection: section)
         }
 
