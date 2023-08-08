@@ -235,7 +235,9 @@ public final class ExploreView: UIView {
         var snapshot = collectionViewDataSource.snapshot()
 
         recommendationsSection = recommendations
-        let items = recommendations.map(Item.recommendation)
+        let items = recommendations
+            .map(Item.recommendation)
+            .unique()
 
         snapshot.appendItems(items, toSection: .recommendations)
         collectionViewDataSource.apply(snapshot, animatingDifferences: false)
