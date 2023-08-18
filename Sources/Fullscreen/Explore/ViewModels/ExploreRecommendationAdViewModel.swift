@@ -1,6 +1,6 @@
 import FinniversKit
 
-final public class ExploreRecommendationAdViewModel: StandardAdRecommendationViewModel, Hashable {
+final public class ExploreRecommendationAdViewModel: UniqueHashableItem, StandardAdRecommendationViewModel {
     public let id: String
     public var imagePath: String?
     public var imageSize: CGSize
@@ -48,12 +48,5 @@ final public class ExploreRecommendationAdViewModel: StandardAdRecommendationVie
         self.favoriteButtonAccessibilityLabel = favoriteButtonAccessibilityLabel
         self.id = id
         self.badgeViewModel = badgeViewModel
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    public static func == (lhs: ExploreRecommendationAdViewModel, rhs: ExploreRecommendationAdViewModel) -> Bool {
-        lhs.hashValue == rhs.hashValue
     }
 }

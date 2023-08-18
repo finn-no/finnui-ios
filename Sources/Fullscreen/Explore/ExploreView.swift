@@ -202,7 +202,7 @@ public final class ExploreView: UIView {
             recommendationsSection = viewModel.recommendationItems
             let items = viewModel.recommendationItems
                 .map { Item.recommendation($0.self) }
-                .unique()
+
             snapshot.appendItems(items, toSection: section)
         }
 
@@ -237,7 +237,6 @@ public final class ExploreView: UIView {
         recommendationsSection = recommendations
         let items = recommendations
             .map(Item.recommendation)
-            .unique()
 
         snapshot.appendItems(items, toSection: .recommendations)
         collectionViewDataSource.apply(snapshot, animatingDifferences: false)
