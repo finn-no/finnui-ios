@@ -2,7 +2,7 @@ import Combine
 import FinniversKit
 import UIKit
 
-public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
+public final class FiksFerdigShippingInfoView: FiksFerdigInfoBaseView {
     private let viewModel: FiksFerdigShippingInfoViewModel
 
     private let noProviderLabel: Label = {
@@ -54,12 +54,5 @@ public final class FiksFerdigShippingInfoView: FiksFerdigAccordionView {
         }
 
         addViewToContentView(cellsContainerStackView)
-    }
-}
-
-private extension Button.Style {
-    static var fiksFerdigAccordionButtonStyle: Button.Style {
-        .flat
-        .overrideStyle(normalFont: .captionStrong)
     }
 }

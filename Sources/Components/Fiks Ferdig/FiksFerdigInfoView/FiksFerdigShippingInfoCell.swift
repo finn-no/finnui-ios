@@ -55,7 +55,6 @@ public final class FiksFerdigShippingInfoCell: UIStackView {
         providerLabel.text = viewModel.providerName
         messageLabel.text = viewModel.message
 
-        providerLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         providerIconView.setContentHuggingPriority(.required, for: .horizontal)
         providerIconView.setContentCompressionResistancePriority(.required, for: .horizontal)
 

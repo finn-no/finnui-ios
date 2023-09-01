@@ -2,16 +2,17 @@ import Combine
 import FinniversKit
 import UIKit
 
-public final class FiksFerdigServiceInfoView: FiksFerdigAccordionView {
+public final class FiksFerdigServiceInfoView: FiksFerdigInfoBaseView {
     private let viewModel: FiksFerdigServiceInfoViewModel
     private let dottedIndicatorProvider = DottedTimeLineIndicatorProvider(font: .caption)
-    private let messageLabel: Label = {
+
+    private var cancellable: AnyCancellable?
+
+    private lazy var messageLabel: Label = {
         let label = Label(style: .body, withAutoLayout: true)
         label.numberOfLines = 0
         return label
     }()
-
-    private var cancellable: AnyCancellable?
 
     private lazy var timeLineView: TimeLineView = {
         let timeLineView = TimeLineView(

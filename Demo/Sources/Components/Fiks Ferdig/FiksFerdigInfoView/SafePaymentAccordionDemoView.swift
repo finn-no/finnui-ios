@@ -33,7 +33,6 @@ final class FiksFerdigSafePaymentInfoDemoView: UIView {
         accordionView.layoutIfNeeded()
 
         self.accordionView = accordionView
-        viewModel.headerViewModel.delegate = self
     }
 }
 
@@ -60,8 +59,7 @@ extension FiksFerdigSafePaymentInfoDemoView: TweakableDemo {
                     TimeLineItem(title: "Betal med Vipps eller kort"),
                     TimeLineItem(title: "Varen leveres hjem til deg"),
                     TimeLineItem(title: "Du har 24 timer til å sjekke varen")
-                ],
-                isExpanded: true
+                ]
             )
             setup(with: viewModel)
         case .multilinedText:
@@ -71,8 +69,7 @@ extension FiksFerdigSafePaymentInfoDemoView: TweakableDemo {
                     TimeLineItem(title: "Betal med Vipps eller kort Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
                     TimeLineItem(title: "Varen leveres hjem til deg"),
                     TimeLineItem(title: "Du har 24 timer til å sjekke varen Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor")
-                ],
-                isExpanded: true
+                ]
             )
             setup(with: viewModel)
         }

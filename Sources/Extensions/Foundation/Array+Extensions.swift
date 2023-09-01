@@ -15,3 +15,11 @@ extension Array {
         return indices.contains(index) ? self[index] : nil
     }
 }
+
+extension Array where Element: Hashable {
+    /// Return an array with any duplicates removed
+    func unique() -> [Element] {
+        var uniqueElements = Set(self)
+        return compactMap { uniqueElements.remove($0) }
+    }
+}

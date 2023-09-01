@@ -9,7 +9,7 @@ public final class FiksFerdigServiceInfoViewModel {
     public let timeLineItems: [TimeLineItem]
     public let readMoreTitle: String
     public let readMoreURL: URL
-    public let headerViewModel: FiksFerdigAccordionViewModel
+    public let headerViewModel: FiksFerdigInfoBaseViewModel
     public weak var delegate: FiksFerdigServiceInfoViewModelDelegate?
 
     public init(
@@ -24,10 +24,9 @@ public final class FiksFerdigServiceInfoViewModel {
         self.timeLineItems = timeLineItems
         self.readMoreTitle = readMoreTitle
         self.readMoreURL = readMoreURL
-        self.headerViewModel = FiksFerdigAccordionViewModel(
+        self.headerViewModel = FiksFerdigInfoBaseViewModel(
             title: headerTitle,
-            icon: UIImage(named: .tjtTorgetShipping),
-            isExpanded: isExpanded
+            icon: UIImage(named: .tjtTorgetShipping)
         )
     }
 

@@ -3,7 +3,6 @@ import FinniversKit
 import DemoKit
 
 final class FiksFerdigShippingInfoDemoView: UIView {
-
     var viewModel: FiksFerdigShippingInfoViewModel!
     var accordionView: FiksFerdigShippingInfoView?
 
@@ -36,7 +35,6 @@ final class FiksFerdigShippingInfoDemoView: UIView {
 
         self.viewModel = viewModel
         self.accordionView = accordionView
-        viewModel.headerViewModel.delegate = self
     }
 }
 
@@ -76,16 +74,14 @@ extension FiksFerdigShippingInfoDemoView: TweakableDemo {
                         message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias"
                     )
                 ],
-                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel.",
-                isExpanded: true
+                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel."
             )
             setup(with: viewModel)
         case .noProviders:
             let viewModel = FiksFerdigShippingInfoViewModel(
                 headerTitle: "Varen sendes med",
                 providers: [],
-                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel.",
-                isExpanded: true
+                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel."
             )
             setup(with: viewModel)
         }
