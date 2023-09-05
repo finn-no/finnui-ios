@@ -1,15 +1,8 @@
 import FinnUI
 import FinniversKit
+import DemoKit
 
-class MotorSidebarDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Default") { [weak self] in
-            self?.setupSidebar(with: .demoModel)
-        },
-        TweakingOption(title: "W/ secondary section") { [weak self] in
-            self?.setupSidebar(with: .withSecondarySection)
-        }
-    ]
+class MotorSidebarDemoView: UIView {
 
     // MARK: - Private properties
 
@@ -21,7 +14,7 @@ class MotorSidebarDemoView: UIView, Tweakable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -55,6 +48,31 @@ class MotorSidebarDemoView: UIView, Tweakable {
         ])
 
         motorSidebar = view
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension MotorSidebarDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case `default`
+        case withSecondarySection
+    }
+
+    var dismissKind: DismissKind { .button }
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .default:
+            setupSidebar(with: .demoModel)
+        case .withSecondarySection:
+            setupSidebar(with: .withSecondarySection)
+        }
     }
 }
 

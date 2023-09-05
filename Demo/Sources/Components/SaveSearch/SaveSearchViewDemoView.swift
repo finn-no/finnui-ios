@@ -4,13 +4,9 @@
 
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class SaveSearchViewDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Creating a new search") { self.saveSearchView.configure(with: .createSavedSearch) },
-        TweakingOption(title: "Editing an existing search") { self.saveSearchView.configure(with: .existingSavedSearch) },
-    ]
-
+class SaveSearchViewDemoView: UIView {
     private lazy var saveSearchView = SaveSearchView(withAutoLayout: true)
 
     // MARK: - Init
@@ -27,7 +23,32 @@ class SaveSearchViewDemoView: UIView, Tweakable {
     private func setup() {
         addSubview(saveSearchView)
         saveSearchView.fillInSuperview()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension SaveSearchViewDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case createANewSearch
+        case editingAnExistingSearch
+    }
+
+    var presentation: DemoablePresentation { .sheet(detents: [.medium(), .large()]) }
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .createANewSearch:
+            saveSearchView.configure(with: .createSavedSearch)
+        case .editingAnExistingSearch:
+            saveSearchView.configure(with: .existingSavedSearch)
+        }
     }
 }
 

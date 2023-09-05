@@ -1,37 +1,9 @@
 import UIKit
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class RealestateSoldStateDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        .init(title: "Default - expanded") { [weak self] in
-            self?.setupDemoView(with: .demoModel, isExpanded: true)
-        },
-        .init(title: "Default - collapsed") { [weak self] in
-            self?.setupDemoView(with: .demoModel, isExpanded: false)
-        },
-        .init(title: "With several phone numbers - collapsed") { [weak self] in
-            self?.setupDemoView(with: .demoModelWithSeveralPhoneNumbers, isExpanded: false)
-        },
-        .init(title: "Without contact information - collapsed") { [weak self] in
-            self?.setupDemoView(with: .demoModelWithoutContactInfo, isExpanded: false)
-        },
-        .init(title: "Without agent phone number - collapsed") { [weak self] in
-            self?.setupDemoView(with: .demoModelWithoutAgentPhoneNumber, isExpanded: false)
-        },
-        .init(title: "Without agent image - collapsed") { [weak self] in
-            self?.setupDemoView(with: .demoModelWithoutAgentImage, isExpanded: false)
-        },
-        .init(title: "Without agent image and several phone numbers - collapsed") { [weak self] in
-            self?.setupDemoView(with: .demoModelWithoutAgentImageAndSeveralPhoneNumbers, isExpanded: false)
-        },
-        .init(title: "Without phone number or agent image - collapsed") { [weak self] in
-            self?.setupDemoView(with: .demoModelWithoutPhoneNumberOrAgentImage, isExpanded: false)
-        },
-        .init(title: "Form submitted") { [weak self] in
-            self?.setupDemoView(with: .demoModel, isExpanded: false, isFormSubmitted: true)
-        },
-    ]
+class RealestateSoldStateDemoView: UIView {
 
     private var realestateSoldStateView: RealestateSoldStateView?
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
@@ -41,7 +13,7 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -81,6 +53,51 @@ class RealestateSoldStateDemoView: UIView, Tweakable {
         ])
 
         realestateSoldStateView = view
+    }
+}
+// MARK: - TweakableDemo
+
+extension RealestateSoldStateDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case defaultExpanded
+        case defaultCollapsed
+        case collapsedWithPhoneNumbers
+        case collapsedWithoutContactInformation
+        case collapsedWithoutAgentPhoneNumber
+        case collapsedWithoutAgentImage
+        case collapsedWithoutAgentImageButWithPhoneNumbers
+        case collapsedWithoutAgentPhoneNumberOrImage
+        case formSubmitted
+    }
+
+    var dismissKind: DismissKind { .button }
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .defaultExpanded:
+            setupDemoView(with: .demoModel, isExpanded: true)
+        case .defaultCollapsed:
+            setupDemoView(with: .demoModel, isExpanded: false)
+        case .collapsedWithPhoneNumbers:
+            setupDemoView(with: .demoModelWithSeveralPhoneNumbers, isExpanded: false)
+        case .collapsedWithoutContactInformation:
+            setupDemoView(with: .demoModelWithoutContactInfo, isExpanded: false)
+        case .collapsedWithoutAgentPhoneNumber:
+            setupDemoView(with: .demoModelWithoutAgentPhoneNumber, isExpanded: false)
+        case .collapsedWithoutAgentImage:
+            setupDemoView(with: .demoModelWithoutAgentImage, isExpanded: false)
+        case .collapsedWithoutAgentImageButWithPhoneNumbers:
+            setupDemoView(with: .demoModelWithoutAgentImageAndSeveralPhoneNumbers, isExpanded: false)
+        case .collapsedWithoutAgentPhoneNumberOrImage:
+            setupDemoView(with: .demoModelWithoutPhoneNumberOrAgentImage, isExpanded: false)
+        case .formSubmitted:
+            setupDemoView(with: .demoModel, isExpanded: false, isFormSubmitted: true)
+        }
     }
 }
 

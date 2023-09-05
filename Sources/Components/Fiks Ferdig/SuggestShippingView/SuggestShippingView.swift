@@ -73,7 +73,6 @@ public final class SuggestShippingView: UIView {
 
     private func setup() {
         layer.borderWidth = 1
-        layer.borderColor = UIColor.borderDefault.cgColor
         layer.cornerRadius = 3
 
         addSubview(horizontalContainer)
@@ -92,6 +91,11 @@ public final class SuggestShippingView: UIView {
             loadingIndicator.heightAnchor.constraint(equalToConstant: 30),
             loadingIndicator.widthAnchor.constraint(equalToConstant: 30),
         ])
+    }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.borderColor = UIColor.borderDefault.cgColor
     }
 
     @objc

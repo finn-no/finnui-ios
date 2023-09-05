@@ -5,8 +5,9 @@
 import FinnUI
 import FinniversKit
 import UIKit
+import DemoKit
 
-final class RecommendationEmptyDemoView: UIView {
+final class RecommendationEmptyDemoView: UIView, Demoable {
     private lazy var viewModel = RecommendationEmptyViewModel(
         titleText: "Oisann",
         detailText: "Vi har desverre ikke noen anbefalinger tilgjengelig for deg"

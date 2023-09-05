@@ -1,20 +1,8 @@
 import FinnUI
 import FinniversKit
+import DemoKit
 
-public class IconLinkListViewDemo: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = {
-        [
-            TweakingOption(title: "2 items") {
-                self.iconLinkListView.configure(with: [.videoLink, .virtualViewing])
-            },
-            TweakingOption(title: "3 items") {
-                self.iconLinkListView.configure(with: [.videoLink, .virtualViewing, .virtualViewing])
-            },
-            TweakingOption(title: "Single item") {
-                self.iconLinkListView.configure(with: [.carPresentation])
-            }
-        ]
-    }()
+class IconLinkListViewDemo: UIView {
 
     // MARK: - Private properties
 
@@ -27,7 +15,7 @@ public class IconLinkListViewDemo: UIView, Tweakable {
         setup()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
 
@@ -35,7 +23,7 @@ public class IconLinkListViewDemo: UIView, Tweakable {
 
     private func setup() {
         addSubview(iconLinkListView)
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
 
         NSLayoutConstraint.activate([
             iconLinkListView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -45,8 +33,37 @@ public class IconLinkListViewDemo: UIView, Tweakable {
     }
 }
 
+// MARK: - TweakableDemo
+
+extension IconLinkListViewDemo: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case twoItems
+        case threeItems
+        case singleItem
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .twoItems:
+            iconLinkListView.configure(with: [.videoLink, .virtualViewing])
+        case .threeItems:
+            iconLinkListView.configure(with: [.videoLink, .virtualViewing, .virtualViewing])
+        case .singleItem:
+            iconLinkListView.configure(with: [.carPresentation])
+        }
+    }
+}
+
+// MARK: - IconLinkViewDelegate
+
 extension IconLinkListViewDemo: IconLinkViewDelegate {
-    public func iconLinkViewWasSelected(_ view: IconLinkView, url: String, identifier: String?) {
+    func iconLinkViewWasSelected(_ view: IconLinkView, url: String, identifier: String?) {
         print("🔥🔥🔥🔥 IconLinkView tapped with url: \(url), identifier: \(identifier ?? "")")
     }
 }

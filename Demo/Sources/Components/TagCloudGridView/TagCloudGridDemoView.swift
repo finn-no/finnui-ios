@@ -5,8 +5,9 @@
 import FinnUI
 import FinniversKit
 import UIKit
+import DemoKit
 
-final class TagCloudGridDemoView: UIView {
+final class TagCloudGridDemoView: UIView, Demoable {
     private lazy var view: TagCloudGridView = {
         let view = TagCloudGridView(withAutoLayout: true)
         view.delegate = self

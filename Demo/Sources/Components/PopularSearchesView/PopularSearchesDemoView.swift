@@ -1,8 +1,9 @@
 import UIKit
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class PopularSearchesDemoView: UIView, Tweakable {
+class PopularSearchesDemoView: UIView {
     private lazy var popularSearchesView: PopularSearchesView = {
         let view = PopularSearchesView(withAutoLayout: true)
         view.delegate = self
@@ -18,27 +19,12 @@ class PopularSearchesDemoView: UIView, Tweakable {
         return scrollView
     }()
 
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "5 searches", action: { [weak self] in
-            self?.popularSearchesView.configure(with: ["Hund", "Katt", "Fugl", "Sykkelhjul", "Traktortilhenger"])
-        }),
-        TweakingOption(title: "4 searches", action: { [weak self] in
-            self?.popularSearchesView.configure(with: ["Hund", "Katt", "Fugl", "Sykkelhjul"])
-        }),
-        TweakingOption(title: "1 search", action: { [weak self] in
-            self?.popularSearchesView.configure(with: ["Hund"])
-        }),
-        TweakingOption(title: "Different lengths", action: { [weak self] in
-            self?.popularSearchesView.configure(with: ["Båt", "Traktortilhenger", "Båt", "Traktortilhenger", "Båt", "Traktortilhenger", "Båt", "Traktortilhenger"])
-        }),
-    ]
-
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -55,6 +41,39 @@ class PopularSearchesDemoView: UIView, Tweakable {
         layoutIfNeeded()
     }
 }
+
+// MARK: - TweakableDemo
+
+extension PopularSearchesDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case fiveSearches
+        case fourSearches
+        case oneSearch
+        case differentLenghts
+    }
+
+    var dismissKind: DismissKind { .button }
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .fiveSearches:
+            popularSearchesView.configure(with: ["Hund", "Katt", "Fugl", "Sykkelhjul", "Traktortilhenger"])
+        case .fourSearches:
+            popularSearchesView.configure(with: ["Hund", "Katt", "Fugl", "Sykkelhjul"])
+        case .oneSearch:
+            popularSearchesView.configure(with: ["Hund"])
+        case .differentLenghts:
+            popularSearchesView.configure(with: ["Båt", "Traktortilhenger", "Båt", "Traktortilhenger", "Båt", "Traktortilhenger", "Båt", "Traktortilhenger"])
+        }
+    }
+}
+
+// MARK: - PopularSearchesViewDelegate
 
 extension PopularSearchesDemoView: PopularSearchesViewDelegate {
     func popularSearchesView(_ view: PopularSearchesView, didSelectItemAtIndex index: Int) {

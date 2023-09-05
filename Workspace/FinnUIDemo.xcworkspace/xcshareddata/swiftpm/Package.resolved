@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "demokit-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:finn-no/DemoKit-iOS.git",
+      "state" : {
+        "revision" : "c17f55cf4054fab4cd9a8ce591a4e5c2c465231c",
+        "version" : "0.2.0"
+      }
+    },
+    {
       "identity" : "finniverskit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/finn-no/FinniversKit.git",
@@ -14,7 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pimms/swift-snapshot-testing.git",
       "state" : {
-        "revision" : "0efeef44df913fe60ea868f037f271ac927a8e8c"
+        "revision" : "b44b563e6ddc5a613a107fb57626047a7f1d4e1a",
+        "version" : "1.9.666"
       }
     }
   ],

@@ -4,14 +4,9 @@
 
 import FinnUI
 import UIKit
+import DemoKit
 
-final class ExploreDetailDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Collection Detail", action: { [weak self] in
-            self?.reload()
-        })
-    ]
-
+final class ExploreDetailDemoView: UIView, Demoable {
     private var sections = [ExploreDetailSection]()
     private var favorites = Set<Int>()
 

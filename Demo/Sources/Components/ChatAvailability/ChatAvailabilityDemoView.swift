@@ -4,14 +4,9 @@
 
 import FinnUI
 import FinniversKit
+import DemoKit
 
-public class ChatAvailabilityDemoView: UIView, Tweakable {
-
-    lazy var tweakingOptions: [TweakingOption] = ChatStatus.allCases.map { status in
-        TweakingOption(title: "Status: \(status.rawValue)", action: { [weak self] in
-            self?.chatAvailabilityView.configure(with: ChatAvailabilityData(chatStatus: status))
-        })
-    }
+class ChatAvailabilityDemoView: UIView {
 
     private lazy var chatAvailabilityView = ChatAvailabilityView(withAutoLayout: true)
 
@@ -22,12 +17,12 @@ public class ChatAvailabilityDemoView: UIView, Tweakable {
         setup()
     }
 
-    public required init?(coder aDecoder: NSCoder) { fatalError() }
+    required init?(coder aDecoder: NSCoder) { fatalError() }
 
     // MARK: - Setup
 
     private func setup() {
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
         addSubview(chatAvailabilityView)
 
         NSLayoutConstraint.activate([
@@ -38,11 +33,30 @@ public class ChatAvailabilityDemoView: UIView, Tweakable {
     }
 }
 
-private enum ChatStatus: String, CaseIterable {
-    case online
-    case offline
-    case loading
+// MARK: - TweakableDemo
+
+extension ChatAvailabilityDemoView: TweakableDemo {
+    enum ChatStatus: String, CaseIterable, TweakingOption {
+        case online
+        case offline
+        case loading
+    }
+
+    var dismissKind: DismissKind { .button }
+    var numberOfTweaks: Int { ChatStatus.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        ChatStatus.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        let chatStatus = ChatStatus.allCases[index]
+        chatAvailabilityView.configure(with: ChatAvailabilityData(chatStatus: chatStatus))
+    }
 }
+
+// MARK: - Private types
+
 
 private struct ChatAvailabilityData: ChatAvailabilityViewModel {
     let title = "Live videovisning av bilen"
@@ -54,7 +68,7 @@ private struct ChatAvailabilityData: ChatAvailabilityViewModel {
     let bookTimeTitle: String?
     let bookTimeButtonTitle: String?
 
-    init(chatStatus: ChatStatus) {
+    init(chatStatus: ChatAvailabilityDemoView.ChatStatus) {
         switch chatStatus {
         case .online:
             self.init(

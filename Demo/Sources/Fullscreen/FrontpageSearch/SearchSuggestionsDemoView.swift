@@ -1,23 +1,8 @@
 import FinnUI
 import FinniversKit
+import DemoKit
 
-class SearchSuggestionsDemoView: UIView, Tweakable {
-
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Search suggestions", description: "With location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .suggestions(withLocationPermission: true))
-        },
-        TweakingOption(title: "Search suggestions", description: "Without location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .suggestions())
-        },
-        TweakingOption(title: "Search landingpage", description: "With location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .landingPage(withLocationPermission: true))
-        },
-        TweakingOption(title: "Search landingpage", description: "Without location permission cell") { [weak self] in
-            self?.searchLandingView.configure(with: .landingPage())
-        }
-    ]
-
+class SearchSuggestionsDemoView: UIView {
     private lazy var searchLandingView = FrontpageSearchView(withAutoLayout: true, delegate: self, remoteImageViewDataSource: self)
 
     // MARK: - Init
@@ -25,7 +10,7 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.last?.action?()
+        configure(forTweakAt: 0)
     }
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -35,6 +20,36 @@ class SearchSuggestionsDemoView: UIView, Tweakable {
     private func setup() {
         addSubview(searchLandingView)
         searchLandingView.fillInSuperview()
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension SearchSuggestionsDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case searchSuggestionsWithLocationPermissionCell
+        case searchSuggestionsWithoutLocationPermissionCell
+        case searchLandingpageWithLocationPermissionCell
+        case searchLandingpageWithoutLocationPermissionCell
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .searchSuggestionsWithLocationPermissionCell:
+            searchLandingView.configure(with: .suggestions(withLocationPermission: true))
+        case .searchSuggestionsWithoutLocationPermissionCell:
+            searchLandingView.configure(with: .suggestions())
+        case .searchLandingpageWithLocationPermissionCell:
+            searchLandingView.configure(with: .landingPage(withLocationPermission: true))
+        case .searchLandingpageWithoutLocationPermissionCell:
+            searchLandingView.configure(with: .landingPage())
+        }
     }
 }
 

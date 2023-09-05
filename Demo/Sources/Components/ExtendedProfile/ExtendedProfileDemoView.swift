@@ -1,22 +1,9 @@
 import UIKit
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class ExtendedProfileDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        .init(title: "Is expandable: true, is expanded: true") { [weak self] in
-            self?.setupDemoView(with: .demoModel, isExpandable: true, isExpanded: true)
-        },
-        .init(title: "Is expandable: true, is expanded: false") { [weak self] in
-            self?.setupDemoView(with: .demoModel, isExpandable: true, isExpanded: false)
-        },
-        .init(title: "Is expandable: false, is expanded: true") { [weak self] in
-            self?.setupDemoView(with: .demoModel, isExpandable: false, isExpanded: true)
-        },
-        .init(title: "Is expandable: false, is expanded: false") { [weak self] in
-            self?.setupDemoView(with: .demoModel, isExpandable: false, isExpanded: false)
-        },
-    ]
+class ExtendedProfileDemoView: UIView {
 
     private var extendedProfileView: ExtendedProfileView?
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
@@ -26,7 +13,7 @@ class ExtendedProfileDemoView: UIView, Tweakable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -67,6 +54,36 @@ class ExtendedProfileDemoView: UIView, Tweakable {
         ])
 
         extendedProfileView = view
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension ExtendedProfileDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case isExpandableAndExpanded
+        case isExpandableAndCollapsed
+        case isNotExpandableAndExpanded
+        case isNotExpandableAndCollapsed
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .isExpandableAndExpanded:
+            setupDemoView(with: .demoModel, isExpandable: true, isExpanded: true)
+        case .isExpandableAndCollapsed:
+            setupDemoView(with: .demoModel, isExpandable: true, isExpanded: false)
+        case .isNotExpandableAndExpanded:
+            setupDemoView(with: .demoModel, isExpandable: false, isExpanded: true)
+        case .isNotExpandableAndCollapsed:
+            setupDemoView(with: .demoModel, isExpandable: false, isExpanded: false)
+        }
     }
 }
 

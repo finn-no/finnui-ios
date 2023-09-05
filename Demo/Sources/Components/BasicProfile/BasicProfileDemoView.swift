@@ -1,22 +1,9 @@
 import UIKit
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class BasicProfileDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        .init(title: "One contactPerson with mail button") { [weak self] in
-            self?.setupDemoView(with: .demoModel(contactPersonCount: 1, includeSendMail: true))
-        },
-        .init(title: "One contactPerson without mail button") { [weak self] in
-            self?.setupDemoView(with: .demoModel(contactPersonCount: 1, includeSendMail: false))
-        },
-        .init(title: "Two contactPersons with mail button") { [weak self] in
-            self?.setupDemoView(with: .demoModel(contactPersonCount: 2, includeSendMail: true))
-        },
-        .init(title: "Two contactPersons without mail button") { [weak self] in
-            self?.setupDemoView(with: .demoModel(contactPersonCount: 2, includeSendMail: false))
-        }
-    ]
+class BasicProfileDemoView: UIView {
 
     private var basicProfileView: BasicProfileView?
     private lazy var scrollView = UIScrollView(withAutoLayout: true)
@@ -26,7 +13,7 @@ class BasicProfileDemoView: UIView, Tweakable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        tweakingOptions.first?.action?()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -65,6 +52,36 @@ class BasicProfileDemoView: UIView, Tweakable {
         ])
 
         basicProfileView = view
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension BasicProfileDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case oneContactWithMailButton
+        case oneContactWithoutMailButton
+        case twoContactsWithMailButton
+        case twoContactsWithoutMailButton
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .oneContactWithMailButton:
+            setupDemoView(with: .demoModel(contactPersonCount: 1, includeSendMail: true))
+        case .oneContactWithoutMailButton:
+            setupDemoView(with: .demoModel(contactPersonCount: 1, includeSendMail: false))
+        case .twoContactsWithMailButton:
+            setupDemoView(with: .demoModel(contactPersonCount: 2, includeSendMail: true))
+        case .twoContactsWithoutMailButton:
+            setupDemoView(with: .demoModel(contactPersonCount: 2, includeSendMail: false))
+        }
     }
 }
 

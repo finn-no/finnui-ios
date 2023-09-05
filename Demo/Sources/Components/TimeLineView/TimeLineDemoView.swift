@@ -1,28 +1,8 @@
 import FinniversKit
 import FinnUI
+import DemoKit
 
-final class TimeLineDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "With dotted line", action: { [unowned self] in
-            let timeLineIndicatorProvider = DottedTimeLineIndicatorProvider(font: .caption)
-            let timeLineView = TimeLineView(
-                items: items,
-                itemIndicatorProvider: timeLineIndicatorProvider,
-                withAutoLayout: true
-            )
-            setup(with: timeLineView)
-        }),
-        TweakingOption(title: "Just with simple indicators", action: { [unowned self] in
-            let simpleIndicatorProvider = SimpleTimeLineIndicatorProvider(font: .caption)
-            let timeLineView = TimeLineView(
-                items: items,
-                itemIndicatorProvider: simpleIndicatorProvider,
-                withAutoLayout: true
-            )
-            setup(with: timeLineView)
-        })
-    ]
-
+final class TimeLineDemoView: UIView {
     let items = [
         TimeLineItem(title: "First asiodasi asd us a dasihdaihsdu asiu d da soidj asjd aosi dioa sod jsaidj asu duha ui dsashduha sid asd aso ditem"),
         TimeLineItem(title: "Second item"),
@@ -34,7 +14,7 @@ final class TimeLineDemoView: UIView, Tweakable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        tweakingOptions.first?.action!()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -53,5 +33,41 @@ final class TimeLineDemoView: UIView, Tweakable {
         ])
 
         self.timeLineView = timeLineView
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension TimeLineDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case withDottedLine
+        case withSimpleIndicators
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .withDottedLine:
+            let timeLineIndicatorProvider = DottedTimeLineIndicatorProvider(font: .caption)
+            let timeLineView = TimeLineView(
+                items: items,
+                itemIndicatorProvider: timeLineIndicatorProvider,
+                withAutoLayout: true
+            )
+            setup(with: timeLineView)
+        case .withSimpleIndicators:
+            let simpleIndicatorProvider = SimpleTimeLineIndicatorProvider(font: .caption)
+            let timeLineView = TimeLineView(
+                items: items,
+                itemIndicatorProvider: simpleIndicatorProvider,
+                withAutoLayout: true
+            )
+            setup(with: timeLineView)
+        }
     }
 }

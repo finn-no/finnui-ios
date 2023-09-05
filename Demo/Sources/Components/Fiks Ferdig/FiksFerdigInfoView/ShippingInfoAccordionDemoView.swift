@@ -1,48 +1,14 @@
 import FinniversKit
 @testable import FinnUI
+import DemoKit
 
-final class FiksFerdigShippingInfoDemoView: UIView, Tweakable {
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Multi-lined text with Multiple Providers") { [unowned self] in
-            let viewModel = FiksFerdigShippingInfoViewModel(
-                headerTitle: "Varen sendes med",
-                providers: [
-                .init(
-                    provider: .postnord,
-                    providerName: "Postnord",
-                    message: "Du betaler 60 kr for frakten"
-                ),
-                .init(
-                    provider: .posten,
-                    providerName: "Posten",
-                    message: "Du betaler 60 kr for frakten"
-                ),
-                .init(
-                    provider: .heltHjem,
-                    providerName: "Helthjem idjaisj daj id aisdijasid as asduhsahdahsd daijsidj asja",
-                    message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias"
-                )
-                ],
-                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel."
-            )
-            setup(with: viewModel)
-        },
-        TweakingOption(title: "No Providers") { [unowned self] in
-            let viewModel = FiksFerdigShippingInfoViewModel(
-                headerTitle: "Varen sendes med",
-                providers: [],
-                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel."
-            )
-            setup(with: viewModel)
-        }
-    ]
-
+final class FiksFerdigShippingInfoDemoView: UIView {
     var viewModel: FiksFerdigShippingInfoViewModel!
     var accordionView: FiksFerdigShippingInfoView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        tweakingOptions.first?.action!()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -71,6 +37,58 @@ final class FiksFerdigShippingInfoDemoView: UIView, Tweakable {
         self.accordionView = accordionView
     }
 }
+
+// MARK: - TweakableDemo
+
+extension FiksFerdigShippingInfoDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case multiLinedWithMultipleProviders
+        case noProviders
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .multiLinedWithMultipleProviders:
+            let viewModel = FiksFerdigShippingInfoViewModel(
+                headerTitle: "Varen sendes med",
+                providers: [
+                    .init(
+                        provider: .postnord,
+                        providerName: "Postnord",
+                        message: "Du betaler 60 kr for frakten"
+                    ),
+                    .init(
+                        provider: .posten,
+                        providerName: "Posten",
+                        message: "Du betaler 60 kr for frakten"
+                    ),
+                    .init(
+                        provider: .heltHjem,
+                        providerName: "Helthjem idjaisj daj id aisdijasid as asduhsahdahsd daijsidj asja",
+                        message: "Du betaler 60 kr for frakten sdiasiu djiajs idj asij diasj idj asij dias"
+                    )
+                ],
+                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel."
+            )
+            setup(with: viewModel)
+        case .noProviders:
+            let viewModel = FiksFerdigShippingInfoViewModel(
+                headerTitle: "Varen sendes med",
+                providers: [],
+                noProviderText: "Du kan velge hvilken leverandør pakken skal sendes med når du legger inn en forespørsel."
+            )
+            setup(with: viewModel)
+        }
+    }
+}
+
+// MARK: - FiksFerdigAccordionViewModelDelegate
 
 extension FiksFerdigShippingInfoDemoView: FiksFerdigAccordionViewModelDelegate {
     func didChangeExpandedState(isExpanded: Bool) {

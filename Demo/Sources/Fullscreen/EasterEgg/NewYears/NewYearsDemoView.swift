@@ -4,8 +4,9 @@
 
 import FinniversKit
 import FinnUI
+import DemoKit
 
-class NewYearsDemoView: UIView {
+class NewYearsDemoView: UIView, Demoable {
     private lazy var label: Label = {
         let label = Label(style: .title2)
         label.text = "Tap to start animation"

@@ -1,7 +1,8 @@
 import FinnUI
 import UIKit
+import DemoKit
 
-final class FiksFerdigInfoDemoView: UIView, Tweakable {
+final class FiksFerdigInfoDemoView: UIView {
     var sidebar: FiksFerdigInfoView!
 
     let serviceInfoViewModel = FiksFerdigServiceInfoViewModel(
@@ -48,28 +49,9 @@ final class FiksFerdigInfoDemoView: UIView, Tweakable {
         ]
     )
 
-    lazy var tweakingOptions: [TweakingOption] = [
-        TweakingOption(title: "Full info with Helthjem") { [unowned self] in
-            let viewModel = FiksFerdigInfoViewModel(
-                serviceInfoViewModel: serviceInfoViewModel,
-                shippingInfoViewModel: shippingInfoViewModel,
-                safePaymentInfoViewModel: safePaymentInfoViewModel
-            )
-            setup(with: viewModel)
-        },
-        TweakingOption(title: "Missing shipping info") { [unowned self] in
-            let viewModel = FiksFerdigInfoViewModel(
-                serviceInfoViewModel: serviceInfoViewModel,
-                shippingInfoViewModel: nil,
-                safePaymentInfoViewModel: safePaymentInfoViewModel
-            )
-            setup(with: viewModel)
-        }
-    ]
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-        tweakingOptions.first?.action!()
+        configure(forTweakAt: 0)
     }
 
     public required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -90,5 +72,39 @@ final class FiksFerdigInfoDemoView: UIView, Tweakable {
             sidebar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             sidebar.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+}
+
+// MARK: - TweakableDemo
+
+extension FiksFerdigInfoDemoView: TweakableDemo {
+    enum Tweaks: String, CaseIterable, TweakingOption {
+        case fullInfoWithHeltHjem
+        case missingShippingInfo
+    }
+
+    var numberOfTweaks: Int { Tweaks.allCases.count }
+
+    func tweak(for index: Int) -> any TweakingOption {
+        Tweaks.allCases[index]
+    }
+
+    func configure(forTweakAt index: Int) {
+        switch Tweaks.allCases[index] {
+        case .fullInfoWithHeltHjem:
+            let viewModel = FiksFerdigInfoViewModel(
+                serviceInfoViewModel: serviceInfoViewModel,
+                shippingInfoViewModel: shippingInfoViewModel,
+                safePaymentInfoViewModel: safePaymentInfoViewModel
+            )
+            setup(with: viewModel)
+        case .missingShippingInfo:
+            let viewModel = FiksFerdigInfoViewModel(
+                serviceInfoViewModel: serviceInfoViewModel,
+                shippingInfoViewModel: nil,
+                safePaymentInfoViewModel: safePaymentInfoViewModel
+            )
+            setup(with: viewModel)
+        }
     }
 }
