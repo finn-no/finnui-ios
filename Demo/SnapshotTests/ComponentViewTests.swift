@@ -54,14 +54,6 @@ class ComponentViewTests: XCTestCase {
         snapshot(.numberedAdTipsCollapsibleView)
     }
 
-    func testHelthjemView() {
-        snapshot(.helthjemView)
-    }
-
-    func testShippingAlternativesView() {
-        snapshot(.shippingAlternativesView)
-    }
-
     func testRealestateAgencyBanner() {
         snapshot(.realestateAgencyBanner)
     }
@@ -94,48 +86,8 @@ class ComponentViewTests: XCTestCase {
         snapshot(.basicProfileView)
     }
 
-    func testSuggestShippingView() {
-        snapshot(.suggestShippingView)
-    }
-
-    func testShippingRequestedView() {
-        snapshot(.shippingRequestedView)
-    }
-
-    func testShippingRequestErrorView() {
-        snapshot(.shippingRequestErrorView)
-    }
-
-    func testFiksFerdigPriceView() {
-        snapshot(.fiksFerdigPriceView)
-    }
-
-    func testFiksFerdigAccordionView() {
-        snapshot(.fiksFerdigAccordionView)
-    }
-
     func testTimeLineView() {
         snapshot(.timeLineView)
-    }
-
-    func testFiksFerdigServiceInfoView() {
-        snapshot(.fiksFerdigServiceInfoView)
-    }
-
-    func testFiksFerdigShippingInfoView() {
-        snapshot(.fiksFerdigShippingInfoView)
-    }
-
-    func testFiksFerdigSafePaymentInfoView() {
-        snapshot(.fiksFerdigSafePaymentInfoView)
-    }
-
-    func testFiksFerdigInfoView() {
-        snapshot(.fiksFerdigInfoView)
-    }
-
-    func testFiksFerdigContactSellerView() {
-        snapshot(.fiksFerdigContactSellerView)
     }
 
     func testProjectUnitsListView() {
