@@ -87,13 +87,19 @@ private extension UIView {
     static var tallView = create(title: "Tall view", backgroundColor: .pea, height: 550)
 
     static var titleView: UIView {
-        let titleView = ObjectPageTitleView(titleStyle: .body, subtitleStyle: .title2, withAutoLayout: true)
-        titleView.configure(
-            withTitle: "Hareveien 11",
-            subtitle: "7 lekre selveierleiligheter uten gjenboere",
-            ribbonViewModel: RibbonViewModel(style: .warning, title: "Solgt")
-        )
-        return titleView
+        let stackView = UIStackView(axis: .vertical, withAutoLayout: true)
+        stackView.alignment = .leading
+
+        let titleLabel = Label(style: .body, withAutoLayout: true)
+        titleLabel.numberOfLines = 0
+        titleLabel.text = "Hareveien 11"
+
+        let subtitleLabel = Label(style: .title2, withAutoLayout: true)
+        subtitleLabel.numberOfLines = 0
+        subtitleLabel.text = "7 lekre selveierleiligheter uten gjenboere"
+
+        stackView.addArrangedSubviews([titleLabel, subtitleLabel])
+        return stackView
     }
 
     private static func create(title: String, backgroundColor: UIColor, height: CGFloat) -> UIView {

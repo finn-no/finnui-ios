@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		171E41C1286302D400A4FE2C /* FiksFerdigPriceDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171E41C0286302D400A4FE2C /* FiksFerdigPriceDemoView.swift */; };
+		17C9C2082AC1C5D600063576 /* DemoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 17C9C2072AC1C5D600063576 /* DemoKit */; };
+		17C9C20A2AC1C5D600063576 /* DemoKitSnapshot in Frameworks */ = {isa = PBXBuildFile; productRef = 17C9C2092AC1C5D600063576 /* DemoKitSnapshot */; };
 		46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AE6FC3242BADC9007BB005 /* AppDelegate.swift */; };
 		46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725B242CEF09008A5E93 /* FullscreenDemoViews.swift */; };
 		46E773A8242CEF0A008A5E93 /* ComponentDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725D242CEF09008A5E93 /* ComponentDemoViews.swift */; };
@@ -69,8 +71,6 @@
 		E6ADF8EB28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6ADF8EA28636EE700EBCA5F /* FiksFerdingInfoDemoView.swift */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
 		F0941B6C29CAEDBD005E72AA /* MotorSidebarDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0941B6B29CAEDBD005E72AA /* MotorSidebarDemoView.swift */; };
-		F09FBC2A2A72AEFB005C334B /* DemoKit in Frameworks */ = {isa = PBXBuildFile; productRef = F09FBC292A72AEFB005C334B /* DemoKit */; };
-		F09FBC2C2A72AEFB005C334B /* DemoKitSnapshot in Frameworks */ = {isa = PBXBuildFile; productRef = F09FBC2B2A72AEFB005C334B /* DemoKitSnapshot */; };
 		F09FBC2E2A72CE87005C334B /* ExploreDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FBC2D2A72CE87005C334B /* ExploreDemoViewController.swift */; };
 		F0BBDB10297FE61800018B51 /* ProjectUnitsListDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BBDB0F297FE61800018B51 /* ProjectUnitsListDemoView.swift */; };
 		F0D8D3842857890300FADED2 /* BasicProfileDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D8D3832857890300FADED2 /* BasicProfileDemoView.swift */; };
@@ -193,7 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F09FBC2A2A72AEFB005C334B /* DemoKit in Frameworks */,
+				17C9C2082AC1C5D600063576 /* DemoKit in Frameworks */,
 				D61E2C3825C0157600FA8F16 /* FinnUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,7 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F09FBC2C2A72AEFB005C334B /* DemoKitSnapshot in Frameworks */,
+				17C9C20A2AC1C5D600063576 /* DemoKitSnapshot in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,7 +723,7 @@
 			name = Demo;
 			packageProductDependencies = (
 				D61E2C3725C0157600FA8F16 /* FinnUI */,
-				F09FBC292A72AEFB005C334B /* DemoKit */,
+				17C9C2072AC1C5D600063576 /* DemoKit */,
 			);
 			productName = Demo;
 			productReference = 46AE6FC0242BADC9007BB005 /* Demo.app */;
@@ -744,7 +744,7 @@
 			);
 			name = SnapshotTests;
 			packageProductDependencies = (
-				F09FBC2B2A72AEFB005C334B /* DemoKitSnapshot */,
+				17C9C2092AC1C5D600063576 /* DemoKitSnapshot */,
 			);
 			productName = SnapshotTests;
 			productReference = 46E7756C242D4736008A5E93 /* SnapshotTests.xctest */;
@@ -774,8 +774,9 @@
 		46AE6FB8242BADC9007BB005 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = "FINN.no AS";
 				TargetAttributes = {
 					46AE6FBF242BADC9007BB005 = {
@@ -800,7 +801,7 @@
 			);
 			mainGroup = 46AE6FB7242BADC9007BB005;
 			packageReferences = (
-				F09FBC282A72AEFB005C334B /* XCRemoteSwiftPackageReference "DemoKit-iOS" */,
+				17C9C2062AC1C5D600063576 /* XCRemoteSwiftPackageReference "DemoKit-iOS" */,
 			);
 			productRefGroup = 46AE6FC1242BADC9007BB005 /* Products */;
 			projectDirPath = "";
@@ -836,6 +837,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		46F73A272431F491005D730A /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -854,6 +856,7 @@
 		};
 		4D529E0C25835570007AE5B6 /* Generate constants for assets names (Demo) */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -994,6 +997,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1055,6 +1059,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1264,9 +1269,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F09FBC282A72AEFB005C334B /* XCRemoteSwiftPackageReference "DemoKit-iOS" */ = {
+		17C9C2062AC1C5D600063576 /* XCRemoteSwiftPackageReference "DemoKit-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:finn-no/DemoKit-iOS.git";
+			repositoryURL = "https://github.com/finn-no/DemoKit-iOS.git";
 			requirement = {
 				kind = exactVersion;
 				version = 0.2.0;
@@ -1275,19 +1280,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		17C9C2072AC1C5D600063576 /* DemoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17C9C2062AC1C5D600063576 /* XCRemoteSwiftPackageReference "DemoKit-iOS" */;
+			productName = DemoKit;
+		};
+		17C9C2092AC1C5D600063576 /* DemoKitSnapshot */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17C9C2062AC1C5D600063576 /* XCRemoteSwiftPackageReference "DemoKit-iOS" */;
+			productName = DemoKitSnapshot;
+		};
 		D61E2C3725C0157600FA8F16 /* FinnUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FinnUI;
-		};
-		F09FBC292A72AEFB005C334B /* DemoKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F09FBC282A72AEFB005C334B /* XCRemoteSwiftPackageReference "DemoKit-iOS" */;
-			productName = DemoKit;
-		};
-		F09FBC2B2A72AEFB005C334B /* DemoKitSnapshot */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F09FBC282A72AEFB005C334B /* XCRemoteSwiftPackageReference "DemoKit-iOS" */;
-			productName = DemoKitSnapshot;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
