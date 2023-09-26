@@ -44,7 +44,6 @@ enum ImageAsset: String {
     case balloon3
     case blinkRocket
     case checkMark
-    case checkMarkCircle
     case chevronDown
     case chevronUp
     case close
@@ -57,7 +56,6 @@ enum ImageAsset: String {
     case favoritesSortAdStatus
     case favoritesSortDistance
     case favoritesSortLastAdded
-    case fiksFerdigContactSeller
     case finnLogoSimple
     case heartMini
     case lock
@@ -102,7 +100,6 @@ enum ImageAsset: String {
             .balloon3,
             .blinkRocket,
             .checkMark,
-            .checkMarkCircle,
             .chevronDown,
             .chevronUp,
             .close,
@@ -115,7 +112,6 @@ enum ImageAsset: String {
             .favoritesSortAdStatus,
             .favoritesSortDistance,
             .favoritesSortLastAdded,
-            .fiksFerdigContactSeller,
             .finnLogoSimple,
             .heartMini,
             .lock,
