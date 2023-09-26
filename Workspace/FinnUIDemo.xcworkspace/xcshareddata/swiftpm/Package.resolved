@@ -3,7 +3,7 @@
     {
       "identity" : "demokit-ios",
       "kind" : "remoteSourceControl",
-      "location" : "git@github.com:finn-no/DemoKit-iOS.git",
+      "location" : "https://github.com/finn-no/DemoKit-iOS.git",
       "state" : {
         "revision" : "c17f55cf4054fab4cd9a8ce591a4e5c2c465231c",
         "version" : "0.2.0"
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/finn-no/FinniversKit.git",
       "state" : {
-        "revision" : "af23d0898d6d8f24485f64b910835577e295efc9",
-        "version" : "117.2.0"
+        "revision" : "80972078d8717c2c0efea6fcf804d7cc7ff97b6d",
+        "version" : "118.0.0"
       }
     },
     {
