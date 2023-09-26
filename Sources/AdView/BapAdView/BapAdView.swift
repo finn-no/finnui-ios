@@ -83,7 +83,7 @@ extension BapAdView {
     private var favoriteButton: some View {
         Button(action: addToFavorites) {
             HStack {
-                Image(.favoriteActive)
+                Image(ImageAsset.favoriteActive)
                     .resizable()
                     .frame(width: .spacingM, height: .spacingM)
                 Text(viewModel.addToFavoritesButtonTitle)
@@ -116,7 +116,7 @@ extension BapAdView {
     private var location: some View {
         Button(action: showMap) {
             HStack(spacing: .spacingXS) {
-                Image(.pin)
+                Image(ImageAsset.pin)
                     .resizable()
                     .frame(width: .spacingM, height: .spacingM)
                     .foregroundColor(.btnPrimary)

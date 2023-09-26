@@ -205,7 +205,7 @@ private struct VersionView: View {
         HStack {
             Spacer()
             VStack(spacing: .spacingS) {
-                Image(.finnLogoSimple)
+                Image(ImageAsset.finnLogoSimple)
                 Text(text)
                     .finnFont(.detail)
                     .foregroundColor(.textPrimary)
