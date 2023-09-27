@@ -47,7 +47,7 @@ extension AuthorView {
     }
 
     var verifiedIcon: Image? {
-        author.verified ? Image(.verified) : nil
+        author.verified ? Image(ImageAsset.verified) : nil
     }
 
     var description: some View {

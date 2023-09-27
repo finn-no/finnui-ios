@@ -1,10 +1,10 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.8
 
 import PackageDescription
 
 let package = Package(
     name: "FinnUI",
-    platforms: [.iOS(.v14)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(
             name: "FinnUI",
@@ -12,7 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/finn-no/FinniversKit.git", "111.4.0"..."999.0.0")
+        .package(url: "https://github.com/finn-no/FinniversKit.git", "118.0.0"..."999.0.0")
     ],
     targets: [
     	.target(

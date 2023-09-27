@@ -51,7 +51,6 @@ extension FadedExpandableDemoView: TweakableDemo {
     enum Tweaks: String, CaseIterable, TweakingOption {
         case shortView
         case tallView
-        case titleView
     }
 
     var numberOfTweaks: Int { Tweaks.allCases.count }
@@ -66,8 +65,6 @@ extension FadedExpandableDemoView: TweakableDemo {
             configure(contentView: .shortView, buttonVerticalMargin: .spacingM)
         case .tallView:
             configure(contentView: .tallView, buttonVerticalMargin: .spacingM)
-        case .titleView:
-            configure(contentView: .titleView, contentViewVerticalMargin: .spacingM, buttonVerticalMargin: .spacingM)
         }
     }
 }
@@ -85,16 +82,6 @@ extension FadedExpandableDemoView: FadedExpandableViewDelegate {
 private extension UIView {
     static var shortView = create(title: "Short view", backgroundColor: .secondaryBlue, height: 150)
     static var tallView = create(title: "Tall view", backgroundColor: .pea, height: 550)
-
-    static var titleView: UIView {
-        let titleView = ObjectPageTitleView(titleStyle: .body, subtitleStyle: .title2, withAutoLayout: true)
-        titleView.configure(
-            withTitle: "Hareveien 11",
-            subtitle: "7 lekre selveierleiligheter uten gjenboere",
-            ribbonViewModel: RibbonViewModel(style: .warning, title: "Solgt")
-        )
-        return titleView
-    }
 
     private static func create(title: String, backgroundColor: UIColor, height: CGFloat) -> UIView {
         let view = UIView(withAutoLayout: true)
