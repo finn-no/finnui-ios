@@ -98,7 +98,6 @@ enum ImageAsset: String {
     case sold
     case travel
     case vehicles
-    case vippsLogo
     case virtualViewing
     case warranty
     case webview
@@ -172,7 +171,6 @@ enum ImageAsset: String {
             .sold,
             .travel,
             .vehicles,
-            .vippsLogo,
             .virtualViewing,
             .warranty,
             .webview,
