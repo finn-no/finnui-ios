@@ -44,7 +44,6 @@ enum ImageAsset: String {
     case balloon3
     case blinkRocket
     case checkMark
-    case checkMarkCircle
     case chevronDown
     case chevronUp
     case close
@@ -57,7 +56,6 @@ enum ImageAsset: String {
     case favoritesSortAdStatus
     case favoritesSortDistance
     case favoritesSortLastAdded
-    case fiksFerdigContactSeller
     case finnLogoSimple
     case heartMini
     case lock
@@ -75,9 +73,6 @@ enum ImageAsset: String {
     case searchBig
     case searchSmall
     case share
-    case shipWithHelthjem
-    case shipWithHelthjemDarkmode
-    case shippingTruck
     case snowflake
     case spark
     case splashLetters1
@@ -87,12 +82,6 @@ enum ImageAsset: String {
     case splashLogo
     case storyPlaceholder
     case tagMini
-    case tjtHelthjemIcon
-    case tjtLockShield
-    case tjtPostenIcon
-    case tjtPostnordIcon
-    case tjtShipmentInTransit
-    case tjtTorgetShipping
     case trashcan
     case verified
     case videoChat
@@ -111,7 +100,6 @@ enum ImageAsset: String {
             .balloon3,
             .blinkRocket,
             .checkMark,
-            .checkMarkCircle,
             .chevronDown,
             .chevronUp,
             .close,
@@ -124,7 +112,6 @@ enum ImageAsset: String {
             .favoritesSortAdStatus,
             .favoritesSortDistance,
             .favoritesSortLastAdded,
-            .fiksFerdigContactSeller,
             .finnLogoSimple,
             .heartMini,
             .lock,
@@ -142,9 +129,6 @@ enum ImageAsset: String {
             .searchBig,
             .searchSmall,
             .share,
-            .shipWithHelthjem,
-            .shipWithHelthjemDarkmode,
-            .shippingTruck,
             .snowflake,
             .spark,
             .splashLetters1,
@@ -154,12 +138,6 @@ enum ImageAsset: String {
             .splashLogo,
             .storyPlaceholder,
             .tagMini,
-            .tjtHelthjemIcon,
-            .tjtLockShield,
-            .tjtPostenIcon,
-            .tjtPostnordIcon,
-            .tjtShipmentInTransit,
-            .tjtTorgetShipping,
             .trashcan,
             .verified,
             .videoChat,

@@ -17,8 +17,6 @@ enum ComponentDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
     case tagCloudGridView
     case adTipsCollapsibleView
     case numberedAdTipsCollapsibleView
-    case helthjemView
-    case shippingAlternativesView
     case realestateAgencyBanner
     case realestateSoldState
     case realestateAgencyContent
@@ -27,17 +25,7 @@ enum ComponentDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
     case fadedExpandableView
     case extendedProfileView
     case basicProfileView
-    case suggestShippingView
-    case shippingRequestedView
-    case shippingRequestErrorView
-    case fiksFerdigAccordionView
     case timeLineView
-    case fiksFerdigServiceInfoView
-    case fiksFerdigShippingInfoView
-    case fiksFerdigSafePaymentInfoView
-    case fiksFerdigInfoView
-    case fiksFerdigPriceView
-    case fiksFerdigContactSellerView
     case projectUnitsListView
     case motorSidebar
 
@@ -74,10 +62,6 @@ enum ComponentDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
             return AdTipsCollapsibleDemoView()
         case .numberedAdTipsCollapsibleView:
             return NumberedAdTipsCollapsibleDemoView()
-        case .helthjemView:
-            return HelthjemDemoView()
-        case .shippingAlternativesView:
-            return ShippingAlternativesDemoView()
         case .realestateAgencyBanner:
             return RealestateAgencyBannerDemoView()
         case .realestateSoldState:
@@ -94,28 +78,8 @@ enum ComponentDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
             return ExtendedProfileDemoView()
         case .basicProfileView:
             return BasicProfileDemoView()
-        case .fiksFerdigAccordionView:
-            return FiksFerdigAccordionDemoView()
-        case .suggestShippingView:
-            return SuggestShippingDemoView()
-        case .shippingRequestedView:
-            return ShippingRequestedDemoView()
-        case .shippingRequestErrorView:
-            return ShippingRequestErrorDemoView()
         case .timeLineView:
             return TimeLineDemoView()
-        case .fiksFerdigServiceInfoView:
-            return FiksFerdigServiceInfoDemoView()
-        case .fiksFerdigShippingInfoView:
-            return FiksFerdigShippingInfoDemoView()
-        case .fiksFerdigSafePaymentInfoView:
-            return FiksFerdigSafePaymentInfoDemoView()
-        case .fiksFerdigInfoView:
-            return FiksFerdigInfoDemoView()
-        case .fiksFerdigPriceView:
-            return FiksFerdigPriceDemoView()
-        case .fiksFerdigContactSellerView:
-            return FiksFerdigContactSellerDemoView()
         case .projectUnitsListView:
             return ProjectUnitsListDemoView()
         case .motorSidebar:
