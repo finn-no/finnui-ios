@@ -37,7 +37,7 @@ class ProjectUnitCell: UICollectionViewCell {
         let button = UIButton(withAutoLayout: true)
         button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(handleFavoriteButtonTap), for: .touchUpInside)
-        button.tintColor = .stone
+        button.tintColor = .gray500
         return button
     }()
 
@@ -122,8 +122,10 @@ class ProjectUnitCell: UICollectionViewCell {
     // MARK: - Private methods
 
     private func updateFavoriteButton(isFavorite: Bool) {
-        let favoriteImage = isFavorite ? UIImage(named: .favoriteActive) : UIImage(named: .favoriteDefault).withRenderingMode(.alwaysTemplate)
+        let favoriteImage = isFavorite ? UIImage(named: .favoriteActive).withRenderingMode(.alwaysTemplate)
+                                    : UIImage(named: .favoriteDefault).withRenderingMode(.alwaysTemplate)
         favoriteButton.setImage(favoriteImage, for: .normal)
+        favoriteButton.tintColor = isFavorite ? .nmpBrandColorPrimary : .gray500
     }
 
     @objc private func handleFavoriteButtonTap() {

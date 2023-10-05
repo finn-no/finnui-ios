@@ -83,7 +83,6 @@ enum ImageAsset: String {
     case storyPlaceholder
     case tagMini
     case trashcan
-    case verified
     case videoChat
     case webview
 
@@ -139,7 +138,6 @@ enum ImageAsset: String {
             .storyPlaceholder,
             .tagMini,
             .trashcan,
-            .verified,
             .videoChat,
             .webview,
     ]

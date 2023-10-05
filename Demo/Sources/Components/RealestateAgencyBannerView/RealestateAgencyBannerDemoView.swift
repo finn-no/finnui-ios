@@ -89,7 +89,7 @@ private extension RealestateAgencyBannerViewModel {
             buttonTitle: "Se våre artikler",
             style: .init(
                 textColor: .milk,
-                backgroundColor: .primaryBlue,
+                backgroundColor: .nmpBrandColorPrimary,
                 logoBackgroundColor: .white,
                 actionButtonStyle: nil
             )

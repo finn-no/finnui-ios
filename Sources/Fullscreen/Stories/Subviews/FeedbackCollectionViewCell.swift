@@ -16,7 +16,7 @@ class FeedbackCollectionViewCell: UICollectionViewCell {
 
     private lazy var containerView: UIView = {
         let view = UIView(withAutoLayout: true)
-        view.backgroundColor = .primaryBlue
+        view.backgroundColor = .nmpBrandColorPrimary
         view.layer.cornerRadius = .spacingM
         view.clipsToBounds = true
         return view
@@ -205,7 +205,7 @@ private class OptionButton: UIButton {
 
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? highlightedColor : .primaryBlue
+            backgroundColor = isHighlighted ? highlightedColor : .nmpBrandColorPrimary
             checkImageView.isHidden = !isHighlighted
         }
     }
@@ -226,7 +226,7 @@ private class OptionButton: UIButton {
 
     private func setup() {
         titleLabel?.font = .title3Strong
-        backgroundColor = .primaryBlue
+        backgroundColor = .nmpBrandColorPrimary
         layer.cornerRadius = 16
         titleEdgeInsets = UIEdgeInsets(top: 0, leading: .spacingM, bottom: 0, trailing: 0)
         contentHorizontalAlignment = .leading

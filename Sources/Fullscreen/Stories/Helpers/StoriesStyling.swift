@@ -18,7 +18,7 @@ struct StoriesStyling {
     static let openAdButtonSize: Button.Size = .normal
 
     // Styling for feedback module
-    static let feedbackBackgroundColor: UIColor = .primaryBlue
+    static let feedbackBackgroundColor: UIColor = .nmpBrandColorPrimary
     static let feedbackTitleStyle: Label.Style = .title2
     static let feedbackDisclaimerStyle: Label.Style = .detail
     static let feedbackSuccessLabelStyle: Label.Style = .title1
