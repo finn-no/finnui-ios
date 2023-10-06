@@ -63,7 +63,7 @@ final class ExploreCollectionCell: UICollectionViewCell {
         super.prepareForReuse()
         imageView.cancelLoading()
         imageView.setImage(nil, animated: false)
-        imageView.backgroundColor = .secondaryBlue
+        imageView.backgroundColor = .nmpBrandColorSecondary
         titleLabel.text = nil
     }
 

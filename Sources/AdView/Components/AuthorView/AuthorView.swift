@@ -2,6 +2,7 @@
 //  Copyright © 2020 FINN.no AS. All rights reserved.
 //
 
+import FinniversKit
 import SwiftUI
 
 struct AuthorView<ImageProvider: SingleImageProvider>: View {
@@ -47,7 +48,7 @@ extension AuthorView {
     }
 
     var verifiedIcon: Image? {
-        author.verified ? Image(ImageAsset.verified) : nil
+        author.verified ? Image(uiImage: .brandTrustVerified) : nil
     }
 
     var description: some View {

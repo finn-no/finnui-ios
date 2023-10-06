@@ -111,10 +111,10 @@ private extension RealestateAgencyContentViewModel {
             articles: articles,
             style: .init(
                 textColor: .milk,
-                backgroundColor: .primaryBlue,
+                backgroundColor: .nmpBrandColorPrimary,
                 logoBackgroundColor: .white,
                 actionButtonStyle: .init(
-                    textColor: .primaryBlue,
+                    textColor: .nmpBrandColorPrimary,
                     backgroundColor: .milk,
                     backgroundActiveColor: .milk.withAlphaComponent(0.7),
                     borderColor: .milk

@@ -22,7 +22,7 @@ public class IconLinkView: UIView {
 
     private lazy var titleLabel: Label = {
         let label = Label(style: .caption, withAutoLayout: true)
-        label.textColor = .linkTintColor
+        label.textColor = .textAction
         label.numberOfLines = 0
         return label
     }()
@@ -30,7 +30,7 @@ public class IconLinkView: UIView {
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView(withAutoLayout: true)
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .linkTintColor
+        imageView.tintColor = .textAction
         return imageView
     }()
 
@@ -88,10 +88,4 @@ public class IconLinkView: UIView {
         guard let url = viewModel?.url else { return }
         delegate?.iconLinkViewWasSelected(self, url: url, identifier: viewModel?.identifier)
     }
-}
-
-// MARK: - Private extension
-
-private extension UIColor {
-    static var linkTintColor = dynamicColor(defaultColor: .primaryBlue, darkModeColor: UIColor(hex: "#006DFB"))
 }

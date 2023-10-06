@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03B4A4492ACEC3B00084F289 /* DemoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 17C9C2072AC1C5D600063576 /* DemoKit */; };
+		03B4A44A2ACEC3B00084F289 /* DemoKitSnapshot in Frameworks */ = {isa = PBXBuildFile; productRef = 17C9C2092AC1C5D600063576 /* DemoKitSnapshot */; };
 		46AE6FC4242BADC9007BB005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AE6FC3242BADC9007BB005 /* AppDelegate.swift */; };
 		46E773A6242CEF0A008A5E93 /* FullscreenDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725B242CEF09008A5E93 /* FullscreenDemoViews.swift */; };
 		46E773A8242CEF0A008A5E93 /* ComponentDemoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7725D242CEF09008A5E93 /* ComponentDemoViews.swift */; };
@@ -167,7 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17C9C2082AC1C5D600063576 /* DemoKit in Frameworks */,
+				03B4A4492ACEC3B00084F289 /* DemoKit in Frameworks */,
 				D61E2C3825C0157600FA8F16 /* FinnUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,7 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17C9C20A2AC1C5D600063576 /* DemoKitSnapshot in Frameworks */,
+				03B4A44A2ACEC3B00084F289 /* DemoKitSnapshot in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
