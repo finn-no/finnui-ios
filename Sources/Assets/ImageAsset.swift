@@ -70,6 +70,7 @@ enum ImageAsset: String {
     case repair
     case republish
     case schibstedFooter
+    case schibstedFooterTori
     case searchBig
     case searchSmall
     case share
@@ -82,6 +83,7 @@ enum ImageAsset: String {
     case splashLogo
     case storyPlaceholder
     case tagMini
+    case toriSplashLogo
     case trashcan
     case videoChat
     case webview
@@ -125,6 +127,7 @@ enum ImageAsset: String {
             .repair,
             .republish,
             .schibstedFooter,
+            .schibstedFooterTori,
             .searchBig,
             .searchSmall,
             .share,
@@ -137,6 +140,7 @@ enum ImageAsset: String {
             .splashLogo,
             .storyPlaceholder,
             .tagMini,
+            .toriSplashLogo,
             .trashcan,
             .videoChat,
             .webview,

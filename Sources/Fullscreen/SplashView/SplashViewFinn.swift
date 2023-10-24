@@ -6,10 +6,11 @@ import UIKit
 import FinniversKit
 
 public protocol SplashViewDelegate: AnyObject {
-    func splashViewDidFinishAnimating(_ view: SplashView)
+    func splashViewDidFinishAnimating(_ view: SplashViewFinn)
+    func removeSplashView(_ view: SplashViewTori)
 }
 
-public final class SplashView: UIView {
+public final class SplashViewFinn: UIView {
     public weak var delegate: SplashViewDelegate?
 
     private lazy var leftLogoView: UIImageView = {
@@ -64,45 +65,45 @@ public final class SplashView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        backgroundColor = .accentSecondaryBlue
+            backgroundColor = .accentSecondaryBlue
 
-        logoContainer.addSubview(leftLogoView)
-        logoContainer.addSubview(rightLogoView)
-        letterViews.forEach({ logoContainer.addSubview($0) })
+            logoContainer.addSubview(leftLogoView)
+            logoContainer.addSubview(rightLogoView)
+            letterViews.forEach({ logoContainer.addSubview($0) })
 
-        addSubview(logoContainer)
-        addSubview(footerView)
+            addSubview(logoContainer)
+            addSubview(footerView)
 
-        NSLayoutConstraint.activate([
-            leftLogoView.trailingAnchor.constraint(equalTo: rightLogoView.leadingAnchor, constant: 1),
-            leftLogoView.centerYAnchor.constraint(equalTo: logoContainer.centerYAnchor),
+            NSLayoutConstraint.activate([
+                leftLogoView.trailingAnchor.constraint(equalTo: rightLogoView.leadingAnchor, constant: 1),
+                leftLogoView.centerYAnchor.constraint(equalTo: logoContainer.centerYAnchor),
 
-            rightLogoView.centerXAnchor.constraint(equalTo: logoContainer.centerXAnchor, constant: 23),
-            rightLogoView.centerYAnchor.constraint(equalTo: logoContainer.centerYAnchor),
-            rightLogoView.heightAnchor.constraint(equalToConstant: 50),
-            rightLogoViewWidthConstraint,
+                rightLogoView.centerXAnchor.constraint(equalTo: logoContainer.centerXAnchor, constant: 23),
+                rightLogoView.centerYAnchor.constraint(equalTo: logoContainer.centerYAnchor),
+                rightLogoView.heightAnchor.constraint(equalToConstant: 50),
+                rightLogoViewWidthConstraint,
 
-            letterViews[0].leadingAnchor.constraint(equalTo: logoContainer.centerXAnchor, constant: -.spacingS),
-            letterViews[0].bottomAnchor.constraint(equalTo: rightLogoView.bottomAnchor),
+                letterViews[0].leadingAnchor.constraint(equalTo: logoContainer.centerXAnchor, constant: -.spacingS),
+                letterViews[0].bottomAnchor.constraint(equalTo: rightLogoView.bottomAnchor),
 
-            letterViews[1].leadingAnchor.constraint(equalTo: letterViews[0].trailingAnchor, constant: .spacingXS),
-            letterViews[1].bottomAnchor.constraint(equalTo: letterViews[0].bottomAnchor),
+                letterViews[1].leadingAnchor.constraint(equalTo: letterViews[0].trailingAnchor, constant: .spacingXS),
+                letterViews[1].bottomAnchor.constraint(equalTo: letterViews[0].bottomAnchor),
 
-            letterViews[2].leadingAnchor.constraint(equalTo: letterViews[1].trailingAnchor, constant: .spacingXS),
-            letterViews[2].bottomAnchor.constraint(equalTo: letterViews[0].bottomAnchor),
+                letterViews[2].leadingAnchor.constraint(equalTo: letterViews[1].trailingAnchor, constant: .spacingXS),
+                letterViews[2].bottomAnchor.constraint(equalTo: letterViews[0].bottomAnchor),
 
-            letterViews[3].leadingAnchor.constraint(equalTo: letterViews[2].trailingAnchor, constant: .spacingXS),
-            letterViews[3].bottomAnchor.constraint(equalTo: letterViews[0].bottomAnchor),
+                letterViews[3].leadingAnchor.constraint(equalTo: letterViews[2].trailingAnchor, constant: .spacingXS),
+                letterViews[3].bottomAnchor.constraint(equalTo: letterViews[0].bottomAnchor),
 
-            logoContainer.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            logoContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            logoContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
-            logoContainer.bottomAnchor.constraint(equalTo: footerView.topAnchor),
+                logoContainer.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+                logoContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+                logoContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+                logoContainer.bottomAnchor.constraint(equalTo: footerView.topAnchor),
 
-            footerView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            footerView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -.spacingL),
-        ])
-    }
+                footerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                footerView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -.spacingL),
+            ])
+        }
 
     // MARK: - Animations
 
@@ -155,7 +156,7 @@ public final class SplashView: UIView {
     }
 }
 
-extension SplashView: CAAnimationDelegate {
+extension SplashViewFinn: CAAnimationDelegate {
     public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         delegate?.splashViewDidFinishAnimating(self)
     }
