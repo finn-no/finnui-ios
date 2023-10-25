@@ -13,9 +13,10 @@ jobs:
 
   swiftlint:
     docker:
-      - image: dantoml/swiftlint:latest
+      xcode: 15.0
     steps:
       - checkout
+      - run: brew install swiftlint
       - run: swiftlint lint
 
 workflows:
