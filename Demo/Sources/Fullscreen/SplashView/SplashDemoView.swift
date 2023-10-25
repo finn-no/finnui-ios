@@ -7,7 +7,7 @@ import UIKit
 import DemoKit
 
 class SplashDemoView: UIView, Demoable {
-    private lazy var view = SplashView(withAutoLayout: true)
+    private lazy var view = SplashViewFinn(withAutoLayout: true)
 
     // MARK: - Init
 
