@@ -93,8 +93,4 @@ class ComponentViewTests: XCTestCase {
     func testProjectUnitsListView() {
         snapshot(.projectUnitsListView)
     }
-
-    func testMotorSidebar() {
-        snapshot(.motorSidebar)
-    }
 }

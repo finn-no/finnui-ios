@@ -27,7 +27,6 @@ enum ComponentDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
     case basicProfileView
     case timeLineView
     case projectUnitsListView
-    case motorSidebar
 
     static var groupTitle: String { "Components" }
     static var numberOfDemos: Int { allCases.count }
@@ -82,8 +81,6 @@ enum ComponentDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
             return TimeLineDemoView()
         case .projectUnitsListView:
             return ProjectUnitsListDemoView()
-        case .motorSidebar:
-            return MotorSidebarDemoView()
         }
     }
 }
