@@ -129,6 +129,12 @@ public class SnowGlobeView: UIView {
         layer.addSublayer(gradientLayer)
         layer.addSublayer(emitterLayer)
 
+        configureAVSession()
+    }
+
+    private func configureAVSession() {
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .mixWithOthers)
+        try? AVAudioSession.sharedInstance().setActive(true)
         audioPlayer?.prepareToPlay()
     }
 }
