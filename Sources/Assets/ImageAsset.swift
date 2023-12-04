@@ -7,8 +7,7 @@
 
 import UIKit
 
-private class BundleHelper {
-}
+private class BundleHelper {}
 
 extension UIImage {
     convenience init(named imageAsset: ImageAsset) {
