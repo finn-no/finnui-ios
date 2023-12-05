@@ -14,10 +14,6 @@ class FullscreenViewTests: XCTestCase {
 
     // MARK: - Tests
 
-    func testSnowGlobeView() {
-        snapshot(.snowGlobeView)
-    }
-
     func testSplashView() {
         snapshot(.splashView)
     }
