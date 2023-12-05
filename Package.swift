@@ -12,7 +12,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/finn-no/FinniversKit.git", "120.0.0"..."999.0.0")
+        .package(url: "https://github.com/finn-no/FinniversKit.git", "124.1.1"..."999.0.0")
     ],
     targets: [
     	.target(
