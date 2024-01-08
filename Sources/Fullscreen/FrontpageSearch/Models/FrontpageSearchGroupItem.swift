@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import FinniversKit
 
 public struct FrontpageSearchGroupItem: Hashable {
     public let title: NSAttributedString

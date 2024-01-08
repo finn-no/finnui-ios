@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import FinniversKit
 
 public struct BottomDividerModifier: ViewModifier {
     let show: Bool
