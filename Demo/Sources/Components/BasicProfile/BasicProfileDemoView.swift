@@ -189,7 +189,7 @@ private extension Array {
 private extension LinkButtonViewModel {
     private static var demoStyle: Button.Style {
         Button.Style.flat.overrideStyle(
-            textColor: .btnAction,
+            textColor: .textAction,
             margins: UIEdgeInsets(vertical: .spacingS, horizontal: .zero),
             smallFont: .body
         )

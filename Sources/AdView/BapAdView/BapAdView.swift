@@ -122,7 +122,7 @@ extension BapAdView {
                     .foregroundColor(.btnPrimary)
                 Text(viewModel.locationText)
                     .finnFont(.body)
-                    .foregroundColor(Color.btnAction)
+                    .foregroundColor(Color.textAction)
             }
         }
         .padding(.spacingS)
