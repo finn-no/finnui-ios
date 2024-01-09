@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/finn-no/FinniversKit.git",
       "state" : {
-        "revision" : "50919a703f85675c576496404fabe4d7e070a4ab",
-        "version" : "124.1.1"
+        "revision" : "2217b85fb3399a0dd4dfc48a3e4fad846273b124",
+        "version" : "125.1.0"
       }
     },
     {
