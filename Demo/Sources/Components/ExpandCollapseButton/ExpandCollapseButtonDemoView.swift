@@ -13,7 +13,7 @@ class ExpandCollapseButtonDemoView: UIView, Demoable {
         let button = ExpandCollapseButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(toggleExpandState), for: .touchUpInside)
-        button.tintColor = .btnPrimary
+        button.tintColor = .nmpBrandDecoration
         return button
     }()
 

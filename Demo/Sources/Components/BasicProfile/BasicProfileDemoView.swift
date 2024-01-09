@@ -201,7 +201,7 @@ private extension LinkButtonViewModel {
             buttonTitle: title,
             linkUrl: URL(string: "https://finn.no")!,
             isExternal: isExternal,
-            externalIconColor: .btnPrimary.withAlphaComponent(0.7),
+            externalIconColor: .nmpBrandDecoration.withAlphaComponent(0.7),
             buttonStyle: Self.demoStyle,
             buttonSize: .small
         )
