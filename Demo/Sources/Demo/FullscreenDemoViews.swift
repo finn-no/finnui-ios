@@ -5,7 +5,6 @@ import FinniversKit
 import DemoKit
 
 enum FullscreenDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
-    case snowGlobeView
     case newYearsView
     case splashView
     case savedSearchSortingView
@@ -29,8 +28,6 @@ enum FullscreenDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
 
     var demoable: any Demoable {
         switch self {
-        case .snowGlobeView:
-            return SnowGlobeDemoView()
         case .newYearsView:
             return NewYearsDemoView()
         case .splashView:
