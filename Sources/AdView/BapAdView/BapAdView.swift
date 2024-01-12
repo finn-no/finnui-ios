@@ -119,10 +119,10 @@ extension BapAdView {
                 Image(ImageAsset.pin)
                     .resizable()
                     .frame(width: .spacingM, height: .spacingM)
-                    .foregroundColor(.btnPrimary)
+                    .foregroundColor(.nmpBrandDecoration)
                 Text(viewModel.locationText)
                     .finnFont(.body)
-                    .foregroundColor(Color.btnAction)
+                    .foregroundColor(Color.textAction)
             }
         }
         .padding(.spacingS)

@@ -38,7 +38,7 @@ extension AuthorView {
             .resizable()
             .frame(width: imageSize, height: imageSize)
             .background(Color.bgSecondary)
-            .foregroundColor(.btnPrimary)
+            .foregroundColor(.nmpBrandDecoration)
             .clipShape(Circle())
     }
 

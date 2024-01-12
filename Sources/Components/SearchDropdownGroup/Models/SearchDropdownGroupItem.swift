@@ -1,4 +1,5 @@
 import UIKit
+import FinniversKit
 
 public struct SearchDropdownGroupItem {
     public let title: String

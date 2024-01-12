@@ -42,7 +42,7 @@ struct SavedSearchView: View {
 
     private var textColor: Color {
         switch savedSearch.textStyle {
-        case .active: return .btnAction
+        case .active: return .textAction
         case .inactive: return .textSecondary
         }
     }

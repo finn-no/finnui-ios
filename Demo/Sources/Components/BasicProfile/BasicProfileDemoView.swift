@@ -189,7 +189,7 @@ private extension Array {
 private extension LinkButtonViewModel {
     private static var demoStyle: Button.Style {
         Button.Style.flat.overrideStyle(
-            textColor: .btnAction,
+            textColor: .textAction,
             margins: UIEdgeInsets(vertical: .spacingS, horizontal: .zero),
             smallFont: .body
         )
@@ -201,7 +201,7 @@ private extension LinkButtonViewModel {
             buttonTitle: title,
             linkUrl: URL(string: "https://finn.no")!,
             isExternal: isExternal,
-            externalIconColor: .btnPrimary.withAlphaComponent(0.7),
+            externalIconColor: .nmpBrandDecoration.withAlphaComponent(0.7),
             buttonStyle: Self.demoStyle,
             buttonSize: .small
         )
