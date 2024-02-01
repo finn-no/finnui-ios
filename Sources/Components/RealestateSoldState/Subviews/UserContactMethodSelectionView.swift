@@ -11,7 +11,7 @@ class UserContactMethodSelectionView: UIView {
 
     let viewModel: UserContactMethodSelectionModel
     private weak var delegate: UserContactMethodSelectionViewDelegate?
-    private lazy var radioButton = RadioButtonView(frame: .zero)
+    private lazy var radioButton = RadioButtonView()
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: .spacingXS, withAutoLayout: true)

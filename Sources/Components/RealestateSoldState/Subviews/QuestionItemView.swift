@@ -14,7 +14,7 @@ class QuestionItemView: UIView {
     // MARK: - Private properties
 
     private weak var delegate: QuestionItemViewDelegate?
-    private lazy var checkbox = CheckboxView(frame: .zero)
+    private lazy var checkbox = CheckboxView()
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: .spacingXS, withAutoLayout: true)
