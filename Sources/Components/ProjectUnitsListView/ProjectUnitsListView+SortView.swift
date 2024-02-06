@@ -70,7 +70,7 @@ extension ProjectUnitsListView.SortView: UITableViewDelegate {
         else { return }
 
         sortOptions[indexPath.row].isSelected = true
-        cell.animateSelection(isSelected: true)
+        cell.configure(isSelected: true)
         impactGenerator.impactOccurred()
         delegate?.sortView(self, didSelectSortOption: sortOptions[indexPath.row].column)
     }
@@ -81,7 +81,7 @@ extension ProjectUnitsListView.SortView: UITableViewDelegate {
         }
 
         sortOptions[indexPath.row].isSelected = false
-        cell.animateSelection(isSelected: false)
+        cell.configure(isSelected: false)
     }
 }
 

@@ -14,7 +14,7 @@ class QuestionItemView: UIView {
     // MARK: - Private properties
 
     private weak var delegate: QuestionItemViewDelegate?
-    private lazy var checkbox = AnimatedCheckboxView(frame: .zero)
+    private lazy var checkbox = CheckboxView()
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal, spacing: .spacingXS, withAutoLayout: true)
@@ -56,8 +56,8 @@ class QuestionItemView: UIView {
     // MARK: - Internal methods
 
     func updateView() {
-        if question.isSelected != checkbox.isHighlighted {
-            checkbox.animateSelection(selected: question.isSelected)
+        if question.isSelected != checkbox.isSelected {
+            checkbox.configure(isSelected: question.isSelected)
         }
     }
 
