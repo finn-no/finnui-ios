@@ -288,10 +288,10 @@ class StoryCollectionViewCell: UICollectionViewCell {
 
         if let storyIconImageUrl = story.iconImageUrl, !storyIconImageUrl.isEmpty {
             dataSource?.storyCollectionViewCell(self, loadImageWithPath: storyIconImageUrl, imageWidth: storyIconSize, completion: { [weak self] image in
-                self?.storyIconImageView.image = image ?? UIImage(named: .noImage)
+                self?.storyIconImageView.image = image ?? Config.imageProvider.placeholderAd
             })
         } else {
-            storyIconImageView.image = UIImage(named: .noImage)
+            storyIconImageView.image = Config.imageProvider.placeholderAd
             storyIconImageView.backgroundColor = .milk
         }
     }

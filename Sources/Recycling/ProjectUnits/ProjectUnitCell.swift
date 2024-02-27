@@ -110,7 +110,7 @@ class ProjectUnitCell: UICollectionViewCell {
         areaLabel.text = viewModel.area
         bottomDetailLabel.text = viewModel.bottomDetailText
 
-        let fallbackImage = UIImage(named: .noImage)
+        let fallbackImage = Config.imageProvider.placeholderAd
         if let imageUrl = viewModel.imageUrl {
             remoteImageView.loadImage(for: imageUrl, imageWidth: ProjectUnitCell.width, loadingColor: .bgSecondary, fallbackImage: fallbackImage)
         } else {
