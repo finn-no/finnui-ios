@@ -60,7 +60,6 @@ enum ImageAsset: String {
     case heartMini
     case lock
     case mapPin
-    case noImage
     case notFavorited
     case overflowMenuHorizontal
     case pin
@@ -115,7 +114,6 @@ enum ImageAsset: String {
             .heartMini,
             .lock,
             .mapPin,
-            .noImage,
             .notFavorited,
             .overflowMenuHorizontal,
             .pin,
