@@ -25,7 +25,6 @@ enum ComponentDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
     case fadedExpandableView
     case extendedProfileView
     case basicProfileView
-    case timeLineView
     case projectUnitsListView
 
     static var groupTitle: String { "Components" }
@@ -77,8 +76,6 @@ enum ComponentDemoViews: String, CaseIterable, DemoGroup, DemoGroupItem {
             return ExtendedProfileDemoView()
         case .basicProfileView:
             return BasicProfileDemoView()
-        case .timeLineView:
-            return TimeLineDemoView()
         case .projectUnitsListView:
             return ProjectUnitsListDemoView()
         }
