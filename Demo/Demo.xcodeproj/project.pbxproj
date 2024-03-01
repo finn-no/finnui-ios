@@ -55,7 +55,6 @@
 		DA7B29F22670CAFE0018B11C /* ExploreDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7B29F12670CAFE0018B11C /* ExploreDemoView.swift */; };
 		DAA243B82677850F008B3442 /* ExploreDetailViewModel+Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */; };
 		DAE9CA8724602CB000C7552F /* SwiftUIViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */; };
-		E640A7C8285B66C0002CA903 /* TimeLineDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640A7C7285B66C0002CA903 /* TimeLineDemoView.swift */; };
 		F05770EE2799A70D00C8DD85 /* SnapshotWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */; };
 		F09FBC2E2A72CE87005C334B /* ExploreDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FBC2D2A72CE87005C334B /* ExploreDemoViewController.swift */; };
 		F0BBDB10297FE61800018B51 /* ProjectUnitsListDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BBDB0F297FE61800018B51 /* ProjectUnitsListDemoView.swift */; };
@@ -153,7 +152,6 @@
 		DA7B29F12670CAFE0018B11C /* ExploreDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDemoView.swift; sourceTree = "<group>"; };
 		DAA243B72677850F008B3442 /* ExploreDetailViewModel+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExploreDetailViewModel+Demo.swift"; sourceTree = "<group>"; };
 		DAE9CA8624602CB000C7552F /* SwiftUIViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIViewTests.swift; sourceTree = "<group>"; };
-		E640A7C7285B66C0002CA903 /* TimeLineDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineDemoView.swift; sourceTree = "<group>"; };
 		F05770ED2799A70D00C8DD85 /* SnapshotWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotWrapperViewController.swift; sourceTree = "<group>"; };
 		F09FBC2D2A72CE87005C334B /* ExploreDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDemoViewController.swift; sourceTree = "<group>"; };
 		F0BBDB0F297FE61800018B51 /* ProjectUnitsListDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectUnitsListDemoView.swift; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 				8D680CEAEE8620B4DD78D96C /* SearchDropdownGroup */,
 				DA2F2713266E276D00E6F17C /* TagCloudGridView */,
 				5B95945BFA1580B77EC4F696 /* ExtendedProfile */,
-				E640A7C22858B0E1002CA903 /* TimeLineView */,
 				5B959225F96A844EB3287ECD /* RealestateAgencyBannerView */,
 			);
 			path = Components;
@@ -553,15 +550,6 @@
 			path = Explore;
 			sourceTree = "<group>";
 		};
-		E640A7C22858B0E1002CA903 /* TimeLineView */ = {
-			isa = PBXGroup;
-			children = (
-				E640A7C7285B66C0002CA903 /* TimeLineDemoView.swift */,
-			);
-			name = TimeLineView;
-			path = Sources/Components/TimeLineView;
-			sourceTree = SOURCE_ROOT;
-		};
 		F05770EF2799AB4100C8DD85 /* Wrappers */ = {
 			isa = PBXGroup;
 			children = (
@@ -810,7 +798,6 @@
 				46E773A9242CEF0A008A5E93 /* RecyclingDemoViews.swift in Sources */,
 				F0BBDB10297FE61800018B51 /* ProjectUnitsListDemoView.swift in Sources */,
 				D6D43CEB25BF2F4D00234AC2 /* ExpandCollapseButtonDemoView.swift in Sources */,
-				E640A7C8285B66C0002CA903 /* TimeLineDemoView.swift in Sources */,
 				D6D43CFB25BF2FDD00234AC2 /* ProjectUnitsDemoView.swift in Sources */,
 				DA3E1B0F2673B4ED001B7730 /* ExploreDetailDemoView.swift in Sources */,
 				D6D43CE525BF2F4D00234AC2 /* IconLinkListViewDemo.swift in Sources */,

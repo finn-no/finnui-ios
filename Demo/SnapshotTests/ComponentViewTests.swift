@@ -86,10 +86,6 @@ class ComponentViewTests: XCTestCase {
         snapshot(.basicProfileView)
     }
 
-    func testTimeLineView() {
-        snapshot(.timeLineView)
-    }
-
     func testProjectUnitsListView() {
         snapshot(.projectUnitsListView)
     }
