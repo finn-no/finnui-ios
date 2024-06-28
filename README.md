@@ -1,8 +1,7 @@
 
-[![CircleCI](https://img.shields.io/circleci/project/github/finn-no/finnui-ios/master.svg)](https://circleci.com/gh/finn-no/finnui-ios/tree/master)
-[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+**FinnUI** held some of the UI used to build the FINN.no iOS app but this repository is no longer used and maintained.
 
-**FinnUI** holds some of the UI used to build the FINN.no iOS app.
+---------------------------
 
 Run the Demo project for a list of all our components.
 
